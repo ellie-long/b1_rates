@@ -1,0 +1,137 @@
+MRST 2006 NNLO PDFs
+-------------------
+
+The enclosed Fortran and C++ code provides public access to the parton
+distribution functions (PDFs) published in:
+
+  A. D. Martin, W. J. Stirling, R. S. Thorne and G. Watt,
+  "Update of Parton Distributions at NNLO",
+  arXiv:0706.0459 [hep-ph].
+
+Please reference this paper if you use the PDFs for a publication.
+
+Unpack the tarball with "tar zxvf mrst2006nnlo.tar.gz" to give the
+following files:
+
+  README    : This documentation file.
+  pdf.f     : Fortran code to access grids.
+  pdf.h     : C++ class header file.
+  pdf.C     : C++ class implementation file.
+  example.f : Fortran example code.
+  example.C : C++ example code.
+  Makefile  : Compilation using Make utility.
+
+Grids containing the PDFs are stored in files named
+
+  Grids/mrst2006nnlo.ii.dat
+
+where ii = 00 labels the central fit and ii = 01 to ii = 30 label the
+eigenvector sets.  The grids are provided for
+
+  10^-6 <= x <= 1 and 1 GeV^2 <= Q^2 <= 10^9 GeV^2
+
+An extrapolation is returned with a warning message (by default, but
+see below) if the PDFs are requested for smaller x or larger Q^2.  This
+new extrapolation (thanks to J.Andersen) fixes a problem with the
+previous MRST Fortran code where meaningless results were returned
+(but with a warning message) if the PDFs were requested outside of the
+grids.  The program terminates (by default, but see below) if an attempt
+is made to access the PDFs with x <= 0 or x > 1 or Q^2 < 1 GeV^2.  The
+antistrange distribution "sbar" is now distinct from the strange
+distribution "str".  This is to allow for a strange asymmetry in
+future PDF releases, although str = sbar is assumed for the MRST 2006
+NNLO sets provided here.  As usual, it is always the momentum density
+that is returned, that is, x times the number density.  Note that the
+PDFs are discontinuous at NNLO at the heavy quark thresholds mc^2 and mb^2.
+To account for this, Q^2 grid points are chosen at mc^2-eps, mc^2,
+mb^2-eps, mb^2 (with eps = 10^-6 GeV^2).  If the PDFs are requested for
+mc^2-eps < Q^2 < mc^2 the value at mc^2-eps is used, and similarly if
+mb^2-eps < Q^2 < mb^2 the value at mb^2-eps is used.
+
+For the MRST 2006 NNLO fit, mc = 1.43 GeV, mb = 4.3 GeV and
+Lambda_{QCD}^{nf=4} = 0.2808 GeV => alpha_S(M_Z) = 0.1191.
+
+
+Example programs
+----------------
+
+To compile the Fortran and C++ example programs:
+
+  g77 example.f pdf.f -o example
+  g++ example.C pdf.C -o example_cpp
+
+Or alternatively just type "make".  Then run the programs with:
+
+  ./example
+  ./example_cpp
+
+The Fortran and C++ example programs should give identical output.
+Verify this with:
+
+  diff xg_vs_x.dat xg_vs_x_cpp.dat
+  diff xg_vs_q2.dat xg_vs_q2_cpp.dat
+
+
+Fortran code
+------------
+
+There are three user interfaces for the Fortran code.
+
+  call GetAllPDFs(prefix,i,x,q,upv,dnv,usea,dsea,str,sbar,chm,bot,glu)
+  call GetAllPDFsAlt(prefix,i,x,q,xpdf)
+  xf = GetOnePDF(prefix,i,x,q,f)
+
+See source code of example.f for usage.  The prefix specifies the
+location of the grid files and i labels the eigenvector sets where
+i=0 is the central fit.  xpdf(-6:6) is an array containing all PDFs
+with the index given by the PDG convention.  The numbering scheme
+for the flavour "f" is the same as that used internally in previous
+MRST routines, i.e.
+1=upv 2=dnv 3=glu 4=usea 5=chm 6=str 7=bot 8=dsea 9=sbar.
+
+Setting warn=.false. at the start of the GetOnePDF subroutine will
+suppress the warning issued when extrapolating to small x or large Q^2.
+Setting fatal=.false. at the start of the GetOnePDF subroutine will
+mean that zero is returned if the PDFs are called with x <= 0 or
+x > 1 or Q^2 <= 1 GeV^2 instead of terminating the program (the default
+behaviour).
+
+
+C++ code
+--------
+
+To use the C++ code, first declare an object of class c_pdf, passing
+the desired grid file as an argument:
+
+  c_pdf pdf("filename.dat");
+
+To interpolate all flavours, do
+
+  pdf.update(x,q);
+
+and then access the individual flavours with 
+
+  upv = pdf.cont.upv;
+  dnv = pdf.cont.dnv;
+  etc.
+
+Or to interpolate just a single flavour, do
+
+  xf = pdf.parton(f,x,q);
+
+where the numbering scheme for the flavour "f" is
+1=upv 2=dnv 3=glu 4=usea 5=chm 6=str 7=bot 8=dsea 9=sbar.
+Alternatively the enumerated constants defined in pdf.h can be used.
+See source code of example.C for usage.
+
+The "warn" and "fatal" options described above for the Fortran version
+can be set using the constructor
+
+  c_pdf pdf("filename.dat",warn,fatal);
+
+The default settings are warn=true and fatal=true.  Change either of these
+at your peril.
+
+
+Comments to watt(at)hep.ucl.ac.uk
+Last updated: 4th June 2007

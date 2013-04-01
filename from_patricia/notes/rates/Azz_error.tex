@@ -1,0 +1,300 @@
+%%%%% Set text body and margins 
+%%
+\documentclass[11pt]{article}
+\usepackage[dvips]{graphicx,color}
+\usepackage{longtable}
+%\setlength{\textwidth}{16.5cm}
+%\setlength{\textheight}{22.2cm}
+%\setlength{\hoffset}{-.25in}
+%\setlength{\voffset}{-.9in}
+
+\begin{document}
+
+%%%%% The following lines create the E01-012 Technical Note Title Page
+%%
+\thispagestyle{empty}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%%%%% Substitute your Note number, month and year in the following:
+%%
+\begin{flushright}
+{\small
+$b_1$ technical note 2013-01\\
+March 2013\\}
+\end{flushright}
+
+\vspace{.8cm}
+
+%%%%% Title and Author Information:
+%%
+\begin{center}
+{\bf\large   
+Rates and Error calculations for measurement of $A_{zz}$}
+\vspace{1cm}
+
+
+O. Rondon (INPP-UVA) and P. Solvignon (Jefferson Lab)\\
+(to be continued by Ellie)
+\end{center}
+
+%\vfill
+\vspace{2.0cm}
+
+\begin{center}
+{\bf\large   
+Abstract }
+\end{center}
+\newpage
+%\begin{quote}
+%Summary of target mass corrections methods.
+%\end{quote}
+
+%\vfill
+
+%%%%%%%%%%%%%%%
+%% Choose"Presented at," "Contributed to" for conference papers
+%% or "Submitted to" for journal papers
+%%%%%%%%%%%%%%%
+%\begin{center} 
+%{\it (Invited talk presented at)} 
+%   OR 
+%{\it (Contributed to)} 
+%(Text varies)
+%{\it Conference Name} (spell out completely) \\
+%{\it City, State, Country} (Location of Conference)\\
+%{\it Month Day--Month Day, Year} 
+%   (Indicate duration of conference.)\\
+
+%OR\\
+
+%{\it Submitted to A Journal} (Spell out name of journal.)
+%\end{center}
+%%
+%%%%% End of title page
+
+
+%%%%% Following are the commands to create the rest of the Note.
+%%
+%%%%% The next two lines change the line spacing to doublespace,
+%%      if you should need to do that.
+%%
+%\renewcommand{\baselinestretch}{2}
+%\normalsize
+
+%%%%% Your paper starts here:
+%%
+
+%% To get page numbers in the rest of the paper:
+%
+\pagestyle{plain}
+
+The tensor asymmetry $A_{zz}$ can be extracted from:
+\begin{eqnarray}
+\sigma = \sigma_u \bigg[1 - P_z P_B A_{\parallel} + \frac{1}{2} P_{zz} A_{zz}\bigg]
+\label{xs} 
+\end{eqnarray}
+For unpolarized beam, 
+\begin{eqnarray}
+\sigma = \sigma_u \bigg[1 + \frac{1}{2} P_{zz} A_{zz}\bigg]
+\label{xsbis} 
+\end{eqnarray}
+
+\section{Rates}
+
+\subsection{General expressions}
+
+The total rates for ND3 are:
+\begin{eqnarray}
+R_T &=& {\cal A} \bigg[ L_{He} \sigma_{He} +  L_N \sigma_N + L_D \sigma_D \bigg] \\
+        &=& {\cal A} \bigg[ L_{He} \sigma^u_{He} +  L_{N} \sigma^u_{N} + L_{D} \sigma^u_{D}\bigg(1+\frac{1}{2} N_D P_{zz} A_{zz}\bigg) \bigg]
+\label{rt} 
+\end{eqnarray}
+with ${\cal A}$ is defined as the acceptance ($\Delta \Omega \Delta E'$). The quantity $N_D$ is the D-state contribution to the deuterium ground state wave function (only the D-state can contribute to b1). The luminosity $L_A$ is defined as follows:
+\begin{eqnarray}
+L_A = N_e * N_A
+\label{lumi}
+\end{eqnarray}
+with $N_A = {\cal N} \frac{\rho_A}{M_A} z_A$ and $N_e = I_{beam} / e$. 
+\newline
+Also ${\cal N}$ is the Avogadro's number. The quantities $\rho_A$, $M_A$ and $z_A$ are the density, the atomic or molecular mass and the thickness of the  nuclear species $A$. Therefore we have:
+\begin{eqnarray}
+N_{\rm He} &=& {\cal N} \frac{\rho_{\rm He}}{M_{\rm He}}  z~(1-p_f)  = {\cal N}~{\cal D_{\rm He}} ~z~(1-p_f) \\
+N_{\rm ND_3} &=& {\cal N} \frac{\rho_{\rm ND_3}}{M_{\rm ND_3}} z~p_f = {\cal N}~{\cal D_{\rm ND_3}} ~z~p_f \\
+N_{\rm N} &=& {\cal N} \frac{\rho_{\rm ND_3}}{M_{\rm ND_3}} z~p_f = {\cal N}~{\cal D_{\rm ND_3}} ~z~p_f \\
+N_{\rm D} &=& 3~{\cal N} \frac{\rho_{\rm ND_3}}{M_{\rm ND_3}} z~p_f = 3~{\cal N}~{\cal D_{\rm ND_3}} ~z~p_f \\
+\label{la}
+\end{eqnarray}
+where ${\cal D_A} = \rho_{\rm A}/M_{\rm A}$. The factor 3 in the expression of $l_{\rm D} $ take into account that there are three deuterium atoms in the ammonia molecule.
+The total rate can be finally expressed as follows:
+\begin{eqnarray}
+R_T = {\cal A}~N_e~{\cal N}~z~\bigg[ {\cal D}_{He} (1-p_f) \sigma^u_{He} +  {\cal D}_{ND3}~p_f \bigg(\sigma^u_N + 3 \sigma^u_D (1+\frac{1}{2} N_D P_{zz} A_{zz})\bigg) \bigg]
+\label{rtf} 
+\end{eqnarray}
+with $R_T  = R_U + R_D$. 
+The rate coming from other nuclear species than deuterium is written as: 
+\begin{eqnarray}
+R_U =  {\cal A}~N_e~{\cal N}~z~( {\cal D}_{He} (1-p_f) \sigma^u_{He} +  {\cal D}_{ND3}~p_f~\sigma^u_N).
+\label{ruf} 
+\end{eqnarray}
+and the deuterium rate can then be extracted:
+\begin{eqnarray}
+R_D = {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3 \sigma^u_D \bigg(1+\frac{1}{2} N_D P_{zz} A_{zz}\bigg)
+\label{rdf} 
+\end{eqnarray}
+
+\subsection{Expression of the measured asymmetry}
+
+From Refs.~\cite{meyer} and \cite{uvatn}, the enhancement of the  tensor polarization with solid polarized targets can be done via the ''hole burning`` method by pushing down either one of the $|m_z|$ = 1 states moving its population to $m_z$ = 0. But this necessarily enhances the absolute vector polarization, $|m_+ - m_-|$ because one of the $m_1$'s stays fixed.
+So, as it is said in Ref.~\cite{meyer}, the improvement in $P_{zz}$ comes only from better $P_z$. The asymmetry would come from counting events with $m_+$, $m_-$ and $m_0$ for opposite $P_z$'s\footnote{$m_+$, $m_-$ and $m_0$ represent the normalized populations.}:
+\begin{eqnarray}
+P_z^+ &=& m_+ - m_- ~~~{\rm with}~  m_+ > m_- \\
+P_z^- &=& m_+ - m_- ~~~{\rm with}~ m_+ < m_-
+\label{p1} 
+\end{eqnarray}
+and for the  $P_{zz}$'s:
+\begin{eqnarray}
+P_{zz}^+ &=& P_{zz}(P_z^+) = m_+ + m_- - 2m_0^+ = 2m_+ - P_z^+ - 2m_0^+ \\
+P_{zz}^- &=& P_{zz}(P_z^-) =  m_+ + m_- - 2m_0^- =   2m_- + P_z^- - 2m_0^-
+\label{p2} 
+\end{eqnarray}
+Note that $m_0$ populations won't necessarily be the same.
+\begin{eqnarray}
+R^+_T - R^-_T &=& (R_U^+ + R_D^+)- (R_U^- + R_D^-) \\ 
+                            &=& {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3 \sigma^u_D \frac{1}{2} N_D A_{zz} (P_{zz}^+ - (- P_{zz}^-))
+\label{p3} 
+\end{eqnarray}
+with 
+\begin{eqnarray}
+P_{zz}^+ - P_{zz}^- &=& (2m_+ - P_z^+ - 2m_0^+) + (2m_- + P_z^- - 2m_0^-) \\
+                                    &=& 2 (m_+ + m_-) - 2(m_0^+ + m_0^-) + (P_z^- - P_z^+)
+\label{p3} 
+\end{eqnarray}
+In order to access $A_{zz}$, we will have to take data with $P_{zz} < 0$ and  $P_{zz} > 0$.
+% Does P_zz change sign ?? %
+Simplifications could be done assuming we are using the same target cup and the same integrated luminosity is seen for each polarization stage.
+Also if $P_z^- \sim P_z^+$ and $m_0^+ \sim m_0^-$, we get:
+\begin{eqnarray}
+P_{zz}^+ - P_{zz}^- = 2 (m_+ + m_- - 2 m_0) = 2 P_{zz}
+\label{p4} 
+\end{eqnarray}
+and
+\begin{eqnarray}
+R^+_D - R^-_D = {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3 \sigma^u_D \frac{1}{2} N_D A_{zz} P_{zz}
+\label{p3} 
+\end{eqnarray}
+\begin{eqnarray}
+R^+_D - R^-_D &=& {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3~\sigma^u_D \frac{1}{2} N_D A_{zz} P_{zz} \\
+R^+_D + R^-_D &=& 2 {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~3~\sigma^u_D
+\label{p4} 
+\end{eqnarray}
+\begin{eqnarray}
+A_{meas} &=& f \frac{R^+_D - R^-_D}{R^+_D + R^-_D} \\
+                  &=& \frac{1}{4}~f~N_D~P_{zz}~A_{zz} 
+\label{rdf} 
+\end{eqnarray}
+
+
+
+
+\begin{table}[htdp]
+\caption{Values used in the rate estimates}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+$\rho_{\rm ND_3}$     &    1.007 g.cm$^{-3}$   \\
+$M_{\rm ND_3}$         &    20 g.mol$^{-1}$       \\
+$p_f({\rm ND_3})$      &    0.80                            \\
+$f({\rm ND_3})$           &    6/20                           \\
+$z$                                &    3 cm                            \\
+$P_{zz}$                      &     0.25                            \\
+$N_D$                          &    0.05                             \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+\section{statistical error}
+ \begin{eqnarray}
+A_{zz}  = \frac{4}{f~N_D~P_{zz}} A_{meas}
+\label{stat1} 
+\end{eqnarray}
+ \begin{eqnarray}
+\delta A_{zz} = \frac{4}{f~N_D~P_{zz}} \delta A_{meas}
+\label{stat2} 
+\end{eqnarray}
+
+With $N_{+(-)} = R^{+(-)}_D * T_{+(-)}$, $T$ being the time in second, 
+\begin{eqnarray}
+\delta A_{zz} = \frac{4}{f~N_D~P_{zz}} \frac{2}{(N_++N_-)^2} \sqrt{N_+~N_-~(N_++N_-)}
+\label{stat3} 
+\end{eqnarray}
+Because $A_{zz}$ is very small, we can assume $N_+ \simeq N_- \simeq N/2$ and therefore the statistical error on $A_{zz}$ becomes:
+\begin{eqnarray}
+\delta A_{zz} = \frac{4}{f~N_D~P_{zz}} \frac{1}{\sqrt{N}}
+\label{stat4} 
+\end{eqnarray}
+Time needed to make the measurement:
+\begin{eqnarray}
+T &=& \Bigg(\frac{4}{f~N_D~P_{zz}~\delta A_{zz}}\Bigg)^2 \frac{1}{R_D} \\
+\label{stat5} 
+\end{eqnarray}
+
+I believe that $N_D$ shouldn't appear (Patricia). 
+
+
+\section{kinematics choice}
+
+\begin{table}[htdp]
+\caption{default}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+   $x$  &   $Q^2$ &    $W$  &  $E_P$  &  $\theta_0$  &  $\theta_q$ \\
+\hline   
+  0.15  &    2.011  &  3.504 &  3.856    &   12.50          &     6.580       \\
+  0.25  &    2.020  &  2.634 &  6.695    &     9.50          &   14.105       \\
+  0.35  &    3.381  &  2.676 &  5.852    &   13.16          &   14.107       \\
+  0.45  &    2.754  &  2.061 &  7.738    &   10.32          &   22.261       \\
+  0.55  &    3.811  &  2.000 &  7.308    &   12.50          &   22.253       \\
+\hline  
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+\section{systematics}
+
+%%%%% Acknowledgments
+
+%\section*{Acknowledgments}
+
+%
+\newpage
+%%%%% Bibliography
+%%
+\begin{thebibliography}{6}
+
+\bibitem{meyer} T.W.~Meyer and E.P.~Schilling, Tensor polarized deuteron targets for intermediate energy physics experiments, BONN-HE-85-06 (1985)
+
+\bibitem{uvatn} S.~Bueltmann, D.~Crabb, Y.~Prok. UVa Target Studies, UVa Polarized Target Lab technical note, 1999.
+
+%\bibitem{BITAR} K. Bitar, P. W. Johnson and W.-K. Tung, Phys. Lett. {\bf B83}, 114 (1979)
+
+%\bibitem{WALLY} W. Melnitchouk and F. M. Steffens (work in progress)
+
+%\bibitem{ELLIS} R. K. Ellis, W. Furmanski and R. Petronzio, Nucl.Phys. {\bf B212}, 29 (1983)
+
+%\bibitem{QIU} A. Accardi and J.-W. Qiu (work in progress)
+
+\end{thebibliography} 
+%%
+%%%%% End Bibliography
+
+\end{document}
+%%
+%%%%% End tech_note.tex
+%%%%% EOF
+
+
+
