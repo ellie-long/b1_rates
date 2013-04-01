@@ -1,0 +1,162 @@
+macro f2plot_x
+
+* Macro to plot F2 versus x in bins of Q2. The Q2 bins are specified in the vector
+* q2p(12). Data points are also plotted, and are adjusted according to the 
+* parameterisation of F2 read into vector f2p. Code provides an example of using
+* routine f2qcdfine.f 
+* Initialisation
+for/file 66 emcc_rt.ps
+meta 66 -111
+
+vec/del *
+
+*ve/read flag,zx,zq2,zf2,a,ze ~zeusqcd/develop/reduce.dat
+*this is for data files- but plotting points is disabled in this version
+ve/cr f2v(161,161) r
+ve/cr f2p(161,161) r
+ve/cr f2up(161,161) r
+ve/cr f2dn(161,161) r
+ve/read f2p,f2up,f2dn emcc_rt_tot.dat
+ve/cr q2p(12) r 10 100 530 999 1700 3000 5300 9500 17000
+*ve/cr q2p(12) r 10 2.0 5. 10. 20. 50. 100. 200. 500.
+ve/cr q2pass(1) 
+ve/cr q2val(1) r
+ve/cr q2low(1) r
+ve/cr q2high(1) r
+ve/cr result(1) r
+ve/cr f2tmp(1) r
+ve/cr xe(1) r 0.
+ve/cr f2cen(161,161) r
+ve/cr f2upc(161,161) r
+ve/cr f2dnc(161,161) r
+set xwin 0.001
+set ywin 0.001
+set xsiz 20
+set ysiz 25
+
+zon 3 3
+
+do i=1,9
+  if [i].eq.1 .or. [i].eq.4 .or. [i].eq.7 .or. [i].eq.10 then
+    set xval 0
+  else
+    set xval 1000
+  endif
+  if [i].ge.10 then
+    set yval 0
+  else
+    set yval 1000
+  endif
+  if [i].eq.1 then 
+    exec key
+  else
+    q2=q2p([i])
+    exec curves [q2]
+*    exec points [q2]
+    opt linx
+    null 0 1 0 1 'abs'
+    text 0.95 0.85 Q^2!=[q2]GeV^2! 0.3 ! r
+    if [i].eq.1 .or. [i].eq.4 .or. [i].eq.7 .or. [i].eq.10 then
+      atitle ' ' 'emcc'
+    endif
+    if [i].ge.10 then
+      atitle 'x'
+    endif
+    opt logx
+   endif
+enddo
+
+
+
+close 66
+return
+
+macro curves
+ 
+ve/input q2val(1) [1]
+
+* Plot curves
+opt logx
+*opt linx
+opt liny
+*opt logy
+*null 0. 1. 0. 2.
+null 1e-2 0.99 0.0 1.0
+*null 1.e-2 0.99 -0.5 0.5 
+set lwid 3
+ve/copy q2val(1) q2pass(1)
+ve/copy f2p f2v
+fun/plot f2qcdfine.f 1e-2 0.99 's'
+ve/copy q2val(1) q2pass(1)
+ve/copy f2up f2v
+fun/plot f2qcdfine.f 1e-2 0.99 's'
+ve/copy q2val(1) q2pass(1)
+ve/copy f2dn f2v
+fun/plot f2qcdfine.f 1e-2 0.99 's'
+
+*close 66
+return
+   
+macro points
+nz=$vdim(zx,1) 
+*nz=$sigma(vsum(zx/zx))
+*nzi=$sigma(vsum(zix/zix))
+*nn=$sigma(vsum(nx/nx))
+*nzs=$sigma(vsum(zsx/zsx))
+*n5zs=$sigma(vsum(z5sx/z5sx))
+*nzb=$sigma(vsum(zby/zby))
+
+ve/input q2val(1) [1]
+sigma q2low=q2val*0.9
+sigma q2high=q2val*1.1
+
+* Plots measured points
+
+
+
+do i=1,[nz]
+  if flag([i]).eq.1 then
+   mark=20
+
+   col=4
+  elseif flag([i]).eq.5 then
+   mark=21
+   col=3
+   else
+   col=8
+  endif
+  if zq2([i]).gt.q2low(1) .and. zq2([i]).lt.q2high(1) then
+
+    ve/copy q2val(1) q2pass(1)
+    call f2qcdfine.f(zx([i]))
+    f2val=result(1)
+    ve/copy zq2([i]) q2pass(1)
+    call f2qcdfine.f(zx([i]))
+    f2tr=result(1)
+    f2=[f2val]/[f2tr]*zf2([i])
+    ve/input f2tmp(1) [f2]
+    set pmci [col]
+    if flag([i]).eq.1 .or. flag([i]).eq.5 then
+
+     hplot/err zx([i]) f2tmp(1) xe(1) ze([i]) 1 [mark] 0.15
+     endif
+  endif
+enddo
+
+return
+
+macro key
+
+opt linx
+null 0 1 0 1 'ab'
+set dmod 1
+line 0.16 0.3 0.25 0.3
+text 0.30 0.3 'emcc qcdnum' 0.3
+*close 66
+return
+
+
+
+
+
+

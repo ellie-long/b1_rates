@@ -1,0 +1,22 @@
+#!/bin/csh -fx
+#
+date
+#/cern/pro/bin/ypatchy - qcdnum16 tty qcdnum16.list .go << //
+/cern/pro/bin/nypatchy - qcdnum16 tty qcdnum16.list .go << //
+
++OPTION,MAPASM,UREF.
+ 
++USE,DOUBLE.
+ 
++USE,QCDCOM,QCDNUM,QHEAVY,QCUTIL,T=EXE.
+
++REPL,QCDCOM,QCDCOM,6-7.
+      PARAMETER ( MXX = 152 )
+      PARAMETER ( MQ2 =  62 )
+
++EXE,P=CRA*
+
++PAM, 12, T=ATTACH, T=CARDS.       ../car/qcdnum16.car
+ 
++QUIT.
+//

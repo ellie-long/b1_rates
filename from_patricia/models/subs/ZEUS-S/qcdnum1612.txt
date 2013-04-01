@@ -1,0 +1,133 @@
+
+ 12-08-98 QCDNUM16.12
+ --------------------
+
+ Most likely you start off with the following three files:
+
+ - README .......... this file.
+ - qcdnum1612.uu ... uu encoded (can be sent via email) gzipped tarfile
+                     containing all relevant QCDNUM1612 files.
+ - mbunpak1612 ..... simple unix script to uu decode, gunzip and
+                     extract all files from the tarfile.
+
+ Copy these to an empty directory, goto this directory and type:
+
+                     mbunpak1612
+
+ After this you should have the following files:
+
+ qcdnum1612.car .... Qcdnum source code.
+ qcdnum1612.ps ..... Qcdnum writeup.
+
+ workshop.car ...... Simple toymodel evolutions.
+ mrsa.car .......... Evolution and F2p a la MRSA.
+ fpdflib.car ....... Structure functions from PDFLIB input.
+
+ xxxx.log .......... logfiles of the example jobs above.
+
+ makefile .......... makefile to create a library.
+ runpatchy ......... simple script used by makefile.
+
+ The makefile serves as an example: please make the necessary
+ modifications to get it going on your machine.
+ It is of course important that I get informed (h24@nikhef.nl) about 
+ compiler messages (even warnings) as they may point to a bug.
+
+
+ 12-08-98 QCDNUM16.12
+ --------------------
+ Bug fixes: 1. LREADB, LREADC, LPLUS were not declared logical.
+            2. Few other very minor fixups.
+            3. Two (!) bug fixes in mrsa.car affecting the bottom distn.
+
+ 17-01-98 QCDNUM16.11
+ --------------------
+
+ 1. Bug fix in the NLO calculation of xF3. At low x~10^-5 xF3 from 
+    QCDNUM16.10 was wrong by about 10-15%, much less so at high x.
+    The QCDNUM16.11 manual is identical to that of version 16.10.
+
+ 03-12-97 QCDNUM16.10
+ --------------------
+
+ 1. Improved logic to detect if a parton distribution has already
+    been evolved (important for speeding up QCD fits). In QCDNUM16.00
+    this logic was flawed and, for instance, caused the b+ non-singlet
+    distribution to be *not* evolved in the example job mrsa.car.
+
+ 2. Protection against evolving down to or below the QCD scale parameter
+    Lambda**2. No such protection was built into QCDNUM16.00 causing
+    the program to be caught into very time consuming (machine
+    dependent) recovery procedures if alphas was calculated at or
+    below Lambda**2.
+
+ 3. New: alfas = QALFAS ( Q2, Lambda_out, nf_out, ierr ) which also returns
+    the current value of the QCD scale parameter Lambda(nf).
+
+ 4. You can set the top mass for the alpha_s evolution by a call to
+    QNRSET ( 'MTALF', value ). In QCDNUM16.00 this mass was fixed
+    internally to 188 GeV.
+
+ 5. For details see the updated manual qcdnum1610.ps.
+
+
+ 25-08-97 Differences between QCDNUM16.00 and QCDNUM15
+ -----------------------------------------------------
+
+ 1. QCDNUM16.00 is backwards compatible with QCDNUM15. User code should 
+    therefore run without any modification. You have to recreate the
+    weight files though - see (2) below.
+
+ 2. More compact storage of weight tables.
+    The weight tables in QCDNUM16.00 are more efficiently stored. In
+    particular the heavy quark weight tables are reduced by a factor of 
+    nx/2 ~ 50 when 100 x-gridpoints are used. This implies:
+
+    - Smaller executable (factor 5 typically).
+    - Heavy quark weight tables take only a few minutes to calculate.
+    - Weight file size is reduced by more than a factor of 10.
+    - F2b and FLb are now also available.
+    - QCDNUM15 weight files cannot be read by QCDNUM16.00.
+
+    w15to16.f is a small job to convert QCDNUM15 to QCDNUM16.00 files.
+
+ 3. In QCDNUM16.00 the charm/bottom mass can be set differently for the
+    heavy quark structure function calculations and for the evolution of
+    alpha_s:
+
+   +-------+---+-------+--------------+------------------------------------+
+   | var   |typ| deflt |     value    | description                        |
+   +-------+---+-------+--------------+------------------------------------+
+   | MCSTF | R |  1.5  |  0.15000E+01 | C mass for F2c, FLc (GeV)          |
+   | MBSTF | R |  5.0  |  0.50000E+01 | B mass for F2b, FLb (GeV)          |
+   | MCALF | R |  1.5  |  0.15000E+01 | C mass for alpha_s evolution (GeV) |
+   | MBALF | R |  5.0  |  0.50000E+01 | B mass for alpha_s evolution (GeV) |
+   +-------+---+-------+--------------+------------------------------------+
+
+    You can still use the QCDNUM15 variables 'CMASS' and 'BMASS' which
+    will set the relevant mass equal for both the heavy quark structure
+    functions and alpha_s (as was done in QCDNUM15). Resetting the heavy
+    quark masses requires a re-calculation of the corresponding weight 
+    table(s).
+
+ 4. In QCDNUM16.00 the renormalisation scale and the factorisation scale
+    can be set. See the relevant sections in the write-up.
+
+ 5. The QCDNUM16.00 heavy quark structure functions are not calculated on
+    the evolution grid but on a equidistant logarithmic x-grid (that is why
+    the weight tables could be much reduced in size). Hence the results
+    for the heavy quarks (at high x) are slightly different from those 
+    obtained by QCDNUM15. The logarithmic heavy quark grid is maintained
+    automatically by QCDNUM and is, in fact, invisible for the user.
+
+ 6. List of small differences:
+    - Output variable IFL in QPDFIJ, QPDFXQ, QSTFIJ, QSTFXQ has a
+      different meaning. See writeup.
+    - Functions LFROMA and AFROML are not supported anymore.
+    - In QCDNUM16.00 the heavy quark weight tables are calculated for all
+      Q2 gridpoints. In QCDNUM15 you could pass a list of Q2 gridpoints as
+      an argument to QNWILW. This argument is still there but has no 
+      meaning in QCDNUM16.00.
+
+
+

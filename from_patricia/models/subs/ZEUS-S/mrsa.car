@@ -1,0 +1,577 @@
+
+
++PATCH,QUCOMM.
+C
++DECK,USRCOM.
+C
+C------------------------USER COMMON BLOCKS-----------------------
+C
++PATCH,QUPROG.
+C
++DECK,QUPROG.
+ 
+C     ==============
+      PROGRAM QUPROG
+C     ==============
+
+C--   29-01-98 Two bug fixes:
+C--   (1) Bottom weight PWT(6) = 4/9 ---> 1/9 for proton and deusteron.
+C--   (2) CALL QNPSET('BPLUS',IX,IQb,CPLUS) must be BPLUS.
+C--                                  ^^^^^
+C--   06-06-97 Bug fix:
+C--       The deuteron was in fact the neutron.....
+
+C--   Parton evolution a la MRSA.
+C--   This illustrates the rather complicated gymnastics transforming
+C--   quark distns into singlet/non-singlet and vice versa with the
+C--   additional complication that there are flavour thresholds.
+C--
+C--   Given in parametric form (at input scale 4 GeV2) are:
+C--   gluon
+C--   uv     = u-ubar
+C--   dv     = d-dbar
+C--   dminu  = dbar-ubar
+C--   sea    = 2*(ubar+dbar+sbar+cbar)
+C--
+C--   Further, according to MRSA:
+C--   2*ubar = 0.4*(1-delta)*sea-dminu
+C--   2*dbar = 0.4*(1-delta)*sea+dminu
+C--   2*sbar = 0.2*(1-delta)*sea
+C--   2*cbar = delta*sea           with delta = 0.02
+C--
+C--   From this we get the singlet/non-singlet distributions:
+C--   singlet = uv+dv+sea
+C--   uplus   = uv+2*ubar-(1/4)*singlet
+C--   dplus   = dv+2*dbar-(1/4)*singlet
+C--   splus   = 2*sbar-(1/4)*singlet
+C--   cplus   = 2*cbar-(1/4)*singlet
+C--   bplus   = -(1/5)*singlet at the bottom threshold
+C--
+C--   These distributions are evolved in Q2 and transformed back into:
+C--   u,   ubar
+C--   d,   dbar
+C--   s  (=sbar)
+C--   c  (=cbar)
+C--   b  (=bbar)
+C--   proton
+C--   deuteron
+C--
+C--   These back-transformations are flavour dependent i.e they
+C--   are different for Q2 < Q2c, Q2c < Q2 < Q2b and Q2b < Q2.
+C--   
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DIMENSION XXTAB(99),QQTAB(99)
+      DIMENSION GARR(99,99),PARR(99,99),FARR(99,99)
+
+      DIMENSION PWGT(10)
+      DATA PWGT / 10*0.D0 /
+
+      WRITE(6,'(//'' QCDNUM example job mrsa.car''/
+     +            '' ---------------------------'')')
+ 
+C--   Initialisation
+      CALL QNINIT
+      CALL QNTIME('START')
+
+C--   LO/NLO
+      CALL QNISET('ORDER',2)
+
+C--   Number of gridpoints and starting point of evolution
+      N_X = 100
+      N_Q =  37
+      Q0  = 4.D0
+
+C--   set thresholds and quark masses as in MRSA
+      Q2C = 2.7
+      Q2B = 30.
+      CALL QNRSET('CMASS',SQRT(Q2C))
+      CALL QNRSET('BMASS',SQRT(Q2B))
+ 
+C--   Coarse x - Q2 grid
+
+      CALL GRXINP(1.D-5,1)
+      CALL GRXINP(2.D-5,1)
+      CALL GRXINP(5.D-5,1)
+      CALL GRXINP(1.D-4,1)
+      CALL GRXINP(2.D-4,1)
+      CALL GRXINP(5.D-4,1)
+      CALL GRXINP(1.D-3,1)
+      CALL GRXINP(2.D-3,1)
+      CALL GRXINP(5.D-3,1)
+      CALL GRXINP(1.D-2,1)
+      CALL GRXINP(2.D-2,1)
+      CALL GRXINP(5.D-2,1)
+      CALL GRXINP(1.D-1,1)
+      CALL GRXINP(2.D-1,1)
+      CALL GRXINP(5.D-1,1)
+      CALL GRXINP(6.D-1,1)
+      CALL GRXINP(7.D-1,1)
+      CALL GRXINP(8.D-1,1)
+      CALL GRXINP(9.D-1,1)
+
+      CALL GRQINP(2.D0,1)    
+      CALL GRQINP(5.D0,1)   
+      CALL GRQINP(1.D1,1)
+      CALL GRQINP(2.D1,1)
+      CALL GRQINP(5.D1,1)
+      CALL GRQINP(1.D2,1)
+      CALL GRQINP(2.D2,1)
+      CALL GRQINP(5.D2,1)
+      CALL GRQINP(1.D3,1)
+      CALL GRQINP(2.D3,1)
+      CALL GRQINP(5.D3,1)
+      CALL GRQINP(1.D4,1)
+
+C--   For printout  
+      CALL GRGIVE(NXTAB,XMI,XMA,NQTAB,QMI,QMA)
+      CALL GRXOUT(XXTAB)
+      CALL GRQOUT(QQTAB)
+
+C--   Define x q2 evolution grid (overwrite coarse grid)
+      CALL GRXDEF(N_X,XMI)
+      CALL GRQDEF(N_Q,QMI,QMA)
+
+C--   Starting Q2
+      CALL GRQINP(Q0,1)
+
+C--   Put charm, bottom threshold in the grid
+      CALL GRQINP(Q2C,1)
+      CALL GRQINP(Q2B,1)
+ 
+C--   Get final grid definitions
+      CALL GRGIVE(NXGRI,XMI,XMA,NQGRI,QMI,QMA)
+
+C--   Get gridindices of Q0, Q2C and Q2B
+      IQ0 = IQFROMQ(Q0)
+      IQC = IQFROMQ(Q2C)
+      IQB = IQFROMQ(Q2B)
+ 
+C--   Compute weights
+      CALL QNFILW(0,0)
+ 
+C--   Tell QCDNUM where the flavour thresholds are
+      CALL QTHRES(Q2C,Q2B)
+ 
+C--   Book quark nonsinglet distributions
+      CALL QNBOOK(2,'Uplus')
+      CALL QNBOOK(3,'Dplus')
+      CALL QNBOOK(4,'Splus')
+      CALL QNBOOK(5,'Cplus')
+      CALL QNBOOK(6,'Bplus')
+      CALL QNBOOK(7,'Upval')
+      CALL QNBOOK(8,'Dnval')
+
+C--   Book linear combinations for f = 3,4,5 flavours
+ 
+C--   Up = 1/2 * ( 1/f * singlet + uplus + uval )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(2) =  1./2.
+      PWGT(7) =  1./2.
+      CALL QNLINC(11,'Up',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(11,'Up',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(11,'Up',5,PWGT)
+C--   Ubar = 1/2 * ( 1/f * singlet + uplus - uval )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(2) =  1./2.
+      PWGT(7) = -1./2.
+      CALL QNLINC(12,'Ubar',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(12,'Ubar',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(12,'Ubar',5,PWGT)
+C--   Down  = 1/2 * ( 1/f * singlet + dplus + dval )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(3) =  1./2.
+      PWGT(8) =  1./2.
+      CALL QNLINC(13,'Dn',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(13,'Dn',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(13,'Dn',5,PWGT)
+C--   Dbar = 1/2 * ( 1/f * singlet + dplus - dval )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(3) =  1./2.
+      PWGT(8) = -1./2.
+      CALL QNLINC(14,'Dbar',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(14,'Dbar',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(14,'Dbar',5,PWGT)
+C--   Sbar = 1/2 * ( 1/f * singlet + splus )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(4) =  1./2.
+      CALL QNLINC(15,'Sbar',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(15,'Sbar',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(15,'Sbar',5,PWGT)
+C--   Cbar = 1/2 * ( 1/f * singlet + cplus )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(5) =  1./2.
+      CALL QNLINC(16,'Cbar',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(16,'Cbar',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(16,'Cbar',5,PWGT)
+C--   Bbar = 1/2 * ( 1/f * singlet + bplus )
+      CALL VZERO(PWGT,20)
+      PWGT(1) =  1./6.
+      PWGT(6) =  1./2.
+      CALL QNLINC(17,'Bbar',3,PWGT)
+      PWGT(1) =  1./8.
+      CALL QNLINC(17,'Bbar',4,PWGT)
+      PWGT(1) =  1./10.
+      CALL QNLINC(17,'Bbar',5,PWGT)
+C--   Proton
+      CALL VZERO(PWGT,20)
+      PWGT(1) = 4./18.
+      PWGT(2) = 4./9.
+      PWGT(3) = 1./9.
+      PWGT(4) = 1./9.
+      CALL QNLINC(18,'Proton',3,PWGT)
+      PWGT(1) = 5./18.
+      PWGT(5) = 4./9.
+      CALL QNLINC(18,'Proton',4,PWGT)
+      PWGT(1) = 11./45.
+C--   Bug fix 29/01/98
+*     PWGT(6) = 4./9.
+      PWGT(6) = 1./9.
+      CALL QNLINC(18,'Proton',5,PWGT)
+C--   Deuteron
+      CALL VZERO(PWGT,20)
+      PWGT(1) = 4./18.
+      PWGT(2) = 5./18.
+      PWGT(3) = 5./18.
+      PWGT(4) = 1./9.
+      CALL QNLINC(19,'Deuter',3,PWGT)
+      PWGT(1) = 5./18.
+      PWGT(5) = 4./9.
+      CALL QNLINC(19,'Deuter',4,PWGT)
+      PWGT(1) = 11./45.
+C--   Bug fix 29/01/98
+*     PWGT(6) = 4./9.
+      PWGT(6) = 1./9.
+      CALL QNLINC(19,'Deuter',5,PWGT)
+ 
+C--   Input quark distributions at Q2 = 4 GeV2
+C--   We are above the charm threshold so that f = 4
+      DO IX = 1,NXGRI
+        X = XFROMIX(IX)
+        GLUON   = XGLU(X)
+        SINGL   = XQSI(X)
+        UPVAL   = XUPV(X)
+        DNVAL   = XDNV(X)
+        UPLUS   = UPVAL + 2.*XUBAR(X) - SINGL/4.
+        DPLUS   = DNVAL + 2.*XDBAR(X) - SINGL/4.
+        SPLUS   =         2.*XSBAR(X) - SINGL/4.
+        CPLUS   =         2.*XCBAR(X) - SINGL/4.
+        CALL QNPSET('GLUON',IX,IQ0,GLUON)
+        CALL QNPSET('SINGL',IX,IQ0,SINGL)
+        CALL QNPSET('UPLUS',IX,IQ0,UPLUS)
+        CALL QNPSET('DPLUS',IX,IQ0,DPLUS)
+        CALL QNPSET('SPLUS',IX,IQ0,SPLUS)
+        CALL QNPSET('CPLUS',IX,IQ0,CPLUS)
+        CALL QNPSET('UPVAL',IX,IQ0,UPVAL)
+        CALL QNPSET('DNVAL',IX,IQ0,DNVAL)
+      ENDDO
+
+C--   Singlet, gluon and valence we can evolve over whole grid
+      CALL EVOLSG(IQ0,1,NQGRI)
+      CALL EVOLNM('UPVAL',IQ0,1,NQGRI)
+      CALL EVOLNM('DNVAL',IQ0,1,NQGRI)
+
+C--   NS^plus evolution down to charm and up to bottom threshold
+      CALL EVPLUS('UPLUS',IQ0,IQc,IQb)
+      CALL EVPLUS('DPLUS',IQ0,IQc,IQb)
+      CALL EVPLUS('SPLUS',IQ0,IQc,IQb)
+      CALL EVPLUS('CPLUS',IQ0,IQc,IQb)
+
+C--   At charm threshold add (1/4)*singlet to the NS^plus distributions
+C--      and subtract (1/3)*singlet to provide starting value for 
+C--      evolution from charm threshold down to lower Q^2.
+C--   At bottom threshold add (1/4)*singlet to the NS^plus distributions
+C--      and subtract (1/5)*singlet to provide starting value for 
+C--      evolution from bottom threshold up to higher Q^2.
+C--      Set also the starting value for b^plus(Q2_b) = -(1/5)*singlet
+C--   NB: you can also use the QCDNUM routine QADDSI to do all this.
+
+      DO IX = 1,NXGRI
+
+        UPLUS = QNPGET('UPLUS',Ix,IQc)
+        DPLUS = QNPGET('DPLUS',Ix,IQc)
+        SPLUS = QNPGET('SPLUS',Ix,IQc)
+        CPLUS = QNPGET('CPLUS',Ix,IQc)
+        SINGL = QNPGET('SINGL',Ix,IQc)
+        UPLUS = UPLUS+SINGL*(1./4-1./3.)
+        DPLUS = DPLUS+SINGL*(1./4-1./3.)
+        SPLUS = SPLUS+SINGL*(1./4-1./3.)
+        CPLUS = CPLUS+SINGL*(1./4-1./3.)
+        CALL QNPSET('UPLUS',IX,IQc,UPLUS)
+        CALL QNPSET('DPLUS',IX,IQc,DPLUS)
+        CALL QNPSET('SPLUS',IX,IQc,SPLUS)
+        CALL QNPSET('CPLUS',IX,IQc,CPLUS)
+
+        UPLUS = QNPGET('UPLUS',Ix,IQb)
+        DPLUS = QNPGET('DPLUS',Ix,IQb)
+        SPLUS = QNPGET('SPLUS',Ix,IQb)
+        CPLUS = QNPGET('CPLUS',Ix,IQb)
+        SINGL = QNPGET('SINGL',Ix,IQb)
+        UPLUS = UPLUS+SINGL*(1./4-1./5.)
+        DPLUS = DPLUS+SINGL*(1./4-1./5.)
+        SPLUS = SPLUS+SINGL*(1./4-1./5.)
+        CPLUS = CPLUS+SINGL*(1./4-1./5.)
+        BPLUS =       SINGL*(    -1./5.)
+        CALL QNPSET('UPLUS',IX,IQb,UPLUS)
+        CALL QNPSET('DPLUS',IX,IQb,DPLUS)
+        CALL QNPSET('SPLUS',IX,IQb,SPLUS)
+        CALL QNPSET('CPLUS',IX,IQb,CPLUS)
+C--     Bug fix 29/01/98
+*       CALL QNPSET('BPLUS',IX,IQb,CPLUS)
+        CALL QNPSET('BPLUS',IX,IQb,BPLUS)
+
+      ENDDO
+
+C--   Evolve downward from charm threshold
+      IF(1.LT.IQC) THEN
+        CALL EVPLUS('UPLUS',IQc,1,IQc)    
+        CALL EVPLUS('DPLUS',IQc,1,IQc)      
+        CALL EVPLUS('SPLUS',IQc,1,IQc)    
+      ENDIF
+
+C--   Evolve upward from bottom threshold
+      IF(IQB.LT.NQGRI) THEN
+        CALL EVPLUS('UPLUS',IQb,IQb,NQGRI)
+        CALL EVPLUS('DPLUS',IQb,IQb,NQGRI)
+        CALL EVPLUS('SPLUS',IQb,IQb,NQGRI)
+        CALL EVPLUS('CPLUS',IQb,IQb,NQGRI)
+        CALL EVPLUS('BPLUS',IQb,IQb,NQGRI)
+      ENDIF
+
+C--   Output
+C--   Store only a few distributions for printout
+      DO IQ = 1,NQTAB
+        Q = QQTAB(IQ)
+        DO IX = 1,NXTAB 
+          X = XXTAB(IX)
+          GLUON = QPDFXQ('GLUON',X,Q,IFLAG)
+          SINGL = QPDFXQ('SINGL',X,Q,IFLAG)
+          UP    = QPDFXQ('UP'   ,X,Q,IFLAG)
+          UBAR  = QPDFXQ('UBAR' ,X,Q,IFLAG)
+          DN    = QPDFXQ('DN'   ,X,Q,IFLAG)
+          DBAR  = QPDFXQ('DBAR' ,X,Q,IFLAG)
+          SBAR  = QPDFXQ('SBAR' ,X,Q,IFLAG)
+          CBAR  = QPDFXQ('CBAR' ,X,Q,IFLAG)
+          BBAR  = QPDFXQ('BBAR' ,X,Q,IFLAG)
+          UPVAL = QPDFXQ('UPVAL',X,Q,IFLAG)
+          DNVAL = QPDFXQ('DNVAL',X,Q,IFLAG)
+          PROTO = QPDFXQ('PROTO',X,Q,IFLAG)
+          DEUTE = QPDFXQ('DEUTE',X,Q,IFLAG)
+          F2P   = QSTFXQ('F2','PROTO',X,Q,IFLAG)
+          F2D   = QSTFXQ('F2','DEUTE',X,Q,IFLAG)
+          GARR(IX,IQ) = GLUON
+          PARR(IX,IQ) = PROTO
+          FARR(IX,IQ) = F2P
+        ENDDO
+      ENDDO
+
+C--   Output on the logfile
+      LUN = 6
+      WRITE(LUN,'(//''  nxg  nqg  nxt  nqt'')')
+      WRITE(LUN,'(4I5)') nxgri,nqgri,nxtab,nqtab
+      WRITE(LUN,'('' xxtab'')')
+      WRITE(LUN,'(6E12.5)') (xxtab(i),i=1,nxtab)
+      WRITE(LUN,'('' qqtab'')')
+      WRITE(LUN,'(6E12.5)') (qqtab(i),i=1,nqtab)
+      WRITE(LUN,'('' gluon'')')
+      WRITE(LUN,'(6E12.5)') ((garr(i,j),i=1,nxtab),j=1,nqtab)
+      WRITE(LUN,'('' qprot'')')
+      WRITE(LUN,'(6E12.5)') ((parr(i,j),i=1,nxtab),j=1,nqtab)
+      WRITE(LUN,'('' F2p'')')
+      WRITE(LUN,'(6E12.5)') ((farr(i,j),i=1,nxtab),j=1,nqtab)
+
+C--   Various standard printouts
+      CALL QPRINT(6,'ALL')
+
+      STOP
+      END
+
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XUPV(X)
+C     =================================
+ 
+*--   MRSA: xupv = xup - xupbar at 4 GeV^2
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      data a_u   /2.0052d0/
+      data eta_1 /0.538d0/
+      data eta_2 /3.96d0/
+      data eps_u /-0.39d0/
+      data gam_u /5.13d0/
+
+      xupv=a_u*(x**eta_1)*((1.-x)**eta_2)*
+     > (1.+eps_u*sqrt(x)+gam_u*x)
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XDNV(X)
+C     =================================
+ 
+*--   MRSA: xdnv = xdn - xdnbar at 4 GeV^2
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+ 
+      data a_d   /0.301867d0/
+      data eta_3 /0.330d0/
+      data eta_4 /4.71d0/
+      data eps_d /5.03d0/
+      data gam_d /5.56d0/
+
+      xdnv=a_d*(x**eta_3)*((1.-x)**eta_4)*
+     > (1.+eps_d*sqrt(x)+gam_d*x)
+
+      RETURN
+      END
+ 
+C     ================================
+      DOUBLE PRECISION FUNCTION XDU(X)
+C     ================================
+ 
+*--   MRSA dbar - upbar at 4 geV^2
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+ 
+      data ad   / 0.099d0 /
+      data delt / 0.4d0 /
+      data etad / 9.27d0 /
+      data gamd / 25.0d0  /
+ 
+      xdu = ad * (x ** delt) * ( (1.-x) ** etad) *
+     .      (1.d0 + gamd*x)
+ 
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XSEA(X)
+C     =================================
+ 
+*--   MRSA: 2 * ( upbar + dbar + sbar +cbar ) @ 4 GeV^2
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      data a_s   /0.411d0/
+      data dlambda /-0.3d0/
+      data eta_s /9.27d0/
+      data eps_s /-1.15d0/
+      data gam_s /15.6d0/
+
+      xsea=a_s*(x**dlambda)*((1.-x)**eta_s)*
+     > (1.+eps_s*sqrt(x)+gam_s*x)
+
+      RETURN
+      END
+
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XGLU(X)
+C     =================================
+
+*--   MRSA: xgluon at 4 GeV^2
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      data a_g   /0.77133d0/
+      data dlambda /-0.3d0/
+      data eta_g /5.3d0/
+      data eps_g /0.d0/
+      data gam_g /5.2d0/
+
+      xglu=a_g*(x**dlambda)*((1.d0-x)**eta_g)*
+     > (1.d0+eps_g*sqrt(x)+gam_g*x)
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XQSI(X)
+C     =================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      XQSI = XUPV(X) + XDNV(X) + XSEA(X)
+
+      RETURN
+      END
+ 
+C     ==================================
+      DOUBLE PRECISION FUNCTION XUBAR(X)
+C     ==================================
+ 
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+ 
+      data delta / 0.02 /
+ 
+      XUBAR = 0.4 * (1.D0 - DELTA) * XSEA(X) - XDU(X)
+      XUBAR = 0.5*XUBAR
+ 
+      RETURN
+      END
+ 
+C     ==================================
+      DOUBLE PRECISION FUNCTION XDBAR(X)
+C     ==================================
+ 
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+ 
+      data delta / 0.02 /
+ 
+      XDBAR = 0.4 * (1.D0 - DELTA) * XSEA(X) + XDU(X)
+      XDBAR = 0.5 * XDBAR
+ 
+      RETURN
+      END
+ 
+ 
+C     ==================================
+      DOUBLE PRECISION FUNCTION XSBAR(X)
+C     ==================================
+ 
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+ 
+      data delta / 0.02 /
+ 
+      XSBAR = 0.2 * (1.D0 - DELTA) * XSEA(X)
+      XSBAR = 0.5 * XSBAR
+ 
+      RETURN
+      END
+ 
+C     ==================================
+      DOUBLE PRECISION FUNCTION XCBAR(X)
+C     ==================================
+ 
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+ 
+      data delta / 0.02 /
+ 
+      XCBAR = DELTA * XSEA(X)
+      XCBAR = 0.5*XCBAR
+ 
+      RETURN
+      END
+
+ 

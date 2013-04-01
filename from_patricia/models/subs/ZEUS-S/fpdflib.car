@@ -1,0 +1,296 @@
+
+
++PATCH,QUCOMM.
+C
++DECK,USRCOM.
+C
+C------------------------USER COMMON BLOCKS-----------------------
+C
++PATCH,QUPROG.
+C
++DECK,QUPROG.
+ 
+C     ==============
+      PROGRAM QUPROG
+C     ==============
+
+C--   Take PDFLIB input, store the distributions in QCDNUM memory
+C--   and calculate F2p structure function. 
+C--   As an example also F2uds (light quarks) and F2c for one Q2.
+C--
+C--   1. The parton distn set must be defined in the MSbar scheme.
+C--   2. Set LO/NLO and the thresholds the same as for the set.
+C--   3. Set also alfa_s same as for the set (ignored here).
+C--   4. F2c should only be calculated for sets which were evolved
+C--      with f=3 flavours e.g. GRV94 (ignored here).
+C--   5. The scale for F2c calculation must be the same as used 
+C--      by the authors of the set (ignored here).
+C--
+C--   Singlet/non-singlet distns and proton distn:
+C--   f=3:  singlet =  d+dbar + u+ubar + s+sbar
+C--         dtype   =  d+dbar + s+sbar - 2/3*singlet
+C--         utype   =  u+ubar - 1/3*singlet
+C--         proton  =  4/18*singlet + 1/9*dtype + 4/9*utype
+C--   f=4:  singlet =  d+dbar + u+ubar + s+sbar + c+cbar
+C--         dtype   =  d+dbar + s+sbar - 2/4*singlet
+C--         utype   =  u+ubar + c+cbar - 2/4*singlet
+C--         proton  =  5/18*singlet + 1/9*dtype + 4/9*utype
+C--   f=5:  singlet =  d+dbar + u+ubar + s+sbar + c+cbar + b+bbar
+C--         dtype   =  d+dbar + s+sbar + b+bbar - 3/5*singlet
+C--         utype   =  u+ubar + c+cbar - 2/5*singlet
+C--         proton  = 11/45*singlet + 1/9*dtype + 4/9*utype
+C--
+C--   The light flavour component (uds) of the proton can be written as:
+C--   f=3:  as above
+C--   f=4:  dlight  =  d+dbar + s+sbar - 2/4*singlet
+C--         ulight  =  u+ubar - 1/4*singlet
+C--         plight  =  3/18*singlet + 1/9*dlight + 4/9*ulight
+C--   f=5:  dlight  =  d+dbar + s+sbar - 2/5*singlet
+C--         ulight  =  u+ubar - 1/5*singlet
+C--         plight  =  6/45*singlet + 1/9*dlight + 4/9*ulight
+C--
+C--   Then calculate:
+C--   1. F2p   from proton distn (3,4,5 light flavours).
+C--   2. F2uds from plight distn (uds component).
+C--   3. F2c   from plight distn.
+C--
+C--   If the parton ditribution set has been evolved with 3,4,5 light
+C--   flavours (e.g. MRSA) then (1) is correct; if evolved with 3
+C--   light flavours only (e.g. GRV94) then (2)+(3) gives the right
+C--   answer (if this example job does not contain a bug.....).
+C--   
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DIMENSION XXTAB(99),QQTAB(99)
+      DIMENSION GARR(99,99),PARR(99,99),FARR(99,99)
+      DIMENSION DXPDF(-6:6),VALU(20)
+      
+      CHARACTER*20 PARM(20)
+
+      DIMENSION PWGT(10)
+      DATA PWGT / 10*0.D0 /
+
+      WRITE(6,'(//'' QCDNUM example job fpdflib.car''/
+     +            '' ------------------------------'')')
+ 
+C--   Initialisation
+      CALL QNINIT
+      CALL QNTIME('START')
+
+C--   LO/NLO
+      CALL QNISET('ORDER',2)
+
+C--   Number of gridpoints 
+      N_X = 100
+      N_Q =  37
+
+C--   PDFLIB: choose MRSA
+ 
+      PARM(1) = 'NPTYPE'
+      VALU(1)  = 1.D0
+      PARM(2) = 'NGROUP'
+      VALU(2)  = 3.D0
+      PARM(3) = 'NSET'
+      VALU(3)  = 38.D0
+      CALL PDFSET(PARM,VALU)
+
+C--   set thresholds and quark masses as in MRSA
+      Q2C = 2.7
+      Q2B = 30.
+      CALL QNRSET('CMASS',SQRT(Q2C))
+      CALL QNRSET('BMASS',SQRT(Q2B))
+      CALL QTHRES(Q2C,Q2B)
+ 
+C--   Coarse x - Q2 grid
+
+      CALL GRXINP(1.D-5,1)
+      CALL GRXINP(2.D-5,1)
+      CALL GRXINP(5.D-5,1)
+      CALL GRXINP(1.D-4,1)
+      CALL GRXINP(2.D-4,1)
+      CALL GRXINP(5.D-4,1)
+      CALL GRXINP(1.D-3,1)
+      CALL GRXINP(2.D-3,1)
+      CALL GRXINP(5.D-3,1)
+      CALL GRXINP(1.D-2,1)
+      CALL GRXINP(2.D-2,1)
+      CALL GRXINP(5.D-2,1)
+      CALL GRXINP(1.D-1,1)
+      CALL GRXINP(2.D-1,1)
+      CALL GRXINP(5.D-1,1)
+      CALL GRXINP(6.D-1,1)
+      CALL GRXINP(7.D-1,1)
+      CALL GRXINP(8.D-1,1)
+      CALL GRXINP(9.D-1,1)
+
+      CALL GRQINP(2.D0,1)    
+      CALL GRQINP(5.D0,1)   
+      CALL GRQINP(1.D1,1)
+      CALL GRQINP(2.D1,1)
+      CALL GRQINP(5.D1,1)
+      CALL GRQINP(1.D2,1)
+      CALL GRQINP(2.D2,1)
+      CALL GRQINP(5.D2,1)
+      CALL GRQINP(1.D3,1)
+      CALL GRQINP(2.D3,1)
+      CALL GRQINP(5.D3,1)
+      CALL GRQINP(1.D4,1)
+
+C--   For printout  
+      CALL GRGIVE(NXTAB,XMI,XMA,NQTAB,QMI,QMA)
+      CALL GRXOUT(XXTAB)
+      CALL GRQOUT(QQTAB)
+
+C--   Define x q2 evolution grid (overwrite coarse grid)
+      CALL GRXDEF(N_X,XMI)
+      CALL GRQDEF(N_Q,QMI,QMA)
+
+C--   Put charm, bottom threshold in the grid
+      CALL GRQINP(Q2C,1)
+      CALL GRQINP(Q2B,1)
+ 
+C--   Get final grid definitions
+      CALL GRGIVE(NXGRI,XMI,XMA,NQGRI,QMI,QMA)
+
+C--   Get gridindices of Q2C and Q2B
+      IQC = IQFROMQ(Q2C)
+      IQB = IQFROMQ(Q2B)
+ 
+C--   Compute weights: we need only the structure functions
+      CALL QNLSET('W1ANA',.FALSE.)
+      CALL QNLSET('W2NUM',.FALSE.)
+      CALL QNLSET('WTF2C',.TRUE. )
+      CALL QNFILW(0,0)
+ 
+C--   Book quark nonsinglet distributions
+C--   Dtype is sum of all downtype quarks
+C--   Utype is sum of all uptype   quarks
+      CALL QNBOOK(2,'Dtype')
+      CALL QNBOOK(3,'Utype')
+      CALL QNBOOK(4,'Dlight')
+      CALL QNBOOK(5,'Ulight')
+
+C--   Book linear combination representing the proton
+      PWGT(1) = 4./18.
+      PWGT(2) = 1./9.
+      PWGT(3) = 4./9.
+      CALL QNLINC(11,'Proton',3,PWGT)
+      PWGT(1) = 5./18.
+      CALL QNLINC(11,'Proton',4,PWGT)
+      PWGT(1) = 11./45.
+      CALL QNLINC(11,'Proton',5,PWGT)
+
+C--   Book linear combination representing the uds part of proton
+      PWGT(1) = 4./18.
+      PWGT(2) = 0.
+      PWGT(3) = 0.
+      PWGT(4) = 1./9.
+      PWGT(5) = 4./9.
+      CALL QNLINC(12,'Plight',3,PWGT)
+      PWGT(1) = 3./18.
+      CALL QNLINC(12,'Plight',4,PWGT)
+      PWGT(1) = 6./45.
+      CALL QNLINC(12,'Plight',5,PWGT)
+ 
+C--   Input quark distributions for all x and Q2
+      DO IX = 1,NXGRI
+
+        X = XFROMIX(IX)
+
+        DO IQ = 1,NQGRI
+
+C--       Get pdflib parton distns
+          Q = SQRT(QFROMIQ(IQ))
+          CALL PFTOPDG(X,Q,DXPDF)
+
+C--       gluon, quarks+antiquarks
+          GL = DXPDF(0)
+          DN = DXPDF(1)+DXPDF(-1)
+          UP = DXPDF(2)+DXPDF(-2)
+          ST = DXPDF(3)+DXPDF(-3)
+          CH = DXPDF(4)+DXPDF(-4)
+          BO = DXPDF(5)+DXPDF(-5)
+
+C--       Get number of flavours
+          NF = NFLGET(IQ)
+
+C--       For f=3,4,5: - add the up and downtype quarks.
+C--                    - substract (1/f)*singlet*#quark species
+C--                      to get a proper non-singlet.
+          IF(NF.EQ.3) THEN
+            SINGL = DN+UP+ST
+            DTYPE = DN+ST-(2./3.)*SINGL
+            UTYPE = UP-(1./3.)*SINGL
+            DLIGH = DTYPE
+            ULIGH = UTYPE
+          ELSEIF(NF.EQ.4) THEN
+            SINGL = DN+UP+ST+CH
+            DTYPE = DN+ST-(2./4.)*SINGL
+            UTYPE = UP+CH-(2./4.)*SINGL
+            DLIGH = DTYPE
+            ULIGH = UP-(1./4.)*SINGL
+          ELSE
+            SINGL = DN+UP+ST+CH+BO
+            DTYPE = DN+ST+BO-(3./5.)*SINGL
+            UTYPE = UP+CH-(2./5.)*SINGL
+            DLIGH = DN+ST-(2./5.)*SINGL
+            ULIGH = UP-(1./5.)*SINGL
+          ENDIF
+
+          CALL QNPSET('GLUON',IX,IQ,GL   )
+          CALL QNPSET('SINGL',IX,IQ,SINGL)
+          CALL QNPSET('DTYPE',IX,IQ,DTYPE)
+          CALL QNPSET('UTYPE',IX,IQ,UTYPE)
+          CALL QNPSET('DLIGH',IX,IQ,DLIGH)
+          CALL QNPSET('ULIGH',IX,IQ,ULIGH)
+
+        ENDDO
+
+      ENDDO
+
+C--   Gluon, proton and F2p for all x and Q2.
+      DO IQ = 1,NQTAB
+        Q = QQTAB(IQ)
+        DO IX = 1,NXTAB 
+          X           = XXTAB(IX)
+          GARR(IX,IQ) = QPDFXQ('GLUON',X,Q,IFLAG)
+          PARR(IX,IQ) = QPDFXQ('PROTO',X,Q,IFLAG)
+          FARR(IX,IQ) = QSTFXQ('F2','PROTO',X,Q,IFLAG)
+        ENDDO
+      ENDDO
+
+C--   F2p, F2uds and F2c for Q2heavy only
+      Q2HEAVY = 100.
+      WRITE(6,'(//'' F2 at Q2 = '',E15.5)') Q2HEAVY
+      WRITE(6,'(/''     X           F2          F2_uds '',
+     +           ''     F2_c    F2_uds + F2_c '')')
+      DO IX = 1,NXTAB 
+        X           = XXTAB(IX)
+        F2P         = QSTFXQ('F2' ,'PROTON',X,Q2HEAVY,IFLAG)
+        F2UDS       = QSTFXQ('F2' ,'PLIGHT',X,Q2HEAVY,IFLAG)
+        F2C         = QSTFXQ('F2C','PLIGHT',X,Q2HEAVY,IFLAG)
+        F2SUM       = F2UDS+F2C
+        WRITE(6,'(5E12.5)') X,F2P,F2UDS,F2C,F2SUM
+      ENDDO
+
+C--   Output on the logfile
+      LUN = 6
+      WRITE(LUN,'(//''  nxg  nqg  nxt  nqt'')')
+      WRITE(LUN,'(4I5)') nxgri,nqgri,nxtab,nqtab
+      WRITE(LUN,'('' xxtab'')')
+      WRITE(LUN,'(6E12.5)') (xxtab(i),i=1,nxtab)
+      WRITE(LUN,'('' qqtab'')')
+      WRITE(LUN,'(6E12.5)') (qqtab(i),i=1,nqtab)
+      WRITE(LUN,'('' gluon'')')
+      WRITE(LUN,'(6E12.5)') ((garr(i,j),i=1,nxtab),j=1,nqtab)
+      WRITE(LUN,'('' qprot'')')
+      WRITE(LUN,'(6E12.5)') ((parr(i,j),i=1,nxtab),j=1,nqtab)
+      WRITE(LUN,'('' F2p'')')
+      WRITE(LUN,'(6E12.5)') ((farr(i,j),i=1,nxtab),j=1,nqtab)
+
+C--   Various standard printouts
+      CALL QPRINT(6,'ALL')
+
+      STOP
+      END

@@ -1,0 +1,293 @@
+
+
++PATCH,QUCOMM.
+C
++DECK,USRCOM.
+C
+C------------------------USER COMMON BLOCKS-----------------------
+C
++PATCH,QUPROG.
+C
++DECK,QCDNUM.
+ 
+C     ==============
+      PROGRAM QCDNUM
+C     ==============
+
+C--
+C--   Toymodel (reasonably realistic though) used for HERA workshop
+C--   comparisons of several NLO evolution codes.
+C--
+C--   Input definitions  at Q^2 = 4 GeV^2: --> evolve with f=4 flavours.
+C--
+C--   xuval = a_u x**0.5 (1-x)**3    int_0^1 xuval dx/x = 2
+C--   xdval = a_d x**0.5 (1-x)**4    int_0^1 xdval dx/x = 1
+C--   xsea  = a_s x**-0.2 (1-x)**7   int_0^1 xsea  dx   = 0.15
+C--   xglue = a_g x**-0.2 (1-x)**5   int_0^1 xglue+xsea+xuval+xdval  dx = 1
+C--
+C--   where the sea is defined as sea = 2*up_bar + 2*dn_bar + 2*s_bar
+C--   with up_bar = dn_bar = s_bar.
+C--
+C--   This gives the following singlet/non-singlets and proton:
+C--
+C--   singlet  = u_val + d_val + sea
+C--   up       = up_val + 2*up_bar = up_val + (1/3)*sea
+C--   up_plus  = up - (1/4)*singlet
+C--   c        = 0 at the input scale (4 GeV^2)
+C--   c_plus   = c  - (1/4)*singlet
+C--   proton   = (5/18)*singlet + (1/3)*up_plus + (1/3)*c_plus
+C--
+C--   This program writes the gluon distribution, the proton quark
+C--   distribution and F_2^p on a coarse grid in x and Q^2 to the
+C--   logfile.
+C--
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DIMENSION XXTAB(99),QQTAB(99)
+      DIMENSION GARR(99,99),PARR(99,99),FARR(99,99)
+ 
+      DIMENSION PWGT(10)
+      DATA PWGT / 10*0.D0 /
+
+      WRITE(6,'(//'' QCDNUM example job workshop.car''/
+     +            '' -------------------------------'')')
+ 
+C--   Initialisation
+      CALL QNINIT
+      CALL QNTIME('START')
+
+C--   LO/NLO
+      CALL QNISET('ORDER',2)
+ 
+C--   Define alpha_s
+      CALL QNRSET('MCALF',1.5D0)
+      CALL QNRSET('MBALF',5.0D0)
+      CALL QNRSET('ALFQ0',8315.25D0)
+      CALL QNRSET('ALFAS',0.118D0)
+ 
+C--   Evolve with four  flavours throughout
+      CALL QTHRES(.1D0,1.D6)
+
+C--   Starting scale and number of gridpoints in x and Q2
+      N_X = 100
+      N_Q =  30
+      Q0  = 4.D0
+ 
+C--   Book quark distributions
+      CALL QNBOOK(2,'Uplus')
+      CALL QNBOOK(3,'Cplus')
+      CALL QNBOOK(4,'Upval')
+      CALL QNBOOK(5,'Dnval')
+ 
+      PWGT(1) =  5./18.
+      PWGT(2) =  1./3.
+      PWGT(3) =  1./3.
+      CALL QNLINC(11,'PROTO',4,PWGT)
+ 
+C--   coarse x - Q2 grid
+ 
+      CALL GRXINP(1.D-5,1)
+      CALL GRXINP(2.D-5,1)
+      CALL GRXINP(5.D-5,1)
+      CALL GRXINP(1.D-4,1)
+      CALL GRXINP(2.D-4,1)
+      CALL GRXINP(5.D-4,1)
+      CALL GRXINP(1.D-3,1)
+      CALL GRXINP(2.D-3,1)
+      CALL GRXINP(5.D-3,1)
+      CALL GRXINP(1.D-2,1)
+      CALL GRXINP(2.D-2,1)
+      CALL GRXINP(5.D-2,1)
+      CALL GRXINP(1.D-1,1)
+      CALL GRXINP(2.D-1,1)
+      CALL GRXINP(5.D-1,1)
+      CALL GRXINP(0.7D0,1)
+      CALL GRXINP(0.9D0,1)
+
+      CALL GRQINP(4.D0,1)
+      CALL GRQINP(1.D1,1)
+      CALL GRQINP(2.D1,1)
+      CALL GRQINP(5.D1,1)
+      CALL GRQINP(1.D2,1)
+      CALL GRQINP(2.D2,1)
+      CALL GRQINP(5.D2,1)
+      CALL GRQINP(1.D3,1)
+      CALL GRQINP(2.D3,1)
+      CALL GRQINP(5.D3,1)
+      CALL GRQINP(1.D4,1)
+
+C--   Copy grid to local array
+      CALL GRGIVE(NXTAB,XMI,XMA,NQTAB,QMI,QMA)
+      CALL GRXOUT(XXTAB)
+      CALL GRQOUT(QQTAB)
+
+C--   Define x-Q2 evolution grid (overwrite the coarse grid)
+      CALL GRXDEF(N_X,XMI)
+      CALL GRQDEF(N_Q,QMI,QMA)
+      CALL GRQINP(Q0,1)  
+
+C--   Get final grid definitions
+      CALL GRGIVE(NXGRI,XMI,XMA,NQGRI,QMI,QMA)
+ 
+C--   Compute weights
+      CALL QNFILW(0,0)
+
+c--   Input quark distributions
+      IQ0 = IQFROMQ(Q0)
+      DO IX = 1,NXGRI
+        X = XFROMIX(IX)
+        GLUON   = XGLU(X)
+        SINGL   = XQSI(X)
+        UPVAL   = XUPV(X)
+        DNVAL   = XDNV(X)
+        UPLUS   = UPVAL+XSEA(X)/3.-SINGL/4.
+        CPLUS   = -SINGL/4.
+        CALL QNPSET('GLUON',IX,IQ0,GLUON)
+        CALL QNPSET('SINGL',IX,IQ0,SINGL)
+        CALL QNPSET('UPLUS',IX,IQ0,UPLUS)
+        CALL QNPSET('CPLUS',IX,IQ0,CPLUS)
+        CALL QNPSET('UPVAL',IX,IQ0,UPVAL)
+        CALL QNPSET('DNVAL',IX,IQ0,DNVAL)
+      ENDDO
+
+C--   Evolution
+      CALL EVOLSG(IQ0,1,NQGRI)
+      CALL EVPLUS('UPLUS',IQ0,1,NQGRI)
+      CALL EVPLUS('CPLUS',IQ0,1,NQGRI)
+      CALL EVOLNM('UPVAL',IQ0,1,NQGRI)
+      CALL EVOLNM('DNVAL',IQ0,1,NQGRI)
+
+C--   Store only a few distributions for printout
+      DO IQ = 1,NQTAB
+        Q = QQTAB(IQ)
+        DO IX = 1,NXTAB 
+          X = XXTAB(IX)
+          GARR(IX,IQ) = QPDFXQ('GLUON',X,Q,IFLAG)
+          PARR(IX,IQ) = QPDFXQ('PROTO',X,Q,IFLAG)
+          FARR(IX,IQ) = QSTFXQ('F2','PROTO',X,Q,IFLAG)
+        ENDDO
+      ENDDO
+
+C--   Output on the logfile
+      LUN = 6
+      WRITE(LUN,'(//''  nxg  nqg  nxt  nqt'')')
+      WRITE(LUN,'(4I5)') nxgri,nqgri,nxtab,nqtab
+      WRITE(LUN,'('' xxtab'')')
+      WRITE(LUN,'(6E12.5)') (xxtab(i),i=1,nxtab)
+      WRITE(LUN,'('' qqtab'')')
+      WRITE(LUN,'(6E12.5)') (qqtab(i),i=1,nqtab)
+      WRITE(LUN,'('' gluon'')')
+      WRITE(LUN,'(6E12.5)') ((garr(i,j),i=1,nxtab),j=1,nqtab)
+      WRITE(LUN,'('' qprot'')')
+      WRITE(LUN,'(6E12.5)') ((parr(i,j),i=1,nxtab),j=1,nqtab)
+      WRITE(LUN,'('' F2p'')')
+      WRITE(LUN,'(6E12.5)') ((farr(i,j),i=1,nxtab),j=1,nqtab)
+
+C--   Some qcdnum printout
+      CALL QPRINT(6,'all')
+ 
+      STOP
+      END
+
+C     ===================================
+      DOUBLE PRECISION FUNCTION DNOR(B,C)
+C     ===================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+C--   Int_0^1 x**b (1-x)**c dx
+
+      DNOR = DGAMMA(B+1.D0)*DGAMMA(C+1.D0)/DGAMMA(B+C+2.D0)
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XUPV(X)
+C     =================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DATA AU /-1.D0/
+
+      IF(AU.LE.0.) THEN
+        AU = 2.D0/DNOR(-0.5D0,3.D0)
+        WRITE(6,'('' AUPVAL = '',F20.10)') AU
+      ENDIF
+
+      XUPV = AU * X**0.5D0 * (1.D0-X)**3.D0
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XDNV(X)
+C     =================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DATA AD /-1.D0/
+
+      IF(AD.LE.0.) THEN
+        AD = 1.D0/DNOR(-0.5D0,4.D0)
+        WRITE(6,'('' ADNVAL = '',F20.10)') AD
+      ENDIF
+
+      XDNV = AD * X**0.5D0 * (1.D0-X)**4.D0
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XSEA(X)
+C     =================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DATA AS /-1.D0/
+
+      IF(AS.LE.0.) THEN
+        AS = 0.15D0/DNOR(-0.2D0,7.D0)
+        WRITE(6,'('' ASEA   = '',F20.10)') AS
+      ENDIF
+
+      XSEA = AS * X**(-0.2D0) * (1.D0-X)**7.D0
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XGLU(X)
+C     =================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      DATA AG /-1.D0/
+
+      IF(AG.LE.0.) THEN
+        AU = (2.D0/DNOR(-0.5D0,3.D0))*DNOR(0.5D0,3.D0)
+        AD = (1.D0/DNOR(-0.5D0,4.D0))*DNOR(0.5D0,4.D0)
+        AS = 0.15D0
+        AG = 1.D0 - AS - AD - AU
+        WRITE(6,'('' AU='',F10.3,'' AD='',F10.3,
+     +            '' AS='',F10.3,'' AG='',F10.3)') AU,AD,AS,AG
+        AG = AG/DNOR(-0.2D0,5.D0)
+        WRITE(6,'('' AGLUE  = '',F20.10)') AG
+      ENDIF
+
+      XGLU = AG * X**(-0.2D0) * (1.D0-X)**5.D0
+
+      RETURN
+      END
+
+C     =================================
+      DOUBLE PRECISION FUNCTION XQSI(X)
+C     =================================
+
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+
+      XQSI = XUPV(X) + XDNV(X) + XSEA(X)
+
+      RETURN
+      END
