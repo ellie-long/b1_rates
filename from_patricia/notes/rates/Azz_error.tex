@@ -90,12 +90,12 @@ Abstract }
 
 The tensor asymmetry $A_{zz}$ can be extracted from:
 \begin{eqnarray}
-\sigma = \sigma_u \bigg[1 - P_z P_B A_{\parallel} + \frac{1}{2} P_{zz} A_{zz}\bigg]
+\sigma = \sigma_u \bigg[1 - P_z P_B A_{\parallel} + P_{zz} A_{zz}\bigg]
 \label{xs} 
 \end{eqnarray}
 For unpolarized beam, 
 \begin{eqnarray}
-\sigma = \sigma_u \bigg[1 + \frac{1}{2} P_{zz} A_{zz}\bigg]
+\sigma = \sigma_u \bigg[1 + P_{zz} A_{zz}\bigg]
 \label{xsbis} 
 \end{eqnarray}
 
@@ -148,13 +148,13 @@ From Refs.~\cite{meyer} and \cite{uvatn}, the enhancement of the  tensor polariz
 So, as it is said in Ref.~\cite{meyer}, the improvement in $P_{zz}$ comes only from better $P_z$. The asymmetry would come from counting events with $m_+$, $m_-$ and $m_0$ for opposite $P_z$'s\footnote{$m_+$, $m_-$ and $m_0$ represent the normalized populations.}:
 \begin{eqnarray}
 P_z^+ &=& m_+ - m_- ~~~{\rm with}~  m_+ > m_- \\
-P_z^- &=& m_+ - m_- ~~~{\rm with}~ m_+ < m_-
+-P_z^- &=& m_+ - m_- ~~~{\rm with}~ m_+ < m_-
 \label{p1} 
 \end{eqnarray}
 and for the  $P_{zz}$'s:
 \begin{eqnarray}
 P_{zz}^+ &=& P_{zz}(P_z^+) = m_+ + m_- - 2m_0^+ = 2m_+ - P_z^+ - 2m_0^+ \\
-P_{zz}^- &=& P_{zz}(P_z^-) =  m_+ + m_- - 2m_0^- =   2m_- + P_z^- - 2m_0^-
+P_{zz}^- &=& P_{zz}(P_z^-) =  m_+ + m_- - 2m_0^- =   2m_- - P_z^- - 2m_0^-
 \label{p2} 
 \end{eqnarray}
 Note that $m_0$ populations won't necessarily be the same.
@@ -165,16 +165,16 @@ R^+_T - R^-_T &=& (R_U^+ + R_D^+)- (R_U^- + R_D^-) \\
 \end{eqnarray}
 with 
 \begin{eqnarray}
-P_{zz}^+ - P_{zz}^- &=& (2m_+ - P_z^+ - 2m_0^+) + (2m_- + P_z^- - 2m_0^-) \\
-                                    &=& 2 (m_+ + m_-) - 2(m_0^+ + m_0^-) + (P_z^- - P_z^+)
+P_{zz}^+ + P_{zz}^- &=& (2m_+ - P_z^+ - 2m_0^+) + (2m_- - P_z^- - 2m_0^-) \\
+                                    &=& 2 (m_+ + m_-) - 2(m_0^+ + m_0^-) - (P_z^- + P_z^+)
 \label{p3} 
 \end{eqnarray}
 In order to access $A_{zz}$, we will have to take data with $P_{zz} < 0$ and  $P_{zz} > 0$.
 % Does P_zz change sign ?? %
 Simplifications could be done assuming we are using the same target cup and the same integrated luminosity is seen for each polarization stage.
-Also if $P_z^- \sim P_z^+$ and $m_0^+ \sim m_0^-$, we get:
+Also if $-P_z^- \sim P_z^+$ and $m_0^+ \sim m_0^- = m_0$, we get:
 \begin{eqnarray}
-P_{zz}^+ - P_{zz}^- = 2 (m_+ + m_- - 2 m_0) = 2 P_{zz}
+P_{zz}^+ + P_{zz}^- = 2 (m_+ + m_- - 2 m_0) = 2 P_{zz}
 \label{p4} 
 \end{eqnarray}
 and
