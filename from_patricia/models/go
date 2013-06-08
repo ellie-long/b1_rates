@@ -2,5 +2,5 @@
 
 
 rm ./b1d
-g77 -ffixed-line-length-none -o b1d b1d_calc.f
+gfortran -ffixed-line-length-none -o b1d b1d_calc.f
 

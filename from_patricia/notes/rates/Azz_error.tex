@@ -3,9 +3,13 @@
 \documentclass[11pt]{article}
 \usepackage[dvips]{graphicx,color}
 \usepackage{longtable}
-%\setlength{\textwidth}{16.5cm}
+\usepackage{hyperref}
+\usepackage{breakurl}
+\hypersetup{pdfborder={0 0 100}}
+%\textwidth{16.5cm}
+\setlength{\textwidth}{15.5cm}
 %\setlength{\textheight}{22.2cm}
-%\setlength{\hoffset}{-.25in}
+\setlength{\hoffset}{-.25in}
 %\setlength{\voffset}{-.9in}
 
 \begin{document}
@@ -19,8 +23,8 @@
 %%
 \begin{flushright}
 {\small
-$b_1$ technical note 2013-01\\
-March 2013\\}
+$b_1$ technical note 2013-05\\
+May 2013\\}
 \end{flushright}
 
 \vspace{.8cm}
@@ -29,12 +33,12 @@ March 2013\\}
 %%
 \begin{center}
 {\bf\large   
-Rates and Error calculations for measurement of $A_{zz}$}
+Rates and Statistical Uncertainty Calculations for a Measurement of $A_{zz}$}
 \vspace{1cm}
 
 
-O. Rondon (INPP-UVA) and P. Solvignon (Jefferson Lab)\\
-(to be continued by Ellie)
+E. Long (UNH), O. Rondon (INPP-UVA), P. Solvignon (Jefferson Lab)\\
+
 \end{center}
 
 %\vfill
@@ -43,6 +47,8 @@ O. Rondon (INPP-UVA) and P. Solvignon (Jefferson Lab)\\
 \begin{center}
 {\bf\large   
 Abstract }
+
+A proposal on measuring the deuteron structure function $b_1^d$ was submitted to PAC 40. The asymmetry $A_{zz}$ will be used to extract $b_1^d$. This tech note provides details on the calculations of the rates and statistical uncertainties completed for the proposal. 
 \end{center}
 \newpage
 %\begin{quote}
@@ -88,182 +94,252 @@ Abstract }
 %
 \pagestyle{plain}
 
-The tensor asymmetry $A_{zz}$ can be extracted from:
+\section{Method of Measuring $A_{zz}$}
+
+The deuteron cross section can be utilized to extract the tensor asymmetry, $A_{zz}$. The cross section takes the form
 \begin{eqnarray}
-\sigma = \sigma_u \bigg[1 - P_z P_B A_{\parallel} + P_{zz} A_{zz}\bigg]
+ \frac{d^2\sigma_{\mathrm{D}}}{d\Omega dE'} = \sigma_{\mathrm{D}} = \sigma_{\mathrm{D}}^u\left[ 1  - P_z P_B A_{\parallel} + \frac{1}{2}P_{zz}A_{zz}^d \right],
 \label{xs} 
 \end{eqnarray}
-For unpolarized beam, 
+where $\sigma_{\mathrm{D}}^u$ is the unpolarized deuteron cross section, $P_B$ is the polarization of the electron beam, $P_z$ is the vector polarization of the target, and $P_{zz}$ is the tensor polarization of the target. In the case of an unpolarized beam, the middle term vanishes leaving just
 \begin{eqnarray}
-\sigma = \sigma_u \bigg[1 + P_{zz} A_{zz}\bigg]
+\sigma_{\mathrm{D}} = \sigma_{\mathrm{D}}^u \left[1 + P_{zz} A_{zz}\right].
 \label{xsbis} 
 \end{eqnarray}
 
-\section{Rates}
+For the proposed measurement of $A_{zz}$, we are looking in the DIS region. The general form of DIS electron scattering off of a nucleus is described by
+\begin{eqnarray}
+\frac{d^2\sigma^u_X}{d\Omega dE'} = \sigma^u_X = A_X \left( \frac{d\sigma}{d\Omega} \right) _{\mathrm{Mott}_{\mathrm{p}}} \left[ \frac{2\cdot \left(\frac{F_1^{X}}{A_X} \right)}{m_{p}}\tan^2\left( \frac{\theta_{e'}}{2} \right) + \frac{\left( \frac{F_2^X}{A_X}\right) }{\nu} \right],
+\end{eqnarray}
+where $A_X$ is the number of nucleons, $F_1^X$ and $F_2^X$ are the nuclear structure functions, $\theta_{e'}$ is the electron scattering angle, $m_p$ is the mass of a proton, $\nu$ is the energy transfer, and $\left( \frac{d\sigma}{d\Omega} \right) _{\mathrm{Mott}_{\mathrm{p}}}$ is the Mott cross section of a proton.
 
-\subsection{General expressions}
+In order to reduce systematic effects, a ratio of cross section is used to determine $A_{zz}$. This ratio, in terms of the measured counts with the target tensor-polarized and unpolarized, is expressed as
+\begin{eqnarray}
+\frac{N_{Pol}}{N_{u}} - 1 = f \frac{1}{2} A_{zz}  P_{zz},
+\end{eqnarray}
+where $N_{Pol}$ is the number of events recorded when the target is polarized, $N_u$ is the number of events recorded when the target is unpolarized, and a dilution factor, $f$, is included since the target material will contain nitrogen and helium as well as deuterium. Thus, $A_{zz}$ is measured through
+\begin{eqnarray}A_{zz} = \frac{2  }{f \cdot P_{zz}}\left( \frac{N_{Pol}}{N_{u}} - 1 \right).
+\end{eqnarray}
+
+\section{Rates}
+\label{rates-sec}
+\subsection{General Expressions}
 
 The total rates for ND3 are:
 \begin{eqnarray}
-R_T &=& {\cal A} \bigg[ L_{He} \sigma_{He} +  L_N \sigma_N + L_D \sigma_D \bigg] \\
-        &=& {\cal A} \bigg[ L_{He} \sigma^u_{He} +  L_{N} \sigma^u_{N} + L_{D} \sigma^u_{D}\bigg(1+\frac{1}{2} N_D P_{zz} A_{zz}\bigg) \bigg]
+R_{\mathrm{Total}}   &=& \mathcal{A}\left[ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}} + \mathcal{L}_{\mathrm{D}} \sigma_{\mathrm{D}} \right]  \\
+        &=& \mathcal{A}\left[ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}} \sigma_{\mathrm{D}}^u\left( 1 + \frac{1}{2}P_{zz}A_{zz}^d \right) \right] 
 \label{rt} 
 \end{eqnarray}
-with ${\cal A}$ is defined as the acceptance ($\Delta \Omega \Delta E'$). The quantity $N_D$ is the D-state contribution to the deuterium ground state wave function (only the D-state can contribute to b1). The luminosity $L_A$ is defined as follows:
+where ${\cal A}$ is the acceptance ($\Delta \Omega \Delta E'$), $\sigma^u_A$ is the unpolarized cross section of the given nucleus, and $\mathcal{L}_A$ is the luminosity. The general form of the luminosity is
 \begin{eqnarray}
-L_A = N_e * N_A
+\mathcal{L}_A = N_e \cdot {\cal N} \frac{\rho_A}{M_A} z_A p_{f_A},
 \label{lumi}
 \end{eqnarray}
-with $N_A = {\cal N} \frac{\rho_A}{M_A} z_A$ and $N_e = I_{beam} / e$. 
+where $N_e = I_{beam} / e$ is the rate of incident electrons, $\cal N$ is Avogadro's number, $\rho_A$ is the density, $M_A$ is the atomic or molecular mass, $z$ is the target thickness, and $p_{f_A}$ is the packing fraction of the material. Since we are using solid deuterated ammonia beads surrounded by liquid helium, the luminosities come out to
 \newline
-Also ${\cal N}$ is the Avogadro's number. The quantities $\rho_A$, $M_A$ and $z_A$ are the density, the atomic or molecular mass and the thickness of the  nuclear species $A$. Therefore we have:
 \begin{eqnarray}
-N_{\rm He} &=& {\cal N} \frac{\rho_{\rm He}}{M_{\rm He}}  z~(1-p_f)  = {\cal N}~{\cal D_{\rm He}} ~z~(1-p_f) \\
-N_{\rm ND_3} &=& {\cal N} \frac{\rho_{\rm ND_3}}{M_{\rm ND_3}} z~p_f = {\cal N}~{\cal D_{\rm ND_3}} ~z~p_f \\
-N_{\rm N} &=& {\cal N} \frac{\rho_{\rm ND_3}}{M_{\rm ND_3}} z~p_f = {\cal N}~{\cal D_{\rm ND_3}} ~z~p_f \\
-N_{\rm D} &=& 3~{\cal N} \frac{\rho_{\rm ND_3}}{M_{\rm ND_3}} z~p_f = 3~{\cal N}~{\cal D_{\rm ND_3}} ~z~p_f \\
+\mathcal{L}_{\mathrm{He}} &=& \left[ \mathcal{N}  \frac{\rho_{\mathrm{He}}}{M_{\mathrm{He}}}\left(1 - p_f\right) \right] \cdot \left( \frac{I_{\mathrm{beam}}}{e} \right) \cdot z_{\mathrm{tgt}}, \\
+\mathcal{L}_{\mathrm{N}} &=& \left[ \mathcal{N}  \frac{\rho_{\mathrm{ND}_3}}{M_{\mathrm{ND}_3}} p_f \right] \cdot \left( \frac{I_{\mathrm{beam}}}{e} \right) \cdot z_{\mathrm{tgt}},\hspace{5pt}\mathrm{and} \\
+\mathcal{L}_{\mathrm{D}} &=& 3\left[ \mathcal{N}  \frac{\rho_{\mathrm{ND}_3}}{M_{\mathrm{ND}_3}} p_f \right] \cdot \left( \frac{I_{\mathrm{beam}}}{e} \right) \cdot z_{\mathrm{tgt}}. 
 \label{la}
 \end{eqnarray}
-where ${\cal D_A} = \rho_{\rm A}/M_{\rm A}$. The factor 3 in the expression of $l_{\rm D} $ take into account that there are three deuterium atoms in the ammonia molecule.
-The total rate can be finally expressed as follows:
+The factor of 3 in the expression of $\cal L_{\rm D} $ takes into account that there are three deuterium atoms in the ammonia molecule.
+
+We will be detecting events from two different target states: polarized and unpolarized. The total rate when the target is tensor-polarized is written as
 \begin{eqnarray}
-R_T = {\cal A}~N_e~{\cal N}~z~\bigg[ {\cal D}_{He} (1-p_f) \sigma^u_{He} +  {\cal D}_{ND3}~p_f \bigg(\sigma^u_N + 3 \sigma^u_D (1+\frac{1}{2} N_D P_{zz} A_{zz})\bigg) \bigg]
-\label{rtf} 
+R_{\mathrm{Total}}^{Pol} = \mathcal{A}\left[ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}} \sigma_{\mathrm{D}}^u\left( 1 + \frac{1}{2}P_{zz}A_{zz}^d \right) \right] 
 \end{eqnarray}
-with $R_T  = R_U + R_D$. 
-The rate coming from other nuclear species than deuterium is written as: 
-\begin{eqnarray}
-R_U =  {\cal A}~N_e~{\cal N}~z~( {\cal D}_{He} (1-p_f) \sigma^u_{He} +  {\cal D}_{ND3}~p_f~\sigma^u_N).
-\label{ruf} 
+ and when the target is unpolarized,
+ \begin{eqnarray}
+R_{\mathrm{Total}}^{u} = \mathcal{A}\left[ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}} \sigma_{\mathrm{D}}^u \right]. 
 \end{eqnarray}
-and the deuterium rate can then be extracted:
+The total number of counts in each state would depend on the amount of time spent in each, such that
 \begin{eqnarray}
-R_D = {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3 \sigma^u_D \bigg(1+\frac{1}{2} N_D P_{zz} A_{zz}\bigg)
-\label{rdf} 
+N_{Pol} &=& R_{\mathrm{Total}}^{Pol}t_{Pol}\hspace{5pt}\mathrm{and} \\
+N_{u} &=& R_{\mathrm{Total}}^{u}t_{u}.
 \end{eqnarray}
 
-\subsection{Expression of the measured asymmetry}
 
-From Refs.~\cite{meyer} and \cite{uvatn}, the enhancement of the  tensor polarization with solid polarized targets can be done via the ''hole burning`` method by pushing down either one of the $|m_z|$ = 1 states moving its population to $m_z$ = 0. But this necessarily enhances the absolute vector polarization, $|m_+ - m_-|$ because one of the $m_1$'s stays fixed.
-So, as it is said in Ref.~\cite{meyer}, the improvement in $P_{zz}$ comes only from better $P_z$. The asymmetry would come from counting events with $m_+$, $m_-$ and $m_0$ for opposite $P_z$'s\footnote{$m_+$, $m_-$ and $m_0$ represent the normalized populations.}:
+\subsection{Expression of the Measured Asymmetry}
+
+From Refs.~\cite{meyer} and \cite{uvatn}, the enhancement of the  tensor polarization with solid polarized targets can be done via the ''hole burning`` method by pushing down either one of the $|m_z|$ = 1 states moving its population to $m_z$ = 0. But this necessarily enhances the absolute vector polarization, $|m_+ - m_-|$ because one of the $m_1$'s stays fixed. So, as it is said in Ref.~\cite{meyer}, the improvement in $P_{zz}$ comes only from better $P_z$. 
+
+In order to reduce systematic uncertainties, we find $A_{zz}$ by measuring the ratio of events detected when the target is polarized with $P_{zz}>0$ and when it is unpolarized. In terms of the rates for each state, this ratio is written
 \begin{eqnarray}
-P_z^+ &=& m_+ - m_- ~~~{\rm with}~  m_+ > m_- \\
--P_z^- &=& m_+ - m_- ~~~{\rm with}~ m_+ < m_-
-\label{p1} 
+\frac{N_{Pol}}{N_u} = \frac{\mathcal{A}\left[ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}} \sigma_{\mathrm{D}}^u\left( 1 + \frac{1}{2}P_{zz}A_{zz}^d \right) \right] t_{Pol}}{ \mathcal{A}\left[ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}} \sigma_{\mathrm{D}}^u \right] t_u },
 \end{eqnarray}
-and for the  $P_{zz}$'s:
+
 \begin{eqnarray}
-P_{zz}^+ &=& P_{zz}(P_z^+) = m_+ + m_- - 2m_0^+ = 2m_+ - P_z^+ - 2m_0^+ \\
-P_{zz}^- &=& P_{zz}(P_z^-) =  m_+ + m_- - 2m_0^- =   2m_- - P_z^- - 2m_0^-
-\label{p2} 
+\frac{N_{Pol}}{N_u} = \left( \frac{t_{Pol}}{t_u}\right) \left[1 + \left( \frac{\mathcal{L}_{\mathrm{D}}\sigma_{\mathrm{D}}^u}{ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}}\sigma_{\mathrm{D}}^u } \right) \frac{1}{2} A_{zz}  P_{zz}\right].
 \end{eqnarray}
-Note that $m_0$ populations won't necessarily be the same.
+The luminosity terms make up the dilution factor, such that $f=\frac{\mathcal{L}_{\mathrm{D}}\sigma_{\mathrm{D}}^u}{ \mathcal{L}_{\mathrm{He}} \sigma_{\mathrm{He}}^u  + \mathcal{L}_{\mathrm{N}} \sigma_{\mathrm{N}}^u + \mathcal{L}_{\mathrm{D}}\sigma_{\mathrm{D}}^u }$ and
+
 \begin{eqnarray}
-R^+_T - R^-_T &=& (R_U^+ + R_D^+)- (R_U^- + R_D^-) \\ 
-                            &=& {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3 \sigma^u_D \frac{1}{2} N_D A_{zz} (P_{zz}^+ - (- P_{zz}^-))
-\label{p3} 
+\frac{N_{Pol}}{N_u} = \left( \frac{t_{Pol}}{t_u}\right) \left[1 + f \frac{1}{2} A_{zz}  P_{zz}\right].
 \end{eqnarray}
-with 
+
+If equal time is spent on each polarization state such that $t_{Pol} \approx t_u$, then
 \begin{eqnarray}
-P_{zz}^+ + P_{zz}^- &=& (2m_+ - P_z^+ - 2m_0^+) + (2m_- - P_z^- - 2m_0^-) \\
-                                    &=& 2 (m_+ + m_-) - 2(m_0^+ + m_0^-) - (P_z^- + P_z^+)
-\label{p3} 
+\frac{N_{Pol}}{N_u} =  1 + f \frac{1}{2} A_{zz}  P_{zz}.
 \end{eqnarray}
-In order to access $A_{zz}$, we will have to take data with $P_{zz} < 0$ and  $P_{zz} > 0$.
-% Does P_zz change sign ?? %
-Simplifications could be done assuming we are using the same target cup and the same integrated luminosity is seen for each polarization stage.
-Also if $-P_z^- \sim P_z^+$ and $m_0^+ \sim m_0^- = m_0$, we get:
+This can be split up into a measured ratio, $A_{\mathrm{meas}}$, defined as
 \begin{eqnarray}
-P_{zz}^+ + P_{zz}^- = 2 (m_+ + m_- - 2 m_0) = 2 P_{zz}
-\label{p4} 
+A_{\mathrm{meas}} = \frac{N_{Pol}}{N_u} - 1.
 \end{eqnarray}
-and
+From this, $A_{zz}$ can be extracted by
 \begin{eqnarray}
-R^+_D - R^-_D = {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3 \sigma^u_D \frac{1}{2} N_D A_{zz} P_{zz}
-\label{p3} 
-\end{eqnarray}
-\begin{eqnarray}
-R^+_D - R^-_D &=& {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~ 3~\sigma^u_D \frac{1}{2} N_D A_{zz} P_{zz} \\
-R^+_D + R^-_D &=& 2 {\cal A}~N_e~{\cal N}~z~ {\cal D}_{ND3}~p_f~3~\sigma^u_D
-\label{p4} 
-\end{eqnarray}
-\begin{eqnarray}
-A_{meas} &=& f \frac{R^+_D - R^-_D}{R^+_D + R^-_D} \\
-                  &=& \frac{1}{4}~f~N_D~P_{zz}~A_{zz} 
-\label{rdf} 
+A_{zz} = \frac{2  }{f \cdot P_{zz}}A_{\mathrm{meas}}.
 \end{eqnarray}
 
 
 
 
 \begin{table}[htdp]
-\caption{Values used in the rate estimates}
+\caption{Values used in the rate estimates.}
 \begin{center}
 \begin{tabular}{|c|c|}
 \hline
-$\rho_{\rm ND_3}$     &    1.007 g.cm$^{-3}$   \\
-$M_{\rm ND_3}$         &    20 g.mol$^{-1}$       \\
-$p_f({\rm ND_3})$      &    0.80                            \\
-$f({\rm ND_3})$           &    6/20                           \\
-$z$                                &    3 cm                            \\
-$P_{zz}$                      &     0.25                            \\
-$N_D$                          &    0.05                             \\
+$\rho_{\rm ND_3}$	&	1.007 g.cm$^{-3}$ \\
+$M_{\rm ND_3}$		&	20 g.mol$^{-1}$ \\
+$p_f({\rm ND_3})$	&	0.65 \\
+$z_{\mathrm{tgt}}$	&	3 cm \\
+$P_{zz}$				&	0.25 \\
 \hline
 \end{tabular}
 \end{center}
 \label{default}
 \end{table}%
 
-\section{statistical error}
- \begin{eqnarray}
-A_{zz}  = \frac{4}{f~N_D~P_{zz}} A_{meas}
-\label{stat1} 
-\end{eqnarray}
- \begin{eqnarray}
-\delta A_{zz} = \frac{4}{f~N_D~P_{zz}} \delta A_{meas}
-\label{stat2} 
-\end{eqnarray}
+\section{Statistical Uncertainty}
+\label{stat-sec}
 
-With $N_{+(-)} = R^{+(-)}_D * T_{+(-)}$, $T$ being the time in second, 
+Given the form of $A_{zz}$ in terms of $A_{\mathrm{meas}}$, 
 \begin{eqnarray}
-\delta A_{zz} = \frac{4}{f~N_D~P_{zz}} \frac{2}{(N_++N_-)^2} \sqrt{N_+~N_-~(N_++N_-)}
-\label{stat3} 
+A_{zz} = \frac{2  }{f \cdot P_{zz}}A_{\mathrm{meas}},
 \end{eqnarray}
-Because $A_{zz}$ is very small, we can assume $N_+ \simeq N_- \simeq N/2$ and therefore the statistical error on $A_{zz}$ becomes:
-\begin{eqnarray}
-\delta A_{zz} = \frac{4}{f~N_D~P_{zz}} \frac{1}{\sqrt{N}}
-\label{stat4} 
-\end{eqnarray}
-Time needed to make the measurement:
-\begin{eqnarray}
-T &=& \Bigg(\frac{4}{f~N_D~P_{zz}~\delta A_{zz}}\Bigg)^2 \frac{1}{R_D} \\
-\label{stat5} 
-\end{eqnarray}
+we can find the uncertainty from
+\begin{equation}
+\delta A_{zz} = \sqrt{\left( \frac{\partial A_{zz}}{\partial A_{\mathrm{meas}}} \delta A_{\mathrm{meas}} \right)^2 + \left( \frac{\partial A_{zz}}{\partial f} \delta f \right)^2 + \left( \frac{\partial A_{zz}}{\partial P_{zz}} \delta P_{zz} \right)^2 }.
+\end{equation}
+In this case, we can break it down into statistical and systematic uncertainties,
+\begin{equation}
+\delta A_{zz} = \sqrt{\left( \delta A_{zz}^{\mathrm{Stat}} \right) ^2 + \left( \delta A_{zz}^{\mathrm{Sys}} \right) ^2 }.
+\label{azz_err}
+\end{equation}
+The statistical component relates as
+\begin{equation}
+\delta A_{zz}^{\mathrm{Stat}} = \frac{\partial A_{zz}}{\partial A_{\mathrm{meas}}} \delta A_{\mathrm{meas}} = \frac{2}{f\cdot P_{zz}} \delta A_{\mathrm{meas}}.
+\end{equation}
+Since $A_{\mathrm{meas}} = \frac{N_{Pol}}{N_u} - 1$, the uncertainty in $A_{\mathrm{meas}}$ depends on the number of events counted in each state as described by
+\begin{equation}
+\delta A_{\mathrm{meas}} = \sqrt{ \left( \frac{\partial A_{\mathrm{meas}}}{\partial N_{Pol}} \delta N_{Pol} \right)^2 + \left( \frac{\partial A_{\mathrm{meas}}}{\partial N_{u}} \delta N_{u} \right)^2 },
+\end{equation}
+\begin{equation}
+\delta A_{\mathrm{meas}} = \sqrt{ \left( \frac{1}{N_u} \sqrt{N_{Pol}} \right)^2 + \left( -\frac{N_{Pol}}{N_u^2} \sqrt{N_u} \right)^2 },
+\end{equation}
+\begin{equation}
+\delta A_{\mathrm{meas}} = \sqrt{  \frac{N_{Pol}}{N_u^2} + \frac{N_{Pol}^2}{N_u^3}  }.
+\end{equation}
 
-I believe that $N_D$ shouldn't appear (Patricia). 
+Because $A_{zz}$ is very small, we can assume that $N_{Pol} \approx N_u \approx \frac{N}{2}$, then
+\begin{equation}
+\delta A_{\mathrm{meas}} = \sqrt{  \frac{N/2}{N^2/4} + \frac{N^2/4}{N^3/8}  },
+\end{equation}
+\begin{equation}
+\delta A_{\mathrm{meas}} = \frac{2}{\sqrt{N}}.
+\label{ameas_err}
+\end{equation}
+Equation (\ref{ameas_err}) can be put back into equation (\ref{azz_err}) to get
+\begin{equation}
+\delta A_{zz}^{\mathrm{Stat}} = \frac{2}{f\cdot P_{zz}} \left( \frac{2}{\sqrt{N}} \right),
+\end{equation}
+\begin{equation}
+\delta A_{zz}^{\mathrm{Stat}} = \frac{4}{f\cdot P_{zz}\sqrt{t\cdot R_{\mathrm{Total}}}}.
+\end{equation}
 
 
-\section{kinematics choice}
+
+\section{Kinematics}
+\label{kine-sec}
+In order to determine the kinematics to be used, a balance was struck between the physical constraints of the detector, increasing the rate by moving to a lower angle, and maximizing the number of events occurring from DIS. The kinematics selected for this technote are described in Table \ref{tab:kine}.
+
 
 \begin{table}[htdp]
-\caption{default}
+\caption{Central values of the kinematics chosen for the $b_1$ proposal.}
 \begin{center}
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-   $x$  &   $Q^2$ &    $W$  &  $E_P$  &  $\theta_0$  &  $\theta_q$ \\
+   Detector & $x$  &   $Q^2$ &    $W$  &  $E_{e'}$  &  $\theta_{e'}$  &  $\theta_q$ \\
 \hline   
-  0.15  &    2.011  &  3.504 &  3.856    &   12.50          &     6.580       \\
-  0.25  &    2.020  &  2.634 &  6.695    &     9.50          &   14.105       \\
-  0.35  &    3.381  &  2.676 &  5.852    &   13.16          &   14.107       \\
-  0.45  &    2.754  &  2.061 &  7.738    &   10.32          &   22.261       \\
-  0.55  &    3.811  &  2.000 &  7.308    &   12.50          &   22.253       \\
+SHMS	 & 0.15 &	1.21 & 2.78 & 6.70 &  7.35 & 11.13 \\
+SHMS	 & 0.30 &	2.00 & 2.36 & 7.45 &  8.96 & 17.66 \\
+SHMS	 & 0.45 &	2.58 & 2.00 & 7.96 &  9.85 & 23.31 \\
+HMS	 & 0.55 &	3.81 & 2.00 & 7.31 & 12.50 & 22.26 \\
 \hline  
 \end{tabular}
 \end{center}
-\label{default}
+\label{tab:kine}
 \end{table}%
 
-\section{systematics}
+Estimates for the total kinematic range were calculated in a FORTRAN code, discussed in Section \ref{results-sec}, which looked at the entire acceptance range of the HMS and SHMS. These ranges are displayed in Figure \ref{fig-kine}.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=6cm]{hms_shms_theta.eps} \hspace{10px} \includegraphics[width=6cm]{hms_shms_eprime.eps}	
+	\includegraphics[width=6cm]{hms_shms_theta_q.eps} \hspace{10px} \includegraphics[width=6cm]{hms_shms_w.eps}	
+	\includegraphics[width=6cm]{hms_shms_q2.eps}	
+	\end{center}
+	\caption [Kinematics] {Kinematics chosen for the HMS and SHMS. The darker colored points indicate the central HMS or SHMS value, the red (blue) dotted lines represent the limits of the central value of the HMS (SHMS), and the light grey represent events that will be cut to ensure that DIS is held by maintaining $W>1.85$ GeV, shown as a solid black line.}
+	\label{fig-kine}
+\end{figure}
+
+\newpage 
+\section{Calculated Systematic Uncertainties}
+\label{results-sec}
+Code was written by P. Solvignon and E. Long to automate the method described in Sections \ref{rates-sec} and \ref{stat-sec} using the kinematics discussed in Section \ref{kine-sec}. The FORTRAN code used is available at \url{http://nuclear.unh.edu/~elong/analysis_files/2013-05-09/b1_rates-2013-05-09.tar.gz}. It takes the weighted cross-sections for each kinematics setting and uses it to estimate both the rates and the statistical uncertainty in $A_{zz}$. The rates and the amount of time spent at each setting, assuming 100\% efficiency, are presented in Figure \ref{fig:rates}.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=6cm]{hms_shms_rates.eps} \hspace{10px} \includegraphics[width=6cm]{hms_shms_time.eps}	
+	\end{center}
+	\caption [Rates and Time] {The calculated rates are presented alongside the amount of time, assuming 100\% efficiency, that was used to estimate the uncertainty in $A_{zz}$ and $b_1^d$.}
+	\label{fig:rates}
+\end{figure}
+
+
+Since many of the spectrometer settings overlap in $x$, as shown in Figure \ref{fig-kine}, the number of events in each $x$ bin were integrated so that a distinct measurement of $A_{zz}$ against $x$ could be made. The calculated uncertainty in $A_{zz}$ is shown in Figure \ref{fig-dAzz}.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=8cm]{hms_shms_Azz.eps}
+	\end{center}
+	\caption [Uncertainty in $A_{zz}$] {The estimated uncertainty in $A_{zz}$ is plotted against previous data by HERMES and a number of theoretical calculations.}
+	\label{fig-dAzz}
+\end{figure}
+
+
+Additionally, it estimates the uncertainty on $b_1^d$, which is extracted from $A_{zz}$ by
+\begin{equation}
+b_1^d = - \frac{3}{2}A_{zz} \left( \frac{F_1^d}{A_{\mathrm{D}}} \right)= - \frac{3}{2}A_{zz} \left( \frac{F_1^d}{2} \right). 
+\end{equation}
+The systematic uncertainty on $b_1^d$ is dependent on the uncertainty in $A_{zz}$ such that 
+\begin{equation}
+\delta b_1^d =\sqrt{ \left[ - \frac{3}{2} \left( \frac{F_1^d}{2} \right)\delta A_{zz} \right]^2}.
+\end{equation}
+This uncertainty was also calculated, based on the statistical uncertainty on $A_{zz}$, and is show in Figure \ref{fig-db1}.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=8cm]{hms_shms_b1.eps}
+	\end{center}
+	\caption [Uncertainty in $b_1^d$] {The estimated uncertainty in $b_1^d$ is plotted against previous data by HERMES and a number of theoretical calculations.}
+	\label{fig-db1}
+\end{figure}
+
+
+
+%\section{Systematics}
 
 %%%%% Acknowledgments
 
