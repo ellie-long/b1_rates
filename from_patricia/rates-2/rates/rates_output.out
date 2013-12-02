@@ -1,0 +1,171 @@
+sub_b1d.f:127.63:
+
+         CALL GetAllPDFs(prefix,iset,x,q,upv,dnv,usea,dsea,str,sbar,
+                                                               1
+Warning: Rank mismatch in argument 'sbar' at (1) (scalar and rank-2)
+rm: cannot remove `*.o': No such file or directory
+ using ND3
+ error in dwmin,pzmin   1   0   2 99.900    NaN    NaN  1.000  0.000 -0.985
+           1                       NaN   99.900001525878906                            NaN  -33.363467107816504                            NaN   0.0000000000000000       0.66737804440657555                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           1                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           1                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           1                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           1                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000        0.0000000000000000     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ Reading PDF grid from ../models/Grids/mstw2008lo.00.dat
+           2   1.0732780987909545        5.9000000953674316       0.58650710438518205        8.1417476287559083        14.746631897273318        1.3183200945171585       0.30727663080504186       4.09930414076188354E-002   0.0000000000000000       -0.0000000000000000        336.00000000000000        0.0000000000000000        0.0000000000000000        33.539500465463931       0.83350510229681196     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           2                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        33.539500465463931       0.83350510229681196     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           2                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        33.539500465463931       0.83350510229681196     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           2                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        33.539500465463931       0.83350510229681196     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+           2                       NaN   99.000000000000000                            NaN   10.472434432298842        55.228816342497687        0.0000000000000000        1.0000000000000000                            NaN  -0.0000000000000000                            NaN   336.00000000000000        0.0000000000000000        0.0000000000000000        33.539500465463931       0.83350510229681196     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ --------------------------
+ For ND3
+ lumi=   1.27330192429811870E+035
+ rho=   1.77376496484080327E+023
+ Pzz=   0.30000001192092896     
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.142 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.142 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.142 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.142 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.142 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.142 -0.985
+ error in dwmin,pzmin   1   0   2    Inf    Inf    NaN  1.000  0.000 -0.985
+ error in dwmin,pzmin   1   0   2    NaN    NaN    NaN  1.000  0.000 -0.985
+ -------------------------------------------
+ Clock:
+  0.23999999    
+Too many ticks ( > MAX_TICKS ), autoticking

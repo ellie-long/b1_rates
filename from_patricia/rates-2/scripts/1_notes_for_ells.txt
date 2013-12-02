@@ -1,0 +1,14 @@
+./new_proj_b1.sh plots the projected b1 based on the output of ../ptrates
+	Right now it's plotting the following:
+		A bunch of theory curves
+		HERMES b1 data points
+		Projected HMS b1 points
+		Projected SHMS points
+
+
+./cov.sh plots the projected kinematics coverage based on ../output/xs.out
+	It plots Q^2 vs. x_Bjorken for iSpec = 1 or 2 (HMS or SHMS) and x is in the first x bin
+
+./kin_cov.sh plots the projected kinematics coverage based on ../output/xs.out
+	It differs from cov.sh in that it includes a W>2 cut-off
+	

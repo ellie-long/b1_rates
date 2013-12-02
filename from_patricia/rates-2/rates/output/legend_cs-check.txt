@@ -1,0 +1,2 @@
+ 1			2			3			4		 5			6			7		  8			 9			10		   11				12		13
+ x			q2			th_in		e_in	 ep_in		nu			w2		  sig_pol_d	 sig_up_d	sig_up_n   sig_up_he		f_dil	sig_up_c

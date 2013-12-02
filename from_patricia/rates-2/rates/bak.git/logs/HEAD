@@ -1,0 +1,38 @@
+0000000000000000000000000000000000000000 a273c87938e4516ed60eaed8d42815742e2e19f6 Elena Long <ellie@jlab.org> 1364493105 -0400	commit (initial): First commit -- All files came originally from Patricia Solvignon
+a273c87938e4516ed60eaed8d42815742e2e19f6 12316262af84aef7c72a4177dcd2a7ab65d66d7b Elena Long <ellie@jlab.org> 1364828259 -0400	commit: Re-wrote qvec.f into C++ (qvec.cpp)
+12316262af84aef7c72a4177dcd2a7ab65d66d7b 97db9eeb3c5484c10cb649b7761d1d35a4da1de8 Elena Long <ellie@jlab.org> 1364839016 -0400	commit: Attempting to recreate original proposal rates
+97db9eeb3c5484c10cb649b7761d1d35a4da1de8 7971a2be361b10ca5c8492cf3727bdcc1e986071 Elena Long <ellie@jlab.org> 1364853199 -0400	commit: Things seem to be working, although with a warning in sub_b1d.f -- this can be ignored for now
+7971a2be361b10ca5c8492cf3727bdcc1e986071 06fd05fde49c7ed97183a7ff64b859bfc3c1add0 Elena Long <ellie@jlab.org> 1365194070 -0400	commit: Edited xmgrace files to output kinematics as well as rates plots
+06fd05fde49c7ed97183a7ff64b859bfc3c1add0 7c1aad0e3da4009c26afb9a60e884d477dca90e4 Elena Long <ellie@jlab.org> 1365194464 -0400	commit: Edited parameter files for BB/SBS and HRS/SOLID as well as HMS/SHMS
+7c1aad0e3da4009c26afb9a60e884d477dca90e4 c97984197c8322fe17cff8f616e425aa26764edb Elena Long <ellie@jlab.org> 1365536125 -0400	commit: Set up the "board", almost ready to start playing the game
+c97984197c8322fe17cff8f616e425aa26764edb 142410e65a386fc0f80cf83b2243d67b210397fd Elena Long <ellie@jlab.org> 1365539099 -0400	commit: Added th_qq and cos(th_q) into the ptrates.f script
+142410e65a386fc0f80cf83b2243d67b210397fd 859ac12b0c3f25b09e4248a394afd931ab8b9b72 Elena Long <ellie@jlab.org> 1365540521 -0400	commit: Added theta_q to the rates and parameter files
+859ac12b0c3f25b09e4248a394afd931ab8b9b72 14dbecbf8761c911f536aa12a91dd9c09be221ed Elena Long <ellie@jlab.org> 1365543269 -0400	commit: The board is set, it's time to start playing (with the rates)
+14dbecbf8761c911f536aa12a91dd9c09be221ed ac84db61072174c34dc93b0d3c86db6477ba7078 Elena Long <ellie@jlab.org> 1365543859 -0400	commit: Added a |W|=2 line to show the cut-off of DIS
+ac84db61072174c34dc93b0d3c86db6477ba7078 f5019bea7c5c4885f52adf89e3fe9b5d3bc1e349 Elena Long <ellie@jlab.org> 1365787085 -0400	commit: Things are working now, about to try and add x>0.8 rates
+f5019bea7c5c4885f52adf89e3fe9b5d3bc1e349 9c5d12613b9becec146342333ac134c8ff85e923 Elena Long <ellie@jlab.org> 1366213625 -0400	commit: QuasiElastic peak working, added dx error bars
+9c5d12613b9becec146342333ac134c8ff85e923 e19599afc57aae4d98b6f2d813712ed5e0ed20bc Elena Long <ellie@jlab.org> 1366748971 -0400	commit: I think the total rates are *finally* working correctly. Or at least reasonably.
+e19599afc57aae4d98b6f2d813712ed5e0ed20bc d4cb39564f7c228867795e55e1057907160ad385 Elena Long <ellie@jlab.org> 1366832562 -0400	commit: Maxed out total rates at 1kHz and 50kHz
+d4cb39564f7c228867795e55e1057907160ad385 ae589075bd7088c1d3921a3eb2566c983cfe1bdd Elena Long <ellie@jlab.org> 1366924836 -0400	commit: Added spectrometer limit lines in theta and E'
+ae589075bd7088c1d3921a3eb2566c983cfe1bdd b74e3b1fcc0b884c9d0160fafbfc4115d0cdb169 Elena Long <ellie@jlab.org> 1366983779 -0400	commit: Added spectrometer theta and E' limits, changed Q^2 to maximize to the limits
+b74e3b1fcc0b884c9d0160fafbfc4115d0cdb169 2d7ee09e93f47c96d26692b160fa2ae5de5016ba Elena Long <ellie@jlab.org> 1367507360 -0400	commit: Things are looking good!
+2d7ee09e93f47c96d26692b160fa2ae5de5016ba bcfa1bbb2c031cea9e2314bbdbf572f465a1a857 Elena Long <ellie@jlab.org> 1367520115 -0400	commit: Added the groundwork to include non-physics rate, but haven't implemented it yet
+bcfa1bbb2c031cea9e2314bbdbf572f465a1a857 d1db5d43fb5e0aa3ae66a9f38ae29fbe31978221 Elena Long <ellie@jlab.org> 1367530860 -0400	commit: Everything is working, so I'm going to stop for the moment...
+d1db5d43fb5e0aa3ae66a9f38ae29fbe31978221 733a68e3c2db0674980d37d7c70586b422233d7f Elena Long <ellie@jlab.org> 1367587163 -0400	commit: Added comments to clarify what's done and what's in progress
+733a68e3c2db0674980d37d7c70586b422233d7f 7b191d459cb44e07c6e35d525010e362efe0d4a9 Elena Long <ellie@jlab.org> 1367593365 -0400	commit: OUR CODES MATCH!!! :-D
+7b191d459cb44e07c6e35d525010e362efe0d4a9 281b7dac8b4c94b2bce6aec67e961cc6eca96282 Elena Long <ellie@jlab.org> 1367596020 -0400	commit: Added weighted average x bins for b1, Azz, rates, and time
+281b7dac8b4c94b2bce6aec67e961cc6eca96282 dbe4677e6f7bad3fe5d94a2672e6df9208449af6 Elena Long <ellie@jlab.org> 1367700403 -0400	commit: Implemented dAzz per x bin, not per spectrometer setting
+dbe4677e6f7bad3fe5d94a2672e6df9208449af6 b21340f21b07468ccb0fcd2418c00edbad407dbe Elena Long <ellie@jlab.org> 1367702042 -0400	commit: Edited plots to reflect x rebinning
+b21340f21b07468ccb0fcd2418c00edbad407dbe ec8d4a41dfb582a9c5f14f848281ed33e4493bb8 Elena Long <ellie@jlab.org> 1367811942 -0400	commit: Everything is working good -- let's not screw it up
+ec8d4a41dfb582a9c5f14f848281ed33e4493bb8 c14e9fe3b515d60b3559e768bc150eee7d6315f1 Elena Long <ellie@jlab.org> 1368112658 -0400	commit: Everything is finalized for the b1 proposal submission
+c14e9fe3b515d60b3559e768bc150eee7d6315f1 349e97823f1f6ad9f932c72b56a9f216de53a44e Elena Long <ellie@jlab.org> 1370469485 -0400	commit: Fixed problems with rebinned x bins, added drift uncertainties as a weighted average
+349e97823f1f6ad9f932c72b56a9f216de53a44e d8568513a5646d1e3a6d855c727671882365843f Elena Long <ellie@jlab.org> 1374526207 -0400	commit: Final version used in PAC defense talk
+d8568513a5646d1e3a6d855c727671882365843f 26a58b2e41f8854a04d4134e538c0e011b5321fd Elena Long <ellie@jlab.org> 1379449279 -0400	commit: Code now runs Quasi-Elastic and x>1 region
+26a58b2e41f8854a04d4134e538c0e011b5321fd bd6bed3adc8356ea54eba69cf08ae1315d0ced69 Elena Long <ellie@jlab.org> 1379449333 -0400	commit: Added shell script that scans over Q2
+bd6bed3adc8356ea54eba69cf08ae1315d0ced69 650786ecb4ef91c76b7ea5cee916026f4231c8b3 Elena Long <ellie@jlab.org> 1380750059 -0400	commit: Extra code for plotting the cross section added
+650786ecb4ef91c76b7ea5cee916026f4231c8b3 64486963ecf67d33d7ae799691530491dfea5ba8 Elena Long <ellie@jlab.org> 1380750086 -0400	commit: Added parameter files for cross section plots
+64486963ecf67d33d7ae799691530491dfea5ba8 6356731fdd2a77c6b7565308baba60bd5cf430a5 Elena Long <ellie@jlab.org> 1381160627 -0400	commit: Working
+6356731fdd2a77c6b7565308baba60bd5cf430a5 a32eb5442c6749411db382afc6d25de78b6d8f15 Elena Long <ellie@jlab.org> 1381262601 -0400	commit: Best Azz plots working now
+a32eb5442c6749411db382afc6d25de78b6d8f15 64889a108aa410efb315aa90151fcba3e106d98b Elena Long <ellie@jlab.org> 1381269931 -0400	commit: All working! :-D
+64889a108aa410efb315aa90151fcba3e106d98b 3b3cce47fd4d0f29a1298d3c835df76fe6be00bf Elena Long <ellie@jlab.org> 1381430358 -0400	commit: Added Azz plotting files, kinematics now shaded
+3b3cce47fd4d0f29a1298d3c835df76fe6be00bf 064cbe39c2fa5a29d4e01b2496e4dd63e04326da Elena Long <ellie@jlab.org> 1386013341 -0500	commit: Most recent with Azz

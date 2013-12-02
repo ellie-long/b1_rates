@@ -1,0 +1,43 @@
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+Most of the data is of the form:
+
+1			2		3				4	5	6			7						8		9					10
+ispectro	ix		thit			q2	x	sqrt(w2)	sigma_unpol				Aout	sigma_tensor		sigma_born
+iSpec		x Bin	Theta (degrees)	Q^2	x	|W|			Unpolarized xs (barns)	Azz		Tensor xs (barns)	Total xs (barns)
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+While some of the data (every 20 or so lines) is of the form:
+
+1			2	3					4		5						6
+ispectro	x	th_in				pit		sigradsum				isum
+iSpec		x	Theta (degrees)		E'		Sum of Unpolarized xs	# of Unpolarized xs summed over
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In both cases, iSpec is defined by:
+1 = HMS
+2 = SHMS
+3 = HRS
+4 = SOLID
+5 = BigBite
+6 = Super BigBite
+
+
+
+1	2	3		4		5		6			7		8			9		  10
+is	ix	thit	q2		x	sqrt(w2) sigma_unpol  Aout		sigma_tensor sigma_born
+
+
+1  2  3  4	5	 6		7		8		9		10		11		12		13		14			15			16		 17			18			19			20			21			22		  23		  24		25		26
+is ix ip it isum thit	th_in	q2		qq		x		xx		w2 		 w*w	sig_d 		sig_he		sig_n	 F1d		F2d			F1he		F2he		F1n			F2n		  pit		  thit		thit_q	all_sig
+
+
+
+
+
+
+
+
+
