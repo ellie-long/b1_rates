@@ -1,0 +1,353 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/solid/!svn/ver/295/solid_gemc/database_io/geometry
+END
+solid_BaBar_SIDIS_ec_largeangle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_ec_largeangle.pl
+END
+solid_CLEO_SIDIS_ec_forwardangle_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_ec_forwardangle_kill.pl
+END
+solid_CLEO_PVDIS_cherenkov.pl
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/solid/!svn/ver/292/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_cherenkov.pl
+END
+solid_CLEO_SIDIS_absorber.pl
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/solid/!svn/ver/255/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_absorber.pl
+END
+solid_CLEO_PVDIS_target.pl
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_target.pl
+END
+solid_CLEO_SIDIS_virtualhodoscope_ec.pl
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/solid/!svn/ver/246/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_virtualhodoscope_ec.pl
+END
+submit_solid_CLEO_PVDIS
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/solid/!svn/ver/257/solid_gemc/database_io/geometry/submit_solid_CLEO_PVDIS
+END
+solid_BaBar_solenoid.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_solenoid.pl
+END
+solid_BaBar_PVDIS_gem.pl
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_gem.pl
+END
+solid_CLEO_SIDIS_gem.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_gem.pl
+END
+solid_BaBar_PVDIS_gem_real.pl
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_gem_real.pl
+END
+solid_CLEO_SIDIS_absorber_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/solid/!svn/ver/255/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_absorber_kill.pl
+END
+solid_BaBar_SIDIS_target.pl
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_target.pl
+END
+solid_CLEO_SIDIS_beamline.pl
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_beamline.pl
+END
+solid_CLEO_PVDIS_ec_forwardangle_thin.pl
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_ec_forwardangle_thin.pl
+END
+solid_BaBar_PVDIS_baffle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_baffle.pl
+END
+solid_CLEO_JPsi_target.pl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_JPsi_target.pl
+END
+solid_BaBar_PVDIS_ec_forwardangle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_ec_forwardangle.pl
+END
+solid_CLEO_solenoid.pl
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_solenoid.pl
+END
+solid_CLEO_SIDIS_ec_forwardangle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/solid/!svn/ver/234/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_ec_forwardangle.pl
+END
+solid_BaBar_PVDIS_cherenkov.pl
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_cherenkov.pl
+END
+solid_CLEO_SIDIS_ec_largeangle_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_ec_largeangle_kill.pl
+END
+solid_CLEO_SIDIS_target.pl
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_target.pl
+END
+solid_BaBar_SIDIS_mrpc.pl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_mrpc.pl
+END
+solid_CLEO_PVDIS_baffle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/solid/!svn/ver/239/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_baffle.pl
+END
+submit_solid_CLEO_SIDIS
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/solid/!svn/ver/257/solid_gemc/database_io/geometry/submit_solid_CLEO_SIDIS
+END
+solid_BaBar_SIDIS_ptarget.pl
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_ptarget.pl
+END
+solid_CDF_solenoid.pl
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CDF_solenoid.pl
+END
+solid_BaBar_SIDIS_cherenkov_lightgas.pl
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_cherenkov_lightgas.pl
+END
+solid_CLEO_solenoid_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_solenoid_kill.pl
+END
+solid_BaBar_SIDIS_gem.pl
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_gem.pl
+END
+solid_BaBar_PVDIS_absorber.pl
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_absorber.pl
+END
+solid_BaBar_SIDIS_gem_real.pl
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_gem_real.pl
+END
+solid_BaBar_SIDIS_cherenkov_heavygas.pl
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_cherenkov_heavygas.pl
+END
+solid_CLEO_SIDIS_mrpc.pl
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/solid/!svn/ver/295/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_mrpc.pl
+END
+drop_geo_table
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/drop_geo_table
+END
+solid_CLEO_SIDIS_ec_forwardangle_thin.pl
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_ec_forwardangle_thin.pl
+END
+solid_CLEO_PVDIS_baffle_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/solid/!svn/ver/239/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_baffle_kill.pl
+END
+solid_CLEO_PVDIS_virtualhodoscope_cher.pl
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/solid/!svn/ver/294/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_virtualhodoscope_cher.pl
+END
+solid_CLEO_SIDIS_cherenkov_lightgas.pl
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/solid/!svn/ver/292/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_cherenkov_lightgas.pl
+END
+solid_CLEO_PVDIS_ec_forwardangle_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_ec_forwardangle_kill.pl
+END
+solid_BaBar_SIDIS_ec_forwardangle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_ec_forwardangle.pl
+END
+solid_CLEO_SIDIS_ec_largeangle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/solid/!svn/ver/234/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_ec_largeangle.pl
+END
+go_table
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/go_table
+END
+solid_CLEO_SIDIS_cherenkov_heavygas.pl
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/solid/!svn/ver/292/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_cherenkov_heavygas.pl
+END
+solid_CLEO_SIDIS_target_collimator.pl
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/solid/!svn/ver/256/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_target_collimator.pl
+END
+solid_CLEO_SIDIS_virtualhodoscope_mrpc.pl
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/solid/!svn/ver/235/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_virtualhodoscope_mrpc.pl
+END
+create_new_geo_table
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/create_new_geo_table
+END
+solid_CLEO_PVDIS_gem.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_gem.pl
+END
+solid_BaBar_SIDIS_absorber.pl
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_absorber.pl
+END
+solid_BaBar_PVDIS_target.pl
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_target.pl
+END
+solid_CLEO_PVDIS_beamline.pl
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_beamline.pl
+END
+solid_CLEO_SIDIS_target_collimator_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/solid/!svn/ver/256/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_target_collimator_kill.pl
+END
+solid_BaBar_PVDIS_baffle_kill.pl
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_PVDIS_baffle_kill.pl
+END
+solid_BaBar_SIDIS_sc.pl
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_BaBar_SIDIS_sc.pl
+END
+solid_CLEO_SIDIS_ec_largeangle_thin.pl
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/solid/!svn/ver/203/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_ec_largeangle_thin.pl
+END
+solid_CLEO_SIDIS_virtualhodoscope_cher.pl
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/solid/!svn/ver/294/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_virtualhodoscope_cher.pl
+END
+solid_CLEO_PVDIS_ec_forwardangle.pl
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/solid/!svn/ver/234/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_ec_forwardangle.pl
+END

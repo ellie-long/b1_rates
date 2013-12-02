@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svnroot/solid/!svn/ver/281/solid_gemc/script
+END
+copytree_fluxT.C
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/solid/!svn/ver/254/solid_gemc/script/copytree_fluxT.C
+END
+solid_CLEO_PVDIS.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/solid/!svn/ver/207/solid_gemc/script/solid_CLEO_PVDIS.gcard
+END
+solid_CDF_SIDIS.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/solid/!svn/ver/204/solid_gemc/script/solid_CDF_SIDIS.gcard
+END
+run_solid_CLEO_PVDIS
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/solid/!svn/ver/248/solid_gemc/script/run_solid_CLEO_PVDIS
+END
+tofpid.C
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/solid/!svn/ver/281/solid_gemc/script/tofpid.C
+END
+solid_CDF_PVDIS.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/solid/!svn/ver/204/solid_gemc/script/solid_CDF_PVDIS.gcard
+END
+copytree_genT_fluxT.C
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/solid/!svn/ver/254/solid_gemc/script/copytree_genT_fluxT.C
+END
+solid_BaBar_SIDIS.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/solid/!svn/ver/204/solid_gemc/script/solid_BaBar_SIDIS.gcard
+END
+solid_BaBar_PVDIS_baffle.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/solid/!svn/ver/204/solid_gemc/script/solid_BaBar_PVDIS_baffle.gcard
+END
+solid_CLEO_SIDIS_3he.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/solid/!svn/ver/245/solid_gemc/script/solid_CLEO_SIDIS_3he.gcard
+END
+solid_BaBar_PVDIS.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/solid/!svn/ver/204/solid_gemc/script/solid_BaBar_PVDIS.gcard
+END
+set_solidGEMC_farm
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/solid/!svn/ver/280/solid_gemc/script/set_solidGEMC_farm
+END
+solid_slice.vis
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/solid/!svn/ver/204/solid_gemc/script/solid_slice.vis
+END
+run_solid_CLEO_SIDIS_3he
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svnroot/solid/!svn/ver/245/solid_gemc/script/run_solid_CLEO_SIDIS_3he
+END
+set_solidGEMC_local
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/solid/!svn/ver/237/solid_gemc/script/set_solidGEMC_local
+END

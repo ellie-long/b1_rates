@@ -1,0 +1,32 @@
+#!/bin/csh -f
+if($1 == "-h" || $#argv != 1) then
+	echo "Usage:   "
+	echo  "  >> sumbit_xxx geometry_database"
+	echo  "submit all geometry for a particular solid configuration"
+	echo  "Possible databases: solid_geometry, user_geometry etc."
+	exit 0
+endif
+
+set database = $1
+ 
+./go_table solid_CLEO_SIDIS_absorber_kill $database
+./go_table solid_CLEO_SIDIS_absorber $database
+./go_table solid_CLEO_SIDIS_acceptance $database
+./go_table solid_CLEO_SIDIS_beamline $database
+./go_table solid_CLEO_SIDIS_cherenkov_heavygas $database 
+./go_table solid_CLEO_SIDIS_cherenkov_lightgas $database
+./go_table solid_CLEO_SIDIS_ec_forwardangle_kill $database
+./go_table solid_CLEO_SIDIS_ec_forwardangle $database
+./go_table solid_CLEO_SIDIS_ec_forwardangle_thin $database
+./go_table solid_CLEO_SIDIS_ec_largeangle_kill $database
+./go_table solid_CLEO_SIDIS_ec_largeangle $database
+./go_table solid_CLEO_SIDIS_ec_largeangle_thin $database
+./go_table solid_CLEO_SIDIS_gem $database
+./go_table solid_CLEO_SIDIS_mrpc $database
+./go_table solid_CLEO_SIDIS_target_collimator_kill $database
+./go_table solid_CLEO_SIDIS_target_collimator $database
+./go_table solid_CLEO_SIDIS_target $database
+./go_table solid_CLEO_SIDIS_virtualhodoscope_ec $database
+./go_table solid_CLEO_SIDIS_virtualhodoscope_mrpc $database
+./go_table solid_CLEO_solenoid_kill $database
+./go_table solid_CLEO_solenoid $database

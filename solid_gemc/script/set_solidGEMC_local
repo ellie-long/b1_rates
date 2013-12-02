@@ -1,0 +1,18 @@
+#!/bin/tcsh
+#this is just an example script to setup SoLID GEMC on local machine
+#modify the variables to your path and source it to setup
+#by default, gemc is its current production version, located at /site/12gev_phys/"system"/gemc/"version"/, to use a specific version, you need to download from its repo, compile and call it explicitly.
+setenv JLAB_ROOT /home/zwzhao/apps/jlab_software  #setup basic enviroment variables for gemc on local installation
+source $JLAB_ROOT/ce/jlab.csh                     #setup basic enviroment variables for gemc on local installation
+setenv SoLID_GEMC /home/zwzhao/solid/solid_svn/solid/solid_gemc #solid_gemc location where you download from SoLID SVN (modify this to your path)
+setenv GEMC_field /home/zwzhao/solid/field        #location of GEMC field map on local
+setenv GEMC_HOST 127.0.0.1          #use this after ssh tunneling if your system is NOT on jlab network
+#setenv GEMC_HOST soliddb.jlab.org  #use this if your system is on jlab network and no need tunneling
+setenv GEMC_DB solid_geometry       #the official detector database
+setenv GEMC_BANK solid_banks        #the official output bank info
+#setenv GEMC_DB   test              #user geometry for test
+#setenv GEMC_BANK test              #user banks for test
+setenv GEMC_USER soliduser          #this user only can read database, used for run simulation
+setenv GEMC_PASS ilovesolid         #readonly user password
+#setenv GEMC_USER soliddev          #this user can read and write, used for update database
+#setenv GEMC_PASS                   #ask other solid gemc develeoper for this password

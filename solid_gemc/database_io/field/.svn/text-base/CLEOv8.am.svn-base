@@ -1,0 +1,243 @@
+SoLID CLEO-II version 8
+;Coil turns: 1282 total, 3 pieces: 2*166-left 2*309-center, 2*166 right
+;Coil Current   3266								
+;										
+&reg kprob=	0	,           	; Declares a POISSON problem							
+
+icylin=1,               ; Cylindrical symmetry
+ienergy=1,              ; Calculate the full energy
+xjfact= 1.0             ; The current multiplicative factor
+dx=1.0,                 ; Mesh interval 0.3 originally
+rhogam=0.000001,        ; relaxation parameter, default = 0.08
+;mode=-1                ; Use fixed gamma for material 2
+mode=0                  ; Use variable gamma for material 2
+
+xreg1=  80.,  kreg1=  41,
+xreg2= 120.,  kreg2=  81,
+xreg3= 150.,  kreg3= 141,
+xreg4= 156.,  kreg4= 201,
+xreg5= 190.,  kreg5= 269,
+xreg6= 320.,  kreg6= 399,
+xreg7= 400.,  kreg7= 439, 
+              kmax = 464,
+
+yreg1=-300.,  lreg1 = 151,
+yreg2=-220.,  lreg2 = 231,
+yreg3=-180.,  lreg3 = 271,
+yreg4= 180.,  lreg4 = 631,
+yreg5= 220.,  lreg5 = 671,
+yreg6= 300.,  lreg6 = 711,
+              lmax  = 861,
+
+
+nbsup=0,                ; Dirichlet boundary condition on upper edge
+nbslf=0,                ; Dirichlet boundary condition on left edge
+nbsrt=0,                ; Dirichlet boundary condition on right edge
+nbslo=0,                ; Dirichlet boundary condition on bottom
+ibound=0 &
+
+;Hall      Region  1 
+&po y= -600. ,x=  0.  &
+&po y=  600. ,x=  0.  &
+&po y=  600. ,x=500.  &
+&po y= -600. ,x=500.  &
+&po y= -600. ,x=  0.  &
+
+; Upstream coil Inner Region 2
+&reg    mat=1,   cur=542156.0 &						
+&po y=-173.80,  x=152.30  &
+&po y= -85.50,  x=152.30  &
+&po y= -85.50,  x=152.70  &
+&po y=-173.80,  x=152.70  &
+&po y=-173.80,  x=152.30  &
+
+; Central coil Inner Region 3
+&reg    mat=1,   cur=1009194.0 &						
+&po y= -85.50,  x=152.30  &
+&po y=  85.50,  x=152.30  &
+&po y=  85.50,  x=152.70  &
+&po y= -85.50,  x=152.70  &
+&po y= -85.50,  x=152.30  &
+
+; Downstream coil Inner Region 4
+&reg    mat=1,   cur=542156.0 &						
+&po y= 173.80,  x=152.30  &
+&po y=  85.50,  x=152.30  &
+&po y=  85.50,  x=152.70  &
+&po y= 173.80,  x=152.70  &
+&po y= 173.80,  x=152.30  &
+
+; Upstream coil Outer Region 5
+&reg    mat=1,   cur=542156.0 &						
+&po y=-173.80,  x=153.90  &
+&po y= -85.50,  x=153.90  &
+&po y= -85.50,  x=154.30  &
+&po y=-173.80,  x=154.30  &
+&po y=-173.80,  x=153.90  &
+
+; Central coil Outer Region 6
+&reg    mat=1,   cur=1009194.0 &						
+&po y= -85.50,  x=153.90  &
+&po y=  85.50,  x=153.90  &
+&po y=  85.50,  x=154.30  &
+&po y= -85.50,  x=154.30  &
+&po y= -85.50,  x=153.90  &
+
+; Downstream coil Outer Region 7
+&reg    mat=1,   cur=542156.0 &						
+&po y= 173.80,  x=153.90  &
+&po y=  85.50,  x=153.90  &
+&po y=  85.50,  x=154.30  &
+&po y= 173.80,  x=154.30  &
+&po y= 173.80,  x=153.90  &
+
+; Barrel yoke Inner Region 8
+&reg    mat=2  &
+&po y=-266.50,  x=212.60  &
+&po y=-266.50,  x=177.90  &
+&po y=-189.00,  x=177.90  &
+&po y=-189.00,  x=176.60  &
+&po y= 189.00,  x=176.60  &
+&po y= 189.00,  x=177.90  &
+&po y= 189.00,  x=212.60  &
+&po y=-266.50,  x=212.60  &
+
+; Barrel yoke Outer Region 9
+&reg    mat=2  &
+&po y=-266.50,  x=221.50  &
+&po y= 189.00,  x=221.50  &
+&po y= 189.00,  x=257.50  &
+&po y=-266.50,  x=257.50  &
+&po y=-266.50,  x=221.50  &
+
+; Slab spacer Upstream Region 10 - they cover about 90% of the circumference, compnsated here by the width 34cm->30.6cm
+&reg    mat=2  &
+&po y=-266.50,  x=212.60  &
+&po y=-266.50,  x=221.50  &
+&po y=-235.90,  x=221.50  &
+&po y=-235.90,  x=212.60  &
+&po y=-266.50,  x=212.60  &
+
+; Slab spacer Downstream Region 11 - they cover about 90% of the circumference, compnsated here by the width 34cm->30.6cm
+&reg    mat=2  &
+&po y= 189.00,  x=212.60  &
+&po y= 189.00,  x=221.50  &
+&po y= 159.00,  x=221.50  &
+&po y= 159.00,  x=212.60  &
+&po y= 189.00,  x=212.60  &
+
+; Coil collar Upstream Region 12
+&reg    mat=2  &
+&po y=-266.50,  x=144.00  &
+&po y=-189.00,  x=144.00  &
+&po y=-189.00,  x=177.90  &
+&po y=-266.50,  x=177.90  &
+&po y=-266.50,  x=144.00  &
+
+; Coil collar Downstream 1 Region 13 split in 3 pieces to calculate the forces
+&reg    mat=2  &
+&po y= 189.00,  x=285.00  &
+&po y= 189.00,  x=257.50  &
+&po y= 209.00,  x=257.50  &
+&po y= 209.00,  x=285.00  &
+&po y= 189.00,  x=285.00  &
+
+; Coil collar Downstream 2 Region 14 split in 3 pieces to calculate the forces
+&reg    mat=2  &
+&po y= 189.00,  x=257.50  &
+&po y= 189.00,  x=177.60  &
+&po y= 209.00,  x=177.60  &
+&po y= 209.00,  x=257.50  &
+&po y= 189.00,  x=257.50  &
+
+; Coil collar Downstream 3 Region 15 split in 3 pieces to calculate the forces
+&reg    mat=2  &
+&po y= 189.00,  x=177.60  &
+&po y= 189.00,  x=144.00  &
+&po y= 193.00,  x=144.00  &
+&po y= 209.00,  x=156.00  &
+&po y= 209.00,  x=177.60  &
+&po y= 189.00,  x=177.60  &
+
+; Endcap Donut  Region 16
+&reg    mat=2  &
+&po y= 209.00,  x=270.00  &
+&po y= 209.00,  x=285.00  &
+&po y= 485.00,  x=285.00  &
+&po y= 485.00,  x=270.00  &
+&po y= 209.00,  x=270.00  &
+
+; Endcap Bottom Inner Region 17
+&reg    mat=2  &
+&po y= 485.00,  x=285.00  &
+&po y= 485.00,  x= 30.00  &
+&po y= 500.00,  x= 30.00  &
+&po y= 500.00,  x=285.00  &
+&po y= 485.00,  x=285.00  &
+
+; Endcap Bottom Outer Region 18
+&reg    mat=2  &
+&po y= 500.00,  x=185.00  &
+&po y= 500.00,  x= 30.00  &
+&po y= 515.00,  x= 45.00  &
+&po y= 515.00,  x=170.00  &
+&po y= 500.00,  x=185.00  &
+
+; Endcap Nose Region 19
+&reg    mat=2  &
+&po y= 485.00,  x= 90.00  &
+&po y= 485.00,  x= 30.00  &
+&po y= 405.00,  x= 30.00  &
+&po y= 189.00,  x= 20.00  &
+&po y= 189.00,  x= 60.00  &
+&po y= 405.00,  x= 90.00  &
+&po y= 485.00,  x= 90.00  &
+
+; Front piece Region 20  
+&reg    mat=2  &
+&po y=-237.00,  x=144.00  &
+&po y=-207.00,  x=144.00  &
+&po y=-207.00,  x= 70.20  &
+&po y=-237.00,  x= 55.60  &
+&po y=-237.00,  x=144.00  &
+
+; Upstream shield 1 Region 21
+&reg    mat=2  &
+&po y=-246.50,  x=144.00  &
+&po y=-250.50,  x=144.00  &
+&po y=-250.50,  x= 48.50  &
+&po y=-246.50,  x= 50.50  &
+&po y=-246.50,  x=144.00  &
+
+; Upstream shield 2 Region 22
+&reg    mat=2  &
+&po y=-254.50,  x=144.00  &
+&po y=-258.50,  x=144.00  &
+&po y=-258.50,  x= 44.60  &
+&po y=-254.50,  x= 46.50  &
+&po y=-254.50,  x=144.00  &
+
+; Upstream shield 3 Region 23
+&reg    mat=2  &
+&po y=-262.50,  x=144.00  &
+&po y=-266.50,  x=144.00  &
+&po y=-266.50,  x= 40.10  &
+&po y=-262.50,  x= 42.70  &
+&po y=-262.50,  x=144.00  &
+
+; Upstream shield 4 Region 24
+&reg    mat=2  &
+&po y=-270.50,  x=257.50  &
+&po y=-274.50,  x=257.50  &
+&po y=-274.50,  x= 36.80  &
+&po y=-270.50,  x= 38.80  &
+&po y=-270.50,  x=257.50  &
+
+; Upstream shield 5 Region 25
+&reg    mat=2  &
+&po y=-277.50,  x=257.50  &
+&po y=-280.50,  x=257.50  &
+&po y=-280.50,  x= 33.90  &
+&po y=-277.50,  x= 35.30  &
+&po y=-277.50,  x=257.50  &
+

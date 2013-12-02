@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks
+END
+go_bank
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/go_bank
+END
+go_hits
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/go_hits
+END
+solid_hits_def.txt
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/solid_hits_def.txt
+END

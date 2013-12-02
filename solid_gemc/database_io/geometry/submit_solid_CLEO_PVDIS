@@ -1,0 +1,23 @@
+#!/bin/csh -f
+if($1 == "-h" || $#argv != 1) then
+	echo "Usage:   "
+	echo  "  >> sumbit_xxx geometry_database"
+	echo  "submit all geometry for a particular solid configuration"
+	echo  "Possible databases: solid_geometry, user_geometry etc."
+	exit 0
+endif
+
+set database = $1
+ 
+./go_table solid_CLEO_PVDIS_baffle_kill $database
+./go_table solid_CLEO_PVDIS_baffle $database
+./go_table solid_CLEO_PVDIS_beamline $database
+./go_table solid_CLEO_PVDIS_cherenkov $database
+./go_table solid_CLEO_PVDIS_ec_forwardangle_kill $database
+./go_table solid_CLEO_PVDIS_ec_forwardangle $database
+./go_table solid_CLEO_PVDIS_ec_forwardangle_thin $database
+./go_table solid_CLEO_PVDIS_gem $database
+./go_table solid_CLEO_PVDIS_target $database
+./go_table solid_CLEO_PVDIS_virtualhodoscope_ec $database
+./go_table solid_CLEO_solenoid_kill $database
+./go_table solid_CLEO_solenoid $database

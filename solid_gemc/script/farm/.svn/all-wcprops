@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svnroot/solid/!svn/ver/249/solid_gemc/script/farm
+END
+LongRun_sim
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/solid/!svn/ver/249/solid_gemc/script/farm/LongRun_sim
+END
+exec_sim
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/solid/!svn/ver/249/solid_gemc/script/farm/exec_sim
+END
+do_it_all.sh
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/solid/!svn/ver/249/solid_gemc/script/farm/do_it_all.sh
+END
