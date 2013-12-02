@@ -1,0 +1,27 @@
+#!/bin/sh
+$GEMC_bin \
+-gcard=solid_CLEO_PVDIS.gcard \
+-DBHOST=$GEMC_HOST \
+-HALL_MATERIAL=Vacuum \
+-RECORD_PASSBY=1 \
+-FIELD_DIR=$GEMC_field \
+-HALL_FIELD=solenoid_CLEO \
+-SCALE_FIELD="solenoid_CLEO, -1" \
+-BEAM_P="chargedgeantino, 5.5*GeV, 25*deg, 0*deg" \
+-SPREAD_P="5.5*GeV, 25*deg, 180*deg" \
+-BEAM_V="(0, 0, 10)cm" \
+-SPREAD_V="(0.1, 20)cm" \
+-N=5e5 \
+-OUTPUT="evio,acceptance_solid_CLEO_PVDIS_negative.evio" \
+-USE_QT=0
+
+# -N=1e5 \
+# -OUTPUT="evio,acceptance_solid_CLEO_PVDIS.evio" \
+# -USE_QT=0
+
+# -geometry=1000x1000 \
+# -EXEC_MACRO=/home/zwzhao/solid/solid_svn/solid/gemc_tool/script/solid_slice.vis \
+# -USE_QT=1
+
+# -CHECK_OVERLAPS=1 \
+# -USE_QT=0

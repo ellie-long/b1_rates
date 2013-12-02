@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/bankdefs
+END
+raw.bank
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/bankdefs/raw.bank
+END
+FLUX.bank
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/bankdefs/FLUX.bank
+END
+Generated.bank
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/bankdefs/Generated.bank
+END
+TRACE.bank
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/bankdefs/TRACE.bank
+END
+SBSGEM.bank
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/solid/!svn/ver/225/solid_gemc/database_io/banks/bankdefs/SBSGEM.bank
+END

@@ -1,0 +1,21 @@
+#!/bin/tcsh
+#tested on ifarml1101(centos 5.3 x64), NOT working on ifarm1102(centos 6.2 x64)
+#source this script to setup SoLID GEMC on ifarm and farm systems, modify SoLID_GEMC to your path
+#by default, gemc is its current production version by default in jlab.csh, to run the production version for SoLID gemc, we need to specify its version by set the env variables explicitly, currently its gemc version 1.7
+setenv GEANT4_VERSION 4.9.5.p01
+setenv CLHEP_VERSION 2.1.2.0
+setenv ROOT_VERSION 5.32
+setenv QT_VERSION 4.8.1
+setenv GEMC_VERSION 1.7
+source  /site/12gev_phys/ce/jlab.csh               #setup basic enviroment variables on ifarm
+setenv SoLID_GEMC /home/zwzhao/solid/solid_svn/solid/solid_gemc #solid_gemc location where you download from SoLID SVN (modify this to your path)
+setenv GEMC_field /u/group/halla/www/hallaweb/html/12GeV/SoLID/download/field       #location of GEMC field map on ifarm
+setenv GEMC_HOST soliddb.jlab.org   #use this if your system is on jlab network
+setenv GEMC_DB solid_geometry       #the official detector database
+setenv GEMC_BANK solid_banks        #the official output bank info
+#setenv GEMC_DB   test              #user geometry for test
+#setenv GEMC_BANK test              #user banks for test
+setenv GEMC_USER soliduser          #this user only can read database, used for run simulation
+setenv GEMC_PASS ilovesolid         #readonly user password
+#setenv GEMC_USER soliddev          #this user can read and write, used for update database
+#setenv GEMC_PASS                   #ask other solid gemc develeoper for this password

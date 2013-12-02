@@ -1,0 +1,30 @@
+#!/bin/sh
+gemc \
+-gcard=solid_CLEO_SIDIS_3he.gcard \
+-DBHOST=$GEMC_HOST \
+-HIT_PROCESS_LIST=solid \
+-USE_PHYSICSL=QGSP_BERT_HP \
+-HALL_MATERIAL=Air \
+-RECORD_PASSBY=1 \
+-FIELD_DIR=$GEMC_field \
+-HALL_FIELD=solenoid_CLEO \
+-BEAM_P="e-, 11*GeV, 0*deg, 0*deg" \
+-BEAM_V="(0, 0, -400)cm" \
+-SPREAD_V="(0.1, 0)cm" \
+-N=2e7 \
+-OUTPUT="evio,background_solid_CLEO_SIDIS_3he_2e7.evio" \
+-USE_QT=0 
+
+# -OUTPUT="evio,background_solid_CLEO_SIDIS_3he_2e7.evio" \
+# -USE_QT=0
+
+# -N=1e5 \
+# -OUTPUT="evio,acceptance_solid_CLEO_PVDIS.evio" \
+# -USE_QT=0
+
+# -geometry=1000x1000 \
+# -EXEC_MACRO=$SoLID_GEMC/script/solid_slice.vis \
+# -USE_QT=1
+
+# -CHECK_OVERLAPS=1 \
+# -USE_QT=0

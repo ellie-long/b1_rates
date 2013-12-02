@@ -1,0 +1,23 @@
+the code shoot beam into target and count the particles on various detectors.
+physcis is handled by geant4 depending the chosen physicslist.
+Dominant channel generally is EM which mean electrons and photons. neutrons can be obtained if particular neutron physicslist is used.
+
+here is an example how to run it.
+
+run "run_solid_CLEO_SIDIS_3he"
+this shoots beam into target and output detector hits in evio format
+
+run "gemc_evio2root background_solid_CLEO_SIDIS_3he_5e7.evio background_solid_CLEO_SIDIS_3he_5e7.root"
+this converts evio to root format
+
+in root, run ".x root2hit.C("background_solid_CLEO_SIDIS_3he_5e7.root")"
+this converts hits in flux bank into a txt file to reduce file size.
+
+compile packacge niel to have niel_fun_lib.so
+
+in root, run ".L ../niel/niel_fun_lib.so"
+
+in root, run ".x background.C("background_solid_CLEO_SIDIS_3he_5e7.txt",5e7)"
+this plot histograms showing hits and store them in background_solid_CLEO_SIDIS_3he_5e7_output.root
+
+2012 by Zhiwen Zhao

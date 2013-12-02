@@ -1,0 +1,15 @@
+<gcard>
+
+<!-- geometry: 	-->
+        <sqltable name="solid_CLEO_solenoid_kill"/>
+        <sqltable name="solid_CLEO_SIDIS_absorber_kill"/>
+        <sqltable name="solid_CLEO_SIDIS_virtualhodoscope_ec"/>
+        <sqltable name="solid_CLEO_SIDIS_ec_largeangle_kill"/>
+        <sqltable name="solid_CLEO_SIDIS_ec_forwardangle_kill"/>
+<!-- option: 	-->
+        <option name="DBUSER"          value="soliduser" />
+        <option name="DBPSWD"          value="ilovesolid" />
+        <option name="DATABASE"        value="user_geometry_1" />
+        <option name="BANK_DATABASE"   value="user_banks_1" />
+</gcard>
+

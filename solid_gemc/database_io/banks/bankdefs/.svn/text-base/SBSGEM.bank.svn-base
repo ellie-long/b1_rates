@@ -1,0 +1,23 @@
+ETot	1	1	1	Total Energy Deposited
+x	2	1	1	Average global x position
+y	3	1	1	Average global y position
+z	4	1	1	Average global z position
+lxin	5	1	1	local x entrance position
+lyin	6	1	1	local y entrance position
+lzin	7	1	1	local z entrance position
+tin	8	1	1	entrance time
+lxout	9	1	1	local x entrance position
+lyout	10	1	1	local y entrance position
+lzout	11	1	1	local z entrance position
+tiout	12	1	1	exit time
+pid	13	1	1	Particle ID
+vx	14	1	1	x coordinate of primary vertex
+vy	15	1	1	y coordinate of primary vertex
+vz	16	1	1	z coordinate of primary vertex
+E	17	1	1	Energy of the track at the entrance point
+trid	18	1	1	Track ID
+weight	19	1	1	Event weight
+px	20	1	1	Momentum x
+py	21	1	1	Momentum y
+pz	22	1	1	Momentum z
+id	23	0	1	Volume ID

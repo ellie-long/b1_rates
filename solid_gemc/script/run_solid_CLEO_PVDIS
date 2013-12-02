@@ -1,0 +1,53 @@
+#!/bin/sh
+gemc \
+-gcard=solid_CLEO_PVDIS.gcard \
+-DBHOST=$GEMC_HOST \
+-USE_PHYSICSL=FTFP_BERT \
+-HALL_MATERIAL=Vacuum \
+-RECORD_PASSBY=1 \
+-FIELD_DIR=$GEMC_field \
+-HALL_FIELD=solenoid_CLEO \
+-BEAM_P="e-, 11*GeV, 0*deg, 0*deg" \
+-BEAM_V="(0, 0, -500)cm" \
+-SPREAD_V="(0.1, 0)cm" \
+-HIT_VERBOSITY=100 \
+-OUT_VERBOSITY=5 \
+-geometry=1000x1000 \
+-EXEC_MACRO=$SoLID_GEMC/script/solid_slice.vis \
+-USE_QT=1
+
+# -geometry=1000x1000 \
+# -EXEC_MACRO=$GEMC/macros/solid_slice.vis \
+# -USE_QT=1
+
+# -CHECK_OVERLAPS=1 \
+# -USE_QT=0
+
+# -LUMI_EVENT="120, 120*ns, 2*ns" \
+# -LUMI_P="pi+, 5*GeV, 15*deg, 2*deg" \
+# -OUTPUT="evio,out.evio" \
+# -OUTPUT="txt,out.txt" \
+# -HALL_FIELD=uniformY2T \
+# -PRINT_EVENT=1 \
+# -HIT_VERBOSITY=100 \
+# -ENERGY_CUT=1 \
+# -OUT_VERBOSITY=5 \
+# -FIELD_DIR=./ \
+# -BEAM_P="e+, 5.5*GeV, 28.5*deg, 0*deg" \
+# -SPREAD_P="5.5*GeV, 6.5*deg, 360*deg" \
+# -BEAM_V="(0, 0, 10)cm" \
+# -SPREAD_V="(0.5, 20)cm" \
+# -OUTPUT="txt,out_new.txt" \
+# -N=1000 \
+# -HALL_FIELD=solenoid_BaBar \
+# -OUTPUT="txt,baffle_fullTarget_positron_1M.txt" \
+# -OUTPUT="txt,baffle_fullTarget_gamma_100K.txt" \
+# -SPREAD_V="(0.5, 20)cm" \
+#-OUTPUT="txt,baffle_fullTarget_1M.txt" \
+# -EXEC_MACRO=$GEMC/macros/solid_slice.vis \
+# -gcard=solid_BaBar_PVDIS_baffleplate.gcard \
+# -N=10 \
+# -OUTPUT="txt,out.txt" \
+# -OUTPUT="evio,out.evio" \
+#-BEAM_P="e-, 6*GeV, 30*deg, 0*deg" \
+# -INPUT_GEN_FILE="LUND, test_generator_4_4GeV.lund" \

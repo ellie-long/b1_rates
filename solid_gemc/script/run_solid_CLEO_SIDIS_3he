@@ -1,0 +1,24 @@
+#!/bin/sh
+gemc \
+-gcard=solid_CLEO_SIDIS_3he.gcard \
+-DBHOST=$GEMC_HOST \
+-USE_PHYSICSL=FTFP_BERT \
+-HALL_MATERIAL=Vacuum \
+-RECORD_PASSBY=1 \
+-FIELD_DIR=$GEMC_field \
+-HALL_FIELD=solenoid_CLEO \
+-BEAM_P="e-, 11*GeV, 0*deg, 0*deg" \
+-BEAM_V="(0, 0, -500)cm" \
+-SPREAD_V="(0.1, 0)cm" \
+-HIT_VERBOSITY=100 \
+-OUT_VERBOSITY=5 \
+-geometry=1000x1000 \
+-EXEC_MACRO=$SoLID_GEMC/script/solid_slice.vis \
+-USE_QT=1 
+
+# -geometry=1000x1000 \
+# -EXEC_MACRO=$GEMC/macros/solid_slice.vis \
+# -USE_QT=1 
+
+# -CHECK_OVERLAPS=1 \
+# -USE_QT=0

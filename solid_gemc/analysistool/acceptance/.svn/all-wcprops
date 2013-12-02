@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/solid/!svn/ver/277/solid_gemc/analysistool/acceptance
+END
+solid_CLEO_SIDIS_3he.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/solid/!svn/ver/277/solid_gemc/analysistool/acceptance/solid_CLEO_SIDIS_3he.gcard
+END
+acceptance.C
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/solid/!svn/ver/277/solid_gemc/analysistool/acceptance/acceptance.C
+END
+run_solid_CLEO_PVDIS_negative
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/solid/!svn/ver/210/solid_gemc/analysistool/acceptance/run_solid_CLEO_PVDIS_negative
+END
+run_solid_CLEO_PVDIS_positive
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/solid/!svn/ver/277/solid_gemc/analysistool/acceptance/run_solid_CLEO_PVDIS_positive
+END
+run_solid_CLEO_SIDIS_3he_negative
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/solid/!svn/ver/258/solid_gemc/analysistool/acceptance/run_solid_CLEO_SIDIS_3he_negative
+END
+run_solid_CLEO_SIDIS_3he_positive
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/solid/!svn/ver/258/solid_gemc/analysistool/acceptance/run_solid_CLEO_SIDIS_3he_positive
+END
+solid_CLEO_PVDIS_nobaffle.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/solid/!svn/ver/210/solid_gemc/analysistool/acceptance/solid_CLEO_PVDIS_nobaffle.gcard
+END
+readme
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/solid/!svn/ver/259/solid_gemc/analysistool/acceptance/readme
+END
+run_solid_CLEO_PVDIS_neutral
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/solid/!svn/ver/210/solid_gemc/analysistool/acceptance/run_solid_CLEO_PVDIS_neutral
+END
+solid_CLEO_PVDIS.gcard
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/solid/!svn/ver/203/solid_gemc/analysistool/acceptance/solid_CLEO_PVDIS.gcard
+END
+run_solid_CLEO_PVDIS_nobaffle_negative
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/solid/!svn/ver/226/solid_gemc/analysistool/acceptance/run_solid_CLEO_PVDIS_nobaffle_negative
+END

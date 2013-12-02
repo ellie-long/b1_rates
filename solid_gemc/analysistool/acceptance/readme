@@ -1,0 +1,22 @@
+shoot geantino(neutral) or chargedgeantino(positive) from target position over target length into SoLID and look for the hits on various detectors like EC and GEM, if there is a hit, this event is considered detected and the generated particle P and theta is recorded.
+
+To test negative particle, use chargedgeantino and flip field by gemc option SCALE_FIELD="solenoid_CLEO, -1" 
+
+in *.gcard
+use "kill" type of solenoid, absorber, baffle etc which have material "Kryptonite" to make sure particles can get blocked.
+use virtualhodoscope in front of EC to see particle hits.
+In the acceptace.C, there's a cut on the EC surface to determine if the EC can detect a particle with its tracjectory.
+
+modify run_* and *.gcard to fit your program environment and database you want to use.
+
+run run_* to generate the evio, use gemc_evio2root to convert to root
+
+use acceptance.C("gemc_rootfile") to plot and generate output rootfile
+
+In the output root file, acceptance in P VS theta histograms are stored as acceptance_largeangle and 
+acceptance_forwardangle
+
+where P is from 0 to 11 GeV, 0.1GeV per bin, theta is from 0 to 50 degree, 0.2 degree per bin 
+
+modified 2013_01_07 Zhiwen Zhao
+created 2012_08_21 Zhiwen Zhao 
