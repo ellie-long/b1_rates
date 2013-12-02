@@ -1,0 +1,11 @@
+#!/bin/sh
+
+rm fort.*
+rm ./ptrates
+
+#gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f 
+gfortran -ffixed-line-length-none -o ptrates ptrates-play.f F1F209.f 
+
+
+rm *.o
+./ptrates

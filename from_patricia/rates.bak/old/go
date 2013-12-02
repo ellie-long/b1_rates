@@ -1,0 +1,8 @@
+#!/bin/sh
+
+rm fort.*
+rm ./rates
+
+gfortran -ffixed-line-length-none -o rates rates.f sub_b1d.f
+
+rm *.o
