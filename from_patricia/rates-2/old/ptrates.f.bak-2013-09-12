@@ -1,0 +1,1658 @@
+      PROGRAM RATES
+c----------
+c     Get rates for the b1d proposal
+c
+c--   Patricia Solvignon, Nov. 16, 2010
+c Edited heavily by Elena Long, 4/10/2013
+c 
+
+      integer :: clck_counts_beg, clck_counts_end, clck_rate
+      REAL*8 pi,alpha,mp,e_ch,picobarn,nanobarn,Navo
+      REAL*8 mass_D,mass_N,mass_He
+      PARAMETER( hbarc2   = 0.389379E-3) ! barn.GeV^2
+      PARAMETER( pi       = 3.14159265 )
+      PARAMETER( mp       = 0.938272   )
+      PARAMETER( mass_D   = 1.876      )
+      PARAMETER( mass_N   = 14.0067    )
+      PARAMETER( mass_He  = 3.7284     )
+      PARAMETER( e_ch     = 1.602E-19  )
+      PARAMETER( picobarn = 1E12       )
+      PARAMETER( nanobarn = 1E9        )
+      PARAMETER( Navo     = 6.022E23   )   ! mol-1
+
+      INTEGER kin_in
+      INTEGER npbin,ntbin
+      INTEGER ip,it
+      REAL*8 z_d,z_he,z_n
+      REAL*8 a_d,a_he,a_n
+      REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
+      REAL*8 A,d_r
+      REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
+      REAL*8 deg,thrad,thincr,thmin,thmax
+      REAL*8 dep,epmin,epmax
+      REAL*8 s2,t2,xx,qq,w
+      REAL*8 rc,rche,rcn
+
+      REAL*8 ND
+      REAL*8 rho_nd3,M_nd3,dil_nd3,pack_nd3,Pz_nd3
+      REAL*8 rho_lid,M_lid,dil_lid,pack_lid,Pz_lid
+      REAL*8 f_dil,Pzz_fact
+      REAL*8 rho,Nelec,lumi,lumi_d
+      REAL*8 rho_he,m_he,lumi_he
+      REAL*8 rho_n,m_n,lumi_n
+
+      REAL*8 deltae
+      REAL*8 w2min,w2pion,K_fact
+
+      REAL*8 tb,ta,teff
+      REAL*8 aux(7)
+
+      REAL*8 pit,thit
+      REAL*8 snsq,cssq,tnsq,nu,q2,w2,x,cstheta
+      REAL*8 w2end
+
+      REAL*8 bcurrent,tgt_thick,tgt_len
+
+      REAL*8 mott_d,mott_he,mott_n,mott_p
+      REAL*8 Pzz,Aout,F1out,b1out,F2out,F1in,F1qe
+      REAL*8 F1d,F2d,F1he,F2he,F1n,F2n
+      REAL*8 allF1out,allF2out,allF1in,allF1qe
+      REAL*8 allF1d,allF2d,allF1he,allF2he,allF1n,allF2n
+      REAL*8 F1dend,F2dend
+      REAL*8 sigma_unpol,sigma_tensor,sigma_born
+      REAL*8 sigma_unpol_d,sigma_unpol_he,sigma_unpol_n
+      REAL*8 sigma_pol_d
+      REAL*8 allsigma_unpol_d,allsigma_unpol_he,allsigma_unpol_n
+      REAL*8 allsigma_pol_d,tot_allsigma
+      REAL*8 sigma_unpol_xem
+      REAL*8 sigma_meas
+      REAL*4 dis_raw,qe_raw,mod_raw
+      REAL*8 ZforF1,AforF1
+
+      ! output rates
+      REAL*8  xp,q2p
+      REAL*8  sigradsum,sigradave,sigma_unpol_e
+      REAL*8  he_sigradsum,he_sigradave
+      REAL*8  n_sigradsum,n_sigradave
+      REAL*8  d_sigradsum,d_sigradave
+      REAL*8  allsigradsum,allsigradave
+      REAL*8  he_allsigradsum,he_allsigradave
+      REAL*8  n_allsigradsum,n_allsigradave
+      REAL*8  d_allsigradsum,d_allsigradave
+      REAL*8  d_unpol_sigradsum,d_unpol_sigradave
+      REAL*8  sigma,sigmasum,sigcenter,sigmasump
+      REAL*8  rate
+      REAL*8  ratecheck_d, ratecheck_he, ratecheck_n
+      REAL*8  ratecheck_all_d, ratecheck_all_he, ratecheck_all_n
+      REAL*8  physrate,totalrate
+      REAL*8  d_unpol_rate
+      REAL*8  ratetot
+      REAL*8  he_ratetot
+      REAL*8  d_unpol_ratetot
+      REAL*8  n_ratetot
+      REAL*8  d_ratetot
+      REAL*8  all_ratetot
+      REAL*8  totrate(11),sigsum(11)
+      REAL*8  he_totrate(11),he_sigsum(11)
+      REAL*8  d_unpol_totrate(11),d_unpol_sigsum(11)
+      REAL*8  n_totrate(11),n_sigsum(11)
+      REAL*8  d_totrate(11),d_sigsum(11)
+      REAL*8  allrate
+      REAL*8  d_unpol_allrate
+      REAL*8  allratetot
+      REAL*8  he_allratetot
+      REAL*8  d_unpol_allratetot
+      REAL*8  n_allratetot
+      REAL*8  d_allratetot
+      REAL*8  all_allratetot
+      REAL*8  totallrate(11),allsigsum(11)
+      REAL*8  he_totallrate(11),he_allsigsum(11)
+      REAL*8  d_unpol_totallrate(11),d_unpol_allsigsum(11)
+      REAL*8  n_totallrate(11),n_allsigsum(11)
+      REAL*8  d_totallrate(11),d_allsigsum(11)
+
+ 
+      INTEGER ixsum(11),ib
+      INTEGER allixsum(11)
+      REAL*8  sigpara,sigperp,e_fact,scale,b1d_scaled,scale_time
+      REAL*8  Azz,dAzz,time,pac_time,dAzz_rel
+      REAL*8  b1d,db1d
+      REAL*8  e_b1_abs
+
+      REAL*8  xcent,prec_bin
+
+      REAL*8  tot_time(100)
+      REAL*8  fsyst_xs
+      REAL*8  syst_Azz, syst_b1d
+      REAL*4  dummy
+
+      REAL*8 m_nuc,m_amu,m_e
+      INTEGER apass,zpass
+      INTEGER ix,ispectro,isum,type
+      INTEGER allisum
+      CHARACTER targ*3
+
+      LOGICAL central
+      INTEGER method
+
+      INTEGER nx,nx1,nx2,nx3,nx4,nx5,nx6
+      REAL*8 prec
+
+      PARAMETER (nx1  = 5)
+      REAL*8 xval1(nx1),qqval1(nx1),prec1(nx1)
+
+      PARAMETER (nx2  = 5)
+      REAL*8 xval2(nx2),qqval2(nx2),prec2(nx2)
+
+      PARAMETER (nx3  = 5)
+      REAL*8 xval3(nx3),qqval3(nx3),prec3(nx3)
+
+      PARAMETER (nx4  = 5)
+      REAL*8 xval4(nx4),qqval4(nx4),prec4(nx4)
+
+      PARAMETER (nx5  = 5)
+      REAL*8 xval5(nx5),qqval5(nx5),prec5(nx5)
+
+      PARAMETER (nx6  = 5)
+      REAL*8 xval6(nx6),qqval6(nx6),prec6(nx6)
+
+      REAL*8 xmin(5),xmax(5)
+      REAL*8 good_x_min,good_x_max
+      REAL*8 cent_x(5),cent_x_min(5),cent_x_max(5)
+      REAL*8 N_for_x(5),Ngood_for_x(5),Ntotal_for_x(5)
+      REAL*8 thisNforx(5),xsum(5)
+      REAL*8 w_ave(5),sigma_sum(5)
+      REAL*8 total_w_ave(5),N_sum(5)
+      REAL*8 dAzz_drift(5)
+      REAL*8 drift_scale
+      REAL*8 ave_x,spec_x
+      REAL*8 totsig_for_ave_x
+    
+      REAL*8 E0_PASS,TH_PASS,EP_PASS
+      REAL*8 rr1,rr2,phistar,thstar
+      REAL*8 thq,thq_r,cosqvec
+      REAL*8 xdx
+      COMMON /VPLRZ/ E0_PASS,TH_PASS,EP_PASS
+      call system_clock ( clck_counts_beg, clck_rate ) 
+
+
+      DATA cent_x/  0.49, 0.75, 1.0, 1.25, 1.0/ 
+      DATA cent_x_min/  0.4, 0.7, 0.95, 1.2,0.9/ 
+      DATA cent_x_max/  0.58, 0.8, 1.05, 1.3,1.1/ 
+
+cc      DATA cent_x/  0.16, 0.275, 0.36, 0.49,10/ 
+cc      DATA cent_x_min/  0.09, 0.23, 0.32, 0.40,10/ 
+cc      DATA cent_x_max/  0.23, 0.32, 0.40, 0.58,10/ 
+
+c      DATA cent_x/  0.15, 0.3, 0.4, 0.45,10/ 
+c      do ib=1,5
+c         cent_x_min(ib) = cent_x(ib) - 0.1
+c         cent_x_max(ib) = cent_x(ib) + 0.1
+c      enddo
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c This section creates the x and Q^2 values to be used
+c for each of the data points to be run
+c      REAL*8 x1,x2,x3,x4,x5
+c      REAL*8 qq1,qq2,qq3,qq4,qq5
+c      PARAMETER (x1 = 0.1)
+c      PARAMETER (x2 = 0.3)
+c      PARAMETER (x3 = 0.5)
+c      PARAMETER (x4 = 0.75)
+c      PARAMETER (x5 = 1.0)
+c      PARAMETER (qq1 = 0.01)
+c      PARAMETER (qq2 = 0.01)
+c      PARAMETER (qq3 = 0.01)
+c      PARAMETER (qq4 = 0.01)
+c      PARAMETER (qq5 = 0.01)
+c      ! 11 GeV kinematics
+c      ! HMS
+c      DATA xval1/    x1, x2, x3, x4, x5/
+c      DATA qqval1/   qq1, qq2, qq3, qq4, qq5/   
+c      DATA prec1/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! SHMS
+c      DATA xval2/    x1, x2, x3, x4, x5/
+c      DATA qqval2/   qq1, qq2, qq3, qq4, qq5/   
+c      DATA prec2/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! HRSs
+c      DATA xval3/    x1, x2, x3, x4, x5/
+c      DATA qqval3/   qq1, qq2, qq3, qq4, qq5/   
+c      DATA prec3/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! SOLID
+c      DATA xval4/    x1, x2, x3, x4, x5/
+c      DATA qqval4/   qq1, qq2, qq3, qq4, qq5/   
+c      DATA prec4/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! BB
+c      DATA xval5/    x1, x2, x3, x4, x5/
+c      DATA qqval5/   qq1, qq2, qq3, qq4, qq5/   
+c      DATA prec5/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! SBS
+c      DATA xval6/    x1, x2, x3, x4, x5/
+c      DATA qqval6/   qq1, qq2, qq3, qq4, qq5/   
+c      DATA prec6/    0.50,  0.50,  0.50,  0.50,  0.50/
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+c THE BIT BELOW IS A COPY JUST FOR, I DON'T KNOW, THINGS
+c ARE WORKING AND I DON'T WANT TO DELETE THEM QUITE YET.
+c HOWEVER, THERE'S NO REAL REASON WHY IT'S STILL HERE.
+c NOR FOR WHY I'M TYPING IN ALL CAPS. Sorry 'bout that. :-(
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c This section creates the x and Q^2 values to be used
+c for each of the data points to be run
+c      ! 11 GeV kinematics
+c      ! HMS
+c      DATA xval1/    0.1, 0.3, 0.5, 0.625, 0.75/
+c      DATA qqval1/   1.322, 2.307, 2.711, 2.861, 2.971/   
+c      DATA prec1/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! SHMS
+c      DATA xval2/    0.1, 0.3, 0.5, 0.625, 0.75/
+c      DATA qqval2/   1.322, 2.307, 2.711, 2.861, 2.971/   
+c      DATA prec2/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! HRSs
+c      DATA xval3/    0.1, 0.3, 0.5, 0.625, 0.75/
+c      DATA qqval3/   1.322, 2.307, 2.711, 2.861, 2.971/   
+c      DATA prec3/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! SOLID
+c      DATA xval4/    0.1, 0.3, 0.5, 0.625, 0.75/
+c      DATA qqval4/   1.322, 2.307, 2.711, 2.861, 2.971/   
+c      DATA prec4/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! BB
+c      DATA xval5/    0.1, 0.3, 0.5, 0.625, 0.75/
+c      DATA qqval5/   1.322, 2.307, 2.711, 2.861, 2.971/   
+c      DATA prec5/    0.50,  0.50,  0.50,  0.50,  0.50/
+c
+c      ! SBS
+c      DATA xval6/    0.1, 0.3, 0.5, 0.625, 0.75/
+c      DATA qqval6/   1.322, 2.307, 2.711, 2.861, 2.971/   
+c      DATA prec6/    0.50,  0.50,  0.50,  0.50,  0.50/
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c This section creates the x and Q^2 values to be used
+c for each of the data points to be run
+      ! 11 GeV kinematics
+      ! HMS
+       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+cc      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
+      DATA xval1/    100.0, 100.0, 100.0, 100.0, 1.25/
+c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 100.0/
+c      DATA xval1/    0.1, 0.3, 0.5, 0.75, 1.00/
+      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
+c      DATA prec1/    0.0625,  0.250,  0.250,  0.5,  5.00/
+c     vvvvvv Max Rate = 1kHz
+c      DATA qqval1/   1.61, 3.8, 4.8, 4.5, 2.388/   
+c     vvvvvv Max Rate, Min dAzz
+       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+cc      DATA qqval1/   99, 99, 99, 99, 3.81/   
+      DATA qqval1/   99, 99, 99, 99, 2.6/   
+
+c     vvvvvv Min dB1
+c      DATA qqval1/   1.5, 2.91, 3.58, 5.25, 6.86/   
+
+
+c      DATA qqval1/   99, 99, 99, 99, 4.31/   
+c      DATA qqval2/   1.21, 2.50, 2.08, 99, 99/   
+
+c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.59/
+c      DATA xval2/    0.19, 0.34, 0.492, 100.0, 100.0/
+
+      ! SHMS
+c      DATA xval2/    0.1, 0.3, 0.5, 0.75, 1.00/
+c      DATA prec2/    216.0,  216.0,  288.0,  168.0,  168.0/
+      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
+c      DATA prec2/    9999.0,  9999.0,  9999.0,  9999.0,  9999.0/
+c      DATA xval2/    0.15, 0.3, 0.452, 0.75, 1.00/
+       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+cc      DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
+      DATA xval2/    0.5, 0.75, 1.0, 100.0, 100.0/
+c      DATA xval2/    0.1, 0.3, 0.5, 0.75, 0.99/
+c      DATA prec2/    72.0,  72.0,  576.0,  168.0,  168.0/
+c      DATA prec2/    0.0625,  0.250,  0.250,  0.5,  5.00/
+c     vvvvv HERMES
+c      DATA xval2/    0.1, 0.3, 0.452, 0.128, 0.248/
+c      DATA qqval2/   1.01, 1.5, 4.69, 2.33, 3.11/   
+c      DATA prec2/    168.0,  168.0,  117.4,  982.2,  59.65/
+c     vvvvvv Max Rate = 1kHz
+c      DATA qqval2/   1.64, 3.9, 4.7, 4.5, 4.1/   
+c     vvvvvv Max Rate, Min dAzz
+c      DATA qqval2/   1.01, 1.5, 3.1, 1.75, 1.8/   
+c      DATA qqval2/   1.21, 1.5, 2.58, 1.75, 1.8/   
+c      DATA qqval2/   1.21, 1.5, 2.58, 99, 99/   
+       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+cc      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+
+c     vvvvvv Min db1
+c      DATA qqval2/   1.03, 2.59, 3.12, 1.75, 4.61/   
+
+      ! HRSs
+c      DATA xval3/    0.1, 0.3, 0.5, 0.75, 1.00/
+      DATA xval3/    100, 100, 100, 100, 100/
+      DATA qqval3/   0.70, 1.4, 3.2, 5.2, 0.90/   
+      DATA prec3/    0.50,  0.50,  0.50,  0.50,  0.50/
+
+      ! SOLID
+c      DATA xval4/    0.1, 0.3, 0.5, 0.75, 1.00/
+      DATA xval4/    100, 100, 100, 100, 100/
+      DATA qqval4/   0.70, 1.4, 3.2, 5.2, 0.90/   
+      DATA prec4/    0.50,  0.50,  0.50,  0.50,  0.50/
+
+      ! BB
+c      DATA xval5/    0.1, 0.3, 0.5, 0.75, 1.00/
+      DATA xval5/    100, 100, 100, 100, 100/
+      DATA qqval5/   0.70, 1.4, 3.2, 5.2, 0.90/   
+      DATA prec5/    0.50,  0.50,  0.50,  0.50,  0.50/
+
+      ! SBS
+c      DATA xval6/    0.1, 0.3, 0.5, 0.75, 1.00/
+      DATA xval6/    100, 100, 100, 100, 100/
+      DATA qqval6/   0.70, 1.4, 3.2, 5.2, 0.90/   
+      DATA prec6/    0.50,  0.50,  0.50,  0.50,  0.50/
+
+      ! rebinning
+c      DATA xmin/ 0.00,0.200,0.400,0.650,0.90/
+c      DATA xmax/ 0.20,0.400,0.600,0.850,1.10/
+c      DATA xmin/ 0.00,0.200,0.352,0.650,0.45/
+c      DATA xmax/ 0.20,0.400,0.552,0.850,0.65/
+      DATA xmin/ 0.00,0.000,0.000,0.000,0.00/
+      DATA xmax/ 0.60,0.600,0.600,0.600,0.600/
+c      DATA xmin/ 0.00,0.200,0.400,0.028,0.148/
+c      DATA xmax/ 0.20,0.400,0.600,0.228,0.348/
+
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+      ! 11 GeV kinematics
+      ! HMS
+
+c      DATA xval1/    0.150, 0.250, 0.350, 0.450, 0.550/
+c      DATA qqval1/   2.011, 2.020, 3.381, 2.754, 3.811/   
+c      DATA qqval1/   3.5, 1.965, 1.968, 2.754, 3.811/
+c      DATA prec1/    0.50,  0.50,  0.50,  0.50,  0.50/
+
+      ! SHMS
+c      DATA xval2/    0.150, 0.250, 0.350, 0.450, 0.550/    
+c      DATA xval2/    0.150, 0.220, 0.250, 0.450, 0.550/    
+c      DATA qqval2/   2.011, 2.020, 3.381, 2.754, 3.811/   
+c      DATA qqval2/   1.5, 2.2, 1.968, 2.754, 3.811/
+c      DATA prec2/    0.50,  0.50,  0.50,  0.50,  0.50/    
+
+      ! HRSs
+c      DATA xval3/    0.150, 0.250, 0.350, 0.450, 0.550/    
+c      DATA qqval3/   2.011, 2.020, 3.381, 2.754, 3.811/   
+c      DATA prec3/    0.50,  0.50,  0.50,  0.50,  0.50/    
+
+      ! SOLID
+c      DATA xval4/    0.150, 0.250, 0.350, 0.450, 0.550/    
+c      DATA qqval4/   2.011, 2.020, 3.381, 2.754, 3.811/   
+c      DATA prec4/    0.50,  0.50,  0.50,  0.50,  0.50/    
+
+      ! BB
+c      DATA xval5/    0.150, 0.250, 0.350, 0.450, 0.550/    
+c      DATA qqval5/   2.011, 2.020, 3.381, 2.754, 3.811/   
+c      DATA prec5/    0.50,  0.50,  0.50,  0.50,  0.50/    
+
+      ! SBS
+c      DATA xval6/    0.150, 0.250, 0.350, 0.450, 0.550/    
+c      DATA qqval6/   2.011, 2.020, 3.381, 2.754, 3.811/   
+c      DATA prec6/    0.50,  0.50,  0.50,  0.50,  0.50/    
+
+      ! rebinning
+c      DATA xmin/ 0.100,0.200,0.300,0.400,0.500/
+c      DATA xmax/ 0.200,0.300,0.400,0.500,0.600/
+
+c---- INPUT/OUTPUT -----------------------------------------
+
+      OPEN(UNIT= 8, FILE='output/xs.out',           STATUS='UNKNOWN')
+      OPEN(UNIT= 9, FILE='output/rates_pbin.out',   STATUS='UNKNOWN')
+      OPEN(UNIT=10, FILE='output/rates.out',        STATUS='UNKNOWN')
+      OPEN(UNIT=11, FILE='output/prop_table.out',   STATUS='UNKNOWN')
+      OPEN(UNIT=12, FILE='output/xs-take1.out',     STATUS='UNKNOWN')
+      OPEN(UNIT=13, FILE='output/xs-take2.out',     STATUS='UNKNOWN')
+      OPEN(UNIT=14, FILE='output/rebinned-x.out',   STATUS='UNKNOWN')
+      OPEN(UNIT=15, FILE='output/pre-rebinn-x.out', STATUS='UNKNOWN')
+
+c---- CONSTANT -------------------------------------------
+
+      alpha   =  1.0/137.0
+      d_r     =  pi/180.0     ! deg --> rad
+      m_e     = .5109991D-03  ! Electron mass in GeV/c^2.
+      m_amu   = .9314943D0    ! Atomic mass unit in GeV/c^2.
+c
+c---- PARAMETER -------------------------------------------
+
+      central   = .false.   ! true --> use only central angle
+                            ! false --> use acceptance phase space
+
+      scale_time= 1.0 
+      scale     = 5.0       ! scale b1 kumano model
+      type      = 1         ! 1=physics rates, 2=total rates
+      targ      = 'ND3'     ! ND3 or LiD
+c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
+c      targ      = 'LiD'
+c      e_in      = 5.5 
+c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      w2pion    =  1.18**2  ! pion threshold
+c      w2min     =  2.00**2  ! Cut on W
+cc      w2min     =  1.85**2  ! Cut on W
+      w2min     =  0.25**2  ! Cut on W
+      m_atom    =  2.0
+      bcurrent  =  0.115    ! 0.085    ! microAmps
+      tgt_len   =  3.0*1.0  ! cm
+      ! ND3 specs
+      rho_nd3   =  1.007 !0.917    ! g/cm3
+
+      dil_nd3   =  6.0/20.0 !
+c      pack_nd3  =  0.80 !0.55     ! packing fraction
+      pack_nd3  =  0.65 !0.55     ! packing fraction
+      Pz_nd3    =  0.42 !0.35     ! vector polarization
+      M_nd3     =  20.0     ! g/mole
+      ! LiD specs
+      rho_lid   =  0.82     ! g/cm3
+      dil_lid   =  0.50     !
+      pack_lid  =  0.55     ! 
+      Pz_lid    =  0.30     !0.50     ! 64% vector polarization, Bueltman NIM A425 
+      M_lid     =  9.0      ! g/mole
+
+      ND        =  1.0     ! D-wave component
+c      Pzz_in    =  0.2    ! expected improvement on the target
+c      Pzz_in    =  0.15    ! expected improvement on the target
+c      Pzz_in    =  0.25    ! expected improvement on the target
+      Pzz_in    =  0.35    ! expected improvement on the target
+
+c      fsyst_xs  =  0.13     ! add a 5% from F1
+      fsyst_xs  =  0.05     ! add a 5% from F1
+
+c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
+c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
+      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+
+      ! General Parameters
+      rho_he = 0.1412
+      m_he = 4.0026
+      z_d = 1
+      z_he = 2
+      z_n = 7
+      a_d = 2
+      a_he = 4
+      a_n = 14
+c----- MAIN ------------------------------------------------
+
+c-- Setup target parameters
+      if (targ.eq.'ND3') then
+         rho   = 3.0 * Navo * (rho_nd3 / M_nd3) * pack_nd3 * tgt_len   ! number density in nuclei.cm^-2 
+                                                                       ! = the number of ammonia molecules
+                                                                       ! per unit area times 3 deuterons per molecule
+         Pz    = Pz_nd3
+         f_dil = dil_nd3
+         write(6,*)'using ND3'
+
+      elseif (targ.eq.'LiD') then
+         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
+         Pz    = Pz_lid
+         f_dil = dil_lid
+         write(6,*)'using LiD'
+      endif
+
+c      Pzz   = Pzz_fact *(2. - sqrt(4. - 3.*Pz**2))    ! tensor polarization
+      Pzz = Pzz_in  ! considering that Pzz cannot be derived from Pz
+
+c-- Calculate the luminosity
+      Nelec = bcurrent*1e-6/e_ch
+c      lumi  = Nelec * rho                ! luminosity in cm^-2
+      lumi  = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len           ! luminosity in 1/(s*cm^2)
+      lumi_d  = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len         ! luminosity in 1/(s*cm^2)
+      lumi_n  = (Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len           ! luminosity in 1/(s*cm^2)
+      lumi_he  = (Navo*(rho_he/m_he)*(1-pack_nd3))*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+c      write(10,*)'#    q2     x       w    rate(kHz)     Azz  
+c     &      DAzz    time '
+
+
+      do ib=1,5
+         Ntotal_for_x(ib)=0
+         dAzz_drift(ib) = 0
+      enddo
+
+
+cLoop over the spectrometers
+cvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      do ispectro = 1,6
+      do ispectro = 1,2
+
+         tot_time(ispectro)    = 0.0
+         ! for physics extraction
+        if (ispectro.eq.1.and.type.eq.1) then ! HMS
+            dp_p    =  0.08   ! 8% momentum bite for the HMS
+            dp_m    =  0.08   ! 8% momentum bite for the HMS
+            dtheta  =  0.028  ! theta acceptance of the HMS
+            dphi    =  0.058  ! phi acceptance of the HMS
+            acc     =  2.*dtheta*2.*dphi
+            hms_min =  10.5   ! minimum angle of the HMS
+            dep     =  0.0015*ep_in 
+            nx      =  nx1 
+         elseif (ispectro.eq.2.and.type.eq.1) then ! SHMS
+            dp_p    =  0.20   ! 20% momentum bite for the SHMS
+            dp_m    =  0.08   ! 8% momentum bite for the SHMS
+            dtheta  =  0.022  ! theta acceptance of the SHMS
+            dphi    =  0.050  ! phi acceptance of the SHMS
+            acc     =  2.*dtheta*2.*dphi
+            hms_min =  5.5    ! minimum angle of the SHMS
+            nx      =  nx2 
+
+c            dp_p    =  0.25   ! +25% momentum bite for the SHMS
+c            dp_m    =  0.15   ! -15% momentum bite for the SHMS
+c            dtheta  =  0.018  ! theta acceptance of the SHMS
+c            dphi    =  0.050  ! phi acceptance of the SHMS
+c            acc     =  2.*dtheta*2.*dphi
+c            hms_min =  5.5    ! minimum angle of the SHMS
+c            dep     =  0.002*ep_in 
+c            nx      =  nx2 
+         elseif (ispectro.eq.3.and.type.eq.1) then ! HRS
+            dp_p    =  0.03   ! 20% momentum bite for the HRS
+            dp_m    =  0.03   ! 8% momentum bite for the HRS
+            dtheta  =  0.040  ! theta acceptance of the HRS
+            dphi    =  0.020  ! phi acceptance of the HRS
+            acc     =  2.*dtheta*2.*dphi
+            hms_min =  12.5    ! minimum angle of the HRS
+            nx      =  nx3 
+         elseif (ispectro.eq.4.and.type.eq.1) then ! SOLID
+            dp_p    =  0.08  
+            dp_m    =  0.08  
+            dtheta  =  0.028  ! theta acceptance of the SoLID
+            dphi    =  0.058  ! phi acceptance of the SoLID
+            acc     =  1.43   ! large acceptance: 1.43 sr
+            hms_min =  12.5   ! minimum angle of the SoLID
+            dep     =  0.02*ep_in 
+            nx      =  nx4 
+         elseif (ispectro.eq.5.and.type.eq.1) then ! BB
+            dp_p    =  0.40  
+            dp_m    =  0.40  
+            dtheta  =  0.067    ! theta acceptance of the BB
+            dphi    =  0.240    ! phi acceptance of the BB
+            acc     =  0.064    ! large acceptance: 0.96 sr
+            hms_min =  12.5     ! minimum angle of the BB
+            dep     =  0.02*ep_in 
+            nx      =  nx5
+         elseif (ispectro.eq.6.and.type.eq.1) then ! SBS
+            dp_p    =  0.40  
+            dp_m    =  0.40  
+            dtheta  =  0.080   ! theta acceptance of the SBS
+            dphi    =  0.210   ! phi acceptance of the SBS
+            acc     =  0.076   ! large acceptance: 0.076 sr
+            hms_min =  15.0    ! minimum angle of the SBS
+            dep     =  0.02*ep_in 
+            nx      =  nx6
+         endif
+
+         do ib=1,nx
+            N_for_x(ib) = 0.0
+            Ngood_for_x(ib) = 0.0
+            w_ave(ib) = 0.0
+            sigma_sum(ib) = 0.0
+            xsum(ib)     = 0.0
+         enddo
+         ix=0
+c   Loop over x bins
+c   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+         do ix = 1,nx ! number of x
+            ib = 0
+            do ib=1,nx
+               thisNforx(ib) = 0
+            enddo
+
+            ratetot            = 0.0
+            d_ratetot          = 0.0
+            d_unpol_ratetot    = 0.0
+            n_ratetot          = 0.0
+            he_ratetot         = 0.0
+            all_ratetot        = 0.0
+            allratetot         = 0.0
+            d_allratetot       = 0.0
+            d_unpol_allratetot = 0.0
+            n_allratetot       = 0.0
+            he_allratetot      = 0.0
+            all_allratetot     = 0.0
+            ratecheck_d        = 0.0
+            ratecheck_he       = 0.0
+            ratecheck_n        = 0.0
+            ratecheck_all_d    = 0.0
+            ratecheck_all_he   = 0.0
+            ratecheck_all_n    = 0.0
+            ave_x              = 0.0
+            totsig_for_ave_x  = 0.0
+
+            do ib=1,nx
+               totrate(ib)            = 0.0
+               d_totrate(ib)          = 0.0
+               d_unpol_totrate(ib)    = 0.0
+               n_totrate(ib)          = 0.0
+               he_totrate(ib)         = 0.0
+               sigsum(ib)             = 0.0
+               d_sigsum(ib)           = 0.0
+               d_unpol_sigsum(ib)     = 0.0
+               n_sigsum(ib)           = 0.0
+               he_sigsum(ib)          = 0.0
+               ixsum(ib)              = 0.0
+               totallrate(ib)         = 0.0
+               d_totallrate(ib)       = 0.0
+               d_unpol_totallrate(ib) = 0.0
+               n_totallrate(ib)       = 0.0
+               he_totallrate(ib)      = 0.0
+               sigsum(ib)             = 0.0
+               d_sigsum(ib)           = 0.0
+               d_unpol_sigsum(ib)     = 0.0
+               n_sigsum(ib)           = 0.0
+               he_sigsum(ib)          = 0.0
+               allixsum(ib)           = 0.0
+               N_for_x(ib)            = 0.0
+               xsum(ib)               = 0.0
+            enddo
+            if (ispectro.eq.1) then
+               xx       = xval1(ix)
+               qq       = qqval1(ix)
+               prec     = prec1(ix)
+            elseif (ispectro.eq.2) then
+               xx       = xval2(ix)
+               qq       = qqval2(ix)
+               prec     = prec2(ix)
+            elseif (ispectro.eq.3) then
+               xx       = xval3(ix)
+               qq       = qqval3(ix)
+               prec     = prec3(ix)
+            elseif (ispectro.eq.4) then
+               xx       = xval4(ix)
+               qq       = qqval4(ix)
+               prec     = prec4(ix)
+            elseif (ispectro.eq.5) then
+               xx       = xval5(ix)
+               qq       = qqval5(ix)
+               prec     = prec5(ix)
+            elseif (ispectro.eq.6) then
+               xx       = xval6(ix)
+               qq       = qqval6(ix)
+               prec     = prec6(ix)
+            endif
+ 
+            good_x_min = xx
+            good_x_max = xx
+
+
+ 10         w     = sqrt(mp**2+qq/xx-qq)
+            nu    = qq/2./mp/xx
+            y_in  = nu/e_in
+            ep_in = e_in - nu
+            s2    = qq/4.0/e_in/ep_in
+            thrad = 2.*asin(sqrt(s2))
+            th_in = thrad/d_r
+            superth_in = thrad/d_r
+
+            ! Binning over the momentum bite
+            dep    = 0.02*ep_in
+            epmin  = ep_in*(1.-dp_m)
+            epmax  = ep_in*(1.+dp_p)
+            npbin  = int((epmax-epmin)/dep)+1
+
+            ! binning over the angular spread
+c            thmin  = th_in - dtheta/d_r
+c            thmax  = th_in + dtheta/d_r
+c            ntbin  = int((thmax - thmin)/theta_res)+1
+            ntbin  = 19
+c            ntbin  = 3
+            thincr = dtheta*2.0/float(ntbin)/d_r
+            thmin  = th_in - float(ntbin/2-1/2)*thincr
+
+            ! banner for output files
+            write(9,*)'# th     pit     q2      x      sig_u     rate_u'
+            write(9,*)'#                            (b/GeV.sr)    (Hz)'
+ 
+            ip = 0
+c      Looping over momentum bins
+c      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+            do ip = 1,npbin
+               pit = epmin+(ip-1)*dep
+
+               sigradsum            = 0.0
+               d_sigradsum          = 0.0
+               d_unpol_sigradsum    = 0.0
+               he_sigradsum         = 0.0
+               n_sigradsum          = 0.0
+               allsigradsum         = 0.0
+               d_allsigradsum       = 0.0
+               d_unpol_allsigradsum = 0.0
+               he_allsigradsum      = 0.0
+               n_allsigradsum       = 0.0
+
+               it = 0 
+               isum = 0
+               allisum = 0
+               if (central) then
+                  ntbin = 1
+               endif   
+c         Looping over theta bins 
+c         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+               do it=1,ntbin
+                  if (central) then
+                     thit = th_in
+                  else
+                     thit = thmin+(it-1)*thincr
+                  endif
+                  
+                  thrad = thit*d_r
+                  snsq  = sin(thrad/2.)**2.
+                  cssq  = cos(thrad/2.)**2.
+                  tnsq  = tan(thrad/2.)**2.
+                  nu    = e_in - pit
+                  q2    = 4.*e_in*pit*snsq
+                  x     = q2/(2.*mp*nu)
+                  w2    = mp*mp + q2/x - q2
+
+c                 The section below uses x_Bjorken (xx) and theta_e' (th_in) to determine
+c                 the angle of the q-vector (thq) in degrees
+c                 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+                  E0_PASS = e_in
+                  TH_PASS = thit
+                  EP_PASS = pit
+                  if (w2.ge.0.0) then
+                      rr1 = 0.0
+                      rr2 = 180.
+                      call ROTATION(rr1, rr2, phistar, thstar)
+                      thq = 180. - thstar
+                      thq_r = thq*pi/180.
+                      cosqvec = cos(thq_r)
+                  endif
+c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+c                 vvv The Mott cross sections below are in barns (1E-24 cm^2)
+                  mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+                  mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+                  mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+                  mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+                  b1out    = 0
+                  Aout     = 0
+                  allF1    = 0
+                  allF1out = 0
+                  allF2    = 0
+                  allF1n   = 0
+                  allF2n   = 0
+                  allF1he  = 0
+                  allF2he  = 0
+                  allF1d   = 0
+                  allF2d   = 0
+                  F1       = 0
+                  F1out    = 0
+                  F2       = 0
+                  F1n      = 0
+                  F2n      = 0
+                  F1he     = 0
+                  F2he     = 0
+                  F1d      = 0
+                  F2d      = 0
+                  rc       = 0
+                  rche     = 0
+                  rcn      = 0
+c                  if (x.lt.1.1.and.w2.gt.w2min) then ! DIS 
+c                     call get_b1d(x,q2,Aout,F1out,b1out)
+c                  if (w2.gt.4.0) then
+                      if (x.ge.0.75.and.x.lt.2.0) then             ! If Quasi-Elastic:
+                         call F1F2QE09(z_d,a_d,q2,w2,F1d,F2d)     !      Get F1 for Deuterium
+                         call F1F2QE09(z_he,a_he,q2,w2,F1he,F2he) !      Get F1 and F2 for Helium-4
+                         call F1F2QE09(z_n,a_n,q2,w2,F1n,F2n)     !      Get F1 and F2 for Nitrogen-14
+                         call get_qe_b1d(x,q2,Aout,F1out,b1out)
+                      elseif (x.lt.0.75.and.x.gt.0) then
+                                                                       ! If DIS:
+                         call F1F2IN09(z_d,a_d,q2,w2,F1d,F2d,rc)       !      Get F1 for Deuterium
+                         call F1F2IN09(z_he,a_he,q2,w2,F1he,F2he,rche) !      Get F1 for Helium-4
+                         call F1F2IN09(z_n,a_n,q2,w2,F1n,F2n,rcn)      !      Get F1 for Nitrogen-14
+                         call get_b1d(x,q2,Aout,F1out,b1out)
+
+                      endif
+c                  endif
+c                  F1d  = 2*F1out
+c                  F1he = 4*F1out
+c                  F1n  = 14*F1out
+c                  Aout = (-2/3)*b1out/F1out
+
+c                 vvvvvvv NOTE: THIS IS A WORK IN PROGRESS AND NOT FINISHED YET vvvvvvvvvvvvvvvvvvvvvvvvv
+c                 vvvvvvvvv This part gives us the total, non-physics info vvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+                  rc  = 0
+                  rche = 0
+                  rcn  = 0
+                  if (x.gt.0.75.and.x.lt.2.0) then             ! If Quasi-Elastic:
+                      call F1F2QE09(z_d,a_d,q2,w2,allF1d,allF2d)     !      Get F1 for Deuterium
+                      call F1F2QE09(z_he,a_he,q2,w2,allF1he,allF2he) !      Get F1 and F2 for Helium-4
+                      call F1F2QE09(z_n,a_n,q2,w2,allF1n,allF2n)     !      Get F1 and F2 for Nitrogen-14
+c                      call get_qe_b1d(x,q2,Aout,F1out,b1out)
+                  elseif (x.lt.0.75.and.x.gt.0) then
+                                                                  ! If DIS:
+                      call F1F2IN09(z_d,a_d,q2,w2,allF1d,allF2d,rc)       !      Get F1 for Deuterium
+                      call F1F2IN09(z_he,a_he,q2,w2,allF1he,allF2he,rche) !      Get F1 for Helium-4
+                      call F1F2IN09(z_n,a_n,q2,w2,allF1n,allF2n,rcn)      !      Get F1 for Nitrogen-14
+                  endif
+
+c                  allsigma_unpol    = 2*mott_p*(2.*(allF1d/(2))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  allsigma_unpol_d  = 2*mott_p*(2.*(allF1d/(2))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  allsigma_unpol_he = 4*mott_p*(2.*(allF1he/(4))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  allsigma_unpol_n  = 14*mott_p*(2.*(allF1n/(14))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  allsigma_pol_d    = allsigma_unpol_d*(1+0.5*Pzz*Aout)
+c                  tot_allsigma = allsigma_unpol_d + allsigma_unpol_he + allsigma_unpol_n
+
+                  sigma_unpol    = 2*mott_p*(2.*(F1d/(2))/mp)*(tnsq + q2/(2.*(nu**2)))
+                  sigma_unpol_d  = 2*mott_p*(2.*(F1d/(2))/mp)*(tnsq + q2/(2.*(nu**2)))
+                  sigma_unpol_he = 4*mott_p*(2.*(F1he/(4))/mp)*(tnsq + q2/(2.*(nu**2)))
+                  sigma_unpol_n  = 14*mott_p*(2.*(F1n/(14))/mp)*(tnsq + q2/(2.*(nu**2)))
+                  sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
+                  tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_n
+
+
+
+
+
+c                  if (tot_allsigma.gt.0.0) then
+c                  if (allsigma_unpol.gt.0.0.and.allsigma_unpol_he.gt.0.0.and.allsigma_unpol_n.gt.0.0) then
+                  if (tot_allsigma.gt.0.0) then
+                      allsigradsum         = allsigradsum + sigma_pol_d
+                      d_unpol_allsigradsum = d_unpol_allsigradsum + sigma_unpol_d
+                      d_allsigradsum       = d_allsigradsum + sigma_pol_d
+                      he_allsigradsum      = he_allsigradsum + sigma_unpol_he
+                      n_allsigradsum       = n_allsigradsum + sigma_unpol_n
+                      allisum              = allisum + 1
+                  endif
+
+
+                  if (w2.lt.w2min) then
+                     sigma_unpol    = 0.0
+                     sigma_unpol_d  = 0.0
+                     sigma_unpol_he = 0.0
+                     sigma_unpol_n  = 0.0
+                     sigma_pol_d    = 0.0
+                  endif
+                      
+c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+c                  sigma_unpol    = 2*mott_p*(2.*(F1d/(2))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  sigma_unpol_d  = 2*mott_p*(2.*(F1d/(2))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  sigma_unpol_he = 4*mott_p*(2.*(F1he/(4))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  sigma_unpol_n  = 14*mott_p*(2.*(F1n/(14))/mp)*(tnsq + q2/(2.*(nu**2)))
+c                  sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
+                  apass = 2
+                  zpass = 1
+                  m_nuc = m_atom*m_amu-float(zpass)*m_e
+
+c                  sigma_tensor = sigma_unpol*0.5*Pzz*Aout
+c                  sigma_born   = sigma_unpol + sigma_tensor
+ 
+               
+                  ! Radiative correction need to be implemented here
+c                  sigma_meas   = sigma_born
+                  !
+
+c
+                  do ib=1,5
+                     if (x.gt.cent_x_min(ib).and.x.lt.cent_x_max(ib).and.w2.gt.w2min.and.sigma_unpol.gt.0.0) then
+c                        N_for_x(ib) = N_for_x(ib)                  
+c     +                    + lumi_d*sigma_unpol_d 
+c     +                    + lumi_he*sigma_unpol_he
+c     +                    + lumi_n*sigma_unpol_n
+                        N_for_x(ib) = lumi_d*sigma_unpol_d 
+     +                    + lumi_he*sigma_unpol_he
+     +                    + lumi_n*sigma_unpol_n
+
+                          xsum(ib) = xsum(ib) + 1
+                          w_ave(ib) = w_ave(ib) + tot_allsigma*sqrt(w2)
+                          sigma_sum(ib) = sigma_sum(ib) + tot_allsigma
+                          Ngood_for_x(ib) = Ngood_for_x(ib) + 
+     +                        N_for_x(ib)*dep*thincr*d_r*2*dphi*1E-24*prec*3600
+                          thisNforx(ib) = thisNforx(ib) + 
+     +                        N_for_x(ib)*dep*thincr*d_r*2*dphi*1E-24*prec*3600
+
+                     endif
+                  enddo
+
+
+                  if (type.eq.1) then ! physics rates
+                     if (x.lt.0.9.and.w2.gt.w2min.and.sigma_unpol.gt.0.0) then ! DIS
+c                     if (x.lt.0.9.and.sigma_unpol.gt.0.0) then ! DIS
+c                        sigradsum         = sigradsum + sigma_unpol
+                        sigradsum         = sigradsum + sigma_pol_d
+                        d_unpol_sigradsum = d_unpol_sigradsum + sigma_unpol_d
+                        d_sigradsum       = d_sigradsum + sigma_pol_d
+                        he_sigradsum      = he_sigradsum + sigma_unpol_he
+                        n_sigradsum       = n_sigradsum + sigma_unpol_n
+                        isum              = isum + 1
+                        ave_x             = ave_x + x*sigma_unpol_d
+                        totsig_for_ave_x  = totsig_for_ave_x + sigma_unpol_d
+                        if (x.lt.good_x_min) then 
+                           good_x_min = x
+                        endif
+                        if (x.gt.good_x_max) then 
+                           good_x_max = x
+                        endif
+                     elseif (x.gt.0.9.and.x.lt.1.1.and.sigma_unpol.gt.0.0) then ! QE
+c                        sigradsum  = sigradsum + sigma_unpol
+                        sigradsum         = sigradsum + sigma_pol_d
+                        d_unpol_sigradsum = d_unpol_sigradsum + sigma_unpol_d
+                        d_sigradsum       = d_sigradsum + sigma_pol_d
+                        he_sigradsum      = he_sigradsum + sigma_unpol_he
+                        n_sigradsum       = n_sigradsum + sigma_unpol_n
+                        isum              = isum + 1
+                        ave_x             = ave_x + x*sigma_unpol_d
+                        totsig_for_ave_x  = totsig_for_ave_x + sigma_unpol_d
+                         if (x.lt.good_x_min) then 
+                           good_x_min = x
+                        endif
+                        if (x.gt.good_x_max) then 
+                           good_x_max = x
+                        endif
+                     endif
+                  elseif (type.eq.2) then ! total rates (not implemented yet)
+                     sigradsum  = sigradsum + sigma_unpol
+                     isum       = isum + 1
+                  endif
+c                  write(8,1002)ispectro, ix, thit, q2, x, sqrt(w2), 
+c     &              sigma_unpol, Aout,sigma_tensor,sigma_born
+                  write(12,1002)ispectro, ix, ip, it, isum,
+c     &              thit,superth_in,q2,qq,x,xx,sqrt(w2),w,
+     &              thit,superth_in,q2,qq,x,xx,w2,w*w,
+c     &              mott_d,mott_he,mott_n,
+     &              sigma_unpol_d,sigma_unpol_he,sigma_unpol_n,
+c     &              allsigma_unpol_d,allsigma_unpol_he,allsigma_unpol_n,
+c     &              allF1d,allF2d,allF1he,allF2he,allF1n,allF2n,
+     &              F1d,F2d,F1he,F2he,F1n,F2n,
+     &              pit,thit,thq,
+     &              tot_allsigma
+
+               enddo ! loop over theta bins
+c         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               write(8,*)ispectro,x,th_in,pit,sigradsum,isum
+               write(13,*)ispectro,x,th_in,pit,sigradsum,isum
+               sigradave         = 0.0
+               d_sigradave       = 0.0
+               d_unpol_sigradave = 0.0
+               he_sigradave      = 0.0
+               n_sigradave       = 0.0
+
+               do ib=1,nx
+                  if (xsum(ib).gt.0.0) then
+c                     Ngood_for_x(ib) = Ngood_for_x(ib) + N_for_x(ib)/xsum(ib)
+c                     Ngood_for_x(ib) = Ngood_for_x(ib) + 
+c     +                                    N_for_x(ib)*dep*acc*1E-24*prec
+                  endif
+               enddo
+
+
+c              vvvvvvv For total, non-physics, rates vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+               allsigradave         = 0.0
+               d_allsigradave       = 0.0
+               d_unpol_allsigradave = 0.0
+               he_allsigradave      = 0.0
+               n_allsigradave       = 0.0
+               if (allisum.gt.0) then
+                  allsigradave         = allsigradsum/allisum
+                  d_allsigradave       = d_allsigradsum/allisum
+                  d_unpol_allsigradave = d_unpol_allsigradsum/allisum
+                  he_allsigradave      = he_allsigradsum/allisum
+                  n_allsigradave       = n_allsigradsum/allisum
+                  allrate         = lumi*allsigradave*dep*acc*1E-24           ! in seconds
+                  d_unpol_allrate = lumi_d*d_unpol_allsigradave*dep*acc*1E-24 ! in seconds
+                  he_allrate      = lumi_he*he_allsigradave*dep*acc*1E-24     ! in seconds
+                  n_allrate       = lumi_n*n_allsigradave*dep*acc*1E-24       ! in seconds
+c                  q2p          = 4.0*e_in*pit*(sin(0.5*th_in*d_r))**2
+                  q2p          = 2.0*e_in*pit*(1-cos(th_in*d_r))
+                  xp           = q2p/(2.0*mp*(e_in-pit))
+                  ratecheck_all_d  = ratecheck_all_d  + d_unpol_allrate
+c                 ratecheck_all_d  = ratecheck_all_d  + rate
+                  ratecheck_all_he = ratecheck_all_he + he_allrate
+                  ratecheck_all_n  = ratecheck_all_n  + n_allrate
+                  ib = 1
+                  do ib=1,nx ! fill x-bin from large acceptance
+                     if (xp.gt.0.0.and.xp.lt.50) then
+                        totallrate(ib)        = totallrate(ib) + allrate
+                        d_unpol_totallrate(ib)= d_unpol_totallrate(ib) + d_unpol_allrate
+                        he_totallrate(ib)     = he_totallrate(ib) + he_allrate
+                        n_totallrate(ib)      = n_totallrate(ib) + n_allrate
+                        allsigsum(ib)         = allsigsum(ib) + allsigradave
+                        d_unpol_allsigsum(ib) = d_unpol_allsigsum(ib) + d_unpol_allsigradave
+                        he_allsigsum(ib)      = he_allsigsum(ib) + he_allsigradave
+                        n_allsigsum(ib)       = n_allsigsum(ib) + n_allsigradave
+                        allixsum (ib)         = allixsum(ib) + 1
+                     endif
+                  enddo
+               endif
+
+c              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+               if (isum.gt.0) then
+                  sigradave         = sigradsum/isum
+                  d_sigradave       = d_sigradsum/isum
+                  d_unpol_sigradave = d_unpol_sigradsum/isum
+                  he_sigradave      = he_sigradsum/isum
+                  n_sigradave       = n_sigradsum/isum
+                  rate         = lumi*sigradave*dep*acc*1E-24           ! in seconds
+                  d_unpol_rate = lumi_d*d_unpol_sigradave*dep*acc*1E-24 ! in seconds
+                  he_rate      = lumi_he*he_sigradave*dep*acc*1E-24     ! in seconds
+                  n_rate       = lumi_n*n_sigradave*dep*acc*1E-24       ! in seconds
+c                  q2p          = 4.0*e_in*pit*(sin(0.5*th_in*d_r))**2
+                  q2p          = 2.0*e_in*pit*(1-cos(th_in*d_r))
+                  xp           = q2p/(2.0*mp*(e_in-pit))
+                  ratecheck_d  = ratecheck_d  + d_unpol_rate
+c                  ratecheck_d  = ratecheck_d  + rate
+                  ratecheck_he = ratecheck_he + he_rate
+                  ratecheck_n  = ratecheck_n  + n_rate
+
+c******************************************************************************************************
+c******************************************************************************************************
+c ******* NOTE **** ANYTHING WITH AN ib LOOP IS PROBABLY WRONG ****************************************
+c******************************************************************************************************
+c******************************************************************************************************
+                  do ib=1,nx ! fill x-bin from large acceptance
+c                     if (xp.ge.xmin(ib).and.xp.lt.xmax(ib)) then
+                        totrate(ib)        = totrate(ib) + rate
+                        d_unpol_totrate(ib)= d_unpol_totrate(ib) + d_unpol_rate
+                        he_totrate(ib)     = he_totrate(ib) + he_rate
+                        n_totrate(ib)      = n_totrate(ib) + n_rate
+                        sigsum(ib)         = sigsum(ib) + sigradave
+                        d_unpol_sigsum(ib) = d_unpol_sigsum(ib) + d_unpol_sigradave
+                        he_sigsum(ib)      = he_sigsum(ib) + he_sigradave
+                        n_sigsum(ib)       = n_sigsum(ib) + n_sigradave
+                        ixsum (ib)         = ixsum(ib) + 1
+c                     endif
+                  enddo
+                  write(9,1003)ispectro,th_in, pit, q2p, xp,sigradave, rate,
+c     &                         sigradave,he_sigradave,n_sigradave
+     &                         d_sigradsum,he_sigradsum,n_sigradsum
+                  sigmasump = sigmasump + sigradave
+               endif
+            enddo  ! loop over p bins
+c      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            sigcenter = sigmasump/npbin
+            w2 = w*w
+            F1d = 0
+            F2d = 0
+            ave_x = ave_x/totsig_for_ave_x
+            spec_x = xx
+            xx = ave_x
+
+            if (spec_x.gt.0.9.and.spec_x.lt.2.0) then   ! If Quasi-Elastic:
+               call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)     !      Get F1 for Deuterium
+            elseif (spec_x.lt.0.9.and.spec_c.gt.0) then ! If DIS:
+               call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)  !      Get F1 for Deuterium
+            endif
+
+            
+            ! calculate the time assuming the settings spread
+            Aout = 0
+            b1d = 0
+            if (spec_x.lt.0.75) then
+               call get_b1d(spec_x,qq,Aout,F1out,b1out)
+            elseif (spec_x.ge.0.75) then
+               call get_qe_b1d(spec_x,qq,Aout,F1out,b1out)
+            endif
+            Azz  = Aout
+            b1d  = b1out
+            b1d_scaled = b1out/scale
+            ratetot         = 0.0
+            d_ratetot       = 0.0
+            d_unpol_ratetot = 0.0
+            n_ratetot       = 0.0
+            he_ratetot      = 0.0
+            all_ratetot     = 0.0
+            allratetot         = 0.0
+            d_allratetot       = 0.0
+            d_unpol_allratetot = 0.0
+            n_allratetot       = 0.0
+            he_allratetot      = 0.0
+            all_allratetot     = 0.0
+
+
+            do ib=1,nx
+               allratetot     = allratetot + totallrate(ib)  ! in Hz
+               d_allratetot   = d_allratetot + totallrate(ib)  ! in Hz
+               d_unpol_allratetot= d_unpol_allratetot + d_unpol_totallrate(ib)  ! in Hz
+               he_allratetot  = he_allratetot + he_totallrate(ib)  ! in Hz
+               n_allratetot   = n_allratetot + n_totallrate(ib)  ! in Hz
+c               all_allratetot = all_allratetot + d_totallrate(ib) + he_totallrate(ib) + n_totallrate(ib)
+            enddo
+            all_allratetot = d_allratetot + he_allratetot + n_allratetot
+
+            do ib=1,nx
+               ratetot     = ratetot + totrate(ib)  ! in Hz
+               d_ratetot   = d_ratetot + totrate(ib)  ! in Hz
+               d_unpol_ratetot= d_unpol_ratetot + d_unpol_totrate(ib)  ! in Hz
+               he_ratetot  = he_ratetot + he_totrate(ib)  ! in Hz
+               n_ratetot   = n_ratetot + n_totrate(ib)  ! in Hz
+c               all_ratetot = all_ratetot + d_totrate(ib) + he_totrate(ib) + n_totrate(ib)
+            enddo
+            all_ratetot = d_ratetot + he_ratetot + n_ratetot
+c            all_ratetot = ratetot + he_ratetot + n_ratetot
+c            all_ratetot = d_ratetot
+
+
+c           vvvvv Define the rates in terms of physics and total for the output vvv
+            physrate = ratecheck_d + ratecheck_he + ratecheck_n
+c            physrate = ratecheck_d
+c            physrate  = all_ratetot
+c            totalrate = all_allratetot
+c            totalrate = ratecheck_d + ratecheck_he + ratecheck_n
+            totalrate = ratecheck_all_d + ratecheck_all_he + ratecheck_all_n
+c           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+c            dAzz  = prec*abs(Azz)
+            pac_time = prec
+c            time = pac_time/2.0
+            time = pac_time
+c            f_dil = d_unpol_ratetot/all_ratetot
+c            f_dil = d_ratetot/all_ratetot
+            f_dil = 0.95*(ratecheck_d/(ratecheck_d + ratecheck_n + ratecheck_he))
+c           vvvvv Error on Azz using A_meas^(1)
+c            dAzz = (2./(f_dil*Pzz))*(1/SQRT(time*all_ratetot*3600.0))
+c           vvvvv Error on Azz using A_meas^(2)
+            dAzz = (4./(f_dil*Pzz))*(1/SQRT(time*physrate*3600.0))
+c            if (ix.gt.2) then
+c               all_ratetot = ratetot
+c               f_dil = d_ratetot/all_ratetot
+c               dAzz = (4./0.9)*(1/SQRT(time*all_ratetot*3600.0))
+c            end if
+c            time  = ((4.0/(f_dil*ND*Pzz*dAzz))**2)*(1/(ratetot*3600.0))
+
+c            dAzz  = prec
+c            time  = (4.0/(f_dil*ND*Pzz*dAzz))**2/(ratetot*3600.0*24.0)
+c            time  = ((4.0/(f_dil*ND*Pzz*dAzz))**2)*(1/(ratetot*3600.0))
+c            db1d  = abs(-1.5*Azz*prec)*F1out
+c            db1d  = abs(-1.5*prec)*F1d
+c            db1d  = abs(-1.5*dAzz)*(F1d/2)
+c            db1d  = sqrt((-1.5*dAzz*F1d/2)**2 + (-1.5*Aout*fsyst_xs/2)**2)
+            F1d = F1out*2
+            db1d  = abs(-1.5*dAzz)*F1d/2
+c            syst_Azz  = 1.0   ! to be adjusted
+            syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+c vvvvvvvvvvvvvvv Below is for playing with QE region where we don't have systematic estimates vvvvvv
+            syst_Azz = 0.0   ! to be adjusted
+            syst_b1d = 0.0
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+            if (spec_x.eq.0.15) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
+               syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+            endif 
+            if (spec_x.eq.0.3) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+               syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+            endif 
+            if (spec_x.eq.0.452) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0028**2)
+               syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+            endif 
+            if (spec_x.eq.0.55) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0021**2)
+               syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+            endif 
+
+
+c            syst_b1d  = 1.0   ! to be adjusted
+c            pac_time = time*2
+
+            xdx = xmax(ix) - xx
+
+c           The bit below is just to test the cross section calculations in
+c           order to make sure that they're working correctly. It should be
+c           removed later.
+c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+            thrad = superth_in*d_r
+            snsq  = sin(thrad/2.)**2.
+            cssq  = cos(thrad/2.)**2.
+            tnsq  = tan(thrad/2.)**2.
+            nu    = qq/2./mp/xx
+            cstheta = cos(thrad/2.)
+c
+c            w2 = w*w
+c            ZforF1 = 1
+c            AforF1 = 2
+c            F1qe = 0
+c            F1in = 0
+c            mott_d  = hbarc2*((1.*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_he = hbarc2*((2.*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_n  = hbarc2*((7.*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            b1out = 0
+c            Aout = 0
+c            F1 = 0
+c            F1out = 0
+c            F2 = 0
+c            F1n = 0
+c            F2n = 0
+c            F1he = 0
+c            F2he = 0
+c            F1d = 0
+c            F2d = 0
+c            rc = 0
+c            rche = 0
+c            rcn = 0
+c            if (x.lt.1.1.and.w2.gt.w2min) then ! DIS 
+c            call get_b1d(x,q2,Aout,F1out,b1out)
+c            if (w2.gt.0) then
+c                if (xx.gt.0.9.and.xx.lt.1.1) then             ! If Quasi-Elastic:
+c                   call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)     !      Get F1 for Deuterium
+c                   call F1F2QE09(z_he,a_he,qq,w2,F1he,F2he) !      Get F1 and F2 for Helium-4
+c                   call F1F2QE09(z_n,a_n,qq,w2,F1n,F2n)     !      Get F1 and F2 for Nitrogen-14
+c                elseif (xx.lt.0.9.and.xx.gt.0) then
+c                                                                 ! If DIS:
+c                   call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)       !      Get F1 for Deuterium
+c                   call F1F2IN09(z_he,a_he,qq,w2,F1he,F2he,rche) !      Get F1 for Helium-4
+c                   call F1F2IN09(z_n,a_n,qq,w2,F1n,F2n,rcn)      !      Get F1 for Nitrogen-14
+c 
+c                endif
+c            endif
+c            mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c
+c
+c            sigma_unpol    = mott_d*(2.*F1d/mass_D)*(tnsq + q2/(2.*nu**2))
+c            sigma_unpol_d  = mott_d*(2.*F1d/mass_D)*(tnsq + q2/(2.*nu**2))
+c            sigma_unpol_he = mott_he*(2.*F1he/mass_He)*(tnsq + q2/(2.*nu**2))
+c            sigma_unpol_n  = mott_n*(2.*F1n/mass_N)*(tnsq + q2/(2.*nu**2))
+c
+c
+c           
+c            ratetot = acc*(dp_p*ep_in+dp_m*ep_in)*lumi*sigma_unpol*1E-24
+c            he_ratetot = acc*(dp_p*ep_in+dp_m*ep_in)*lumi_he*sigma_unpol_he*1E-24
+c            n_ratetot = acc*(dp_p*ep_in+dp_m*ep_in)*lumi_n*sigma_unpol_n*1E-24
+c            all_ratetot = ratetot+he_ratetot+n_ratetot
+c 
+cc           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+c            The section below uses x_Bjorken (xx) and theta_e' (th_in) to determine
+c            the angle of the q-vector (thq) in degrees
+c            vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+             E0_PASS = e_in 
+             TH_PASS = th_in
+             EP_PASS = ep_in
+             if (w2.ge.0.0) then
+                 rr1 = 0.0
+                 rr2 = 180.
+                 call ROTATION(rr1, rr2, phistar, thstar)
+                 thq = 180. - thstar
+                 thq_r = thq*pi/180.
+                 cosqvec = cos(thq_r)
+             endif
+c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+            write(6,*)ispectro,xx,qq,w,
+     &                    ep_in,th_in,
+     &                    ratetot, 
+     &                    Azz,dAzz,
+     &                    b1d,db1d,
+     &                    time,
+     &                    syst_Azz,syst_b1d,
+     &                    thq,cosqvec
+  
+            write(11,1005)ispectro,xx,qq,w,
+c     &                    ep_in,th_in,
+     &                    ep_in,superth_in,
+c     &                    allratetot, 
+c     &                    ratetot, 
+     &                    physrate,
+c     &                    ratecheck_all_d, 
+c     &                    totalrate, 
+     &                    Azz,dAzz,
+c     &                    0.00,dAzz,
+     &                    b1d,db1d,
+c     &                    0.00,db1d,
+     &                    time,
+     &                    syst_Azz,syst_b1d,
+     &                    thq,cosqvec,
+     &                    sigma_unpol,w2,
+c     &                    mp,w2,
+     &                    q2,x,nu,
+     &                    pac_time,e_in,
+     &                    xdx,
+c     &                    all_ratetot,he_allratetot,n_allratetot,
+c     &                    totalrate,he_ratetot,n_ratetot,
+     &                    totalrate,ratecheck_he,ratecheck_n,
+c     &                    totalrate,ratecheck_all_he,ratecheck_all_n,
+c     &                    physrate,he_ratetot,n_ratetot,
+c     &                    sigma_unpol,sigma_unpol_he,sigma_unpol_n,
+     &                    f_dil,spec_x,
+     &                    good_x_min,good_x_max
+
+            do ib=1,nx
+               F1d = 0
+               F2d = 0
+               rc  = 0
+
+               w2 = (w_ave(ib)/sigma_sum(ib))**2
+               qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+
+               if (cent_x(ib).gt.0.9.and.cent_x(ib).lt.2.0) then
+                  call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)
+               elseif (cent_x(ib).lt.0.9.and.cent_x(ib).gt.0) then
+                  call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)
+               endif
+
+               Aout = 0
+               F1out = 0
+               b1out = 0
+               if(cent_x(ib).lt.0.75) then
+                  call get_b1d(cent_x(ib),qq,Aout,F1out,b1out)
+               elseif(cent_x(ib).ge.0.75) then
+                  call get_qe_b1d(cent_x(ib),qq,Aout,F1out,b1out)
+               endif
+   
+               dAzz = (4./(f_dil*Pzz))*(1/SQRT(thisNforx(ib)))
+c               dAzz = sqrt(Aout**2)*0.092
+               db1d  = abs(-1.5*dAzz)*F1d/2
+   
+c               syst_Azz = sqrt(dAzz**2 + (Aout*0.092)**2)
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+               syst_Azz = 0
+c               syst_Azz = 2*sqrt((Aout*0.092)**2)
+c               syst_Azz = 0
+               syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+               syst_b1d = 0
+               if (thisNforx(ib).ne.0.0) then
+                  drift_scale = 0
+                  drift_scale = thisNforx(ib)*0.20/Pzz_in
+                  if (spec_x.eq.0.15) then
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0032*thisNforx(ib)
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0032*thisNforx(ib)*0.20/Pzz_in
+                     dAzz_drift(ib) = dAzz_drift(ib) +0.0032*drift_scale
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.00213*thisNforx(ib)
+                  endif 
+                  if (spec_x.eq.0.3) then
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0037*thisNforx(ib)
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0037*thisNforx(ib)*0.20/Pzz_in
+                     dAzz_drift(ib) = dAzz_drift(ib) +0.0037*drift_scale
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.00247*thisNforx(ib)
+                  endif 
+                  if (spec_x.eq.0.452) then
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0029*thisNforx(ib)
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0029*thisNforx(ib)*0.20/Pzz_in
+                     dAzz_drift(ib) = dAzz_drift(ib) +0.0029*drift_scale
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.00193*thisNforx(ib)
+                  endif 
+                  if (spec_x.eq.0.55) then
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0019*thisNforx(ib)
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.0019*thisNforx(ib)*0.20/Pzz_in
+                     dAzz_drift(ib) = dAzz_drift(ib) +0.0019*drift_scale
+c                     dAzz_drift(ib) = dAzz_drift(ib) + 0.00127*thisNforx(ib)
+                  endif 
+               endif
+   
+   
+
+               write(15,1007) ispectro,spec_x,cent_x(ib),xdx,
+     &                        dAzz,db1d,
+     &                        w2,qq,
+     &                        thisNforx(ib),
+     &                        syst_Azz,syst_b1d,
+     &                        Aout,b1out
+            enddo
+
+
+
+
+
+            ! get projected results for each x-bin
+            do ib=1,nx
+               xcent = (xmin(ib)+xmax(ib))/2
+c               call get_b1d(xcent,qq,Aout,F1out,b1out)    
+               dAzz      = (4.0/f_dil/ND/Pzz)/sqrt(totrate(ib)*time)
+               Azz       = Aout
+               b1d       = -1.5*Azz*F1out
+               db1d      = -1.5*abs(Azz*prec_bin)*F1out
+               syst_Azz  = abs(Azz)*fsyst_A
+               syst_b1d  = abs(b1d)*fsyst_b1
+               if (totrate(ib).gt.0.0) then
+                  write(10,1004)ispectro,qq,xcent,w,totrate(ib)/1000, Azz, 
+     &                    dAzz, time/3600,b1d,db1d,
+     &                    th_in,ep_in,(sigsum(ib)/ixsum(ib)), 
+     &                    F1out, syst_Azz,syst_b1d
+               endif
+            enddo
+
+            write(6,*)'--------------------------'
+            write(6,*)'For ',targ
+            write(6,*)'lumi= ',lumi
+            write(6,*)'rho= ',rho
+            write(6,*)'Pzz= ',pzz
+            tot_time(ispectro)    = tot_time(ispectro) + time/3600
+c           endif
+
+
+
+
+         enddo  ! loop over x-value
+c   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+         f_dil = 0.95*0.3
+         do ib=1,nx
+            F1d = 0
+            F2d = 0
+            rc  = 0
+
+            w_ave(ib) = w_ave(ib)/sigma_sum(ib)
+
+            if(Ngood_for_x(ib).gt.0.0) then
+               if(ispectro.eq.1.or.ispectro.eq.2) then
+                  Ntotal_for_x(ib) = Ntotal_for_x(ib) + Ngood_for_x(ib)
+                  total_w_ave(ib)  = total_w_ave(ib)  
+     +                                      + w_ave(ib)*Ngood_for_x(ib)
+               endif
+            endif
+            w2 = w_ave(ib)**2
+            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+
+            xdx = cent_x_max(ib) - cent_x(ib)
+
+            if (cent_x(ib).gt.0.9.and.cent_x(ib).lt.2.0) then
+               call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)
+            elseif (cent_x(ib).lt.0.9.and.cent_x(ib).gt.0) then
+               call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)
+            endif
+
+
+
+            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ngood_for_x(ib)))
+            db1d  = abs(-1.5*dAzz)*F1d/2
+c            write(14,1006) ispectro,cent_x(ib),xdx,dAzz,db1d,w_ave(ib),qq,Ngood_for_x(ib)
+         enddo
+
+
+         if (ispectro.eq.1) then
+            write(66,*)'HMS running time = ',tot_time(1),' hours (',
+     &                                   tot_time(1)/24.0,' days)'
+         elseif (ispectro.eq.2) then
+            write(66,*)'SHMS running time = ',tot_time(2),' hours (',
+     &                                    tot_time(2)/24.0,' days)'
+         elseif (ispectro.eq.3) then
+            write(66,*)'HRS running time = ',tot_time(3),' hours (',
+     &                                   tot_time(3)/24.0,' days)'
+         elseif (ispectro.eq.4) then
+            write(66,*)'SOLID running time = ',tot_time(4),' hours (',
+     &                                     tot_time(4)/24.0,' days)'
+         elseif (ispectro.eq.5) then
+            write(66,*)'BigBite running time = ',tot_time(5),' hours (',
+     &                                       tot_time(5)/24.0,' days)'
+         elseif (ispectro.eq.6) then
+            write(66,*)'SuperBigBite running time = ',tot_time(6),
+     &                                       ' hours (',
+     &                                       tot_time(6)/24.0,' days)'
+         endif
+      enddo  ! loop over the spectro
+c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+         f_dil = 0.95*0.3
+         do ib=1,nx
+            F1d = 0
+            F2d = 0
+            rc  = 0
+
+            total_w_ave(ib) = total_w_ave(ib)/Ntotal_for_x(ib)
+
+            w2 = total_w_ave(ib)**2
+            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+
+            xdx = cent_x_max(ib) - cent_x(ib)
+
+            if (cent_x(ib).gt.0.9.and.cent_x(ib).lt.2.0) then
+               call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)
+            elseif (cent_x(ib).lt.0.9.and.cent_x(ib).gt.0) then
+               call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)
+            endif
+
+            Aout = 0
+            F1out = 0
+            b1out = 0
+            if(cent_x(ib).lt.0.75) then
+               call get_b1d(cent_x(ib),qq,Aout,F1out,b1out)
+            elseif(cent_x(ib).ge.0.75) then
+               call get_qe_b1d(cent_x(ib),qq,Aout,F1out,b1out)
+            endif
+
+            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
+c            dAzz = sqrt(Aout**2)*0.092
+            db1d  = abs(-1.5*dAzz)*F1d/2
+
+            dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
+
+c            syst_Azz = 0
+c            syst_Azz = sqrt((Aout*0.092)**2 + dAzz_drift(ib)**2)
+c            syst_Azz = sqrt(dAzz_drift(ib)**2)
+            syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)
+            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+            write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
+     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
+     &                     syst_Azz,syst_b1d,
+c     &                     0.0,0.0
+     &                     Aout,b1out
+         enddo
+
+
+
+      call system_clock ( clck_counts_end, clck_rate )
+      write(6,*) "-------------------------------------------"
+      write(6,*) "Clock:"
+      write (6, *)  (clck_counts_end - clck_counts_beg) / real (clck_rate)
+
+ 1020 continue
+      stop
+C =========================== Format Statements ================================
+
+ 1001 format(a)
+c 1002 format(2(i2,1x),f7.3,1x,f6.1,1x,2f7.3,4(1x,E10.3))
+ 1022 format(A7,1x,E10.3)
+ 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),E10.3,1x)
+c 1003 format(2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3))
+ 1003 format(i1,2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3),3(1x,E10.3))
+ 1004 format(i1,1x,f6.1,1x,f7.3,1x,f7.3,3(1x,E10.3),1x,f7.1,2(1x,E10.3),2(1x,f7.3),4(1x,E10.3))
+c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2))
+c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
+ 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2))
+c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
+ 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
+ 1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
+
+      end
+
+
+c The subroutine below rotates theta and phi, which is used to calculate the
+c q-vector angle. It was initially developed by Karl Slifer under qvec.f.
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+      SUBROUTINE ROTATION(PHIT,THET,PHI,THR)
+      ![ PHIT,THET,PHI,THR ] = deg
+      IMPLICIT NONE
+      REAL*8 PI,PHIT,THET,PHI,THR
+      REAL*8 CSP,SNP,CST,SNT,COSTHS,QVEC,E0,TH,EP
+      REAL*8 CSTHEQ,SNTHEQ,RR
+      COMMON /VPLRZ/ E0,TH,EP
+      REAL*8 X(3)
+
+      !-------------------------------
+      PI     =  ACOS(-1.)
+
+      CSP    = COS(PHIT*PI/180.)
+      SNP    = SIN(PHIT*PI/180.)
+      CST    = COS(THET*PI/180.)
+      SNT    = SIN(THET*PI/180.)
+      COSTHS = COS(TH*PI/180.)
+      QVEC   = SQRT( E0**2 + EP**2 - 2.*E0*EP*COSTHS )
+
+      IF (ABS(TH-180.0).LT.1E-6) THEN
+        CSTHEQ = 1.0
+        SNTHEQ = 0.0
+      ELSE
+        CSTHEQ=(E0-EP*COSTHS)/QVEC
+        SNTHEQ=SQRT(1.-CSTHEQ**2)
+      ENDIF
+
+      X(1) =  SNT*CSP*CSTHEQ + CST*SNTHEQ
+      X(2) =  SNT*SNP
+      X(3) = -SNT*CSP*SNTHEQ + CST*CSTHEQ
+
+      CALL CARSPH(X,RR,THR,PHI)
+
+      IF (ABS(RR-1.).GT.1.E-6) STOP ' RR'
+
+      THR = THR*180./PI
+      PHI = PHI*180./PI
+
+      RETURN
+      END
+
+
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+c The subroutine below changes the coordinate system from cartesian to spherical,
+c which is used to calculate the q-vector. It was initially developed by Karl
+c Slifer under qvec.f.
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+      SUBROUTINE CARSPH(X,R,THTA,PHI)
+      IMPLICIT NONE
+      REAL*8 R,THTA,PHI
+      REAL*8 PI,R1
+      REAL*8 X(3)
+
+      !TRANSITION FROM CARTESIAN TO SPHERICAL COORDINATES
+
+      PI  = ACOS(-1.)
+      R1  = X(1)**2+X(2)**2
+      R   = SQRT(R1+X(3)**2)
+      R1  = SQRT(R1)
+
+      IF (R.LT.1.E-12) THEN
+        THTA = 0.
+        PHI  = 0.
+      ELSE
+        IF (R1.EQ.0.0) THEN
+          PHI  = 0.0
+          THTA = 0.0
+          IF (X(3).LT.0.0) THTA=PI
+        ELSE
+          THTA = ACOS(X(3)/R)
+          PHI  = ATAN2(X(2),X(1))
+        ENDIF
+      ENDIF
+
+      RETURN
+      END
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

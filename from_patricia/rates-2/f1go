@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+gfortran -ffixed-line-length-none -o get_F1 get_F1.f F1F209.f sub_b1d.f
+
+gfortran -ffixed-line-length-none -o map_F1 map_F1.f F1F209.f
+

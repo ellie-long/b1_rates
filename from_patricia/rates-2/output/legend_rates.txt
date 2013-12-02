@@ -1,0 +1,2 @@
+ispectro	qq	xcent	w	totrate(ib)/1000	 Azz	 dAzz	 time/3600	b1d	db1d	th_in	ep_in	(sigsum(ib)/ixsum(ib))	F1out	 syst_Azz	syst_b1d
+

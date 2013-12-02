@@ -1,0 +1,15 @@
+#	th	pit	q2	x	sig_u		rate_u
+#					(b/GeV.sr)	(Hz)
+
+
+
+th_in					pit		q2p				xp	sigradave					rate
+e' Theta (degrees)		E'		Q^2 (GeV/c)^2	x	<Unpolarized xs> (barns)	(Hz)
+
+Rate = (I/e_charge*rho)*<Unpolarized xs>*dE'*dOmega*10^(-24)
+	where 
+		dOmega is the detector acceptance given in steradians
+		e_charge is the charge of an electron given in Coulombs
+		rho is the number density in the nuclei given in cm^(-2)
+		I is the beam current given in microAmps
+
