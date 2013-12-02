@@ -1,0 +1,269 @@
+Most recent with Azz
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   b1go
+#	new file:   fort.90
+#	new file:   fort.91
+#	new file:   get_b1.f
+#	new file:   map_F1
+#	new file:   map_F1.f
+#	new file:   old/ptrates.f.bak-2013-09-12
+#	new file:   old/ptrates.f.bak-2013-09-20
+#	new file:   output/cs-check-hms.out
+#	new file:   output/cs-check-shms.out
+#	new file:   output/cs-check.out
+#	new file:   output/f1_map.txt
+#	new file:   output/legend_cs-check.txt
+#	new file:   output/legend_pre-rebin-x.txt
+#	new file:   output/legend_rebinned-x.txt
+#	new file:   output/legend_xs_take1.txt
+#	new file:   output/output_rebinned.txt
+#	new file:   output/pre-rebinn-x.out
+#	modified:   output/prop_table.out
+#	modified:   output/rates_pbin.out
+#	new file:   output/rebinned-x.out
+#	new file:   output/rebinned-x.out.bak
+#	modified:   output/xs-take1.out
+#	modified:   output/xs-take2.out
+#	modified:   output/xs.out
+#	modified:   ptrates
+#	modified:   ptrates.f
+#	new file:   rates_output.out
+#	modified:   scripts/Azz_proj_hms_shms.par
+#	modified:   scripts/Azz_rates_hms_shms.png
+#	modified:   scripts/Untitled.ps
+#	modified:   scripts/b1_proj_hms_shms.par
+#	modified:   scripts/b1_rates_hms_shms.png
+#	modified:   scripts/rates_azz.sh
+#	modified:   scripts/rates_b1_png.sh
+#	deleted:    scripts/temp_1day
+#	deleted:    scripts/temp_1kHz
+#	deleted:    scripts/temp_1month
+#	deleted:    scripts/temp_1week
+#	deleted:    scripts/temp_1year
+#	deleted:    scripts/temp_3kHz
+#	deleted:    scripts/temp_50kHz
+#	deleted:    scripts/temp_Azz_stat
+#	deleted:    scripts/temp_Azz_tot
+#	deleted:    scripts/temp_bb_aep
+#	deleted:    scripts/temp_bb_aq2
+#	deleted:    scripts/temp_bb_atheta
+#	deleted:    scripts/temp_bb_aw
+#	deleted:    scripts/temp_bb_azz_stat
+#	deleted:    scripts/temp_bb_azz_tot
+#	deleted:    scripts/temp_bb_cep
+#	deleted:    scripts/temp_bb_cq2
+#	deleted:    scripts/temp_bb_ctheta
+#	deleted:    scripts/temp_bb_cw
+#	deleted:    scripts/temp_bb_e0
+#	deleted:    scripts/temp_bb_ep
+#	deleted:    scripts/temp_bb_pactm
+#	deleted:    scripts/temp_bb_q2
+#	deleted:    scripts/temp_bb_rates
+#	deleted:    scripts/temp_bb_stat
+#	deleted:    scripts/temp_bb_theta
+#	deleted:    scripts/temp_bb_theta_aq
+#	deleted:    scripts/temp_bb_theta_cq
+#	deleted:    scripts/temp_bb_theta_q
+#	deleted:    scripts/temp_bb_time
+#	deleted:    scripts/temp_bb_tot
+#	deleted:    scripts/temp_bb_totrates
+#	deleted:    scripts/temp_bb_w
+#	deleted:    scripts/temp_epmax_hms
+#	deleted:    scripts/temp_epmax_shms
+#	deleted:    scripts/temp_hms_aep
+#	deleted:    scripts/temp_hms_aq2
+#	deleted:    scripts/temp_hms_atheta
+#	deleted:    scripts/temp_hms_aw
+#	deleted:    scripts/temp_hms_azz_stat
+#	deleted:    scripts/temp_hms_azz_tot
+#	deleted:    scripts/temp_hms_cep
+#	deleted:    scripts/temp_hms_cq2
+#	deleted:    scripts/temp_hms_ctheta
+#	deleted:    scripts/temp_hms_cw
+#	deleted:    scripts/temp_hms_e0
+#	deleted:    scripts/temp_hms_ep
+#	deleted:    scripts/temp_hms_ep1
+#	deleted:    scripts/temp_hms_ep2
+#	deleted:    scripts/temp_hms_ep3
+#	deleted:    scripts/temp_hms_ep4
+#	deleted:    scripts/temp_hms_ep5
+#	deleted:    scripts/temp_hms_fdil
+#	deleted:    scripts/temp_hms_pactm
+#	deleted:    scripts/temp_hms_q2
+#	deleted:    scripts/temp_hms_q21
+#	deleted:    scripts/temp_hms_q22
+#	deleted:    scripts/temp_hms_q23
+#	deleted:    scripts/temp_hms_q24
+#	deleted:    scripts/temp_hms_q25
+#	deleted:    scripts/temp_hms_q2_2d
+#	deleted:    scripts/temp_hms_rates
+#	deleted:    scripts/temp_hms_stat
+#	deleted:    scripts/temp_hms_theta
+#	deleted:    scripts/temp_hms_theta1
+#	deleted:    scripts/temp_hms_theta2
+#	deleted:    scripts/temp_hms_theta3
+#	deleted:    scripts/temp_hms_theta4
+#	deleted:    scripts/temp_hms_theta5
+#	deleted:    scripts/temp_hms_theta_aq
+#	deleted:    scripts/temp_hms_theta_cq
+#	deleted:    scripts/temp_hms_theta_q
+#	deleted:    scripts/temp_hms_theta_q1
+#	deleted:    scripts/temp_hms_theta_q2
+#	deleted:    scripts/temp_hms_theta_q3
+#	deleted:    scripts/temp_hms_theta_q4
+#	deleted:    scripts/temp_hms_theta_q5
+#	deleted:    scripts/temp_hms_time
+#	deleted:    scripts/temp_hms_tot
+#	deleted:    scripts/temp_hms_totrates
+#	deleted:    scripts/temp_hms_w
+#	deleted:    scripts/temp_hms_w1
+#	deleted:    scripts/temp_hms_w2
+#	deleted:    scripts/temp_hms_w3
+#	deleted:    scripts/temp_hms_w4
+#	deleted:    scripts/temp_hms_w5
+#	deleted:    scripts/temp_hrs_aep
+#	deleted:    scripts/temp_hrs_aq2
+#	deleted:    scripts/temp_hrs_atheta
+#	deleted:    scripts/temp_hrs_aw
+#	deleted:    scripts/temp_hrs_azz_stat
+#	deleted:    scripts/temp_hrs_azz_tot
+#	deleted:    scripts/temp_hrs_cep
+#	deleted:    scripts/temp_hrs_cq2
+#	deleted:    scripts/temp_hrs_ctheta
+#	deleted:    scripts/temp_hrs_cw
+#	deleted:    scripts/temp_hrs_e0
+#	deleted:    scripts/temp_hrs_ep
+#	deleted:    scripts/temp_hrs_pactm
+#	deleted:    scripts/temp_hrs_q2
+#	deleted:    scripts/temp_hrs_rates
+#	deleted:    scripts/temp_hrs_stat
+#	deleted:    scripts/temp_hrs_theta
+#	deleted:    scripts/temp_hrs_theta_aq
+#	deleted:    scripts/temp_hrs_theta_cq
+#	deleted:    scripts/temp_hrs_theta_q
+#	deleted:    scripts/temp_hrs_time
+#	deleted:    scripts/temp_hrs_tot
+#	deleted:    scripts/temp_hrs_totrates
+#	deleted:    scripts/temp_hrs_w
+#	deleted:    scripts/temp_model_bacchetta_low
+#	deleted:    scripts/temp_model_bacchetta_up
+#	deleted:    scripts/temp_model_frankfurt_Azz
+#	deleted:    scripts/temp_model_miller_Azz
+#	deleted:    scripts/temp_model_nosea_Azz
+#	deleted:    scripts/temp_model_sargsian_lc
+#	deleted:    scripts/temp_model_sargsian_vn
+#	deleted:    scripts/temp_model_sea_Azz
+#	deleted:    scripts/temp_sbs_aep
+#	deleted:    scripts/temp_sbs_aq2
+#	deleted:    scripts/temp_sbs_atheta
+#	deleted:    scripts/temp_sbs_aw
+#	deleted:    scripts/temp_sbs_azz_stat
+#	deleted:    scripts/temp_sbs_azz_tot
+#	deleted:    scripts/temp_sbs_cep
+#	deleted:    scripts/temp_sbs_cq2
+#	deleted:    scripts/temp_sbs_ctheta
+#	deleted:    scripts/temp_sbs_cw
+#	deleted:    scripts/temp_sbs_ep
+#	deleted:    scripts/temp_sbs_pactm
+#	deleted:    scripts/temp_sbs_q2
+#	deleted:    scripts/temp_sbs_rates
+#	deleted:    scripts/temp_sbs_stat
+#	deleted:    scripts/temp_sbs_theta
+#	deleted:    scripts/temp_sbs_theta_aq
+#	deleted:    scripts/temp_sbs_theta_cq
+#	deleted:    scripts/temp_sbs_theta_q
+#	deleted:    scripts/temp_sbs_time
+#	deleted:    scripts/temp_sbs_tot
+#	deleted:    scripts/temp_sbs_totrates
+#	deleted:    scripts/temp_sbs_w
+#	deleted:    scripts/temp_shms_aep
+#	deleted:    scripts/temp_shms_aq2
+#	deleted:    scripts/temp_shms_atheta
+#	deleted:    scripts/temp_shms_aw
+#	deleted:    scripts/temp_shms_azz_stat
+#	deleted:    scripts/temp_shms_azz_sys_bar
+#	deleted:    scripts/temp_shms_azz_tot
+#	deleted:    scripts/temp_shms_b1_sys_bar
+#	deleted:    scripts/temp_shms_cep
+#	deleted:    scripts/temp_shms_cq2
+#	deleted:    scripts/temp_shms_ctheta
+#	deleted:    scripts/temp_shms_cw
+#	deleted:    scripts/temp_shms_ep
+#	deleted:    scripts/temp_shms_ep1
+#	deleted:    scripts/temp_shms_ep2
+#	deleted:    scripts/temp_shms_ep3
+#	deleted:    scripts/temp_shms_ep4
+#	deleted:    scripts/temp_shms_ep5
+#	deleted:    scripts/temp_shms_fdil
+#	deleted:    scripts/temp_shms_pactm
+#	deleted:    scripts/temp_shms_q2
+#	deleted:    scripts/temp_shms_q21
+#	deleted:    scripts/temp_shms_q22
+#	deleted:    scripts/temp_shms_q23
+#	deleted:    scripts/temp_shms_q24
+#	deleted:    scripts/temp_shms_q25
+#	deleted:    scripts/temp_shms_q2_2d
+#	deleted:    scripts/temp_shms_rates
+#	deleted:    scripts/temp_shms_stat
+#	deleted:    scripts/temp_shms_theta
+#	deleted:    scripts/temp_shms_theta1
+#	deleted:    scripts/temp_shms_theta2
+#	deleted:    scripts/temp_shms_theta3
+#	deleted:    scripts/temp_shms_theta4
+#	deleted:    scripts/temp_shms_theta5
+#	deleted:    scripts/temp_shms_theta_aq
+#	deleted:    scripts/temp_shms_theta_cq
+#	deleted:    scripts/temp_shms_theta_q
+#	deleted:    scripts/temp_shms_theta_q1
+#	deleted:    scripts/temp_shms_theta_q2
+#	deleted:    scripts/temp_shms_theta_q3
+#	deleted:    scripts/temp_shms_theta_q4
+#	deleted:    scripts/temp_shms_theta_q5
+#	deleted:    scripts/temp_shms_time
+#	deleted:    scripts/temp_shms_tot
+#	deleted:    scripts/temp_shms_totrates
+#	deleted:    scripts/temp_shms_w
+#	deleted:    scripts/temp_shms_w1
+#	deleted:    scripts/temp_shms_w2
+#	deleted:    scripts/temp_shms_w3
+#	deleted:    scripts/temp_shms_w4
+#	deleted:    scripts/temp_shms_w5
+#	deleted:    scripts/temp_solid_aep
+#	deleted:    scripts/temp_solid_aq2
+#	deleted:    scripts/temp_solid_atheta
+#	deleted:    scripts/temp_solid_aw
+#	deleted:    scripts/temp_solid_azz_stat
+#	deleted:    scripts/temp_solid_azz_tot
+#	deleted:    scripts/temp_solid_cep
+#	deleted:    scripts/temp_solid_cq2
+#	deleted:    scripts/temp_solid_ctheta
+#	deleted:    scripts/temp_solid_cw
+#	deleted:    scripts/temp_solid_ep
+#	deleted:    scripts/temp_solid_pactm
+#	deleted:    scripts/temp_solid_q2
+#	deleted:    scripts/temp_solid_rates
+#	deleted:    scripts/temp_solid_stat
+#	deleted:    scripts/temp_solid_theta
+#	deleted:    scripts/temp_solid_theta_aq
+#	deleted:    scripts/temp_solid_theta_cq
+#	deleted:    scripts/temp_solid_theta_q
+#	deleted:    scripts/temp_solid_time
+#	deleted:    scripts/temp_solid_tot
+#	deleted:    scripts/temp_solid_totrates
+#	deleted:    scripts/temp_solid_w
+#	deleted:    scripts/temp_thmin_hms
+#	deleted:    scripts/temp_thmin_shms
+#	deleted:    scripts/temp_wmin
+#	deleted:    scripts/temp_wqe
+#	new file:   sub_qe_b1d.f
+#	new file:   test_xycolor.par
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	.DS_Store
