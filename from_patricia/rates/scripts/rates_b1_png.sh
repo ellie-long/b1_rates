@@ -46,11 +46,9 @@ awk '$1==2 {print $2,$12}' $file1 > temp_model_sea_Azz
 awk '$1==3 {print $2,$11}' $file1 > temp_model_nosea_Azz
 awk '$1==3 {print $2,$12}' $file1 > temp_model_sea_Azz
 
-
 file2="/home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_newtable/miller_nov11_2010.dat"
 awk '$1!=0.9 {print $2,$3}' $file2 > temp_model_miller
 awk '$1==3 && $2<=0.6 {print $2,$5}' $file2 > temp_model_miller_Azz
-
 
 file3="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_sargsian.dat"
 awk '$1==1 && $2>=0.15 {print $2,$4/$2}' $file3 > temp_model_sargsian_vn
@@ -62,6 +60,12 @@ awk '$1==1 && $2!=0.0{print $2,$5/$2}' $file5 > temp_model_bacchetta_up
 
 file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
 awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
+
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R12_m338.dat temp_model_b16q
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R-10.dat temp_model_b16q_Rm10
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R+10.dat temp_model_b16q_Rp10
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m-10.dat temp_model_b16q_mm10
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m+10.dat temp_model_b16q_mp10
 
 # In file4, the columns are defined by:
 # $1  = Spectrometer Type
@@ -196,29 +200,34 @@ echo "10 12.2" >> temp_thmin_hms
 file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out"
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_stat
 echo "100	0	0	0" > temp_hms_azz_stat
-awk '$1==2 && $5!="NaN" {print $2,$11,$3,$4}' $file7 > temp_shms_azz_stat
+#awk '$1==2 && $5!="NaN" {print $2,$11,$3,$4}' $file7 > temp_shms_azz_stat
+awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7 > temp_shms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_shms_azz_stat
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_tot
 echo "100	0	0	0" > temp_hms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$9}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_shms_azz_tot
-awk '$1==2 && $5!="NaN" {print $2,$11,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
+#awk '$1==2 && $5!="NaN" {print $2,$11,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
+awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 
 
 echo "100	0	0	0" > temp_hms_stat
 echo "100	0	0	0" > temp_hms_tot
-awk '$1==2 && $5!="NaN" {print $2,$12,$3,$5}' $file7 > temp_shms_stat
+#awk '$1==2 && $5!="NaN" {print $2,$12,$3,$5}' $file7 > temp_shms_stat
+awk '$1==2 && $5!="NaN" {print $2,$12,0,$5}' $file7 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,$12,$3,$10}' $file7 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_tot
-awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
+#awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
+awk '$1==2 && $5!="NaN" {print $2,$12,0,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 
 awk '$1==2 && $5!="NaN" {print $2-$3,-0.025,"\n"$2-$3,-0.025+$9"\n"$2+$3,-0.025+$9,"\n"$2+$3,-0.025}' $file7 > temp_shms_azz_sys_bar
 #awk '$1==2 && $5!="NaN" {print $2-$3,-0.25,"\n"$2-$3,-0.25+sqrt($9*$9)"\n"$2+$3,-0.25+sqrt($9*$9),"\n"$2+$3,-0.25}' $file7 > temp_shms_azz_sys_bar
-awk '$1==2 && $5!="NaN" {print $2-$3,-0.013,"\n"$2-$3,-0.013+$10"\n"$2+$3,-0.013+$10,"\n"$2+$3,-0.013}' $file7 > temp_shms_b1_sys_bar
+#awk '$1==2 && $5!="NaN" {print $2-$3,-0.013,"\n"$2-$3,-0.013+$10"\n"$2+$3,-0.013+$10,"\n"$2+$3,-0.013}' $file7 > temp_shms_b1_sys_bar
 #awk '$1==2 && $5!="NaN" {print $2-$3,-0.0065,"\n"$2-$3,-0.0065+$10"\n"$2+$3,-0.0065+$10,"\n"$2+$3,-0.0065}' $file7 > temp_shms_b1_sys_bar
+awk '$1==2 && $5!="NaN" {print $2-$3,-0.0070,"\n"$2-$3,-0.0070+$10"\n"$2+$3,-0.0070+$10,"\n"$2+$3,-0.0070}' $file7 > temp_shms_b1_sys_bar
 
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -565,7 +574,6 @@ awk '{print $2,$14}' $file4 > temp_syst
 #              -p b1_proj_new.par -noask
 
 #gracebat -hdevice EPS -printfile b1_rates_hms_shms.eps \
-
 gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-settype xy			-block temp_model_miller			-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_model_nosea_mstw		-graph 0 -bxy 1:2 \
@@ -574,6 +582,11 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-settype xy			-block temp_model_sargsian_lc		-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_model_bacchetta_low		-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_model_bacchetta_up		-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_model_b16q				-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_model_b16q_Rm10			-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_model_b16q_Rp10			-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_model_b16q_mm10			-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_model_b16q_mp10			-graph 0 -bxy 1:2 \
 		-settype xydy		-block temp_xb1_tot					-graph 0 -bxy 1:2:3 \
 		-settype xydy		-block temp_xb1_stat				-graph 0 -bxy 1:2:3 \
 		-settype xydxdy		-block temp_hms_tot					-graph 0 -bxy 1:2:3:4 \
@@ -689,22 +702,27 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 
 display b1_rates_hms_shms.png
 
-#xmgrace \
-#		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
-#		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
-#		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
-#		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
-#		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
-#		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
-#		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
-#        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+xmgrace \
+		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_Rm10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_Rp10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_mm10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_mp10		-graph 0 -bxy 1:2 \
+		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
+		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
+		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
+		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
+		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
+		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
+        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 #
 #
 #xmgrace \

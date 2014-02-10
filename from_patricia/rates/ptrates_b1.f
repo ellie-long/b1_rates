@@ -162,15 +162,18 @@ c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1
 c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
 c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
-      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
-      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
-      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
+c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
+c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
+c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
 
 
 c For b1, our target range is 0.09 < x < 0.58
-c      DATA cent_x/      0.16, 0.275, 0.36, 0.49,  0.7,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
-c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.65, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
-c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+c      DATA cent_x/      0.16, 0.275, 0.36, 0.49, 0.64,  0.8,  0.8,  0.9,  1.0,  1.1,  1.2/ 
+c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15/ 
+c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.85, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+      DATA cent_x/      0.16, 0.275, 0.36, 0.49,  0.7,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
+      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.65, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
+      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
 
 
 
@@ -182,18 +185,18 @@ c for each of the data points to be run
 c      DATA xval1/    100, 100, 100, 100, 100/
 c      DATA qqval1/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
+      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
 c      DATA xval1/    1.3, 100, 100, 100, 100/
 
-      DATA xval1/    0.9, 100, 100, 100, 100/
+c      DATA xval1/    0.9, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
-      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
+      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
+c      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA qqval1/   99, 99, 99, 99, 3.82/   
+      DATA qqval1/   99, 99, 99, 99, 3.82/   
 c      DATA qqval1/    1.8, 99, 99, 99, 99/   
 
-      DATA qqval1/    1.3, 99, 99, 99, 99/   
+c      DATA qqval1/    1.3, 99, 99, 99, 99/   
 
 c      DATA qqval1/    0.81, 99, 99, 99, 99/   
 cc      DATA qqval1/    1.4, 99, 99, 99, 99/   
@@ -203,16 +206,16 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
-      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
+      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
+c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
-       DATA xval2/    1.3, 100, 100, 100, 100/
+       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
+c       DATA xval2/    1.3, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
 c      DATA qqval2/    0.85, 99, 99, 99, 99/   
 
-      DATA qqval2/    1.3, 99, 99, 99, 99/   
+c      DATA qqval2/    1.3, 99, 99, 99, 99/   
 
 c      DATA qqval2/    0.6, 99, 99, 99, 99/   
 c      DATA qqval2/    1.2, 99, 99, 99, 99/   
@@ -290,14 +293,15 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'     ! ND3 or LiD
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      targ      = 'LiD'
-c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
-c      w2min     =  1.85**2  ! Cut on W
-      w2min     =  0.0  ! Cut on W
+      w2min     =  1.85**2  ! Cut on W
+c      w2min     =  1.5**2  ! Cut on W
+c      w2min     =  0.0  ! Cut on W
 c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
@@ -756,8 +760,8 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                  + lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
-c                 if (w2.le.w2min) then
-                 if (x.lt.0.75) then
+                 if (w2.le.w2min) then
+c                 if (x.lt.0.75) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -765,8 +769,8 @@ c                 if (w2.le.w2min) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-                 if (x.gt.1.85) then
-c                 if (w2.ge.w2max) then
+c                 if (x.gt.1.85) then
+                 if (w2.ge.w2max) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -774,14 +778,14 @@ c                 if (w2.ge.w2max) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-                 if (q2.lt.1.0) then
-                    sigma_unpol    = 0.0
-                    sigma_unpol_d  = 0.0
-                    sigma_unpol_he = 0.0
-                    sigma_unpol_n  = 0.0
-                    sigma_unpol_c  = 0.0
-                    sigma_pol_d    = 0.0
-                 endif
+c                 if (q2.lt.1.0) then
+c                    sigma_unpol    = 0.0
+c                    sigma_unpol_d  = 0.0
+c                    sigma_unpol_he = 0.0
+c                    sigma_unpol_n  = 0.0
+c                    sigma_unpol_c  = 0.0
+c                    sigma_pol_d    = 0.0
+c                 endif
 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   lumiSig = lumi_d*sigma_pol_d 
@@ -934,8 +938,8 @@ c           vvvvv Define the rates in terms of physics and total for the output 
 c           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-            pac_time = prec*2.0
-c            pac_time = prec
+c            pac_time = prec*2.0
+            pac_time = prec
             time = pac_time
             f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_n + goodRate_he))
 c           vvvvv Error on Azz using A_meas^(2)
