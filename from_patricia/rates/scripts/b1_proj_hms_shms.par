@@ -28,7 +28,8 @@ map color 3 to (0, 0, 255), "blue"
 #map color 6 to (188, 143, 143), "brown"
 map color 4 to (150, 150, 150), "greyHERMES"
 #map color 5 to (148, 0, 211), "violet"
-map color 5 to (255, 0, 255), "violet"
+#map color 5 to (255, 0, 255), "data"
+map color 5 to (0, 0, 0), "Projected Data"
 #map color 9 to (0, 255, 255), "cyan"
 #map color 10 to (255, 0, 255), "magenta"
 #map color 11 to (255, 165, 0), "orange"
@@ -127,7 +128,7 @@ map color 78 to (060, 060, 060), "78"
 map color 79 to (050, 050, 050), "79"
 # ^^^^ Greys for SHMS Cross-Sections ^^^^
 
-
+map color 80 to (025,178,246), "Miller b16q"
 
 
 reference date 0
@@ -156,8 +157,8 @@ with g0
 #    world 0, -0.01, 0.70, 0.01
 #    world 0, -0.01, 0.70, 0.012
 #    world 0, -0.015, 0.70, 0.012
-##    world 0, -0.007, 0.70, 0.012
-    world 0, -0.015,0.7,0.012
+    world 0, -0.0075, 0.70, 0.012
+#    world 0, -0.015,0.7,0.012
     stack world 0, 0, 0, 0
     znorm 1
     view 0.10000, 0.70, 0.50000, 0.98
@@ -694,31 +695,32 @@ with g0
     s6 errorbar riser clip length 0.100000
     s6 comment "Cols 1:2:3"
 #    s6 legend  "Bacchetta's limits"
+
     s7 hidden false
-    s7 type xydy
-    s7 symbol 1
+    s7 type xy
+    s7 symbol 0
     s7 symbol size 0.50000
-    s7 symbol color 4
+    s7 symbol color 9
     s7 symbol pattern 1
-    s7 symbol fill color 4
+    s7 symbol fill color 9
     s7 symbol fill pattern 1
     s7 symbol linewidth 1.0
     s7 symbol linestyle 1
     s7 symbol char 65
     s7 symbol char font 0
     s7 symbol skip 0
-    s7 line type 0
+    s7 line type 1
     s7 line linestyle 1
-    s7 line linewidth 1.0
-    s7 line color 1
+    s7 line linewidth 2.0
+    s7 line color 80
     s7 line pattern 1
     s7 baseline type 0
     s7 baseline off
     s7 dropline off
-    s7 fill type 2
+    s7 fill type 0
     s7 fill rule 0
     s7 fill color 1
-    s7 fill pattern 3
+    s7 fill pattern 0
     s7 avalue off
     s7 avalue type 2
     s7 avalue char size 0.500000
@@ -732,7 +734,7 @@ with g0
     s7 avalue offset 0.000000 , 0.000000
     s7 errorbar on
     s7 errorbar place both
-    s7 errorbar color 4
+    s7 errorbar color 14
     s7 errorbar pattern 1
     s7 errorbar size 0.000000
     s7 errorbar linewidth 2.0
@@ -742,24 +744,26 @@ with g0
     s7 errorbar riser clip off
     s7 errorbar riser clip length 0.100000
     s7 comment "Cols 1:2:3"
-#    s7 legend  ""
+    s7 legend  "Miller b16q"
+
+
     s8 hidden false
-    s8 type xydy
-    s8 symbol 1
+    s8 type xy
+    s8 symbol 0
     s8 symbol size 0.50000
-    s8 symbol color 4
+    s8 symbol color 9
     s8 symbol pattern 1
-    s8 symbol fill color 4
+    s8 symbol fill color 9
     s8 symbol fill pattern 1
     s8 symbol linewidth 1.0
     s8 symbol linestyle 1
     s8 symbol char 65
     s8 symbol char font 0
     s8 symbol skip 0
-    s8 line type 0
+    s8 line type 1
     s8 line linestyle 1
-    s8 line linewidth 1.0
-    s8 line color 9
+    s8 line linewidth 2.0
+    s8 line color 80
     s8 line pattern 1
     s8 baseline type 0
     s8 baseline off
@@ -767,7 +771,7 @@ with g0
     s8 fill type 0
     s8 fill rule 0
     s8 fill color 1
-    s8 fill pattern 1
+    s8 fill pattern 0
     s8 avalue off
     s8 avalue type 2
     s8 avalue char size 0.500000
@@ -781,9 +785,9 @@ with g0
     s8 avalue offset 0.000000 , 0.000000
     s8 errorbar on
     s8 errorbar place both
-    s8 errorbar color 4
+    s8 errorbar color 14
     s8 errorbar pattern 1
-    s8 errorbar size 0.4600000
+    s8 errorbar size 0.000000
     s8 errorbar linewidth 2.0
     s8 errorbar linestyle 1
     s8 errorbar riser linewidth 2.0
@@ -791,24 +795,25 @@ with g0
     s8 errorbar riser clip off
     s8 errorbar riser clip length 0.100000
     s8 comment "Cols 1:2:3"
-    s8 legend  "HERMES"
+#    s8 legend  "Bacchetta's limits"
+
     s9 hidden false
-    s9 type xydxdy
-    s9 symbol 2
+    s9 type xy
+    s9 symbol 0
     s9 symbol size 0.50000
-    s9 symbol color 2
+    s9 symbol color 9
     s9 symbol pattern 1
-    s9 symbol fill color 2
+    s9 symbol fill color 9
     s9 symbol fill pattern 1
     s9 symbol linewidth 1.0
     s9 symbol linestyle 1
     s9 symbol char 65
     s9 symbol char font 0
     s9 symbol skip 0
-    s9 line type 0
+    s9 line type 1
     s9 line linestyle 1
-    s9 line linewidth 1.0
-    s9 line color 11
+    s9 line linewidth 2.0
+    s9 line color 80
     s9 line pattern 1
     s9 baseline type 0
     s9 baseline off
@@ -816,7 +821,7 @@ with g0
     s9 fill type 0
     s9 fill rule 0
     s9 fill color 1
-    s9 fill pattern 1
+    s9 fill pattern 0
     s9 avalue off
     s9 avalue type 2
     s9 avalue char size 0.500000
@@ -830,7 +835,7 @@ with g0
     s9 avalue offset 0.000000 , 0.000000
     s9 errorbar on
     s9 errorbar place both
-    s9 errorbar color 2
+    s9 errorbar color 14
     s9 errorbar pattern 1
     s9 errorbar size 0.000000
     s9 errorbar linewidth 2.0
@@ -840,24 +845,25 @@ with g0
     s9 errorbar riser clip off
     s9 errorbar riser clip length 0.100000
     s9 comment "Cols 1:2:3"
-#    s9 legend  "Projected HMS"
+#    s9 legend  "Bacchetta's limits"
+
     s10 hidden false
-    s10 type xydxdy
-    s10 symbol 2
+    s10 type xy
+    s10 symbol 0
     s10 symbol size 0.50000
-    s10 symbol color 2
+    s10 symbol color 9
     s10 symbol pattern 1
-    s10 symbol fill color 2
+    s10 symbol fill color 9
     s10 symbol fill pattern 1
     s10 symbol linewidth 1.0
     s10 symbol linestyle 1
     s10 symbol char 65
     s10 symbol char font 0
     s10 symbol skip 0
-    s10 line type 0
+    s10 line type 1
     s10 line linestyle 1
-    s10 line linewidth 1.0
-    s10 line color 11
+    s10 line linewidth 2.0
+    s10 line color 80
     s10 line pattern 1
     s10 baseline type 0
     s10 baseline off
@@ -865,7 +871,7 @@ with g0
     s10 fill type 0
     s10 fill rule 0
     s10 fill color 1
-    s10 fill pattern 1
+    s10 fill pattern 0
     s10 avalue off
     s10 avalue type 2
     s10 avalue char size 0.500000
@@ -879,9 +885,9 @@ with g0
     s10 avalue offset 0.000000 , 0.000000
     s10 errorbar on
     s10 errorbar place both
-    s10 errorbar color 2
+    s10 errorbar color 14
     s10 errorbar pattern 1
-    s10 errorbar size 0.4600000
+    s10 errorbar size 0.000000
     s10 errorbar linewidth 2.0
     s10 errorbar linestyle 1
     s10 errorbar riser linewidth 2.0
@@ -889,28 +895,25 @@ with g0
     s10 errorbar riser clip off
     s10 errorbar riser clip length 0.100000
     s10 comment "Cols 1:2:3"
-#    s10 legend  ""
-#    s11 hidden false
-    s11 hidden true
-    s11 type xydxdy
-#    s11 symbol 4
-    s11 symbol 3
+#    s10 legend  "Bacchetta's limits"
+
+    s11 hidden false
+    s11 type xy
+    s11 symbol 0
     s11 symbol size 0.50000
-#    s11 symbol color 3
-    s11 symbol color 5
+    s11 symbol color 9
     s11 symbol pattern 1
-#    s11 symbol fill color 3
-    s11 symbol fill color 5
+    s11 symbol fill color 9
     s11 symbol fill pattern 1
     s11 symbol linewidth 1.0
     s11 symbol linestyle 1
     s11 symbol char 65
     s11 symbol char font 0
     s11 symbol skip 0
-    s11 line type 0
+    s11 line type 1
     s11 line linestyle 1
-    s11 line linewidth 1.0
-    s11 line color 11
+    s11 line linewidth 2.0
+    s11 line color 80
     s11 line pattern 1
     s11 baseline type 0
     s11 baseline off
@@ -918,7 +921,7 @@ with g0
     s11 fill type 0
     s11 fill rule 0
     s11 fill color 1
-    s11 fill pattern 1
+    s11 fill pattern 0
     s11 avalue off
     s11 avalue type 2
     s11 avalue char size 0.500000
@@ -932,10 +935,9 @@ with g0
     s11 avalue offset 0.000000 , 0.000000
     s11 errorbar on
     s11 errorbar place both
-#    s11 errorbar color 3
-    s11 errorbar color 5
+    s11 errorbar color 14
     s11 errorbar pattern 1
-    s11 errorbar size 0.0000
+    s11 errorbar size 0.000000
     s11 errorbar linewidth 2.0
     s11 errorbar linestyle 1
     s11 errorbar riser linewidth 2.0
@@ -943,17 +945,22 @@ with g0
     s11 errorbar riser clip off
     s11 errorbar riser clip length 0.100000
     s11 comment "Cols 1:2:3"
-#    s11 legend  "Projected"
+#    s11 legend  "Bacchetta's limits"
+
+
+
+
+
+
+
+
     s12 hidden false
-    s12 type xydxdy
-#    s12 symbol 4
-    s12 symbol 3
+    s12 type xydy
+    s12 symbol 1
     s12 symbol size 0.50000
-#    s12 symbol color 3
-    s12 symbol color 5
+    s12 symbol color 4
     s12 symbol pattern 1
-#    s12 symbol fill color 3
-    s12 symbol fill color 5
+    s12 symbol fill color 4
     s12 symbol fill pattern 1
     s12 symbol linewidth 1.0
     s12 symbol linestyle 1
@@ -963,15 +970,15 @@ with g0
     s12 line type 0
     s12 line linestyle 1
     s12 line linewidth 1.0
-    s12 line color 11
+    s12 line color 1
     s12 line pattern 1
     s12 baseline type 0
     s12 baseline off
     s12 dropline off
-    s12 fill type 0
+    s12 fill type 2
     s12 fill rule 0
     s12 fill color 1
-    s12 fill pattern 1
+    s12 fill pattern 3
     s12 avalue off
     s12 avalue type 2
     s12 avalue char size 0.500000
@@ -985,10 +992,9 @@ with g0
     s12 avalue offset 0.000000 , 0.000000
     s12 errorbar on
     s12 errorbar place both
-#    s12 errorbar color 3
-    s12 errorbar color 5
+    s12 errorbar color 4
     s12 errorbar pattern 1
-    s12 errorbar size 0.4600000
+    s12 errorbar size 0.000000
     s12 errorbar linewidth 2.0
     s12 errorbar linestyle 1
     s12 errorbar riser linewidth 2.0
@@ -996,34 +1002,31 @@ with g0
     s12 errorbar riser clip off
     s12 errorbar riser clip length 0.100000
     s12 comment "Cols 1:2:3"
-    s12 legend  "Projected"
 #    s12 legend  ""
-
     s13 hidden false
-#    s13 hidden true
-    s13 type xy
-    s13 symbol 0
+    s13 type xydy
+    s13 symbol 1
     s13 symbol size 0.50000
-    s13 symbol color 6
+    s13 symbol color 4
     s13 symbol pattern 1
-    s13 symbol fill color 6
+    s13 symbol fill color 4
     s13 symbol fill pattern 1
     s13 symbol linewidth 1.0
-    s13 symbol linestyle 0
+    s13 symbol linestyle 1
     s13 symbol char 65
     s13 symbol char font 0
     s13 symbol skip 0
-    s13 line type 1
-    s13 line linestyle 0
-    s13 line linewidth 0.0
-    s13 line color 5
+    s13 line type 0
+    s13 line linestyle 1
+    s13 line linewidth 1.0
+    s13 line color 9
     s13 line pattern 1
     s13 baseline type 0
     s13 baseline off
     s13 dropline off
-    s13 fill type 1
+    s13 fill type 0
     s13 fill rule 0
-    s13 fill color 5
+    s13 fill color 1
     s13 fill pattern 1
     s13 avalue off
     s13 avalue type 2
@@ -1038,17 +1041,274 @@ with g0
     s13 avalue offset 0.000000 , 0.000000
     s13 errorbar on
     s13 errorbar place both
-    s13 errorbar color 11
+    s13 errorbar color 4
     s13 errorbar pattern 1
-    s13 errorbar size 0.460000
+    s13 errorbar size 0.4600000
     s13 errorbar linewidth 2.0
     s13 errorbar linestyle 1
-    s13 errorbar riser linewidth 1.0
+    s13 errorbar riser linewidth 2.0
     s13 errorbar riser linestyle 1
     s13 errorbar riser clip off
     s13 errorbar riser clip length 0.100000
-    s13 comment "Cols 1:2"
-#    s13 legend  "Systematic Uncertainty"
+    s13 comment "Cols 1:2:3"
+    s13 legend  "HERMES"
+    s14 hidden false
+    s14 type xydxdy
+    s14 symbol 2
+    s14 symbol size 0.50000
+    s14 symbol color 2
+    s14 symbol pattern 1
+    s14 symbol fill color 2
+    s14 symbol fill pattern 1
+    s14 symbol linewidth 1.0
+    s14 symbol linestyle 1
+    s14 symbol char 65
+    s14 symbol char font 0
+    s14 symbol skip 0
+    s14 line type 0
+    s14 line linestyle 1
+    s14 line linewidth 1.0
+    s14 line color 11
+    s14 line pattern 1
+    s14 baseline type 0
+    s14 baseline off
+    s14 dropline off
+    s14 fill type 0
+    s14 fill rule 0
+    s14 fill color 1
+    s14 fill pattern 1
+    s14 avalue off
+    s14 avalue type 2
+    s14 avalue char size 0.500000
+    s14 avalue font 0
+    s14 avalue color 1
+    s14 avalue rot 0
+    s14 avalue format general
+    s14 avalue prec 3
+    s14 avalue prepend ""
+    s14 avalue append ""
+    s14 avalue offset 0.000000 , 0.000000
+    s14 errorbar on
+    s14 errorbar place both
+    s14 errorbar color 2
+    s14 errorbar pattern 1
+    s14 errorbar size 0.000000
+    s14 errorbar linewidth 2.0
+    s14 errorbar linestyle 1
+    s14 errorbar riser linewidth 2.0
+    s14 errorbar riser linestyle 1
+    s14 errorbar riser clip off
+    s14 errorbar riser clip length 0.100000
+    s14 comment "Cols 1:2:3"
+#    s14 legend  "Projected HMS"
+    s15 hidden false
+    s15 type xydxdy
+    s15 symbol 2
+    s15 symbol size 0.50000
+    s15 symbol color 2
+    s15 symbol pattern 1
+    s15 symbol fill color 2
+    s15 symbol fill pattern 1
+    s15 symbol linewidth 1.0
+    s15 symbol linestyle 1
+    s15 symbol char 65
+    s15 symbol char font 0
+    s15 symbol skip 0
+    s15 line type 0
+    s15 line linestyle 1
+    s15 line linewidth 1.0
+    s15 line color 11
+    s15 line pattern 1
+    s15 baseline type 0
+    s15 baseline off
+    s15 dropline off
+    s15 fill type 0
+    s15 fill rule 0
+    s15 fill color 1
+    s15 fill pattern 1
+    s15 avalue off
+    s15 avalue type 2
+    s15 avalue char size 0.500000
+    s15 avalue font 0
+    s15 avalue color 1
+    s15 avalue rot 0
+    s15 avalue format general
+    s15 avalue prec 3
+    s15 avalue prepend ""
+    s15 avalue append ""
+    s15 avalue offset 0.000000 , 0.000000
+    s15 errorbar on
+    s15 errorbar place both
+    s15 errorbar color 2
+    s15 errorbar pattern 1
+    s15 errorbar size 0.4600000
+    s15 errorbar linewidth 2.0
+    s15 errorbar linestyle 1
+    s15 errorbar riser linewidth 2.0
+    s15 errorbar riser linestyle 1
+    s15 errorbar riser clip off
+    s15 errorbar riser clip length 0.100000
+    s15 comment "Cols 1:2:3"
+#    s15 legend  ""
+#    s16 hidden false
+    s16 hidden true
+    s16 type xydxdy
+#    s16 symbol 4
+    s16 symbol 3
+    s16 symbol size 0.50000
+#    s16 symbol color 3
+    s16 symbol color 5
+    s16 symbol pattern 1
+#    s16 symbol fill color 3
+    s16 symbol fill color 5
+    s16 symbol fill pattern 1
+    s16 symbol linewidth 1.0
+    s16 symbol linestyle 1
+    s16 symbol char 65
+    s16 symbol char font 0
+    s16 symbol skip 0
+    s16 line type 0
+    s16 line linestyle 1
+    s16 line linewidth 1.0
+    s16 line color 11
+    s16 line pattern 1
+    s16 baseline type 0
+    s16 baseline off
+    s16 dropline off
+    s16 fill type 0
+    s16 fill rule 0
+    s16 fill color 1
+    s16 fill pattern 1
+    s16 avalue off
+    s16 avalue type 2
+    s16 avalue char size 0.500000
+    s16 avalue font 0
+    s16 avalue color 1
+    s16 avalue rot 0
+    s16 avalue format general
+    s16 avalue prec 3
+    s16 avalue prepend ""
+    s16 avalue append ""
+    s16 avalue offset 0.000000 , 0.000000
+    s16 errorbar on
+    s16 errorbar place both
+#    s16 errorbar color 3
+    s16 errorbar color 5
+    s16 errorbar pattern 1
+    s16 errorbar size 0.0000
+    s16 errorbar linewidth 2.0
+    s16 errorbar linestyle 1
+    s16 errorbar riser linewidth 2.0
+    s16 errorbar riser linestyle 1
+    s16 errorbar riser clip off
+    s16 errorbar riser clip length 0.100000
+    s16 comment "Cols 1:2:3"
+#    s16 legend  "Projected"
+    s17 hidden false
+    s17 type xydxdy
+#    s17 symbol 4
+    s17 symbol 3
+    s17 symbol size 0.50000
+#    s17 symbol color 3
+    s17 symbol color 5
+    s17 symbol pattern 1
+#    s17 symbol fill color 3
+    s17 symbol fill color 5
+    s17 symbol fill pattern 1
+    s17 symbol linewidth 1.0
+    s17 symbol linestyle 1
+    s17 symbol char 65
+    s17 symbol char font 0
+    s17 symbol skip 0
+    s17 line type 0
+    s17 line linestyle 1
+    s17 line linewidth 1.0
+    s17 line color 11
+    s17 line pattern 1
+    s17 baseline type 0
+    s17 baseline off
+    s17 dropline off
+    s17 fill type 0
+    s17 fill rule 0
+    s17 fill color 1
+    s17 fill pattern 1
+    s17 avalue off
+    s17 avalue type 2
+    s17 avalue char size 0.500000
+    s17 avalue font 0
+    s17 avalue color 1
+    s17 avalue rot 0
+    s17 avalue format general
+    s17 avalue prec 3
+    s17 avalue prepend ""
+    s17 avalue append ""
+    s17 avalue offset 0.000000 , 0.000000
+    s17 errorbar on
+    s17 errorbar place both
+#    s17 errorbar color 3
+    s17 errorbar color 5
+    s17 errorbar pattern 1
+    s17 errorbar size 0.4600000
+    s17 errorbar linewidth 2.0
+    s17 errorbar linestyle 1
+    s17 errorbar riser linewidth 2.0
+    s17 errorbar riser linestyle 1
+    s17 errorbar riser clip off
+    s17 errorbar riser clip length 0.100000
+    s17 comment "Cols 1:2:3"
+    s17 legend  "Projected"
+#    s17 legend  ""
+
+    s18 hidden false
+#    s18 hidden true
+    s18 type xy
+    s18 symbol 0
+    s18 symbol size 0.50000
+    s18 symbol color 6
+    s18 symbol pattern 1
+    s18 symbol fill color 6
+    s18 symbol fill pattern 1
+    s18 symbol linewidth 1.0
+    s18 symbol linestyle 0
+    s18 symbol char 65
+    s18 symbol char font 0
+    s18 symbol skip 0
+    s18 line type 1
+    s18 line linestyle 0
+    s18 line linewidth 0.0
+    s18 line color 5
+    s18 line pattern 1
+    s18 baseline type 0
+    s18 baseline off
+    s18 dropline off
+    s18 fill type 1
+    s18 fill rule 0
+    s18 fill color 5
+    s18 fill pattern 1
+    s18 avalue off
+    s18 avalue type 2
+    s18 avalue char size 0.500000
+    s18 avalue font 0
+    s18 avalue color 1
+    s18 avalue rot 0
+    s18 avalue format general
+    s18 avalue prec 3
+    s18 avalue prepend ""
+    s18 avalue append ""
+    s18 avalue offset 0.000000 , 0.000000
+    s18 errorbar on
+    s18 errorbar place both
+    s18 errorbar color 11
+    s18 errorbar pattern 1
+    s18 errorbar size 0.460000
+    s18 errorbar linewidth 2.0
+    s18 errorbar linestyle 1
+    s18 errorbar riser linewidth 1.0
+    s18 errorbar riser linestyle 1
+    s18 errorbar riser clip off
+    s18 errorbar riser clip length 0.100000
+    s18 comment "Cols 1:2"
+#    s18 legend  "Systematic Uncertainty"
 
 
 with g1
