@@ -59,6 +59,7 @@ awk '$12!="NaN" {print $1,$9}'  $file1 >> temp_sigma_d_unpol
 awk '$12!="NaN" {print $1,$10}' $file1 >> temp_sigma_n
 awk '$12!="NaN" {print $1,$11}' $file1 >> temp_sigma_he
 awk '$12!="NaN" {print $1,$12}' $file1 >> temp_fdil
+awk '$12!="NaN" {print $1,$13}' $file1 >> temp_sigma_c
 
 awk '$12!="NaN" {print $1,$14}' $file1 >> temp_src_n
 awk '$12!="NaN" {print $1,$15}' $file1 >> temp_src_he
@@ -89,7 +90,7 @@ file5="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data
 #awk '$3==11.671 {print $5,$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_nu
 #awk '$3==11.671 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_x
 #awk '{print $1,$2*1E-6,$3*1E-6}'           $file4 >> temp_sigma_d_exp_nu
-#awk '{print 4*5.766*(5.766-$1)*(sin((18.0/2)*(3.14159/180))^2)/(2*0.938*$1),$2*1E-6,$3*1E-6}' $file4 >> temp_sigma_d_exp_x
+awk '{print 4*5.766*(5.766-$1)*(sin((18.0/2)*(3.14159/180))^2)/(2*0.938*$1),$2*1E-6,$3*1E-6}' $file4 >> temp_sigma_d_exp_x
 #awk '{print $1,$2*1E-6,$3*1E-6}'           $file5 >> temp_sigma_d_exp_nu
 #awk '{print 4*5.766*(5.766-$1)*(sin((18.0/2)*(3.14159/180))^2)/(2*0.938*$1),$2*1E-6,$3*1E-6}' $file5 >> temp_sigma_d_exp_x
 
@@ -123,7 +124,7 @@ file5="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data
 #awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file9 >> temp_misak_fdil
 
 file10="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/e02019_18deg_lc.out"
-#awk '$2>2 && $2<11.0 {print 5.766-$2,$9*1E-6}'    $file10 >> temp_misak_d_nu
+awk '$2>2 && $2<11.0 {print 5.766-$2,$9*1E-6}'    $file10 >> temp_misak_d_nu
 awk '$2>2 && $2<11.0 {print 5.766-$2,$6*1E-6}'    $file10 >> temp_misak_d_nu
 awk '$2>2 && $2<11.0 {print $3,$9*1E-6}'          $file10 >> temp_misak_d_x
 awk '$2>2 && $2<11.0 {print 5.766-$2,$6*1E-6}'    $file10 >> temp_misak_n_nu
@@ -148,7 +149,7 @@ awk '$2>2 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file10 >> temp_misak_fdil
 xmgrace\
 	-settype xy		-block temp_sigma_d_pol			-log y 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_d_unpol		-log y 	-graph 0 -bxy 1:2\
-	-settype xy		-block temp_sigma_n				-log y	-graph 0 -bxy 1:2\
+	-settype xy		-block temp_sigma_c				-log y	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_he			-log y	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_d_x			-log y	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_n_x			-log y	-graph 0 -bxy 1:2\

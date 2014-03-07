@@ -191,12 +191,12 @@ c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
       DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA qqval1/   99, 99, 99, 99, 3.82/   
-c      DATA qqval1/    1.8, 99, 99, 99, 99/   
+c      DATA qqval1/    1.8, 99, 99, 99, 99 /   
 
-      DATA qqval1/    1.3, 99, 99, 99, 99/   
+      DATA qqval1/    5.9, 99, 99, 99, 99/   
 
 c      DATA qqval1/    0.81, 99, 99, 99, 99/   
-cc      DATA qqval1/    1.4, 99, 99, 99, 99/   
+cc      DATA qqval1/    1.4, 99, 99, 99, 99 /   
 c      DATA qqval1/    0.37, 99, 99, 99, 99/   
 
       ! SHMS
@@ -212,10 +212,10 @@ c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
 c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
 c      DATA qqval2/    0.85, 99, 99, 99, 99/   
 
-      DATA qqval2/    1.3, 99, 99, 99, 99/   
+      DATA qqval2/    5.9, 99, 99, 99, 99/   
 
-c      DATA qqval2/    0.6, 99, 99, 99, 99/   
-c      DATA qqval2/    1.2, 99, 99, 99, 99/   
+c      DATA qqval2/    0.6, 99, 99, 99, 99 /   
+c      DATA qqval2/    1.2, 99, 99, 99, 99 /   
 c      DATA qqval2/    0.33, 99, 99, 99, 99/   
 c     vvvvv HERMES
 c      DATA xval2/    0.1, 0.3, 0.452, 0.128, 0.248/
@@ -355,7 +355,8 @@ c----- MAIN ------------------------------------------------
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
-            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
+c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
+            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99 
          endif
       enddo
       write (6,*) "------------------------------------------"
@@ -373,7 +374,8 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
-            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
       write (6,*) "------------------------------------------"
@@ -398,9 +400,11 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
       thrad = 2.*asin(sqrt(s2))
       th_in2 = thrad/d_r
 
-      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
+c      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
+c      read (*,*) e_in1
+c      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
 c      read (*,*) ep_in1
-      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
+c      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
 c      read (*,*) th_in1
       call system_clock ( clck_counts_beg2, clck_rate2 ) 
 
@@ -716,7 +720,25 @@ c                 vvvvvvvvv This part gives us the total, non-physics info vvvvv
                   if (.not.(F2c_qe.gt.0)) F2c_qe = 0
                   if (.not.(F2he_ie.gt.0)) F2he_ie = 0
                   if (.not.(F2he_qe.gt.0)) F2he_qe = 0
-      
+
+c                  if (F1d_ie.lt.0) F1d_ie = 0
+c                  if (F1d_qe.lt.0) F1d_qe = 0
+c                  if (F1n_ie.lt.0) F1n_ie = 0
+c                  if (F1n_qe.lt.0) F1n_qe = 0
+c                  if (F1c_ie.lt.0) F1c_ie = 0
+c                  if (F1c_qe.lt.0) F1c_qe = 0
+c                  if (F1he_ie.lt.0) F1he_ie = 0
+c                  if (F1he_qe.lt.0) F1he_qe = 0
+c                  if (F2d_ie.lt.0) F2d_ie = 0
+c                  if (F2d_qe.lt.0) F2d_qe = 0
+c                  if (F2n_ie.lt.0) F2n_ie = 0
+c                  if (F2n_qe.lt.0) F2n_qe = 0
+c                  if (F2c_ie.lt.0) F2c_ie = 0
+c                  if (F2c_qe.lt.0) F2c_qe = 0
+c                  if (F2he_ie.lt.0) F2he_ie = 0
+c                  if (F2he_qe.lt.0) F2he_qe = 0
+
+     
                   sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                               + ((F2d_ie+F2d_qe)/2.)/nu)
                   sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
@@ -774,14 +796,14 @@ c                 if (w2.ge.w2max) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-                 if (q2.lt.1.0) then
-                    sigma_unpol    = 0.0
-                    sigma_unpol_d  = 0.0
-                    sigma_unpol_he = 0.0
-                    sigma_unpol_n  = 0.0
-                    sigma_unpol_c  = 0.0
-                    sigma_pol_d    = 0.0
-                 endif
+c                 if (q2.lt.1.0) then
+c                    sigma_unpol    = 0.0
+c                    sigma_unpol_d  = 0.0
+c                    sigma_unpol_he = 0.0
+c                    sigma_unpol_n  = 0.0
+c                    sigma_unpol_c  = 0.0
+c                    sigma_pol_d    = 0.0
+c                 endif
 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   lumiSig = lumi_d*sigma_pol_d 

@@ -27,7 +27,6 @@ c
       REAL*8 z_d,z_he,z_n,z_c
       REAL*8 a_d,a_he,a_n,a_c
       REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
-      REAL*8 thmin_hms,thmin_shms,thdiff
       REAL*8 th_in1,ep_in1,th_in2,ep_in2
       REAL*8 A,d_r
       REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
@@ -163,18 +162,15 @@ c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1
 c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
 c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
-c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
-c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
-c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
+      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
+      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
+      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
 
 
 c For b1, our target range is 0.09 < x < 0.58
-c      DATA cent_x/      0.16, 0.275, 0.36, 0.49, 0.64,  0.8,  0.8,  0.9,  1.0,  1.1,  1.2/ 
-c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15/ 
-c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.85, 0.85, 0.95, 1.05, 1.15, 1.25/ 
-      DATA cent_x/      0.16, 0.275, 0.36, 0.49,  0.7,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
-      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.65, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
-      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+c      DATA cent_x/      0.16, 0.275, 0.36, 0.49,  0.7,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
+c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.65, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
+c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
 
 
 
@@ -187,19 +183,17 @@ c      DATA xval1/    100, 100, 100, 100, 100/
 c      DATA qqval1/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
-      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.38/
 c      DATA xval1/    1.3, 100, 100, 100, 100/
 
-c      DATA xval1/    0.9, 100, 100, 100, 100/
+      DATA xval1/    0.9, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
-c      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
+c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
+      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA qqval1/   99, 99, 99, 99, 3.82/   
-      DATA qqval1/   99, 99, 99, 99, 2.68/
 c      DATA qqval1/    1.8, 99, 99, 99, 99/   
 
-c      DATA qqval1/    1.3, 99, 99, 99, 99/   
+      DATA qqval1/    1.3, 99, 99, 99, 99/   
 
 c      DATA qqval1/    0.81, 99, 99, 99, 99/   
 cc      DATA qqval1/    1.4, 99, 99, 99, 99/   
@@ -209,16 +203,16 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
-c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
+c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
+      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
-c       DATA xval2/    1.3, 100, 100, 100, 100/
+c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
+       DATA xval2/    1.3, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
 c      DATA qqval2/    0.85, 99, 99, 99, 99/   
 
-c      DATA qqval2/    1.3, 99, 99, 99, 99/   
+      DATA qqval2/    1.3, 99, 99, 99, 99/   
 
 c      DATA qqval2/    0.6, 99, 99, 99, 99/   
 c      DATA qqval2/    1.2, 99, 99, 99, 99/   
@@ -296,15 +290,14 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'     ! ND3 or LiD
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      targ      = 'LiD'
-      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
-      w2min     =  1.85**2  ! Cut on W
-c      w2min     =  1.5**2  ! Cut on W
-c      w2min     =  0.0  ! Cut on W
+c      w2min     =  1.85**2  ! Cut on W
+      w2min     =  0.0  ! Cut on W
 c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
@@ -344,14 +337,10 @@ c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
       z_d = 1; z_he = 2; z_n = 7;  z_c = 6;
       a_d = 2; a_he = 4; a_n = 14; a_c = 12;
 c----- MAIN ------------------------------------------------
-      thmin_hms  = 100
-      thmin_shms = 100
-      thdiff     = 100
       write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
       write (6,*) "------------------------------------------"
-c      write (6,*) "  HMS:             E'max=7.3  Thmin=12.2"
-      write (6,*) "  HMS:             E'max=7.3  Thmin=10.5"
+      write (6,*) "  HMS:             E'max=7.3  Thmin=12.2"
       write (6,*) "      x         Q2        E'       Th"
       do ib=1,5
          xx = xval1(ib)
@@ -367,7 +356,6 @@ c      write (6,*) "  HMS:             E'max=7.3  Thmin=12.2"
             write (6,1009) "",xx,qq,ep_in,th_in
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
             if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
-            if (th_in.lt.thmin_hms) thmin_hms=th_in
          endif
       enddo
       write (6,*) "------------------------------------------"
@@ -386,16 +374,8 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
             if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
-            if (th_in.lt.thmin_shms) thmin_shms=th_in
          endif
       enddo
-      write (6,*) "------------------------------------------"
-      thdiff = thmin_hms+thmin_shms
-      write (6,*) "Spectrometer Separation Angle = ",thdiff
-      if (thdiff.lt.17.5) then
-         write (6,*) "***ERROR*** MINIMUM ANGLE LESS THAN 17.5 DEGREES"
-         STOP "BAD INPUT"
-      endif
       write (6,*) "------------------------------------------"
 
       xx =  xval2(1)
@@ -418,10 +398,12 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
       thrad = 2.*asin(sqrt(s2))
       th_in2 = thrad/d_r
 
+      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
+      read (*,*) e_in1
       write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
-c      read (*,*) ep_in1
+      read (*,*) ep_in1
       write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
-c      read (*,*) th_in1
+      read (*,*) th_in1
       call system_clock ( clck_counts_beg2, clck_rate2 ) 
 
 
@@ -720,23 +702,41 @@ c                 vvvvvvvvv This part gives us the total, non-physics info vvvvv
                   elseif (x.lt.0.8.and.x.gt.0) then ! If DIS:
                       call get_b1d(x,q2,Aout,F1out,b1out)
                   endif
-                  if (.not.(F1d_ie.gt.0)) F1d_ie = 0
-                  if (.not.(F1d_qe.gt.0)) F1d_qe = 0
-                  if (.not.(F1n_ie.gt.0)) F1n_ie = 0
-                  if (.not.(F1n_qe.gt.0)) F1n_qe = 0
-                  if (.not.(F1c_ie.gt.0)) F1c_ie = 0
-                  if (.not.(F1c_qe.gt.0)) F1c_qe = 0
-                  if (.not.(F1he_ie.gt.0)) F1he_ie = 0
-                  if (.not.(F1he_qe.gt.0)) F1he_qe = 0
-                  if (.not.(F2d_ie.gt.0)) F2d_ie = 0
-                  if (.not.(F2d_qe.gt.0)) F2d_qe = 0
-                  if (.not.(F2n_ie.gt.0)) F2n_ie = 0
-                  if (.not.(F2n_qe.gt.0)) F2n_qe = 0
-                  if (.not.(F2c_ie.gt.0)) F2c_ie = 0
-                  if (.not.(F2c_qe.gt.0)) F2c_qe = 0
-                  if (.not.(F2he_ie.gt.0)) F2he_ie = 0
-                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
-      
+c                  if (.not.(F1d_ie.gt.0)) F1d_ie = 0
+c                  if (.not.(F1d_qe.gt.0)) F1d_qe = 0
+c                  if (.not.(F1n_ie.gt.0)) F1n_ie = 0
+c                  if (.not.(F1n_qe.gt.0)) F1n_qe = 0
+c                  if (.not.(F1c_ie.gt.0)) F1c_ie = 0
+c                  if (.not.(F1c_qe.gt.0)) F1c_qe = 0
+c                  if (.not.(F1he_ie.gt.0)) F1he_ie = 0
+c                  if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+c                  if (.not.(F2d_ie.gt.0)) F2d_ie = 0
+c                  if (.not.(F2d_qe.gt.0)) F2d_qe = 0
+c                  if (.not.(F2n_ie.gt.0)) F2n_ie = 0
+c                  if (.not.(F2n_qe.gt.0)) F2n_qe = 0
+c                  if (.not.(F2c_ie.gt.0)) F2c_ie = 0
+c                  if (.not.(F2c_qe.gt.0)) F2c_qe = 0
+c                  if (.not.(F2he_ie.gt.0)) F2he_ie = 0
+c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+
+                  if (F1d_ie.lt.0) F1d_ie = 0
+                  if (F1d_qe.lt.0) F1d_qe = 0
+                  if (F1n_ie.lt.0) F1n_ie = 0
+                  if (F1n_qe.lt.0) F1n_qe = 0
+                  if (F1c_ie.lt.0) F1c_ie = 0
+                  if (F1c_qe.lt.0) F1c_qe = 0
+                  if (F1he_ie.lt.0) F1he_ie = 0
+                  if (F1he_qe.lt.0) F1he_qe = 0
+                  if (F2d_ie.lt.0) F2d_ie = 0
+                  if (F2d_qe.lt.0) F2d_qe = 0
+                  if (F2n_ie.lt.0) F2n_ie = 0
+                  if (F2n_qe.lt.0) F2n_qe = 0
+                  if (F2c_ie.lt.0) F2c_ie = 0
+                  if (F2c_qe.lt.0) F2c_qe = 0
+                  if (F2he_ie.lt.0) F2he_ie = 0
+                  if (F2he_qe.lt.0) F2he_qe = 0
+
+     
                   sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                               + ((F2d_ie+F2d_qe)/2.)/nu)
                   sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
@@ -776,8 +776,8 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                  + lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
-                 if (w2.le.w2min) then
-c                 if (x.lt.0.75) then
+c                 if (w2.le.w2min) then
+                 if (x.lt.0.75) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -785,8 +785,8 @@ c                 if (x.lt.0.75) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-c                 if (x.gt.1.85) then
-                 if (w2.ge.w2max) then
+                 if (x.gt.1.85) then
+c                 if (w2.ge.w2max) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -794,14 +794,14 @@ c                 if (x.gt.1.85) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-c                 if (q2.lt.1.0) then
-c                    sigma_unpol    = 0.0
-c                    sigma_unpol_d  = 0.0
-c                    sigma_unpol_he = 0.0
-c                    sigma_unpol_n  = 0.0
-c                    sigma_unpol_c  = 0.0
-c                    sigma_pol_d    = 0.0
-c                 endif
+                 if (q2.lt.1.0) then
+                    sigma_unpol    = 0.0
+                    sigma_unpol_d  = 0.0
+                    sigma_unpol_he = 0.0
+                    sigma_unpol_n  = 0.0
+                    sigma_unpol_c  = 0.0
+                    sigma_pol_d    = 0.0
+                 endif
 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   lumiSig = lumi_d*sigma_pol_d 
@@ -954,8 +954,8 @@ c           vvvvv Define the rates in terms of physics and total for the output 
 c           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-c            pac_time = prec*2.0
-            pac_time = prec
+            pac_time = prec*2.0
+c            pac_time = prec
             time = pac_time
             f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_n + goodRate_he))
 c           vvvvv Error on Azz using A_meas^(2)
@@ -1507,14 +1507,13 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
-        endif
+         endif
 
       enddo
       write (6,*) "------------------------------------------"
       write (6,*) "Beam E used:",e_in
       write (6,*) "E' used for f_dil:",ep_in1
       write (6,*) "Theta used for f_dil:",th_in1
-      write (6,*) "Spectrometer Separation Angle:",thdiff
 c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
