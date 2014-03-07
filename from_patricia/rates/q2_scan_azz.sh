@@ -20,7 +20,7 @@ file0="./ptrates.f"
 
 i=1
 #while [ $i -le 4 ]
-while [ $i -le 2 ]
+while [ $i -le 1 ]
 do
 	x=0
 	while [ $x -le 5 ]
@@ -29,17 +29,17 @@ do
 		while [ $y -lt 10 ]
 		do
 #			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/    ..., ..., ..., ..., .../" $file0`
-			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/   ...., 99, 99, 99, 99/" $file0`
-			echo "qqval1 lineNo: ${lineNo}"
-			sed -i -e "${lineNo}s/\ \ ..\..,/\ \ 99.9,/g" $file0
+#			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/   ...., 99, 99, 99, 99/" $file0`
+#			echo "qqval1 lineNo: ${lineNo}"
+#			sed -i -e "${lineNo}s/\ \ ..\..,/\ \ 99.9,/g" $file0
 #			sed -i -e "${lineNo}s/\ .\..\//\ 9.9\//g" $file0
 #			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/    ..., ..., ..., ..., .../" $file0`
-			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/   ...., 99, 99, 99, 99/" $file0`
-			echo "qqval2 lineNo: ${lineNo}"
-			sed -i -e "${lineNo}s/\ \ ..\..,/\ \ 99.9,/g" $file0
+#			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/   ...., 99, 99, 99, 99/" $file0`
+#			echo "qqval2 lineNo: ${lineNo}"
+#			sed -i -e "${lineNo}s/\ \ ..\..,/\ \ 99.9,/g" $file0
 #			sed -i -e "${lineNo}s/\ .\..\//\ 9.9\//g" $file0
 # vvvvvvvvvvvvvvvvvv for replacing HMS points vvvvvvvvvvvvvvvvvvv
-			if [ "$i" -eq 1 ]; then
+#			if [ "$i" -eq 1 ]; then
 #				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/    ..., ..., ..., ..., .../" $file0`
 				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/   ...., 99, 99, 99, 99/" $file0`
 				echo "qqval1 lineNo: ${lineNo}"
@@ -47,10 +47,10 @@ do
 #				sed -i -e "${lineNo}s/.\..,/$x.$y,/g" $file0
 #				sed -i -e "${lineNo}s/\ .\..\//\ $x.$y\//g" $file0
 				sed -i -e "${lineNo}s/\ \ ..\..,/\ \ \ $x.$y,/g" $file0
-				outputFolder="/home/ellie/Desktop/b1_plots/x_08_to_19/HMS_q2_scan"
-			fi
+#				outputFolder="/home/ellie/Desktop/b1_plots/x_08_to_19/HMS_q2_scan"
+#			fi
 # vvvvvvvvvvvvvvvvvv for replacing SHMS points vvvvvvvvvvvvvvvvvvv
-			if [ "$i" -eq 2 ]; then
+#			if [ "$i" -eq 1 ]; then
 #				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/   ...., ..., ..., ..., .../" $file0`
 				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/   ...., 99, 99, 99, 99/" $file0`
 				echo "qqval2 lineNo: ${lineNo}"
@@ -58,8 +58,8 @@ do
 #				sed -i -e "${lineNo}s/...,/$x.$y,/g" $file0
 #				sed -i -e "${lineNo}s/\ ...\//\ $x.$y\//g" $file0
 				sed -i -e "${lineNo}s/\ \ ..\..,/\ \ \ $x.$y,/g" $file0
-				outputFolder="/home/ellie/Desktop/b1_plots/x_08_to_19/SHMS_q2_scan"
-			fi
+				outputFolder="/home/ellie/Desktop/b1_plots/x_08_to_19"
+#			fi
 
 
 

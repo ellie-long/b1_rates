@@ -468,8 +468,8 @@ with g0
     s3 errorbar riser clip length 0.100000
     s3 comment "Cols 1:2:3"
     s3 legend  "He (Bosted)"
-#    s4 hidden false
-    s4 hidden true
+    s4 hidden false
+#    s4 hidden true
     s4 type xy
     s4 symbol 0
     s4 symbol size 0.50000
@@ -518,8 +518,8 @@ with g0
     s4 errorbar riser clip length 0.100000
     s4 comment "Cols 1:2:3"
     s4 legend  "D\sunpol\N (Misak)"
-#    s5 hidden false
-    s5 hidden true
+    s5 hidden false
+#    s5 hidden true
     s5 type xy
     s5 symbol 0
     s5 symbol size 0.50000
