@@ -103,6 +103,7 @@ c
       REAL*8  tot_time(100)
       REAL*8  fsyst_xs
       REAL*8  syst_Azz, syst_b1d
+      REAL*8  xplat,fplat
       REAL*4  dummy
 
       REAL*8 m_nuc,m_amu,m_e
@@ -1297,6 +1298,7 @@ c         ep_in1  = 5.80 ! GeV
 c         x       = q2/(2.*mp*nu)
 c         x       = cent_x(ib)
          w2      = mp*mp + q2/x - q2
+         xplat=1.64203-0.177032*log(q2)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1354,9 +1356,14 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
         sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
 
-         f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
-     +             + lumi_n*sigma_unpol_n
-     +             + lumi_d*sigma_unpol_d)
+         if (x.lt.xplat) then
+              f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                  + lumi_n*sigma_unpol_n
+     +                  + lumi_d*sigma_unpol_d)
+              fplat = f_dil
+         else
+              f_dil = fplat
+         endif
 
          src_ratio_n  = (sigma_unpol_n /sigma_unpol_d)*(a_d/a_n)
          src_ratio_he = (sigma_unpol_he/sigma_unpol_d)*(a_d/a_he)

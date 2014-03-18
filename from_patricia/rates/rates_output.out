@@ -12068,11 +12068,8 @@ rm: cannot remove `*.o': No such file or directory
  Beam E used:   6.5999999046325684     
  E' used for f_dil:   4.1814785262951570     
  Theta used for f_dil:   26.733660849741224     
+ qq:   5.9000000953674316     
  -------------------------------------------
- Clock (Total):
-   12.456000    
- -------------------------------------------
- Clock (Ignoring input time):
-   12.456000    
- -------------------------------------------
+ Clock:
+   0.0000000    
 Tried to read doubles from strings!

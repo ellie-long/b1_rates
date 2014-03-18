@@ -29,6 +29,7 @@ file0="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out
 # 14 = sig_n
 # 15 = sig_he
 # 16 = f_dil
+# 17 = sig_li
 #echo "0	0" > temp_sigma_d_pol
 #awk '$12!="NaN" {print $2,$13}' $file0 > temp_sigma_d_unpol
 #awk '$12!="NaN" {print $2,$14}' $file0 > temp_sigma_n
@@ -53,6 +54,7 @@ file1="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check.out"
 # 14 = 14N/2H SRC Ratio
 # 15 = 4He/2H SRC Ratio
 # 16 = 12C/2H SRC Ratio
+# 17 = Unpolarized 6Li cross-section
 awk '$12!="NaN" {print $1,$8}'  $file1 >> temp_sigma_d_pol
 awk '$12!="NaN" {print $1,$9}'  $file1 >> temp_sigma_d_unpol
 #awk '$12!="NaN" {print $1,$13}'  $file1 >> temp_sigma_d_unpol
@@ -60,6 +62,7 @@ awk '$12!="NaN" {print $1,$10}' $file1 >> temp_sigma_n
 awk '$12!="NaN" {print $1,$11}' $file1 >> temp_sigma_he
 awk '$12!="NaN" {print $1,$12}' $file1 >> temp_fdil
 awk '$12!="NaN" {print $1,$13}' $file1 >> temp_sigma_c
+awk '$12!="NaN" {print $1,$17}' $file1 >> temp_sigma_he
 
 awk '$12!="NaN" {print $1,$14}' $file1 >> temp_src_n
 awk '$12!="NaN" {print $1,$15}' $file1 >> temp_src_he
@@ -70,6 +73,7 @@ awk '$12!="NaN" {print $6,$9}'  $file1 >> temp_sigma_d_unpol_nu
 #awk '$12!="NaN" {print $6,$13}'  $file1 >> temp_sigma_d_unpol_nu
 awk '$12!="NaN" {print $6,$10}' $file1 >> temp_sigma_n_nu
 awk '$12!="NaN" {print $6,$11}' $file1 >> temp_sigma_he_nu
+awk '$12!="NaN" {print $6,$17}' $file1 >> temp_sigma_he_nu
 
 
 
@@ -151,6 +155,7 @@ xmgrace\
 	-settype xy		-block temp_sigma_d_unpol		-log y 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_c				-log y	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_he			-log y	-graph 0 -bxy 1:2\
+	-settype xy		-block temp_sigma_li			-log y	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_d_x			-log y	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_n_x			-log y	-graph 0 -bxy 1:2\
 	-settype xydy	-block temp_sigma_d_exp_x		-log y	-graph 0 -bxy 1:2:3\

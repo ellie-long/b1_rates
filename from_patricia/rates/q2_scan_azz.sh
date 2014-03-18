@@ -97,7 +97,7 @@ do
 
 			rm fort.*
 			rm ./ptrates
-			gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f > rates_output.out 2>&1
+			gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f > rates_output.out 2>&1
 			rm *.o >> rates_output.out 2>&1
 			./ptrates >> rates_output.out 2>&1
 	
