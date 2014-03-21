@@ -41,7 +41,7 @@ c
       REAL*8 f_dil,Pzz_fact
       REAL*8 rho,Nelec,lumi,lumi_d
       REAL*8 rho_li,m_li,lumi_li
-      REAL*8 rho_he,m_he,lumi_he
+      REAL*8 rho_he,m_he,lumi_he,lumi_heli
       REAL*8 rho_n,m_n,lumi_n
       REAL*8 rho_c,m_c,lumi_c
       REAL*8 src_ratio_c,src_ratio_n,src_ratio_he
@@ -58,7 +58,7 @@ c
 
       REAL*8 bcurrent,tgt_thick,tgt_len
 
-      REAL*8 mott_d,mott_he,mott_n,mott_p,mott_c
+      REAL*8 mott_d,mott_he,mott_n,mott_p,mott_c,mott_li
       REAL*8 Pzz,Aout,F1out,b1out,F2out,F1in,F1qe
       REAL*8 F1d,F2d,F1he,F2he,F1n,F2n,F1c,F2c,F1li,F2li
       REAL*8 F1d_ie,F2d_ie,F1he_ie,F2he_ie,F1n_ie,F2n_ie,F1c_ie,F2c_ie
@@ -70,6 +70,8 @@ c
       REAL*8 F1dend,F2dend
       REAL*8 sigma_unpol,sigma_tensor,sigma_born
       REAL*8 sigma_unpol_d,sigma_unpol_he,sigma_unpol_n,sigma_unpol_c
+      REAL*8 lumsig_u_d,lumsig_he,lumsig_n,lumsig_c,lumsig_li
+      REAL*8 lumsig_p_d,lumsig_heli
       REAL*8 sigma_pol_d,sigma_unpol_li,allsigma_unpol_li
       REAL*8 allsigma_unpol_d,allsigma_unpol_he,allsigma_unpol_n
       REAL*8 allsigma_pol_d,tot_allsigma
@@ -115,7 +117,7 @@ c
       INTEGER apass,zpass
       INTEGER ix,ispectro,isum,type
       INTEGER allisum
-      CHARACTER targ*3
+      CHARACTER targ*8
 
       LOGICAL central
       INTEGER method
@@ -293,10 +295,10 @@ c---- PARAMETER -------------------------------------------
       scale_time= 1.0 
       scale     = 5.0       ! scale b1 kumano model
       type      = 1         ! 1=physics rates, 2=total rates
-      targ      = 'ND3'     ! ND3 or LiD
-c      targ      = 'LiD'     ! ND3 or LiD
+      targ      = 'ND3'     ! ND3 target
+c      targ      = 'LiD'     ! LiD
+c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-c      targ      = 'LiD'
       e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -341,7 +343,8 @@ c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
       dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
 
       ! General Parameters
-      rho_he = 0.1412;  m_he = 4.0026
+      rho_he = 0.1412 ! 0.1412 g/cm^3
+      m_he = 4.0026
       z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3;
       a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6;
 c----- MAIN ------------------------------------------------
@@ -421,36 +424,47 @@ c      read (*,*) th_in1
 
 c-- Setup target parameters
       Nelec = bcurrent*1e-6/e_ch                                       ! Find number of electrons
+      write(6,*) "Target: ",targ
       if (targ.eq.'ND3') then
-         rho   = 3.0 * Navo * (rho_nd3 / M_nd3) * pack_nd3 * tgt_len   ! number density in nuclei.cm^-2 
+c         rho   = 3.0 * Navo * (rho_nd3 / M_nd3) * pack_nd3 * tgt_len   ! number density in nuclei.cm^-2 
                                                                        ! = the number of ammonia molecules
                                                                        ! per unit area times 3 deuterons per molecule
          Pz    = Pz_nd3
-         f_dil = dil_nd3
+c         f_dil = dil_nd3
 
 c-- Calculate the luminosity
 c         lumi  = Nelec * rho                ! luminosity in cm^-2
-         lumi    = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
          lumi_d  = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
          lumi_n  = (Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
          lumi_he = (Navo*(rho_he/m_he)*(1-pack_nd3))*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
          lumi_li = 0
+         lumi_heli = 0
          write(6,*)" Using ND3..."
-
-      elseif (targ.eq.'LiD') then
-         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
+      else if (targ.eq.'LiD') then
+c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
          Pz    = Pz_lid
-         f_dil = dil_lid
-
-c-- Calculate the luminosity
-c         lumi  = Nelec * rho                ! luminosity in cm^-2
-         lumi    = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
          lumi_d  = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
          lumi_n  = 0                                                    ! luminosity in 1/(s*cm^2)
          lumi_he = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
          lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+         lumi_heli = 0
          write(6,*) "Using LiD..."
-      endif
+      else if (targ.eq.'LiD_He2D') then
+c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
+         Pz    = Pz_lid
+         lumi_d    = 2*(Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len    ! luminosity in 1/(s*cm^2)
+         lumi_n    = 0                                                  ! luminosity in 1/(s*cm^2)
+         lumi_he   = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len    ! luminosity in 1/(s*cm^2)
+         lumi_heli = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
+         lumi_li = 0                                                    ! luminosity in 1/(s*cm^2)
+         write(6,*) "Using (HeD)D..."
+      end if
+
+      write(6,*) "lumi_d  = ",lumi_d
+      write(6,*) "lumi_n  = ",lumi_n
+      write(6,*) "lumi_he = ",lumi_he
+      write(6,*) "lumi_li = ",lumi_li
+
 
 c      Pzz   = Pzz_fact *(2. - sqrt(4. - 3.*Pz**2))    ! tensor polarization
       Pzz = Pzz_in  ! considering that Pzz cannot be derived from Pz
@@ -785,6 +799,8 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                      tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_n
                   elseif (targ.eq.'LiD') then
                      tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_li
+                  elseif (targ.eq.'LiD_He2D') then
+                     tot_allsigma = sigma_unpol_d + sigma_unpol_he
                   endif
 c                  tot_allsigma = sigma_pol_d + sigma_unpol_he + sigma_unpol_n
 
@@ -802,6 +818,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                   lumiSig = lumi_d*sigma_pol_d 
      +                      + lumi_he*sigma_unpol_he 
+     +                      + lumi_heli*sigma_unpol_he 
      +                      + lumi_n*sigma_unpol_n
      +                      + lumi_li*sigma_unpol_li
                   goodRateTotal = goodRateTotal 
@@ -812,6 +829,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                  + lumi_n*sigma_unpol_n*dep*thincr*d_r*2*dphi*1E-24
                   goodRate_he = goodRate_he
      +                  + lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
+     +                + lumi_heli*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
                   goodRate_li = goodRate_li
      +                  + lumi_li*sigma_unpol_li*dep*thincr*d_r*2*dphi*1E-24
 
@@ -867,10 +885,12 @@ c
                         N_for_x(ib) = lumi_d*sigma_pol_d 
      +                    + lumi_li*sigma_unpol_li
      +                    + lumi_he*sigma_unpol_he
+     +                    + lumi_heli*sigma_unpol_he
      +                    + lumi_n*sigma_unpol_n
                         Nunpol_for_x(ib) = lumi_d*sigma_unpol_d 
      +                    + lumi_li*sigma_unpol_li
      +                    + lumi_he*sigma_unpol_he
+     +                    + lumi_heli*sigma_unpol_he
      +                    + lumi_n*sigma_unpol_n
 
                           xsum(ib) = xsum(ib) + 1
@@ -1017,6 +1037,9 @@ c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_n + goodRate_he)
             elseif (targ.eq.'LiD') then
 c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_li + goodRate_he))
                f_dil = (goodRate_d/(goodRate_d + goodRate_li + goodRate_he))
+            elseif (targ.eq.'LiD_He2D') then
+c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_he))
+               f_dil = (goodRate_d/(goodRate_d + goodRate_he))
             endif
 c           vvvvv Error on Azz using A_meas^(2)
             dAzz = (4./(f_dil*Pzz))*(1/SQRT(time*physrate*3600.0))
@@ -1311,6 +1334,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
             f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                + lumi_heli*sigma_unpol_he
      +                + lumi_n*sigma_unpol_n
      +                + lumi_d*sigma_unpol_d
      +                + lumi_li*sigma_unpol_li)
@@ -1447,11 +1471,20 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                      + ((F2c_ie+F2c_qe)/12.)/nu)
 
-        sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+         sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
+         lumsig_p_d  = lumi_d*sigma_pol_d
+         lumsig_u_d  = lumi_d*sigma_unpol_d
+         lumsig_he   = lumi_he*sigma_unpol_he
+         lumsig_n    = lumi_n*sigma_unpol_n
+         lumsig_c    = lumi_he*sigma_unpol_c
+         lumsig_li   = lumi_he*sigma_unpol_li
+         lumsig_heli = lumi_heli*sigma_unpol_he
 
 
          if (x.lt.xplat) then
               f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                  + lumi_heli*sigma_unpol_he
      +                  + lumi_li*sigma_unpol_li
      +                  + lumi_n*sigma_unpol_n
      +                  + lumi_d*sigma_unpol_d)
@@ -1470,13 +1503,17 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
      &                  src_ratio_n,src_ratio_he,src_ratio_c,
-     &                  sigma_unpol_li
+     &                  sigma_unpol_li,
+     &                  lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
          write(17,1008) x,q2,th_in1,e_in,ep_in1,nu,w2,
      &                  sigma_pol_d,
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
      &                  src_ratio_n,src_ratio_he,src_ratio_c,
-     &                  sigma_unpol_li
+     &                  sigma_unpol_li,
+     &                  lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
 
       enddo     
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
@@ -1568,10 +1605,18 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                      + ((F2c_ie+F2c_qe)/12.)/nu)
 
-        sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+         sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+         lumsig_p_d  = lumi_d*sigma_pol_d
+         lumsig_u_d  = lumi_d*sigma_unpol_d
+         lumsig_he   = lumi_he*sigma_unpol_he
+         lumsig_n    = lumi_n*sigma_unpol_n
+         lumsig_c    = lumi_he*sigma_unpol_c
+         lumsig_li   = lumi_he*sigma_unpol_li
+         lumsig_heli = lumi_heli*sigma_unpol_he
 
          if (x.lt.xplat) then
               f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                  + lumi_heli*sigma_unpol_he
      +                  + lumi_li*sigma_unpol_li
      +                  + lumi_n*sigma_unpol_n
      +                  + lumi_d*sigma_unpol_d)
@@ -1589,7 +1634,9 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
      &                  src_ratio_n,src_ratio_he,src_ratio_c,
-     &                  sigma_unpol_li
+     &                  sigma_unpol_li,
+     &                  lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
 
       enddo      
 c     ^^^^^^^^^^^^ HMS ^^^^^^^^^^^^^^^^^^^
@@ -1639,6 +1686,7 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
       write (6,*) "E' used for f_dil:",ep_in1
       write (6,*) "Theta used for f_dil:",th_in1
       write (6,*) "Pzz used:",Pzz_in
+      write (6,*) "Target material used:",targ
 c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c vvvvv Writes out Q^2-dependent Azz curve vvvvvvvv
@@ -1674,7 +1722,7 @@ c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f1
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
  1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),10(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
- 1008 format(17(E10.3,1x))
+ 1008 format(24(E10.3,1x))
  1009 format(A1,4(f10.3))
       end
 
