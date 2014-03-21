@@ -72,13 +72,22 @@ awk '$12!="NaN" {print $1,$13}' $file1 >> temp_sigma_c
 awk '$12!="NaN" {print $1,$17}' $file1 >> temp_sigma_li
 awk '$12!="NaN" {print $1,$11+$9}' $file1 >> temp_sigma_li_hed
 
-awk '$12!="NaN" {print $1,$18}'  $file1 >> temp_lumsig_d_pol
-awk '$12!="NaN" {print $1,$19}'  $file1 >> temp_lumsig_d_unpol
-awk '$12!="NaN" {print $1,$20}'  $file1 >> temp_lumsig_he
-awk '$12!="NaN" {print $1,$21}'  $file1 >> temp_lumsig_n
-awk '$12!="NaN" {print $1,$22}'  $file1 >> temp_lumsig_c
-awk '$12!="NaN" {print $1,$23}'  $file1 >> temp_lumsig_li
-awk '$12!="NaN" && $24>0 {print $1,$24+($19/2)}'  $file1 >> temp_lumsig_heli
+echo '-1 1' >> temp_lumsig_d_pol
+echo '-1 1' >> temp_lumsig_d_unpol
+echo '-1 1' >> temp_lumsig_he
+echo '-1 1' >> temp_lumsig_n
+echo '-1 1' >> temp_lumsig_c
+echo '-1 1' >> temp_lumsig_li
+echo '-1 1' >> temp_lumsig_heli
+
+awk '$12!="NaN" && $18>0 {print $1,$18}'  $file1 >> temp_lumsig_d_pol
+awk '$12!="NaN" && $19>0 {print $1,$19}'  $file1 >> temp_lumsig_d_unpol
+awk '$12!="NaN" && $20>0 {print $1,$20}'  $file1 >> temp_lumsig_he
+awk '$12!="NaN" && $21>0 {print $1,$21}'  $file1 >> temp_lumsig_n
+awk '$12!="NaN" && $22>0 {print $1,$22}'  $file1 >> temp_lumsig_c
+awk '$12!="NaN" && $23>0 {print $1,$23}'  $file1 >> temp_lumsig_li
+awk '$12!="NaN" && $24>0 {print $1,$24}'  $file1 >> temp_lumsig_heli
+#awk '$12!="NaN" && $24>0 {print $1,$24+($19/2)}'  $file1 >> temp_lumsig_heli
 
 awk '$12!="NaN" {print $1,$14}' $file1 >> temp_src_n
 awk '$12!="NaN" {print $1,$15}' $file1 >> temp_src_he
@@ -166,8 +175,8 @@ awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file7 >> temp_misak_fdil
 #	-settype xy		-block temp_src_c						-graph 1 -bxy 1:2\
 #	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check_src.par -noask
 
-#gracebat -hdevice PNG -printfile cs_check.png \
-xmgrace\
+#xmgrace\
+gracebat -hdevice PNG -printfile cs_check.png \
 	-settype xy		-block temp_sigma_d_pol				 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_d_unpol			 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_n						-graph 0 -bxy 1:2\

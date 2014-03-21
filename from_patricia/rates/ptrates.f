@@ -295,9 +295,9 @@ c---- PARAMETER -------------------------------------------
       scale_time= 1.0 
       scale     = 5.0       ! scale b1 kumano model
       type      = 1         ! 1=physics rates, 2=total rates
-      targ      = 'ND3'     ! ND3 target
+c      targ      = 'ND3'     ! ND3 target
 c      targ      = 'LiD'     ! LiD
-c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
+      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
       e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -439,6 +439,7 @@ c         lumi  = Nelec * rho                ! luminosity in cm^-2
          lumi_he = (Navo*(rho_he/m_he)*(1-pack_nd3))*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
          lumi_li = 0
          lumi_heli = 0
+         lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
          write(6,*)" Using ND3..."
       else if (targ.eq.'LiD') then
 c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
@@ -448,6 +449,7 @@ c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number
          lumi_he = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
          lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
          lumi_heli = 0
+         lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
          write(6,*) "Using LiD..."
       else if (targ.eq.'LiD_He2D') then
 c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
@@ -456,7 +458,9 @@ c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number
          lumi_n    = 0                                                  ! luminosity in 1/(s*cm^2)
          lumi_he   = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len    ! luminosity in 1/(s*cm^2)
          lumi_heli = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
-         lumi_li = 0                                                    ! luminosity in 1/(s*cm^2)
+         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+c         lumi_li = 0                                                    ! luminosity in 1/(s*cm^2)
+         lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
          write(6,*) "Using (HeD)D..."
       end if
 
@@ -1477,9 +1481,10 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          lumsig_u_d  = lumi_d*sigma_unpol_d
          lumsig_he   = lumi_he*sigma_unpol_he
          lumsig_n    = lumi_n*sigma_unpol_n
-         lumsig_c    = lumi_he*sigma_unpol_c
-         lumsig_li   = lumi_he*sigma_unpol_li
-         lumsig_heli = lumi_heli*sigma_unpol_he
+         lumsig_c    = lumi_c*sigma_unpol_c
+         lumsig_li   = lumi_li*sigma_unpol_li
+         lumsig_heli = lumi_heli*sigma_unpol_he + lumi_heli*sigma_unpol_d
+c         lumsig_heli = lumi_heli*sigma_unpol_he
 
 
          if (x.lt.xplat) then
@@ -1606,13 +1611,15 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      +                      + ((F2c_ie+F2c_qe)/12.)/nu)
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
          lumsig_p_d  = lumi_d*sigma_pol_d
          lumsig_u_d  = lumi_d*sigma_unpol_d
          lumsig_he   = lumi_he*sigma_unpol_he
          lumsig_n    = lumi_n*sigma_unpol_n
-         lumsig_c    = lumi_he*sigma_unpol_c
-         lumsig_li   = lumi_he*sigma_unpol_li
-         lumsig_heli = lumi_heli*sigma_unpol_he
+         lumsig_c    = lumi_c*sigma_unpol_c
+         lumsig_li   = lumi_li*sigma_unpol_li
+         lumsig_heli = lumi_heli*sigma_unpol_he + lumi_heli*sigma_unpol_d
+c         lumsig_heli = lumi_heli*sigma_unpol_he
 
          if (x.lt.xplat) then
               f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
