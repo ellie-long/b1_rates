@@ -175,8 +175,8 @@ awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file7 >> temp_misak_fdil
 #	-settype xy		-block temp_src_c						-graph 1 -bxy 1:2\
 #	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check_src.par -noask
 
-#xmgrace\
-gracebat -hdevice PNG -printfile cs_check.png \
+#gracebat -hdevice PNG -printfile cs_check.png \
+xmgrace\
 	-settype xy		-block temp_sigma_d_pol				 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_d_unpol			 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_n						-graph 0 -bxy 1:2\

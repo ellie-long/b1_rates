@@ -293,11 +293,11 @@ c---- PARAMETER -------------------------------------------
                             ! false --> use acceptance phase space
 
       scale_time= 1.0 
-      scale     = 5.0       ! scale b1 kumano model
-      type      = 1         ! 1=physics rates, 2=total rates
-c      targ      = 'ND3'     ! ND3 target
-c      targ      = 'LiD'     ! LiD
-      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
+      scale     = 5.0            ! scale b1 kumano model
+      type      = 1              ! 1=physics rates, 2=total rates
+c      targ      = 'ND3'          ! ND3 target
+      targ      = 'LiD'          ! LiD
+c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
       e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -315,7 +315,7 @@ c      w2max     =  0.8**2  ! Cut on W
       bcurrent  =  0.115    ! 0.085    ! microAmps
       tgt_len   =  3.0*1.0  ! cm
       ! ND3 specs
-      rho_nd3   =  1.007 !0.917    0.6/cm3
+      rho_nd3   =  1.007 ! g/cm3
 
       dil_nd3   =  6.0/20.0 !
 c      pack_nd3  =  0.80 !0.55     ! packing fraction
@@ -458,8 +458,8 @@ c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number
          lumi_n    = 0                                                  ! luminosity in 1/(s*cm^2)
          lumi_he   = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len    ! luminosity in 1/(s*cm^2)
          lumi_heli = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
-         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
-c         lumi_li = 0                                                    ! luminosity in 1/(s*cm^2)
+c         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+         lumi_li   = 0                                                  ! luminosity in 1/(s*cm^2)
          lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
          write(6,*) "Using (HeD)D..."
       end if
@@ -734,11 +734,12 @@ c                 vvvvvvvvv This part gives us the total, non-physics info vvvvv
                   rc      = 0; rche    = 0; rcn     = 0; rcc    = 0;
                   call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
                   call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+                  call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 6Li
                   call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
                   call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
                   call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
                   call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
-                  call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 4He
+                  call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 6Li
                   call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
                   call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
                   if (x.ge.0.8.and.x.le.5.0) then   ! If QE:
@@ -796,7 +797,7 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                               + ((F2c_ie+F2c_qe)/12.)/nu)
                   sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-     +                               + ((F2li_ie+F2li_qe)/3.)/nu)
+     +                               + ((F2li_ie+F2li_qe)/6.)/nu)
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
                   if (targ.eq.'ND3') then
@@ -820,22 +821,22 @@ c vvvvvvvvvvv DO NOT TRUST VARIABLES BELOW -- I THINK THEY'RE BAD vvvvvvvvvvvv
                   endif
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-                  lumiSig = lumi_d*sigma_pol_d 
-     +                      + lumi_he*sigma_unpol_he 
-     +                      + lumi_heli*sigma_unpol_he 
-     +                      + lumi_n*sigma_unpol_n
-     +                      + lumi_li*sigma_unpol_li
+                  lumiSig =   (lumi_d*sigma_pol_d)
+     +                      + (lumi_he*sigma_unpol_he)
+     +                      + (lumi_heli*sigma_unpol_he)
+     +                      + (lumi_n*sigma_unpol_n)
+     +                      + (lumi_li*sigma_unpol_li)
                   goodRateTotal = goodRateTotal 
-     +                  + lumiSig*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumiSig*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_d = goodRate_d 
-     +                  + lumi_d*sigma_pol_d*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_d*sigma_pol_d*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_n = goodRate_n 
-     +                  + lumi_n*sigma_unpol_n*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_n*sigma_unpol_n*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_he = goodRate_he
-     +                  + lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
-     +                + lumi_heli*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24)
+     +                + (lumi_heli*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_li = goodRate_li
-     +                  + lumi_li*sigma_unpol_li*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_li*sigma_unpol_li*dep*thincr*d_r*2*dphi*1E-24)
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
                  if (w2.le.w2min) then
