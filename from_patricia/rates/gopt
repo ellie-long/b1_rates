@@ -8,4 +8,4 @@ gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe
 
 
 rm *.o
-#./ptrates
+./ptrates

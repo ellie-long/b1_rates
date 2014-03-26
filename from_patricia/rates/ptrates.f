@@ -295,8 +295,8 @@ c---- PARAMETER -------------------------------------------
       scale_time= 1.0 
       scale     = 5.0            ! scale b1 kumano model
       type      = 1              ! 1=physics rates, 2=total rates
-c      targ      = 'ND3'          ! ND3 target
-      targ      = 'LiD'          ! LiD
+      targ      = 'ND3'          ! ND3 target
+c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -412,12 +412,12 @@ c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
       thrad = 2.*asin(sqrt(s2))
       th_in2 = thrad/d_r
 
-c      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
-c      read (*,*) e_in1
-c      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
-c      read (*,*) ep_in1
-c      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
-c      read (*,*) th_in1
+      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
+      read (*,*) e_in1
+      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
+      read (*,*) ep_in1
+      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
+      read (*,*) th_in1
       call system_clock ( clck_counts_beg2, clck_rate2 ) 
 
 
@@ -1404,6 +1404,7 @@ c         ep_in1  = 5.80 ! GeV
          snsq    = sin(thrad/2.)**2.
          cssq    = cos(thrad/2.)**2.
          tnsq    = tan(thrad/2.)**2.
+         ep_in1 = e_in/(1+(4*e_in*snsq)/(2*mp*x))
          nu      = e_in - ep_in1
          q2      = 4.*e_in*ep_in1*snsq
 c         x       = q2/(2.*mp*nu)
@@ -1463,18 +1464,42 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
          if (.not.(F2li_ie.gt.0)) F2li_ie = 0
          if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
-         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
-     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
-         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
-     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
-         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
-     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
+c         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+c         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+c         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+c     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
+c         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+c     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
+c         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+c     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
+c         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+c     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
+
+         sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                      + ((0+F2d_qe)/2.)/nu)
+         sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                      + ((0+F2d_qe)/2.)/nu)
+         sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
+     +                      + ((0+F2li_qe)/6.)/nu)
+         sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
+     +                      + ((0+F2he_qe)/4.)/nu)
+         sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
+     +                      + ((0+F2n_qe)/14.)/nu)
+         sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
+     +                      + ((0+F2c_qe)/12.)/nu)
+
+
+
+c         call init_incl(e_in,ep_in1,thin1,x,a_d,z_d,sigma_unpol)
+c         call init_incl(e_in,ep_in1,thin1,x,a_d,z_d,sigma_unpol_d)
+c         call init_incl(e_in,ep_in1,thin1,x,a_li,z_li,sigma_unpol_li)
+c         call init_incl(e_in,ep_in1,thin1,x,a_he,z_he,sigma_unpol_he)
+c         call init_incl(e_in,ep_in1,thin1,x,a_n,z_n,sigma_unpol_n)
+c         call init_incl(e_in,ep_in1,thin1,x,a_c,z_c,sigma_unpol_c)
+
+
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
@@ -1539,6 +1564,7 @@ c         ep_in1  = 5.80 ! GeV
          snsq    = sin(thrad/2.)**2.
          cssq    = cos(thrad/2.)**2.
          tnsq    = tan(thrad/2.)**2.
+         ep_in2 = e_in/(1+(4*e_in*snsq)/(2*mp*x))
          nu      = e_in - ep_in2
          q2      = 4.*e_in*ep_in2*snsq
 c         x       = q2/(2.*mp*nu)
@@ -1598,18 +1624,40 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
          if (.not.(F2li_ie.gt.0)) F2li_ie = 0
          if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
-         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
-     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
-         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
-     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
-         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
-     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
+c         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+c         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+c         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+c     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
+c         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+c     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
+c         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+c     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
+c         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+c     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
+
+
+         sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                      + ((0+F2d_qe)/2.)/nu)
+         sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                      + ((0+F2d_qe)/2.)/nu)
+         sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
+     +                      + ((0+F2li_qe)/6.)/nu)
+         sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
+     +                      + ((0+F2he_qe)/4.)/nu)
+         sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
+     +                      + ((0+F2n_qe)/14.)/nu)
+         sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
+     +                      + ((0+F2c_qe)/12.)/nu)
+
+c         call init_incl(e_in,ep_in2,thin2,x,a_d,z_d,sigma_unpol)
+c         call init_incl(e_in,ep_in2,thin2,x,a_d,z_d,sigma_unpol_d)
+c         call init_incl(e_in,ep_in2,thin2,x,a_li,z_li,sigma_unpol_li)
+c         call init_incl(e_in,ep_in2,thin2,x,a_he,z_he,sigma_unpol_he)
+c         call init_incl(e_in,ep_in2,thin2,x,a_n,z_n,sigma_unpol_n)
+c         call init_incl(e_in,ep_in2,thin2,x,a_c,z_c,sigma_unpol_c)
+
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
