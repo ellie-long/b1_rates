@@ -1,0 +1,32 @@
+          PROGRAM  OF INCLUSIVE  (ee') ELECTROPRODUCTION  
+                                         
+                                                            
+                                          UENPC   
+                                          YERPHI-1990      
+                                          JUNE
+                                                                 
+                                                                 
+INCIDENT   ELECTRON    4.600   0.000   0.000   0.000   0.000   0.000      
+TARGET     PB        208.000  82.000   0.270  25.000   0.020   0.000
+RAD_EFFECT NES        30.000   0.020   0.010   0.010   0.050   0.000  
+
+SWELLING   V1          0.000   0.000   0.000   0.000   0.000   0.000  
+EMC        NES         0.000   0.000   0.000   0.000   0.000   0.000  
+
+ELEC_SPECT             0.000   0.000   0.000   0.000   0.000   0.000
+Ee` -RANGE NES         2.710   3.430   0.015   0.000   0.000   0.000
+THe -RANGE             0.000   0.000   0.000  20.865   0.000   0.000
+Q0  -RANGE NES         1.400   2.500   0.100   0.000   0.000   0.000
+W   -RANGE NO          0.900   0.910   0.025   0.000   0.000   0.000
+X   -RANGE YES         0.950   1.100   0.050   0.000   0.000   0.000
+
+INTEGRATION            0.000   0.001   0.001   0.001   0.000 200.000
+          
+VIRT.NUCL. YES          
+LIGHT-CONE NES
+HYDROGEN   NES
+
+QUASIELASTIC
+AINELASTIC
+
+MEASURE    MICROBARN
