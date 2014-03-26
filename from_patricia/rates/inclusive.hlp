@@ -1,0 +1,34 @@
+INTEGRATION            0.000   0.001   0.001   0.001   0.000 100.000
+
+I   -  relative accuracy of integration in quasi-elastic case (using simps integral package)
+         (Note that in order to use option I, the value of II and VI should be set  0)
+II  -  relative/absolute accuracy of integration in quasi-elastic case (using gadap package)
+        Note   that for integrating  by option II we have to chose the values of I and VI to be 0
+III -  relative accuracy of integration in  inelastic case (uses gadap package)
+
+IV - the initial step of integration when using the option I
+
+V - used internally
+
+VI - integration with equal partition of the interval, by 1000*VI. 
+        (for example if one takes VI=100 one obtiains 100000 partitions, 
+         it makes integral rather slow but it is most accurate)
+
+
+TARGET
+for the case in which A= 3
+VI defnes the he3/h3 wave function case. 
+1.0 - Silvano
+2.0 - NewBochum V18_tm
+3.0 - NewBochum V18_ix
+4.0 - NewBochum cdbonn
+5.0 - Newbochum cdbonn_tm
+
+
+
+INCIDENT   ELECTRON   12.000   0.000   0.000   0.000   0.000   1.000      
+
+VI = 1.000- Old SLAC parameterization for nucleon formfactors
+     2.000 - Kely's parameterization from Phys. Rev. C70, 068202, 2004
+     3.000-  Bradford, Bodek, Budd, Arrington  Hep-ex/0602017
+  

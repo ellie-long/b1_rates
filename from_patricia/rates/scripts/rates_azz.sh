@@ -245,27 +245,27 @@ file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/xs-take1.out"
 
 hms_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14<min) min=$14} END {print min}' $file6`
 hms_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14>max) max=$14} END {print max}' $file6`
-hms_csmax="0.263E-05"
-hms_csmin="0"
+#hms_csmax="0.263E-05"
+#hms_csmin="0"
 hms_scale=`awk 'BEGIN{scale = 19/('$hms_csmax'-'$hms_csmin')} END {print scale}' $file6`
 
 shms_csmin=`awk 'BEGIN {min = 1000} {if ($1==2 && $2==1 && $14>0 && $10>0 && $10<1000 && $14<min) min=$14} END {print min}' $file6`
 shms_csmax=`awk 'BEGIN {max = 0} {if ($1==2 && $2==1 && $14>0 && $10>0 && $10<1000 && $14>max) max=$14} END {print max}' $file6`
-shms_csmax="0.436E-04"
-shms_csmin="0"
+#shms_csmax="0.436E-04"
+#shms_csmin="0"
 shms_scale=`awk 'BEGIN{scale = 19/('$shms_csmax'-'$shms_csmin')} END {print scale}' $file6`
 
 
 hmsa_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==1 && $26>0 && $10>0 && $10<1000 && $26<min) min=$26} END {print min}' $file6`
 hmsa_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==1 && $26>0 && $10>0 && $10<1000 && $26>max) max=$26} END {print max}' $file6`
-hmsa_csmax="0.189E-03"
-hmsa_csmin="0"
+#hmsa_csmax="0.189E-03"
+#hmsa_csmin="0"
 hmsa_scale=`awk 'BEGIN{scale = 19/('$hmsa_csmax'-'$hmsa_csmin')} END {print scale}' $file6`
 
 shmsa_csmin=`awk 'BEGIN {min = 1000} {if ($1==2 && $2==1 && $26>0 && $10>0 && $10<1000 && $26<min) min=$26} END {print min}' $file6`
 shmsa_csmax=`awk 'BEGIN {max = 0} {if ($1==2 && $2==1 && $26>0 && $10>0 && $10<1000 && $26>max) max=$26} END {print max}' $file6`
-shmsa_csmax="0.189E-03"
-shmsa_csmin="0"
+#shmsa_csmax="0.189E-03"
+#shmsa_csmin="0"
 shmsa_scale=`awk 'BEGIN{scale = 19/('$shmsa_csmax'-'$shmsa_csmin')} END {print scale}' $file6`
 
 
@@ -656,7 +656,7 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 
 
-#display Azz_rates_hms_shms.png
+display Azz_rates_hms_shms.png
 #
 #xmgrace \
 #		-settype xy			-block temp_shms_fdil				-graph 0 -bxy 1:2 \

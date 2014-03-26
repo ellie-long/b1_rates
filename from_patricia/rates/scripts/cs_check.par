@@ -76,8 +76,8 @@ with g0
 #    world 0.0, 1E-19,2.0,1E-14
 #    world 0.0, 1E-10,2.0,1E-3
 #    world 0.0, 1E-12,2.0,1E-5
-    world 0.0, 0,2.0,3E-6
-#    world 0.0, 1E-8,2.0,2E-4
+#    world 0.0, 0,2.0,3E-6
+    world 0.0, 1E-9,2.0,3E-5
     stack world 0, 0, 0, 0
     znorm 1
     view 0.10000, 0.65, 0.50000, 0.98
@@ -160,10 +160,10 @@ with g0
     yaxis  label color 1
     yaxis  label place normal
     yaxis  tick on
-#    yaxis  tick major 10
-    yaxis  tick major 5E-7
-#    yaxis  tick minor ticks 9
-    yaxis  tick minor ticks 4
+    yaxis  tick major 10
+#    yaxis  tick major 5E-7
+    yaxis  tick minor ticks 9
+#    yaxis  tick minor ticks 4
     yaxis  tick default 6
     yaxis  tick place rounded true
     yaxis  tick in
@@ -489,7 +489,7 @@ with g0
     s4 line linestyle 1
     s4 line linewidth 1.0
 #    s4 line color 4
-    s4 line color 1
+    s4 line color 10
     s4 line pattern 1
     s4 baseline type 0
     s4 baseline off
@@ -539,7 +539,7 @@ with g0
     s5 line linestyle 5
     s5 line linewidth 1.0
 #    s5 line color 4
-    s5 line color 2
+    s5 line color 9
     s5 line pattern 1
     s5 baseline type 0
     s5 baseline off
@@ -576,8 +576,8 @@ with g0
 
 
 
-#    s6 hidden false
-    s6 hidden true
+    s6 hidden false
+#    s6 hidden true
     s6 type xy
     s6 symbol 0
     s6 symbol size 0.50000
@@ -626,8 +626,8 @@ with g0
     s6 errorbar riser clip length 0.100000
     s6 comment "Cols 1:2:3"
     s6 legend  "D\sunpol\N (Misak)"
-#    s7 hidden false
-    s7 hidden true
+    s7 hidden false
+#    s7 hidden true
     s7 type xy
     s7 symbol 0
     s7 symbol size 0.50000
@@ -742,7 +742,7 @@ with g1
     subtitle size 1.000000
     subtitle color 1
     xaxes scale Normal
-#    yaxes scale Normal
+    yaxes scale Normal
     xaxes invert off
     yaxes invert off
     xaxis  on
@@ -973,8 +973,8 @@ with g1
     s0 comment "Cols 1:2:3"
     s0 legend  "Bosted"
 
-#    s1 hidden false
-    s1 hidden true
+    s1 hidden false
+#    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -1024,8 +1024,8 @@ with g1
     s1 comment "Cols 1:2:3"
     s1 legend  "Misak"
 with g2
-#    world 0.0, 1E24,2.0,1E30
-    world 0.0, 1E24,2.0,1.3E29
+    world 0.0, 1E27,2.0,1E30
+#    world 0.0, 1E24,2.0,1.3E29
     stack world 0, 0, 0, 0
     znorm 1
     view 0.60000, 0.65, 1.00000, 0.98
@@ -1108,10 +1108,10 @@ with g2
     yaxis  label color 1
     yaxis  label place normal
     yaxis  tick on
-#    yaxis  tick major 10
-    yaxis  tick major 5E28
-    yaxis  tick minor ticks 4
-#    yaxis  tick minor ticks 9
+    yaxis  tick major 10
+    yaxis  tick minor ticks 9
+#    yaxis  tick major 5E28
+#    yaxis  tick minor ticks 4
     yaxis  tick default 6
     yaxis  tick place rounded true
     yaxis  tick in

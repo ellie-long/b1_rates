@@ -24,23 +24,24 @@ c
       INTEGER kin_in
       INTEGER npbin,ntbin
       INTEGER ip,it
-      REAL*8 z_d,z_he,z_n,z_c
-      REAL*8 a_d,a_he,a_n,a_c
+      REAL*8 z_d,z_he,z_n,z_c,z_li
+      REAL*8 a_d,a_he,a_n,a_c,a_li
       REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
       REAL*8 th_in1,ep_in1,th_in2,ep_in2
       REAL*8 A,d_r
       REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
       REAL*8 deg,thrad,thincr,thmin,thmax
       REAL*8 dep,epmin,epmax
-      REAL*8 s2,t2,xx,qq,w
-      REAL*8 rc,rche,rcn,rcc
+      REAL*8 s2,t2,xx,qq,w,tempqq
+      REAL*8 rc,rche,rcn,rcc,rcli
 
       REAL*8 ND
       REAL*8 rho_nd3,M_nd3,dil_nd3,pack_nd3,Pz_nd3
       REAL*8 rho_lid,M_lid,dil_lid,pack_lid,Pz_lid
       REAL*8 f_dil,Pzz_fact
       REAL*8 rho,Nelec,lumi,lumi_d
-      REAL*8 rho_he,m_he,lumi_he
+      REAL*8 rho_li,m_li,lumi_li
+      REAL*8 rho_he,m_he,lumi_he,lumi_heli
       REAL*8 rho_n,m_n,lumi_n
       REAL*8 rho_c,m_c,lumi_c
       REAL*8 src_ratio_c,src_ratio_n,src_ratio_he
@@ -57,17 +58,21 @@ c
 
       REAL*8 bcurrent,tgt_thick,tgt_len
 
-      REAL*8 mott_d,mott_he,mott_n,mott_p,mott_c
+      REAL*8 mott_d,mott_he,mott_n,mott_p,mott_c,mott_li
       REAL*8 Pzz,Aout,F1out,b1out,F2out,F1in,F1qe
-      REAL*8 F1d,F2d,F1he,F2he,F1n,F2n,F1c,F2c
+      REAL*8 F1d,F2d,F1he,F2he,F1n,F2n,F1c,F2c,F1li,F2li
       REAL*8 F1d_ie,F2d_ie,F1he_ie,F2he_ie,F1n_ie,F2n_ie,F1c_ie,F2c_ie
+      REAL*8 F1li_ie,F2li_ie
       REAL*8 F1d_qe,F2d_qe,F1he_qe,F2he_qe,F1n_qe,F2n_qe,F1c_qe,F2c_qe
+      REAL*8 F1li_qe,F2li_qe
       REAL*8 allF1out,allF2out,allF1in,allF1qe
-      REAL*8 allF1d,allF2d,allF1he,allF2he,allF1n,allF2n
+      REAL*8 allF1d,allF2d,allF1he,allF2he,allF1n,allF2n,allF1li,allF2li
       REAL*8 F1dend,F2dend
       REAL*8 sigma_unpol,sigma_tensor,sigma_born
       REAL*8 sigma_unpol_d,sigma_unpol_he,sigma_unpol_n,sigma_unpol_c
-      REAL*8 sigma_pol_d
+      REAL*8 lumsig_u_d,lumsig_he,lumsig_n,lumsig_c,lumsig_li
+      REAL*8 lumsig_p_d,lumsig_heli
+      REAL*8 sigma_pol_d,sigma_unpol_li,allsigma_unpol_li
       REAL*8 allsigma_unpol_d,allsigma_unpol_he,allsigma_unpol_n
       REAL*8 allsigma_pol_d,tot_allsigma
       REAL*8 sigma_unpol_xem
@@ -81,7 +86,9 @@ c
       REAL*8  he_sigradsum,he_sigradave
       REAL*8  n_sigradsum,n_sigradave
       REAL*8  d_sigradsum,d_sigradave
+      REAL*8  li_sigradsum,li_sigradave
       REAL*8  allsigradsum,allsigradave
+      REAL*8  li_allsigradsum,li_allsigradave
       REAL*8  he_allsigradsum,he_allsigradave
       REAL*8  n_allsigradsum,n_allsigradave
       REAL*8  d_allsigradsum,d_allsigradave
@@ -89,7 +96,7 @@ c
       REAL*8  sigma,sigmasum,sigcenter,sigmasump
       REAL*8  rate
       REAL*8  lumiSig, goodRateTotal, physRateTotal
-      REAL*8  goodRate_d, goodRate_n, goodRate_he
+      REAL*8  goodRate_d, goodRate_n, goodRate_he, goodRate_li
 
       INTEGER ixsum(11),ib
       INTEGER allixsum(11)
@@ -110,7 +117,7 @@ c
       INTEGER apass,zpass
       INTEGER ix,ispectro,isum,type
       INTEGER allisum
-      CHARACTER targ*3
+      CHARACTER targ*8
 
       LOGICAL central
       INTEGER method
@@ -169,9 +176,9 @@ c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1
 
 
 c For b1, our target range is 0.09 < x < 0.58
-c      DATA cent_x/      0.16, 0.275, 0.36, 0.49,  0.7,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
-c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.65, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
-c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.75, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+c      DATA cent_x/      0.16, 0.275, 0.36, 0.49, 0.64,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
+c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.58, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
+c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
 
 
 
@@ -192,12 +199,12 @@ c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
       DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA qqval1/   99, 99, 99, 99, 3.82/   
-c      DATA qqval1/    1.8, 99, 99, 99, 99/   
+c      DATA qqval1/    1.8, 99, 99, 99, 99 /   
 
       DATA qqval1/    1.3, 99, 99, 99, 99/   
 
 c      DATA qqval1/    0.81, 99, 99, 99, 99/   
-cc      DATA qqval1/    1.4, 99, 99, 99, 99/   
+cc      DATA qqval1/    1.4, 99, 99, 99, 99 /   
 c      DATA qqval1/    0.37, 99, 99, 99, 99/   
 
       ! SHMS
@@ -215,8 +222,8 @@ c      DATA qqval2/    0.85, 99, 99, 99, 99/
 
       DATA qqval2/    1.3, 99, 99, 99, 99/   
 
-c      DATA qqval2/    0.6, 99, 99, 99, 99/   
-c      DATA qqval2/    1.2, 99, 99, 99, 99/   
+c      DATA qqval2/    0.6, 99, 99, 99, 99 /   
+c      DATA qqval2/    1.2, 99, 99, 99, 99 /   
 c      DATA qqval2/    0.33, 99, 99, 99, 99/   
 c     vvvvv HERMES
 c      DATA xval2/    0.1, 0.3, 0.452, 0.128, 0.248/
@@ -286,11 +293,12 @@ c---- PARAMETER -------------------------------------------
                             ! false --> use acceptance phase space
 
       scale_time= 1.0 
-      scale     = 5.0       ! scale b1 kumano model
-      type      = 1         ! 1=physics rates, 2=total rates
-      targ      = 'ND3'     ! ND3 or LiD
+      scale     = 5.0            ! scale b1 kumano model
+      type      = 1              ! 1=physics rates, 2=total rates
+      targ      = 'ND3'          ! ND3 target
+c      targ      = 'LiD'          ! LiD
+c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-c      targ      = 'LiD'
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -298,6 +306,7 @@ c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.85**2  ! Cut on W
+c      w2min     =  1.8**2  ! Cut on W
       w2min     =  0.0  ! Cut on W
 c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
@@ -306,7 +315,7 @@ c      w2max     =  0.8**2  ! Cut on W
       bcurrent  =  0.115    ! 0.085    ! microAmps
       tgt_len   =  3.0*1.0  ! cm
       ! ND3 specs
-      rho_nd3   =  1.007 !0.917    0.6/cm3
+      rho_nd3   =  1.007 ! g/cm3
 
       dil_nd3   =  6.0/20.0 !
 c      pack_nd3  =  0.80 !0.55     ! packing fraction
@@ -316,8 +325,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       ! LiD specs
       rho_lid   =  0.82     ! g/cm3
       dil_lid   =  0.50     !
-      pack_lid  =  0.55     ! 
-      Pz_lid    =  0.30     !0.50     ! 64% vector polarization, Bueltman NIM A425 
+      pack_lid  =  0.65 !0.55     ! packing fraction
+      Pz_lid    =  0.50 !0.30     !0.50     ! 64% vector polarization, Bueltman NIM A425 
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
@@ -334,9 +343,10 @@ c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
       dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
 
       ! General Parameters
-      rho_he = 0.1412;  m_he = 4.0026
-      z_d = 1; z_he = 2; z_n = 7;  z_c = 6;
-      a_d = 2; a_he = 4; a_n = 14; a_c = 12;
+      rho_he = 0.1412 ! 0.1412 g/cm^3
+      m_he = 4.0026
+      z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3;
+      a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6;
 c----- MAIN ------------------------------------------------
       write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
@@ -356,7 +366,9 @@ c----- MAIN ------------------------------------------------
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
+c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) qqval1(ib)=99
             if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
+c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99 
          endif
       enddo
       write (6,*) "------------------------------------------"
@@ -375,6 +387,7 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
             if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
       write (6,*) "------------------------------------------"
@@ -409,33 +422,57 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
 
 
 
-
 c-- Setup target parameters
+      Nelec = bcurrent*1e-6/e_ch                                       ! Find number of electrons
+      write(6,*) "Target: ",targ
       if (targ.eq.'ND3') then
-         rho   = 3.0 * Navo * (rho_nd3 / M_nd3) * pack_nd3 * tgt_len   ! number density in nuclei.cm^-2 
+c         rho   = 3.0 * Navo * (rho_nd3 / M_nd3) * pack_nd3 * tgt_len   ! number density in nuclei.cm^-2 
                                                                        ! = the number of ammonia molecules
                                                                        ! per unit area times 3 deuterons per molecule
          Pz    = Pz_nd3
-         f_dil = dil_nd3
-         write(6,*)" Using ND3..."
+c         f_dil = dil_nd3
 
-      elseif (targ.eq.'LiD') then
-         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
+c-- Calculate the luminosity
+c         lumi  = Nelec * rho                ! luminosity in cm^-2
+         lumi_d  = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
+         lumi_n  = (Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+         lumi_he = (Navo*(rho_he/m_he)*(1-pack_nd3))*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
+         lumi_li = 0
+         lumi_heli = 0
+         lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
+         write(6,*)" Using ND3..."
+      else if (targ.eq.'LiD') then
+c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
          Pz    = Pz_lid
-         f_dil = dil_lid
+         lumi_d  = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+         lumi_n  = 0                                                    ! luminosity in 1/(s*cm^2)
+         lumi_he = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
+         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+         lumi_heli = 0
+         lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
          write(6,*) "Using LiD..."
-      endif
+      else if (targ.eq.'LiD_He2D') then
+c         rho   = 3.0 * Navo * (rho_lid / M_lid) * pack_lid * tgt_len   ! number density in nuclei.cm^-2
+         Pz    = Pz_lid
+         lumi_d    = 2*(Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len    ! luminosity in 1/(s*cm^2)
+         lumi_n    = 0                                                  ! luminosity in 1/(s*cm^2)
+         lumi_he   = (Navo*(rho_he/m_he)*(1-pack_lid))*Nelec*tgt_len    ! luminosity in 1/(s*cm^2)
+         lumi_heli = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len      ! luminosity in 1/(s*cm^2)
+c         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
+         lumi_li   = 0                                                  ! luminosity in 1/(s*cm^2)
+         lumi_c    = 0                                                  ! luminosity in 1/(s*cm^2)
+         write(6,*) "Using (HeD)D..."
+      end if
+
+      write(6,*) "lumi_d  = ",lumi_d
+      write(6,*) "lumi_n  = ",lumi_n
+      write(6,*) "lumi_he = ",lumi_he
+      write(6,*) "lumi_li = ",lumi_li
+
 
 c      Pzz   = Pzz_fact *(2. - sqrt(4. - 3.*Pz**2))    ! tensor polarization
       Pzz = Pzz_in  ! considering that Pzz cannot be derived from Pz
 
-c-- Calculate the luminosity
-      Nelec = bcurrent*1e-6/e_ch
-c      lumi  = Nelec * rho                ! luminosity in cm^-2
-      lumi  = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len           ! luminosity in 1/(s*cm^2)
-      lumi_d  = (3*Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len         ! luminosity in 1/(s*cm^2)
-      lumi_n  = (Navo*(rho_nd3/M_nd3)*pack_nd3)*Nelec*tgt_len           ! luminosity in 1/(s*cm^2)
-      lumi_he  = (Navo*(rho_he/m_he)*(1-pack_nd3))*Nelec*tgt_len        ! luminosity in 1/(s*cm^2)
 c      write(10,*)'#    q2     x       w    rate(kHz)     Azz  
 c     &      DAzz    time '
 
@@ -630,10 +667,12 @@ c      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                d_unpol_sigradsum    = 0.0
                he_sigradsum         = 0.0
                n_sigradsum          = 0.0
+               li_sigradsum         = 0.0
                allsigradsum         = 0.0
                d_allsigradsum       = 0.0
                d_unpol_allsigradsum = 0.0
                he_allsigradsum      = 0.0
+               li_allsigradsum      = 0.0
                n_allsigradsum       = 0.0
 
                it = 0 
@@ -677,25 +716,32 @@ c                 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c                 vvv The Mott cross sections below are in barns/GeV*str (1E-24 cm^2/(GeV*str))
-                  mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c                  mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.) 
+                  mott_p  = 4*(1**2)*(alpha**2)*hbarc2*((e_in-nu)**2)*
+     +                        (cos(thrad/2.)**2)/(q2**2)
                   mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
                   mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
                   mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+                  mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c                 vvvvvvvvv This part gives us the total, non-physics info vvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-                  b1out   = 0; Aout    = 0; F1out = 0;
-                  F1      = 0; F2      = 0; F1n    = 0; F2n    = 0;
-                  F1n_qe  = 0; F2n_qe  = 0; F1c_qe = 0; F2c_qe = 0;
-                  F1n_ie  = 0; F2n_ie  = 0; F1c_ie = 0; F2c_ie = 0;
-                  F1he    = 0; F2he    = 0; F1d    = 0; F2d    = 0;
-                  F1he_qe = 0; F2he_qe = 0; F1d_qe = 0; F2d_qe = 0;
-                  F1he_ie = 0; F2he_ie = 0; F1d_ie = 0; F2d_ie = 0;
-                  rc      = 0; rche    = 0; rcn    = 0; rcc    = 0;
+                  b1out   = 0; Aout    = 0; F1out   = 0;
+                  F1      = 0; F2      = 0; F1n     = 0; F2n    = 0;
+                  F1n_qe  = 0; F2n_qe  = 0; F1c_qe  = 0; F2c_qe = 0;
+                  F1n_ie  = 0; F2n_ie  = 0; F1c_ie  = 0; F2c_ie = 0;
+                  F1he    = 0; F2he    = 0; F1d     = 0; F2d    = 0;
+                  F1he_qe = 0; F2he_qe = 0; F1d_qe  = 0; F2d_qe = 0;
+                  F1he_ie = 0; F2he_ie = 0; F1d_ie  = 0; F2d_ie = 0;
+                  F1li    = 0; F1li_ie = 0; F1li_qe = 0; rcli   = 0;
+                  F2li    = 0; F2li_ie = 0; F2li_qe = 0;
+                  rc      = 0; rche    = 0; rcn     = 0; rcc    = 0;
                   call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
                   call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+                  call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 6Li
                   call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
                   call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
                   call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
                   call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
+                  call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 6Li
                   call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
                   call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
                   if (x.ge.0.8.and.x.le.5.0) then   ! If QE:
@@ -720,22 +766,26 @@ c                  if (.not.(F2c_qe.gt.0)) F2c_qe = 0
 c                  if (.not.(F2he_ie.gt.0)) F2he_ie = 0
 c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
 
-                  if (F1d_ie.lt.0) F1d_ie = 0
-                  if (F1d_qe.lt.0) F1d_qe = 0
-                  if (F1n_ie.lt.0) F1n_ie = 0
-                  if (F1n_qe.lt.0) F1n_qe = 0
-                  if (F1c_ie.lt.0) F1c_ie = 0
-                  if (F1c_qe.lt.0) F1c_qe = 0
-                  if (F1he_ie.lt.0) F1he_ie = 0
-                  if (F1he_qe.lt.0) F1he_qe = 0
-                  if (F2d_ie.lt.0) F2d_ie = 0
-                  if (F2d_qe.lt.0) F2d_qe = 0
-                  if (F2n_ie.lt.0) F2n_ie = 0
-                  if (F2n_qe.lt.0) F2n_qe = 0
-                  if (F2c_ie.lt.0) F2c_ie = 0
-                  if (F2c_qe.lt.0) F2c_qe = 0
-                  if (F2he_ie.lt.0) F2he_ie = 0
-                  if (F2he_qe.lt.0) F2he_qe = 0
+                  if (.not.(F1d_ie.gt.0)) F1d_ie = 0
+                  if (.not.(F1d_qe.gt.0)) F1d_qe = 0
+                  if (.not.(F1n_ie.gt.0)) F1n_ie = 0
+                  if (.not.(F1n_qe.gt.0)) F1n_qe = 0
+                  if (.not.(F1c_ie.gt.0)) F1c_ie = 0
+                  if (.not.(F1c_qe.gt.0)) F1c_qe = 0
+                  if (.not.(F1he_ie.gt.0)) F1he_ie = 0
+                  if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+                  if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+                  if (.not.(F1li_qe.gt.0)) F1li_qe = 0
+                  if (.not.(F2d_ie.gt.0)) F2d_ie = 0
+                  if (.not.(F2d_qe.gt.0)) F2d_qe = 0
+                  if (.not.(F2n_ie.gt.0)) F2n_ie = 0
+                  if (.not.(F2n_qe.gt.0)) F2n_qe = 0
+                  if (.not.(F2c_ie.gt.0)) F2c_ie = 0
+                  if (.not.(F2c_qe.gt.0)) F2c_qe = 0
+                  if (.not.(F2he_ie.gt.0)) F2he_ie = 0
+                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+                  if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+                  if (.not.(F2li_qe.gt.0)) F2li_qe = 0
 
      
                   sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
@@ -748,9 +798,20 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
      +                               + ((F2n_ie+F2n_qe)/14.)/nu)
                   sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                               + ((F2c_ie+F2c_qe)/12.)/nu)
+                  sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                               + ((F2li_ie+F2li_qe)/6.)/nu)
+
+
+
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
-                  tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_n
+                  if (targ.eq.'ND3') then
+                     tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_n
+                  elseif (targ.eq.'LiD') then
+                     tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_li
+                  elseif (targ.eq.'LiD_He2D') then
+                     tot_allsigma = sigma_unpol_d + sigma_unpol_he
+                  endif
 c                  tot_allsigma = sigma_pol_d + sigma_unpol_he + sigma_unpol_n
 
 c vvvvvvvvvvv DO NOT TRUST VARIABLES BELOW -- I THINK THEY'RE BAD vvvvvvvvvvvv
@@ -759,22 +820,28 @@ c vvvvvvvvvvv DO NOT TRUST VARIABLES BELOW -- I THINK THEY'RE BAD vvvvvvvvvvvv
                       d_unpol_allsigradsum = d_unpol_allsigradsum + sigma_unpol_d
                       d_allsigradsum       = d_allsigradsum + sigma_pol_d
                       he_allsigradsum      = he_allsigradsum + sigma_unpol_he
+                      li_allsigradsum      = li_allsigradsum + sigma_unpol_li
                       n_allsigradsum       = n_allsigradsum + sigma_unpol_n
                       allisum              = allisum + 1
                   endif
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-                  lumiSig = lumi_d*sigma_pol_d 
-     +                      + lumi_he*sigma_unpol_he 
-     +                      + lumi_n*sigma_unpol_n
+                  lumiSig =   (lumi_d*sigma_pol_d)
+     +                      + (lumi_he*sigma_unpol_he)
+     +                      + (lumi_heli*sigma_unpol_he)
+     +                      + (lumi_n*sigma_unpol_n)
+     +                      + (lumi_li*sigma_unpol_li)
                   goodRateTotal = goodRateTotal 
-     +                  + lumiSig*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumiSig*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_d = goodRate_d 
-     +                  + lumi_d*sigma_pol_d*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_d*sigma_pol_d*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_n = goodRate_n 
-     +                  + lumi_n*sigma_unpol_n*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_n*sigma_unpol_n*dep*thincr*d_r*2*dphi*1E-24)
                   goodRate_he = goodRate_he
-     +                  + lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24
+     +                  + (lumi_he*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24)
+     +                + (lumi_heli*sigma_unpol_he*dep*thincr*d_r*2*dphi*1E-24)
+                  goodRate_li = goodRate_li
+     +                  + (lumi_li*sigma_unpol_li*dep*thincr*d_r*2*dphi*1E-24)
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
 c                 if (w2.le.w2min) then
@@ -782,6 +849,7 @@ c                 if (w2.le.w2min) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
+                    sigma_unpol_li = 0.0
                     sigma_unpol_n  = 0.0
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
@@ -790,6 +858,7 @@ c                 if (w2.le.w2min) then
 c                 if (w2.ge.w2max) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
+                    sigma_unpol_li = 0.0
                     sigma_unpol_he = 0.0
                     sigma_unpol_n  = 0.0
                     sigma_unpol_c  = 0.0
@@ -798,6 +867,7 @@ c                 if (w2.ge.w2max) then
                  if (q2.lt.1.0) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
+                    sigma_unpol_li = 0.0
                     sigma_unpol_he = 0.0
                     sigma_unpol_n  = 0.0
                     sigma_unpol_c  = 0.0
@@ -823,10 +893,14 @@ c
                   do ib=1,11
                      if (x.gt.cent_x_min(ib).and.x.lt.cent_x_max(ib).and.sigma_unpol.gt.0.0) then
                         N_for_x(ib) = lumi_d*sigma_pol_d 
+     +                    + lumi_li*sigma_unpol_li
      +                    + lumi_he*sigma_unpol_he
+     +                    + lumi_heli*sigma_unpol_he
      +                    + lumi_n*sigma_unpol_n
                         Nunpol_for_x(ib) = lumi_d*sigma_unpol_d 
+     +                    + lumi_li*sigma_unpol_li
      +                    + lumi_he*sigma_unpol_he
+     +                    + lumi_heli*sigma_unpol_he
      +                    + lumi_n*sigma_unpol_n
 
                           xsum(ib) = xsum(ib) + 1
@@ -849,6 +923,7 @@ c
                      sigradsum         = sigradsum + sigma_pol_d
                      d_unpol_sigradsum = d_unpol_sigradsum + sigma_unpol_d
                      d_sigradsum       = d_sigradsum + sigma_pol_d
+                     li_sigradsum      = li_sigradsum + sigma_unpol_li
                      he_sigradsum      = he_sigradsum + sigma_unpol_he
                      n_sigradsum       = n_sigradsum + sigma_unpol_n
                      isum              = isum + 1
@@ -866,7 +941,7 @@ c
      &              sigma_unpol_d,sigma_unpol_he,sigma_unpol_n,
      &              F1d,F2d,F1he,F2he,F1n,F2n,
      &              pit,thit,thq,
-     &              tot_allsigma
+     &              tot_allsigma,sigma_unpol_li
 
                enddo ! loop over theta bins
 c         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -877,12 +952,14 @@ c              vvvvvvv For total, non-physics, rates vvvvvvvvvvvvvvvvvvvvvvvvvvv
                allsigradave         = 0.0
                d_allsigradave       = 0.0
                d_unpol_allsigradave = 0.0
+               li_allsigradave      = 0.0
                he_allsigradave      = 0.0
                n_allsigradave       = 0.0
                if (allisum.gt.0) then
                   allsigradave         = allsigradsum/allisum
                   d_allsigradave       = d_allsigradsum/allisum
                   d_unpol_allsigradave = d_unpol_allsigradsum/allisum
+                  li_allsigradave      = li_allsigradsum/allisum
                   he_allsigradave      = he_allsigradsum/allisum
                   n_allsigradave       = n_allsigradsum/allisum
                   q2p          = 2.0*e_in*pit*(1-cos(th_in*d_r))
@@ -894,18 +971,20 @@ c              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                d_sigradave       = 0.0
                d_unpol_sigradave = 0.0
                he_sigradave      = 0.0
+               li_sigradave      = 0.0
                n_sigradave       = 0.0
                if (isum.gt.0) then
                   sigradave         = sigradsum/isum
                   d_sigradave       = d_sigradsum/isum
                   d_unpol_sigradave = d_unpol_sigradsum/isum
+                  li_sigradave      = li_sigradsum/isum
                   he_sigradave      = he_sigradsum/isum
                   n_sigradave       = n_sigradsum/isum
                   q2p          = 2.0*e_in*pit*(1-cos(th_in*d_r))
                   xp           = q2p/(2.0*mp*(e_in-pit))
 
                   write(9,1003)ispectro,th_in, pit, q2p, xp,sigradave, physRateTotal,
-     &                         d_sigradsum,he_sigradsum,n_sigradsum
+     &                         d_sigradsum,he_sigradsum,n_sigradsum,li_sigradsum
                   sigmasump = sigmasump + sigradave
                endif
             enddo  ! loop over p bins
@@ -928,6 +1007,8 @@ c      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (.not.(F1c_qe.gt.0)) F1c_qe = 0
             if (.not.(F1he_ie.gt.0)) F1he_ie = 0
             if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+            if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+            if (.not.(F1li_qe.gt.0)) F1li_qe = 0
             if (.not.(F2d_ie.gt.0)) F2d_ie = 0
             if (.not.(F2d_qe.gt.0)) F2d_qe = 0
             if (.not.(F2n_ie.gt.0)) F2n_ie = 0
@@ -936,6 +1017,8 @@ c      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (.not.(F2c_qe.gt.0)) F2c_qe = 0
             if (.not.(F2he_ie.gt.0)) F2he_ie = 0
             if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+            if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+            if (.not.(F2li_qe.gt.0)) F2li_qe = 0
 
             ! calculate the time assuming the settings spread
             Aout = 0
@@ -958,7 +1041,16 @@ c           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             pac_time = prec*2.0
 c            pac_time = prec
             time = pac_time
-            f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_n + goodRate_he))
+            if (targ.eq.'ND3') then
+c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_n + goodRate_he))
+               f_dil = (goodRate_d/(goodRate_d + goodRate_n + goodRate_he))
+            elseif (targ.eq.'LiD') then
+c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_li + goodRate_he))
+               f_dil = (goodRate_d/(goodRate_d + goodRate_li + goodRate_he))
+            elseif (targ.eq.'LiD_He2D') then
+c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_he))
+               f_dil = (goodRate_d/(goodRate_d + goodRate_he))
+            endif
 c           vvvvv Error on Azz using A_meas^(2)
             dAzz = (4./(f_dil*Pzz))*(1/SQRT(time*physrate*3600.0))
 c            F1d = F1out*2
@@ -1027,7 +1119,8 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      &                    xdx,
      &                    goodRateTotal,goodRate_he,goodRate_n,
      &                    f_dil,spec_x,
-     &                    good_x_min,good_x_max
+     &                    good_x_min,good_x_max,
+     &                    goodRate_li
 
             do ib=1,11
                F1d = 0
@@ -1047,6 +1140,8 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                if (.not.(F1c_qe.gt.0)) F1c_qe = 0
                if (.not.(F1he_ie.gt.0)) F1he_ie = 0
                if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+               if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+               if (.not.(F1li_qe.gt.0)) F1li_qe = 0
                if (.not.(F2d_ie.gt.0)) F2d_ie = 0
                if (.not.(F2d_qe.gt.0)) F2d_qe = 0
                if (.not.(F2n_ie.gt.0)) F2n_ie = 0
@@ -1055,6 +1150,8 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                if (.not.(F2c_qe.gt.0)) F2c_qe = 0
                if (.not.(F2he_ie.gt.0)) F2he_ie = 0
                if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+               if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+               if (.not.(F2li_qe.gt.0)) F2li_qe = 0
 
                F1d = F1d_qe+F1d_ie
                Aout = 0
@@ -1175,24 +1272,31 @@ c            x     = q2/(2.*mp*nu)
             x     = cent_x(ib)
             w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
-            mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+            mott_p  = 4*(1**2)*(alpha**2)*hbarc2*((e_in-nu)**2)*
+     +                  (cos(thrad/2.)**2)/(q2**2)
             mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+            mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-            b1out   = 0; Aout    = 0; F1out = 0;
-            F1      = 0; F2      = 0; F1n    = 0; F2n    = 0;
-            F1n_qe  = 0; F2n_qe  = 0; F1c_qe = 0; F2c_qe = 0;
-            F1n_ie  = 0; F2n_ie  = 0; F1c_ie = 0; F2c_ie = 0;
-            F1he    = 0; F2he    = 0; F1d    = 0; F2d    = 0;
-            F1he_qe = 0; F2he_qe = 0; F1d_qe = 0; F2d_qe = 0;
-            F1he_ie = 0; F2he_ie = 0; F1d_ie = 0; F2d_ie = 0;
-            rc      = 0; rche    = 0; rcn    = 0; rcc    = 0;
+            b1out   = 0; Aout    = 0; F1out   = 0;
+            F1      = 0; F2      = 0; F1n     = 0; F2n     = 0;
+            F1n_qe  = 0; F2n_qe  = 0; F1c_qe  = 0; F2c_qe  = 0;
+            F1n_ie  = 0; F2n_ie  = 0; F1c_ie  = 0; F2c_ie  = 0;
+            F1he    = 0; F2he    = 0; F1d     = 0; F2d     = 0;
+            F1he_qe = 0; F2he_qe = 0; F1d_qe  = 0; F2d_qe  = 0;
+            F1he_ie = 0; F2he_ie = 0; F1d_ie  = 0; F2d_ie  = 0;
+            rc      = 0; rche    = 0; rcn     = 0; rcc     = 0;
+            F1li_qe = 0; F1li_ie = 0; F2li_qe = 0; F2li_ie = 0;
+            F1li    = 0; F2li    = 0; rcli    = 0;
             call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
             call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+            call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 4He
             call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
             call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
             call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
             call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
+            call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 4He
             call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
             call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
             if (x.ge.0.75.and.x.le.5.0) then   ! If QE:
@@ -1200,6 +1304,12 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             elseif (x.lt.0.75.and.x.gt.0) then ! If DIS:
                 call get_b1d(x,q2,Aout,F1out,b1out)
             endif
+
+c vvvv VERY PRELIMINARY PLATEAU CHANGES WIth Q^2 vvvvvvvvv
+
+
+
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (.not.(F1d_ie.gt.0)) F1d_ie = 0
             if (.not.(F1d_qe.gt.0)) F1d_qe = 0
             if (.not.(F1n_ie.gt.0)) F1n_ie = 0
@@ -1208,6 +1318,8 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             if (.not.(F1c_qe.gt.0)) F1c_qe = 0
             if (.not.(F1he_ie.gt.0)) F1he_ie = 0
             if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+            if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+            if (.not.(F1li_qe.gt.0)) F1li_qe = 0
             if (.not.(F2d_ie.gt.0)) F2d_ie = 0
             if (.not.(F2d_qe.gt.0)) F2d_qe = 0
             if (.not.(F2n_ie.gt.0)) F2n_ie = 0
@@ -1216,11 +1328,15 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             if (.not.(F2c_qe.gt.0)) F2c_qe = 0
             if (.not.(F2he_ie.gt.0)) F2he_ie = 0
             if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+            if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+            if (.not.(F2li_qe.gt.0)) F2li_qe = 0
 
             sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                         + ((F2d_ie+F2d_qe)/2.)/nu)
             sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                         + ((F2li_ie+F2li_qe)/6.)/nu)
             sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
      +                         + ((F2he_ie+F2he_qe)/4.)/nu)
             sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
@@ -1230,8 +1346,10 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
             f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                + lumi_heli*sigma_unpol_he
      +                + lumi_n*sigma_unpol_n
-     +                + lumi_d*sigma_unpol_d)
+     +                + lumi_d*sigma_unpol_d
+     +                + lumi_li*sigma_unpol_li)
 
             
 c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1260,7 +1378,7 @@ c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     Aout,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
-     &                     f_dil
+     &                     f_dil,sigma_unpol_li
 c            write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
 c     &                     syst_Azz,syst_b1d,
@@ -1301,8 +1419,11 @@ c         x       = cent_x(ib)
          xplat=1.64203-0.177032*log(q2)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_p  = 4*(1**2)*(alpha**2)*hbarc2*((e_in-nu)**2)*
+c     +               (cos(thrad/2.)**2)/(q2**2)
          mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          b1out   = 0; Aout    = 0; F1out = 0;
@@ -1312,13 +1433,18 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          F1he    = 0; F2he    = 0; F1d    = 0; F2d    = 0;
          F1he_qe = 0; F2he_qe = 0; F1d_qe = 0; F2d_qe = 0;
          F1he_ie = 0; F2he_ie = 0; F1d_ie = 0; F2d_ie = 0;
+         F1li    = 0; F2li    = 0; 
+         F1li_qe = 0; F2li_qe = 0;
+         F1li_ie = 0; F2li_ie = 0; rcli   = 0;
          rc      = 0; rche    = 0; rcn    = 0; rcc    = 0;
          call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
          call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+         call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
          call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
          call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
          call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
          call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
+         call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
          call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
          call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
          if (x.ge.0.75.and.x.le.5.0) then       ! If Quasi-Elastic:
@@ -1334,6 +1460,8 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F1c_qe.gt.0)) F1c_qe = 0
          if (.not.(F1he_ie.gt.0)) F1he_ie = 0
          if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+         if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+         if (.not.(F1li_qe.gt.0)) F1li_qe = 0
          if (.not.(F2d_ie.gt.0)) F2d_ie = 0
          if (.not.(F2d_qe.gt.0)) F2d_qe = 0
          if (.not.(F2n_ie.gt.0)) F2n_ie = 0
@@ -1342,10 +1470,28 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2c_qe.gt.0)) F2c_qe = 0
          if (.not.(F2he_ie.gt.0)) F2he_ie = 0
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+         if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+         if (.not.(F2li_qe.gt.0)) F2li_qe = 0
+c         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+c         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+c         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+c     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
+c         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+c     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
+c         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+c     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
+c         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+c     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
+
+
          sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                      + ((F2d_ie+F2d_qe)/2.)/nu)
          sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
          sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
      +                      + ((F2he_ie+F2he_qe)/4.)/nu)
          sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
@@ -1353,17 +1499,29 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                      + ((F2c_ie+F2c_qe)/12.)/nu)
 
-        sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+         sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
+         lumsig_p_d  = lumi_d*sigma_pol_d
+         lumsig_u_d  = lumi_d*sigma_unpol_d
+         lumsig_he   = lumi_he*sigma_unpol_he
+         lumsig_n    = lumi_n*sigma_unpol_n
+         lumsig_c    = lumi_c*sigma_unpol_c
+         lumsig_li   = lumi_li*sigma_unpol_li
+         lumsig_heli = lumi_heli*sigma_unpol_he + lumi_heli*sigma_unpol_d
+c         lumsig_heli = lumi_heli*sigma_unpol_he
 
 
          if (x.lt.xplat) then
               f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                  + lumi_heli*sigma_unpol_he
+     +                  + lumi_li*sigma_unpol_li
      +                  + lumi_n*sigma_unpol_n
      +                  + lumi_d*sigma_unpol_d)
               fplat = f_dil
          else
               f_dil = fplat
          endif
+
 
          src_ratio_n  = (sigma_unpol_n /sigma_unpol_d)*(a_d/a_n)
          src_ratio_he = (sigma_unpol_he/sigma_unpol_d)*(a_d/a_he)
@@ -1373,12 +1531,18 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      &                  sigma_pol_d,
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
-     &                  src_ratio_n,src_ratio_he,src_ratio_c
+     &                  src_ratio_n,src_ratio_he,src_ratio_c,
+     &                  sigma_unpol_li,
+     &                  lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
          write(17,1008) x,q2,th_in1,e_in,ep_in1,nu,w2,
      &                  sigma_pol_d,
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
-     &                  src_ratio_n,src_ratio_he,src_ratio_c
+     &                  src_ratio_n,src_ratio_he,src_ratio_c,
+     &                  sigma_unpol_li,
+     &                  lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
 
       enddo     
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
@@ -1403,10 +1567,14 @@ c         ep_in1  = 5.80 ! GeV
 c         x       = q2/(2.*mp*nu)
 c         x       = cent_x(ib)
          w2      = mp*mp + q2/x - q2
+         xplat=1.64203-0.177032*log(q2)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
-         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+         mott_p  = 4*(1**2)*(alpha**2)*hbarc2*((e_in-nu)**2)*
+     +               (cos(thrad/2.)**2)/(q2**2)
          mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          b1out   = 0; Aout    = 0; F1out = 0;
@@ -1416,13 +1584,18 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          F1he    = 0; F2he    = 0; F1d    = 0; F2d    = 0;
          F1he_qe = 0; F2he_qe = 0; F1d_qe = 0; F2d_qe = 0;
          F1he_ie = 0; F2he_ie = 0; F1d_ie = 0; F2d_ie = 0;
+         F1li    = 0; F2li    = 0; 
+         F1li_qe = 0; F2li_qe = 0;
+         F1li_ie = 0; F2li_ie = 0; rcli   = 0;
          rc      = 0; rche    = 0; rcn    = 0; rcc    = 0;
          call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
          call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+         call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
          call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
          call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
          call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
          call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
+         call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
          call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
          call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
          if (x.ge.0.75.and.x.le.5.0) then       ! If Quasi-Elastic:
@@ -1438,6 +1611,8 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F1c_qe.gt.0)) F1c_qe = 0
          if (.not.(F1he_ie.gt.0)) F1he_ie = 0
          if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+         if (.not.(F1he_ie.gt.0)) F1he_ie = 0
+         if (.not.(F1li_qe.gt.0)) F1li_qe = 0
          if (.not.(F2d_ie.gt.0)) F2d_ie = 0
          if (.not.(F2d_qe.gt.0)) F2d_qe = 0
          if (.not.(F2n_ie.gt.0)) F2n_ie = 0
@@ -1446,10 +1621,14 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2c_qe.gt.0)) F2c_qe = 0
          if (.not.(F2he_ie.gt.0)) F2he_ie = 0
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+         if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+         if (.not.(F2li_qe.gt.0)) F2li_qe = 0
          sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                      + ((F2d_ie+F2d_qe)/2.)/nu)
          sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                      + ((F2d_ie+F2d_qe)/2.)/nu)
+         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
          sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
      +                      + ((F2he_ie+F2he_qe)/4.)/nu)
          sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
@@ -1457,12 +1636,27 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                      + ((F2c_ie+F2c_qe)/12.)/nu)
 
-        sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+         sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
+         lumsig_p_d  = lumi_d*sigma_pol_d
+         lumsig_u_d  = lumi_d*sigma_unpol_d
+         lumsig_he   = lumi_he*sigma_unpol_he
+         lumsig_n    = lumi_n*sigma_unpol_n
+         lumsig_c    = lumi_c*sigma_unpol_c
+         lumsig_li   = lumi_li*sigma_unpol_li
+         lumsig_heli = lumi_heli*sigma_unpol_he + lumi_heli*sigma_unpol_d
+c         lumsig_heli = lumi_heli*sigma_unpol_he
 
-         f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
-     +             + lumi_n*sigma_unpol_n
-     +             + lumi_d*sigma_unpol_d)
+         if (x.lt.xplat) then
+              f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
+     +                  + lumi_heli*sigma_unpol_he
+     +                  + lumi_li*sigma_unpol_li
+     +                  + lumi_n*sigma_unpol_n
+     +                  + lumi_d*sigma_unpol_d)
+              fplat = f_dil
+         else
+              f_dil = fplat
+         endif
 
          src_ratio_n  = (sigma_unpol_n /sigma_unpol_d)*(a_d/a_n)
          src_ratio_he = (sigma_unpol_he/sigma_unpol_d)*(a_d/a_he)
@@ -1472,7 +1666,10 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      &                  sigma_pol_d,
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
-     &                  src_ratio_n,src_ratio_he,src_ratio_c
+     &                  src_ratio_n,src_ratio_he,src_ratio_c,
+     &                  sigma_unpol_li,
+     &                  lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
 
       enddo      
 c     ^^^^^^^^^^^^ HMS ^^^^^^^^^^^^^^^^^^^
@@ -1495,7 +1692,7 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
-         if (.not.xx.eq.100) then
+         if (.not.xx.gt.98) then
             write (6,1009) "",xx,qq,ep_in,th_in
          endif
       enddo
@@ -1512,7 +1709,7 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
-         if (.not.xx.eq.100) then
+         if (.not.xx.gt.98) then
             write (6,1009) "",xx,qq,ep_in,th_in
          endif
 
@@ -1521,9 +1718,15 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
       write (6,*) "Beam E used:",e_in
       write (6,*) "E' used for f_dil:",ep_in1
       write (6,*) "Theta used for f_dil:",th_in1
+      write (6,*) "Pzz used:",Pzz_in
+      write (6,*) "Target material used:",targ
 c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
+c vvvvv Writes out Q^2-dependent Azz curve vvvvvvvv
+      tempqq = qqval2(1)
+      write (6,*) "qq:",tempqq
+      call QE_b1(tempqq)
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       call system_clock ( clck_counts_end, clck_rate )
       write(6,*) "-------------------------------------------"
@@ -1542,17 +1745,17 @@ C =========================== Format Statements ================================
  1001 format(a)
 c 1002 format(2(i2,1x),f7.3,1x,f6.1,1x,2f7.3,4(1x,E10.3))
  1022 format(A7,1x,E10.3)
- 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),E10.3,1x)
+ 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),2(E10.3,1x))
 c 1003 format(2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3))
- 1003 format(i1,2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3),3(1x,E10.3))
+ 1003 format(i1,2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3),4(1x,E10.3))
  1004 format(i1,1x,f6.1,1x,f7.3,1x,f7.3,3(1x,E10.3),1x,f7.1,2(1x,E10.3),2(1x,f7.3),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
- 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2))
+ 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),1x,E10.3)
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
- 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),9(E10.3,1x))
+ 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),10(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
- 1008 format(16(E10.3,1x))
+ 1008 format(24(E10.3,1x))
  1009 format(A1,4(f10.3))
       end
 
