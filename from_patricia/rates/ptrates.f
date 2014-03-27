@@ -118,6 +118,7 @@ c
       INTEGER ix,ispectro,isum,type
       INTEGER allisum
       CHARACTER targ*8
+      CHARACTER csmodel*11
 
       LOGICAL central
       INTEGER method
@@ -298,6 +299,10 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
+c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
+      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -412,12 +417,13 @@ c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
       thrad = 2.*asin(sqrt(s2))
       th_in2 = thrad/d_r
 
-      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
-      read (*,*) e_in1
-      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
-      read (*,*) ep_in1
-      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
-      read (*,*) th_in1
+c      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
+c      read (*,*) e_in1
+c      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
+c      read (*,*) ep_in1
+c      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
+c      read (*,*) th_in1
+
       call system_clock ( clck_counts_beg2, clck_rate2 ) 
 
 
@@ -647,6 +653,7 @@ c            thmin  = th_in - dtheta/d_r
 c            thmax  = th_in + dtheta/d_r
 c            ntbin  = int((thmax - thmin)/theta_res)+1
 c            ntbin  = 19
+c            ntbin  = 10
             ntbin  = 25
 c            ntbin  = 3
             thincr = dtheta*2.0/float(ntbin)/d_r
@@ -784,21 +791,59 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   if (.not.(F2li_ie.gt.0)) F2li_ie = 0
                   if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-
-     
-                  sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                               + ((F2d_ie+F2d_qe)/2.)/nu)
-                  sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                               + ((F2d_ie+F2d_qe)/2.)/nu)
-                  sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
-     +                               + ((F2he_ie+F2he_qe)/4.)/nu)
-                  sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
-     +                               + ((F2n_ie+F2n_qe)/14.)/nu)
-                  sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
-     +                               + ((F2c_ie+F2c_qe)/12.)/nu)
-                  sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-     +                               + ((F2li_ie+F2li_qe)/6.)/nu)
+                  write(6,*) "First cross-section measurement..."
+                  if (csmodel.eq.'Bosted_full') then
+                     sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                                  + ((F2d_ie+F2d_qe)/2.)/nu)
+                     sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                                  + ((F2d_ie+F2d_qe)/2.)/nu)
+                     sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                                  + ((F2li_ie+F2li_qe)/6.)/nu)
+                     sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                                  + ((F2he_ie+F2he_qe)/4.)/nu)
+                     sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                                  + ((F2n_ie+F2n_qe)/14.)/nu)
+                     sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                                  + ((F2c_ie+F2c_qe)/12.)/nu)
+                  endif
+                  if (csmodel.eq.'Bosted_dis') then
+                     sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                                  + ((F2d_ie+0)/2.)/nu)
+                     sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                                  + ((F2d_ie+0)/2.)/nu)
+                     sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+0)/6.)*tnsq/mp
+     +                                  + ((F2li_ie+0)/6.)/nu)
+                     sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+0)/4.)*tnsq/mp
+     +                                  + ((F2he_ie+0)/4.)/nu)
+                     sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+0)/14.)*tnsq/mp
+     +                                  + ((F2n_ie+0)/14.)/nu)
+                     sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+0)/12.)*tnsq/mp
+     +                                  + ((F2c_ie+0)/12.)/nu)
+                  endif
+                  if (csmodel.eq.'Bosted_qe') then
+                     sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                                  + ((0+F2d_qe)/2.)/nu)
+                     sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                                  + ((0+F2d_qe)/2.)/nu)
+                     sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
+     +                                  + ((0+F2li_qe)/6.)/nu)
+                     sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
+     +                                  + ((0+F2he_qe)/4.)/nu)
+                     sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
+     +                                  + ((0+F2n_qe)/14.)/nu)
+                     sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
+     +                                  + ((0+F2c_qe)/12.)/nu)
+                  endif
+                  if (csmodel.eq.'Sargsian') then
+                     call init_incl(e_in,pit,thit,x,a_d,z_d,sigma_unpol)
+                     call init_incl(e_in,pit,thit,x,a_li,z_li,sigma_unpol_li)
+                     call init_incl(e_in,pit,thit,x,a_he,z_he,sigma_unpol_he)
+                     call init_incl(e_in,pit,thit,x,a_n,z_n,sigma_unpol_n)
+                     call init_incl(e_in,pit,thit,x,a_c,z_c,sigma_unpol_c)
+                     sigma_unpol_d  = sigma_unpol
+                  endif
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
 
                   if (targ.eq.'ND3') then
                      tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_n
@@ -1323,19 +1368,58 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (.not.(F2he_qe.gt.0)) F2he_qe = 0
             if (.not.(F2li_ie.gt.0)) F2li_ie = 0
             if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-
-            sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
-            sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
-            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-     +                         + ((F2li_ie+F2li_qe)/6.)/nu)
-            sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+            write(6,*) "Second cross-section measurement..."
+            if (csmodel.eq.'Bosted_full') then
+               sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                            + ((F2li_ie+F2li_qe)/6.)/nu)
+               sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
      +                         + ((F2he_ie+F2he_qe)/4.)/nu)
-            sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
-     +                         + ((F2n_ie+F2n_qe)/14.)/nu)
-            sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
-     +                         + ((F2c_ie+F2c_qe)/12.)/nu)
+               sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                            + ((F2n_ie+F2n_qe)/14.)/nu)
+               sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                            + ((F2c_ie+F2c_qe)/12.)/nu)
+            endif
+            if (csmodel.eq.'Bosted_dis') then
+               sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                            + ((F2d_ie+0)/2.)/nu)
+               sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                            + ((F2d_ie+0)/2.)/nu)
+               sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+0)/6.)*tnsq/mp
+     +                            + ((F2li_ie+0)/6.)/nu)
+               sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+0)/4.)*tnsq/mp
+     +                         + ((F2he_ie+0)/4.)/nu)
+               sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+0)/14.)*tnsq/mp
+     +                            + ((F2n_ie+0)/14.)/nu)
+               sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+0)/12.)*tnsq/mp
+     +                            + ((F2c_ie+0)/12.)/nu)
+            endif
+            if (csmodel.eq.'Bosted_qe') then
+               sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                            + ((0+F2d_qe)/2.)/nu)
+               sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                            + ((0+F2d_qe)/2.)/nu)
+               sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
+     +                            + ((0+F2li_qe)/6.)/nu)
+               sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
+     +                            + ((0+F2he_qe)/4.)/nu)
+               sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
+     +                            + ((0+F2n_qe)/14.)/nu)
+               sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
+     +                            + ((0+F2c_qe)/12.)/nu)
+            endif
+            if (csmodel.eq.'Sargsian') then
+               call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
+               call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
+               call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
+               call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
+               call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+               sigma_unpol_d  = sigma_unpol
+            endif
+
             sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
             f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
@@ -1390,7 +1474,7 @@ c        do ib=0,6000
 c     vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      do ib=1,2
 c     vvvvvvvvvvv SHMS vvvvvvvvvvvvvvvvvvv
-      do ib=0,200
+      do ib=10,200
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -1464,41 +1548,58 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
          if (.not.(F2li_ie.gt.0)) F2li_ie = 0
          if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-c         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-c         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-c         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-c     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
-c         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
-c     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
-c         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
-c     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
-c         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
-c     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
 
-         sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
-     +                      + ((0+F2d_qe)/2.)/nu)
-         sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
-     +                      + ((0+F2d_qe)/2.)/nu)
-         sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
-     +                      + ((0+F2li_qe)/6.)/nu)
-         sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
-     +                      + ((0+F2he_qe)/4.)/nu)
-         sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
-     +                      + ((0+F2n_qe)/14.)/nu)
-         sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
-     +                      + ((0+F2c_qe)/12.)/nu)
-
-
-
-c         call init_incl(e_in,ep_in1,thin1,x,a_d,z_d,sigma_unpol)
-c         call init_incl(e_in,ep_in1,thin1,x,a_d,z_d,sigma_unpol_d)
-c         call init_incl(e_in,ep_in1,thin1,x,a_li,z_li,sigma_unpol_li)
-c         call init_incl(e_in,ep_in1,thin1,x,a_he,z_he,sigma_unpol_he)
-c         call init_incl(e_in,ep_in1,thin1,x,a_n,z_n,sigma_unpol_n)
-c         call init_incl(e_in,ep_in1,thin1,x,a_c,z_c,sigma_unpol_c)
-
+         write(6,*) "Third cross-section measurement..."
+         if (csmodel.eq.'Bosted_full') then
+            sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+            sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                         + ((F2li_ie+F2li_qe)/6.)/nu)
+            sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
+            sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                         + ((F2n_ie+F2n_qe)/14.)/nu)
+            sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                         + ((F2c_ie+F2c_qe)/12.)/nu)
+         endif
+         if (csmodel.eq.'Bosted_dis') then
+            sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                         + ((F2d_ie+0)/2.)/nu)
+            sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                         + ((F2d_ie+0)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+0)/6.)*tnsq/mp
+     +                         + ((F2li_ie+0)/6.)/nu)
+            sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+0)/4.)*tnsq/mp
+     +                      + ((F2he_ie+0)/4.)/nu)
+            sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+0)/14.)*tnsq/mp
+     +                         + ((F2n_ie+0)/14.)/nu)
+            sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+0)/12.)*tnsq/mp
+     +                         + ((F2c_ie+0)/12.)/nu)
+         endif
+         if (csmodel.eq.'Bosted_qe') then
+            sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                         + ((0+F2d_qe)/2.)/nu)
+            sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                         + ((0+F2d_qe)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
+     +                         + ((0+F2li_qe)/6.)/nu)
+            sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
+     +                         + ((0+F2he_qe)/4.)/nu)
+            sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
+     +                         + ((0+F2n_qe)/14.)/nu)
+            sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
+     +                         + ((0+F2c_qe)/12.)/nu)
+         endif
+         if (csmodel.eq.'Sargsian') then
+            call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
+            call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
+            call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
+            call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
+            call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+            sigma_unpol_d  = sigma_unpol
+         endif
 
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
@@ -1513,16 +1614,16 @@ c         call init_incl(e_in,ep_in1,thin1,x,a_c,z_c,sigma_unpol_c)
 c         lumsig_heli = lumi_heli*sigma_unpol_he
 
 
-         if (x.lt.xplat) then
+c         if (x.lt.xplat) then
               f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
      +                  + lumi_heli*sigma_unpol_he
      +                  + lumi_li*sigma_unpol_li
      +                  + lumi_n*sigma_unpol_n
      +                  + lumi_d*sigma_unpol_d)
-              fplat = f_dil
-         else
-              f_dil = fplat
-         endif
+c              fplat = f_dil
+c         else
+c              f_dil = fplat
+c         endif
 
 
          src_ratio_n  = (sigma_unpol_n /sigma_unpol_d)*(a_d/a_n)
@@ -1550,7 +1651,7 @@ c         lumsig_heli = lumi_heli*sigma_unpol_he
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 
 c     vvvvvvvvvvvv HMS vvvvvvvvvvvvvvvvvvv
-       do ib=0,200
+       do ib=10,200
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -1624,40 +1725,57 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
          if (.not.(F2li_ie.gt.0)) F2li_ie = 0
          if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-c         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-c         sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-c     +                      + ((F2d_ie+F2d_qe)/2.)/nu)
-c         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
-c     +                      + ((F2li_ie+F2li_qe)/6.)/nu)
-c         sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
-c     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
-c         sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
-c     +                      + ((F2n_ie+F2n_qe)/14.)/nu)
-c         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
-c     +                      + ((F2c_ie+F2c_qe)/12.)/nu)
-
-
-         sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
-     +                      + ((0+F2d_qe)/2.)/nu)
-         sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
-     +                      + ((0+F2d_qe)/2.)/nu)
-         sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
-     +                      + ((0+F2li_qe)/6.)/nu)
-         sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
-     +                      + ((0+F2he_qe)/4.)/nu)
-         sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
-     +                      + ((0+F2n_qe)/14.)/nu)
-         sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
-     +                      + ((0+F2c_qe)/12.)/nu)
-
-c         call init_incl(e_in,ep_in2,thin2,x,a_d,z_d,sigma_unpol)
-c         call init_incl(e_in,ep_in2,thin2,x,a_d,z_d,sigma_unpol_d)
-c         call init_incl(e_in,ep_in2,thin2,x,a_li,z_li,sigma_unpol_li)
-c         call init_incl(e_in,ep_in2,thin2,x,a_he,z_he,sigma_unpol_he)
-c         call init_incl(e_in,ep_in2,thin2,x,a_n,z_n,sigma_unpol_n)
-c         call init_incl(e_in,ep_in2,thin2,x,a_c,z_c,sigma_unpol_c)
-
+         write(6,*) "Fourth cross-section measurement..."
+         if (csmodel.eq.'Bosted_full') then
+            sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+            sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                         + ((F2li_ie+F2li_qe)/6.)/nu)
+            sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                      + ((F2he_ie+F2he_qe)/4.)/nu)
+            sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                         + ((F2n_ie+F2n_qe)/14.)/nu)
+            sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                         + ((F2c_ie+F2c_qe)/12.)/nu)
+         endif
+         if (csmodel.eq.'Bosted_dis') then
+            sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                         + ((F2d_ie+0)/2.)/nu)
+            sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+     +                         + ((F2d_ie+0)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+0)/6.)*tnsq/mp
+     +                         + ((F2li_ie+0)/6.)/nu)
+            sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+0)/4.)*tnsq/mp
+     +                      + ((F2he_ie+0)/4.)/nu)
+            sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+0)/14.)*tnsq/mp
+     +                         + ((F2n_ie+0)/14.)/nu)
+            sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+0)/12.)*tnsq/mp
+     +                         + ((F2c_ie+0)/12.)/nu)
+         endif
+         if (csmodel.eq.'Bosted_qe') then
+            sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                         + ((0+F2d_qe)/2.)/nu)
+            sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+     +                         + ((0+F2d_qe)/2.)/nu)
+            sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
+     +                         + ((0+F2li_qe)/6.)/nu)
+            sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
+     +                         + ((0+F2he_qe)/4.)/nu)
+            sigma_unpol_n  = 14.*mott_p*(2.*((0+F1n_qe)/14.)*tnsq/mp
+     +                         + ((0+F2n_qe)/14.)/nu)
+            sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
+     +                         + ((0+F2c_qe)/12.)/nu)
+         endif
+         if (csmodel.eq.'Sargsian') then
+            call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
+            call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
+            call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
+            call init_incl(e_in,ep_in2,th_in2,x,a_n,z_n,sigma_unpol_n)
+            call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
+            sigma_unpol_d  = sigma_unpol
+         endif
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
@@ -1670,16 +1788,16 @@ c         call init_incl(e_in,ep_in2,thin2,x,a_c,z_c,sigma_unpol_c)
          lumsig_heli = lumi_heli*sigma_unpol_he + lumi_heli*sigma_unpol_d
 c         lumsig_heli = lumi_heli*sigma_unpol_he
 
-         if (x.lt.xplat) then
+c         if (x.lt.xplat) then
               f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
      +                  + lumi_heli*sigma_unpol_he
      +                  + lumi_li*sigma_unpol_li
      +                  + lumi_n*sigma_unpol_n
      +                  + lumi_d*sigma_unpol_d)
-              fplat = f_dil
-         else
-              f_dil = fplat
-         endif
+c              fplat = f_dil
+c         else
+c              f_dil = fplat
+c         endif
 
          src_ratio_n  = (sigma_unpol_n /sigma_unpol_d)*(a_d/a_n)
          src_ratio_he = (sigma_unpol_he/sigma_unpol_d)*(a_d/a_he)
