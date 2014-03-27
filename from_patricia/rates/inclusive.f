@@ -83,7 +83,7 @@ C        INCLUDE 'inclusive$src:COMMON_INCL.CMN'
           IF(isetup.LE.6)THEN
             titles  = ' '
             READ(15,24)titles
-            WRITE(7,25)titles
+c            WRITE(7,25)titles
 *            TYPE 25,titles
             GOTO 101
           ENDIF
@@ -100,10 +100,10 @@ C        INCLUDE 'inclusive$src:COMMON_INCL.CMN'
 *         exit loop if blank line encountered
 ************************************************************************
           IF(name(1).EQ.' ')then
-            WRITE(7,27)name
+c            WRITE(7,27)name
             GOTO 101
           END IF
-          WRITE(7,27)name,initial_data
+c          WRITE(7,27)name,initial_data
 ************************************************************************
 *         initialize beam conditions
 ************************************************************************
@@ -330,7 +330,7 @@ c            x_fix    = initial_data(4)
 *        CALL datime(jd,jt)
 *        WRITE(6,28)jd,jt
 *        TYPE 28,jd,jt
-        write(7,1)
+c        write(7,1)
 ************************************************************************
 *          beginning of calculations
 ************************************************************************
@@ -439,16 +439,16 @@ C                           ----RADIATIVE PARAMETERS---
       x0=a/x02
       xsi=0.000154*z*tt*x0/a
 C*******************************************************************
-      WRITE(7,*)'                                               '
-      WRITE(7,*)' ================================================'
-      WRITE(7,18)ei
+c      WRITE(7,*)'                                               '
+c      WRITE(7,*)' ================================================'
+c      WRITE(7,18)ei
    18 FORMAT(2x,'ENERGY OD INCIDENT ELECTRONS  ( GeV ) =',f9.5)
       IF(kemc.EQ.1)THEN
-        WRITE(7,*)' ================================================'
-        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
-        WRITE(7,*)' +       EMC EFFECT TAKE INTO ACCOUNT         +'
-        WRITE(7,*)' +      ONLY FOR INELASTIC PART OF SPECTRA    +'
-        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
+c        WRITE(7,*)' ================================================'
+c        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
+c        WRITE(7,*)' +       EMC EFFECT TAKE INTO ACCOUNT         +'
+c        WRITE(7,*)' +      ONLY FOR INELASTIC PART OF SPECTRA    +'
+c        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
       ENDIF
 C      IF(KEMC.EQ.2)THEN     ! no include still
 C      WRITE(6,*)' ================================================'
@@ -461,39 +461,39 @@ C      ENDIF
       WRITE(7,*)' ================================================'
       IF(kswell.EQ.1)THEN
         IF(psg.EQ.0.0)THEN
-          WRITE(7,*)' +--------------------------------------------+'
-          WRITE(7,*)' :  NO SWELLING EFFECT TAKE INTO ACCOUNT      :'
-          WRITE(7,*)' +--------------------------------------------+'
+c          WRITE(7,*)' +--------------------------------------------+'
+c          WRITE(7,*)' :  NO SWELLING EFFECT TAKE INTO ACCOUNT      :'
+c          WRITE(7,*)' +--------------------------------------------+'
         ELSEIF(psg.NE.0.0)THEN
-          WRITE(7,*)' +--------------------------------------------+'
-          WRITE(7,*)' : AVERAGE  SWELLING EFFECT TAKE INTO ACCOUNT :'
-          WRITE(7,*)' +--------------------------------------------+'
+c          WRITE(7,*)' +--------------------------------------------+'
+c          WRITE(7,*)' : AVERAGE  SWELLING EFFECT TAKE INTO ACCOUNT :'
+c          WRITE(7,*)' +--------------------------------------------+'
         ENDIF
       ELSEIF(kswell.EQ.2)THEN
-        WRITE(7,*)' +---------------------------------------------+'
-        WRITE(7,*)' :  DYNAMIC SWELLING EFFECT TAKE INTO ACCOUNT  :'
-        WRITE(7,*)' +---------------------------------------------+'
+c        WRITE(7,*)' +---------------------------------------------+'
+c        WRITE(7,*)' :  DYNAMIC SWELLING EFFECT TAKE INTO ACCOUNT  :'
+c        WRITE(7,*)' +---------------------------------------------+'
       ENDIF
-      WRITE(7,*)' ================================================'
-      WRITE(7,*)' TARGET THICNESS IN MM    =',sm
-      WRITE(7,*)' ATOMIC WEIGHT A          =',a
-      WRITE(7,*)' CHARG NUMBER  Z          =',z
-      WRITE(7,*)' PAIR MASS IN NUCLEAR     =',dmx
-      WRITE(7,*)' RESPONSE ENERGY IN GEV   =',bd
-      WRITE(7,*)' FERMI MOMETUM            =',pferm
-      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
-      WRITE(7,*)' LEVINGER PARAMETER       =',apair
-      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
-      WRITE(7,*)' ================================================'
+c      WRITE(7,*)' ================================================'
+c      WRITE(7,*)' TARGET THICNESS IN MM    =',sm
+c      WRITE(7,*)' ATOMIC WEIGHT A          =',a
+c      WRITE(7,*)' CHARG NUMBER  Z          =',z
+c      WRITE(7,*)' PAIR MASS IN NUCLEAR     =',dmx
+c      WRITE(7,*)' RESPONSE ENERGY IN GEV   =',bd
+c      WRITE(7,*)' FERMI MOMETUM            =',pferm
+c      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
+c      WRITE(7,*)' LEVINGER PARAMETER       =',apair
+c      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
+c      WRITE(7,*)' ================================================'
 **********************************************************************
 *     measure of cross section
 **********************************************************************
       v_m = v_measure
-      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
-      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
-      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
-      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
-      WRITE(7,*)' ================================================'
+c      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
+c      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
+c      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
+c      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
+c      WRITE(7,*)' ================================================'
 *********************************************************************
 *     scattered angle range determination
 *********************************************************************
@@ -503,16 +503,16 @@ C      ENDIF
         IF(k_tet_sum.EQ.1) uet = the_fix
         IF(k_tet_sum.GT.1) uet = the_low + float(k_tet-1) * the_step
         ue=uet*pi/180.
-        WRITE(7,*)'                                               '
-        WRITE(7,*)' ================================================'
-        WRITE(7,19)uet
-        WRITE(7,*)' ================================================'
+c        WRITE(7,*)'                                               '
+c        WRITE(7,*)' ================================================'
+c        WRITE(7,19)uet
+c        WRITE(7,*)' ================================================'
    19   FORMAT(2x,'ANGLE OF SCATTERED ELECTRONS ( degr.) =',f9.5)
         IF(type_rad.EQ.0.0)then
-	WRITE(7,20)
+c	WRITE(7,20)
 c	WRITE(6,20)
 	endif
-        IF(type_rad.EQ.1.0)WRITE(7,21)
+c        IF(type_rad.EQ.1.0)WRITE(7,21)
 **********************************************************************
 *     selection electron spectra type
 **********************************************************************
@@ -588,9 +588,9 @@ C-------------------------------------------------------
             dgw2d   =dged/(2.*pm+4.*ei*sin(ue/2.)**2)
             rel=(2.*dgea)/(a*dged)
             cross_section = dgea * 1E-6
-            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2
+c            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
+c     &        dged,
+c     &dgw2d,rel,gp2
             WRITE(6,103)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
      &        dged,
      &dgw2d,rel,gp2,cross_section,uet,ei
@@ -621,7 +621,7 @@ C-------------------------------------------------------
             k_process = 2
             tdg_in    = tspec(ei,er,ue) / v_m
             tdg_tot   = tdg_ql + tdg_in
-            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
+c            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
             write(21,*)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
 
 ****************************************************************
@@ -642,8 +642,8 @@ C             Fort.27-Output for PAW, Kim
 *          write(6,*)'CALCULATED NUMBER =',ke
 ********************************************************
     1   CONTINUE
-        IF(type_rad.EQ.0.0)WRITE(7,22)
-        IF(type_rad.EQ.1.0)WRITE(7,23)
+c        IF(type_rad.EQ.0.0)WRITE(7,22)
+c        IF(type_rad.EQ.1.0)WRITE(7,23)
       ENDDO
 ***************************************************************
 *     Init line formats
@@ -658,7 +658,7 @@ C             Fort.27-Output for PAW, Kim
 c   20 FORMAT(123('=')/4x,'W2',6x,'Ee`',5x,'X ',8x,'QL_A',7x,'IN_A',6x,
    20 FORMAT(123('=')/4x,'W2',6x,'Ee`',5x,'X ',8x,'QL_A',7x,'IN_A',6x,
      &'TOT_A',7x,'QL_D',7x,'IN_D',6x,'TOT_D',6x,'DGW2D',6x,' REL',
-     &        6x,' Q2 ',6x,' CS ',6x,' THETA ')
+     &        6x,' Q2 ',6x,' CS ',6x,' THETA ',6x,' E_in')
    21 FORMAT(78('=')/5x,'W2',6x,'Ee`',6x,'X ',5x,'T_QL',7x,'T_IN',7x,
      &'T_TOT',5x,' Q0 ',4x,' Q2 ',/78('-'))
 ***************************************************************
@@ -1709,27 +1709,27 @@ C                           ----RADIATIVE PARAMETERS---
       x0=a/x02
       xsi=0.000154*z*tt*x0/a
 C*******************************************************************
-      WRITE(7,*)'                                               '
-      WRITE(7,*)' ================================================'
-      WRITE(7,18)ei
+c      WRITE(7,*)'                                               '
+c      WRITE(7,*)' ================================================'
+c      WRITE(7,18)ei
    18 FORMAT(2x,'ENERGY OD INCIDENT ELECTRONS  ( GeV ) =',f9.5)
-      WRITE(7,*)' ================================================'
-      WRITE(7,*)' TARGET THICNESS IN MM    =',sm
-      WRITE(7,*)' ATOMIC WEIGHT A          =',a
-      WRITE(7,*)' CHARG NUMBER  Z          =',z
-      WRITE(7,*)' PAIR MASS IN NUCLEAR     =',dmx
-      WRITE(7,*)' RESPONSE ENERGY IN GEV   =',bd
-      WRITE(7,*)' FERMI MOMETUM            =',pferm
-      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
-      WRITE(7,*)' LEVINGER PARAMETER       =',apair
-      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
-      WRITE(7,*)' ================================================'
+c      WRITE(7,*)' ================================================'
+c      WRITE(7,*)' TARGET THICNESS IN MM    =',sm
+c      WRITE(7,*)' ATOMIC WEIGHT A          =',a
+c      WRITE(7,*)' CHARG NUMBER  Z          =',z
+c      WRITE(7,*)' PAIR MASS IN NUCLEAR     =',dmx
+c      WRITE(7,*)' RESPONSE ENERGY IN GEV   =',bd
+c      WRITE(7,*)' FERMI MOMETUM            =',pferm
+c      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
+c      WRITE(7,*)' LEVINGER PARAMETER       =',apair
+c      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
+c      WRITE(7,*)' ================================================'
       v_m = v_measure
-      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
-      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
-      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
-      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
-      WRITE(7,*)' ================================================'
+c      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
+c      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
+c      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
+c      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
+c      WRITE(7,*)' ================================================'
 *********************************************************************
 *     scattered angle range determination
 *********************************************************************
@@ -1739,16 +1739,16 @@ C*******************************************************************
         IF(k_tet_sum.EQ.1) uet = the_fix
         IF(k_tet_sum.GT.1) uet = the_low + float(k_tet-1) * the_step
         ue=uet*pi/180.
-        WRITE(7,*)'                                              '
-        WRITE(7,*)' ================================================'
-        WRITE(7,19)uet
-        WRITE(7,*)' ================================================'
+c        WRITE(7,*)'                                              '
+c        WRITE(7,*)' ================================================'
+c        WRITE(7,19)uet
+c        WRITE(7,*)' ================================================'
    19   FORMAT(2x,'ANGLE OF SCATTERED ELECTRONS ( degr.) =',f9.5)
         IF(type_rad.EQ.0.0)then
-	WRITE(7,20)
+c	WRITE(7,20)
 	WRITE(6,20)
 	endif
-        IF(type_rad.EQ.1.0)WRITE(7,21)
+c        IF(type_rad.EQ.1.0)WRITE(7,21)
 **********************************************************************
 *     selection electron spectra type
 **********************************************************************
@@ -1828,9 +1828,9 @@ C-----------------------------------------------------------
             dgw2d   =dged/(2.*pm+4.*ei*sin(ue/2.)**2)
             rel=(2.*dgea)/(a*dged)
             if(type_rad.NE.1.0)then
-            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2
+c            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
+c     &        dged,
+c     &dgw2d,rel,gp2
             endif
             WRITE(6,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
      &        dged,
@@ -1864,7 +1864,7 @@ C-----------------------------------------------------------
             k_process = 2
             tdg_in    = tspec_a(ei,er,ue) / v_m    !  inelastic scattering
             tdg_tot   = tdg_ql + tdg_in
-            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2
+c            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2
 
 ****************************************************************
 C             Fort.27-Output for PAW, Kim
@@ -1896,9 +1896,9 @@ C             Fort.27-Output for PAW, Kim
     1   CONTINUE
         IF(type_rad.EQ.0.0)then
 	WRITE(6,22)
-	WRITE(7,22)
+c	WRITE(7,22)
 	endif
-        IF(type_rad.EQ.1.0)WRITE(7,23)
+c        IF(type_rad.EQ.1.0)WRITE(7,23)
       ENDDO
 *********************************************************
 *     Init line
