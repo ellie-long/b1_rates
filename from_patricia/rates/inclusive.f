@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 c      PROGRAM main
 c         REAL*8 e_in,pit,thit
 c         REAL*8 a,z
@@ -13,22 +12,6 @@ c         write(6,*) "Cross Section:",xsec
 c      END
 
         SUBROUTINE init_incl(e_in,eprime,theta,x_in,a_in,z_in,xsec)
-=======
-      PROGRAM main
-         REAL*8 e_in,pit,thit
-         REAL*8 a,z
-         REAL*8 cross_section
-         e_in = 6.6
-         pit = 6.108
-         thit = 9.51
-         a = 4
-         z = 2
-         call init_incl(e_in,pit,thit,a,z,cross_section)
-         write(6,*) "Cross Section:",cross_section
-      END
-
-        SUBROUTINE init_incl(e_in,eprime,theta,a_in,z_in,cross_section)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 c        PROGRAM init_incl
 **********************************************************************
 *      Program prepare the initial conditions for inclusive          *
@@ -86,15 +69,9 @@ C        INCLUDE 'inclusive$src:COMMON_INCL.CMN'
         common/a3case/a3case
         common/form_factors/ics
         REAL initial_data(6)
-<<<<<<< HEAD
         REAL*8 e_in,eprime,theta,x_in
         REAL*8 a_in,z_in
         REAL*8 xsec
-=======
-        REAL*8 e_in,eprime,theta
-        REAL*8 a_in,z_in
-        REAL*8 cross_section
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
         write(6,1)
 **********************************************************************
 *       read initial conditions file
@@ -106,11 +83,7 @@ C        INCLUDE 'inclusive$src:COMMON_INCL.CMN'
           IF(isetup.LE.6)THEN
             titles  = ' '
             READ(15,24)titles
-<<<<<<< HEAD
 c            WRITE(7,25)titles
-=======
-            WRITE(7,25)titles
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 *            TYPE 25,titles
             GOTO 101
           ENDIF
@@ -127,17 +100,10 @@ c            WRITE(7,25)titles
 *         exit loop if blank line encountered
 ************************************************************************
           IF(name(1).EQ.' ')then
-<<<<<<< HEAD
 c            WRITE(7,27)name
             GOTO 101
           END IF
 c          WRITE(7,27)name,initial_data
-=======
-            WRITE(7,27)name
-            GOTO 101
-          END IF
-          WRITE(7,27)name,initial_data
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 ************************************************************************
 *         initialize beam conditions
 ************************************************************************
@@ -159,19 +125,14 @@ c            ei     = ei_0 + ei_1
 ************************************************************************
           IF(name(1).EQ.'TARGET')then
             a      = a_in
-<<<<<<< HEAD
 c            a      = initial_data(1)
             z      = z_in
 c            z      = initial_data(2)
-=======
-            z      = z_in
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
             pferm  = initial_data(3)
             ps     = initial_data(4) / 100.
             bd     = initial_data(5)
             dd     = 0.0 !initial_data(6)
             a3case = initial_data(6)
-<<<<<<< HEAD
                if (z.eq.1.and.a.eq.2) then
                   nuclei = " D"
                   pferm  = 0.099
@@ -199,8 +160,6 @@ c                  write(6,*) "I'M HERE!! SEE?!"
                   ps     = 25.00 / 100.
                   bd     = 0.025
                endif
-=======
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
       if(a.gt.2.9.and.a.lt.3.1.and.a3case.gt.1.5)then
             if(a3case.lt.2.1)ifl=-2
             if(a3case.gt.2.9)ifl=-1
@@ -208,14 +167,6 @@ c                  write(6,*) "I'M HERE!! SEE?!"
       endif
       print *,a3case,ifl
 
-<<<<<<< HEAD
-=======
-      if (z.eq.1.and.a.eq.2) nuclei="D"
-      if (z.eq.2.and.a.eq.4) nuclei="HE"
-      if (z.eq.3.and.a.eq.6) nuclei="LI"
-      if (z.eq.7.and.a.eq.14) nuclei="N"
-      if (z.eq.6.and.a.eq.12) nuclei="C"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 c            CALL targ_r_length(name(2),rl)
             CALL targ_r_length(nuclei,rl)
             
@@ -271,11 +222,7 @@ c            er_fix    = initial_data(4)
             er_low    = eprime
             er_up     = eprime
             er_step   = 0.001
-<<<<<<< HEAD
             er_fix    = eprime
-=======
-            er_fix    = 0.000
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 ************************************************************************
 *          electron spectra at E'
 ************************************************************************
@@ -327,17 +274,10 @@ c            x_low    = initial_data(1)
 c            x_up     = initial_data(2)
 c            x_step   = initial_data(3)
 c            x_fix    = initial_data(4)
-<<<<<<< HEAD
             x_low    = x_in
             x_up     = x_in
             x_step   = 0.001
             x_fix    = x_in
-=======
-            x_low    = 0.000
-            x_up     = 0.000
-            x_step   = 0.000
-            x_fix    = 0.000
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 ************************************************************************
 *          electron spectra at X
 ************************************************************************
@@ -390,20 +330,12 @@ c            x_fix    = initial_data(4)
 *        CALL datime(jd,jt)
 *        WRITE(6,28)jd,jt
 *        TYPE 28,jd,jt
-<<<<<<< HEAD
 c        write(7,1)
-=======
-        write(7,1)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 ************************************************************************
 *          beginning of calculations
 ************************************************************************
         IF(num_model.EQ.1)CALL vn_incl
-<<<<<<< HEAD
         IF(num_model.EQ.2)CALL lcd_incl(xsec)
-=======
-        IF(num_model.EQ.2)CALL lcd_incl(cross_section)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
         IF(num_model.EQ.3)CALL hydro
 ************************************************************************
 
@@ -507,7 +439,6 @@ C                           ----RADIATIVE PARAMETERS---
       x0=a/x02
       xsi=0.000154*z*tt*x0/a
 C*******************************************************************
-<<<<<<< HEAD
 c      WRITE(7,*)'                                               '
 c      WRITE(7,*)' ================================================'
 c      WRITE(7,18)ei
@@ -518,18 +449,6 @@ c        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
 c        WRITE(7,*)' +       EMC EFFECT TAKE INTO ACCOUNT         +'
 c        WRITE(7,*)' +      ONLY FOR INELASTIC PART OF SPECTRA    +'
 c        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
-=======
-      WRITE(7,*)'                                               '
-      WRITE(7,*)' ================================================'
-      WRITE(7,18)ei
-   18 FORMAT(2x,'ENERGY OD INCIDENT ELECTRONS  ( GeV ) =',f9.5)
-      IF(kemc.EQ.1)THEN
-        WRITE(7,*)' ================================================'
-        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
-        WRITE(7,*)' +       EMC EFFECT TAKE INTO ACCOUNT         +'
-        WRITE(7,*)' +      ONLY FOR INELASTIC PART OF SPECTRA    +'
-        WRITE(7,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
       ENDIF
 C      IF(KEMC.EQ.2)THEN     ! no include still
 C      WRITE(6,*)' ================================================'
@@ -542,7 +461,6 @@ C      ENDIF
       WRITE(7,*)' ================================================'
       IF(kswell.EQ.1)THEN
         IF(psg.EQ.0.0)THEN
-<<<<<<< HEAD
 c          WRITE(7,*)' +--------------------------------------------+'
 c          WRITE(7,*)' :  NO SWELLING EFFECT TAKE INTO ACCOUNT      :'
 c          WRITE(7,*)' +--------------------------------------------+'
@@ -567,49 +485,15 @@ c      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
 c      WRITE(7,*)' LEVINGER PARAMETER       =',apair
 c      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
 c      WRITE(7,*)' ================================================'
-=======
-          WRITE(7,*)' +--------------------------------------------+'
-          WRITE(7,*)' :  NO SWELLING EFFECT TAKE INTO ACCOUNT      :'
-          WRITE(7,*)' +--------------------------------------------+'
-        ELSEIF(psg.NE.0.0)THEN
-          WRITE(7,*)' +--------------------------------------------+'
-          WRITE(7,*)' : AVERAGE  SWELLING EFFECT TAKE INTO ACCOUNT :'
-          WRITE(7,*)' +--------------------------------------------+'
-        ENDIF
-      ELSEIF(kswell.EQ.2)THEN
-        WRITE(7,*)' +---------------------------------------------+'
-        WRITE(7,*)' :  DYNAMIC SWELLING EFFECT TAKE INTO ACCOUNT  :'
-        WRITE(7,*)' +---------------------------------------------+'
-      ENDIF
-      WRITE(7,*)' ================================================'
-      WRITE(7,*)' TARGET THICNESS IN MM    =',sm
-      WRITE(7,*)' ATOMIC WEIGHT A          =',a
-      WRITE(7,*)' CHARG NUMBER  Z          =',z
-      WRITE(7,*)' PAIR MASS IN NUCLEAR     =',dmx
-      WRITE(7,*)' RESPONSE ENERGY IN GEV   =',bd
-      WRITE(7,*)' FERMI MOMETUM            =',pferm
-      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
-      WRITE(7,*)' LEVINGER PARAMETER       =',apair
-      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
-      WRITE(7,*)' ================================================'
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 **********************************************************************
 *     measure of cross section
 **********************************************************************
       v_m = v_measure
-<<<<<<< HEAD
 c      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
 c      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
 c      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
 c      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
 c      WRITE(7,*)' ================================================'
-=======
-      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
-      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
-      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
-      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
-      WRITE(7,*)' ================================================'
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 *********************************************************************
 *     scattered angle range determination
 *********************************************************************
@@ -619,7 +503,6 @@ c      WRITE(7,*)' ================================================'
         IF(k_tet_sum.EQ.1) uet = the_fix
         IF(k_tet_sum.GT.1) uet = the_low + float(k_tet-1) * the_step
         ue=uet*pi/180.
-<<<<<<< HEAD
 c        WRITE(7,*)'                                               '
 c        WRITE(7,*)' ================================================'
 c        WRITE(7,19)uet
@@ -630,18 +513,6 @@ c	WRITE(7,20)
 c	WRITE(6,20)
 	endif
 c        IF(type_rad.EQ.1.0)WRITE(7,21)
-=======
-        WRITE(7,*)'                                               '
-        WRITE(7,*)' ================================================'
-        WRITE(7,19)uet
-        WRITE(7,*)' ================================================'
-   19   FORMAT(2x,'ANGLE OF SCATTERED ELECTRONS ( degr.) =',f9.5)
-        IF(type_rad.EQ.0.0)then
-	WRITE(7,20)
-	WRITE(6,20)
-	endif
-        IF(type_rad.EQ.1.0)WRITE(7,21)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 **********************************************************************
 *     selection electron spectra type
 **********************************************************************
@@ -652,18 +523,11 @@ c        IF(type_rad.EQ.1.0)WRITE(7,21)
         ELSEIF(sub_type_spec.EQ.13.0)THEN
           k_sum = (w_up - w_low) / w_step + 1
         ELSEIF(sub_type_spec.EQ.14.0)THEN
-<<<<<<< HEAD
           k_sum = (x_up - x_low) / x_step + 1
         ENDIF
 **********************************************************
         write(6,*)'TOTAL NUMBERS TO BE CALCULATED  =',k_sum
         WRITE(6,20)
-=======
-          k_sum = (x_up - x_low) / x_step
-        ENDIF
-**********************************************************
-        write(6,*)'TOTAL NUMBERS TO BE CALCULATED  =',k_sum
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 **********************************************************
         kb = 0
         DO 1 ke = 1,k_sum
@@ -723,7 +587,6 @@ c        IF(type_rad.EQ.1.0)WRITE(7,21)
 C-------------------------------------------------------
             dgw2d   =dged/(2.*pm+4.*ei*sin(ue/2.)**2)
             rel=(2.*dgea)/(a*dged)
-<<<<<<< HEAD
             cross_section = dgea * 1E-6
 c            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
 c     &        dged,
@@ -731,15 +594,6 @@ c     &dgw2d,rel,gp2
             WRITE(6,103)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
      &        dged,
      &dgw2d,rel,gp2,cross_section,uet,ei
-=======
-            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2
-            WRITE(6,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2
-            cross_section = dgea
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 *            WRITE(27,*)uet,er,dgea,tdg_tot,x,epni
 ************************************************
 * New addition 25-Apr-2000
@@ -767,11 +621,7 @@ c     &dgw2d,rel,gp2
             k_process = 2
             tdg_in    = tspec(ei,er,ue) / v_m
             tdg_tot   = tdg_ql + tdg_in
-<<<<<<< HEAD
 c            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
-=======
-            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
             write(21,*)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
 
 ****************************************************************
@@ -792,13 +642,8 @@ C             Fort.27-Output for PAW, Kim
 *          write(6,*)'CALCULATED NUMBER =',ke
 ********************************************************
     1   CONTINUE
-<<<<<<< HEAD
 c        IF(type_rad.EQ.0.0)WRITE(7,22)
 c        IF(type_rad.EQ.1.0)WRITE(7,23)
-=======
-        IF(type_rad.EQ.0.0)WRITE(7,22)
-        IF(type_rad.EQ.1.0)WRITE(7,23)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
       ENDDO
 ***************************************************************
 *     Init line formats
@@ -810,16 +655,10 @@ c        IF(type_rad.EQ.1.0)WRITE(7,23)
 *   21 FORMAT(78('=')/5x,'W2',6x,'Ee`',6x,'X ',5x,'T_QL',7x,'T_IN',7x,
 *     &'T_TOT',5x,' Q0 ',4x,' Q2 ',/78('-'))
 *
-<<<<<<< HEAD
 c   20 FORMAT(123('=')/4x,'W2',6x,'Ee`',5x,'X ',8x,'QL_A',7x,'IN_A',6x,
    20 FORMAT(123('=')/4x,'W2',6x,'Ee`',5x,'X ',8x,'QL_A',7x,'IN_A',6x,
      &'TOT_A',7x,'QL_D',7x,'IN_D',6x,'TOT_D',6x,'DGW2D',6x,' REL',
      &        6x,' Q2 ',6x,' CS ',6x,' THETA ',6x,' E_in')
-=======
-   20 FORMAT(123('=')/4x,'W2',6x,'Ee`',5x,'X ',8x,'QL_A',7x,'IN_A',6x,
-     &'TOT_A',7x,'QL_D',7x,'IN_D',6x,'TOT_D',6x,'DGW2D',6x,' REL',
-     &        6x,' Q2 '/123('-'))
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
    21 FORMAT(78('=')/5x,'W2',6x,'Ee`',6x,'X ',5x,'T_QL',7x,'T_IN',7x,
      &'T_TOT',5x,' Q0 ',4x,' Q2 ',/78('-'))
 ***************************************************************
@@ -835,10 +674,7 @@ c   20 FORMAT(123('=')/4x,'W2',6x,'Ee`',5x,'X ',8x,'QL_A',7x,'IN_A',6x,
 ***************************************************************
   101 FORMAT(3f8.4,1x,8e11.3,f8.4)
   102 FORMAT(1x,3f8.4,3e11.3,2f8.4)
-<<<<<<< HEAD
   103 FORMAT(3f8.4,1x,8e11.3,f8.4,8e11.3,2f10.0)
-=======
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
       RETURN
       END
 C..........................
@@ -1873,7 +1709,6 @@ C                           ----RADIATIVE PARAMETERS---
       x0=a/x02
       xsi=0.000154*z*tt*x0/a
 C*******************************************************************
-<<<<<<< HEAD
 c      WRITE(7,*)'                                               '
 c      WRITE(7,*)' ================================================'
 c      WRITE(7,18)ei
@@ -1895,29 +1730,6 @@ c      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
 c      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
 c      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
 c      WRITE(7,*)' ================================================'
-=======
-      WRITE(7,*)'                                               '
-      WRITE(7,*)' ================================================'
-      WRITE(7,18)ei
-   18 FORMAT(2x,'ENERGY OD INCIDENT ELECTRONS  ( GeV ) =',f9.5)
-      WRITE(7,*)' ================================================'
-      WRITE(7,*)' TARGET THICNESS IN MM    =',sm
-      WRITE(7,*)' ATOMIC WEIGHT A          =',a
-      WRITE(7,*)' CHARG NUMBER  Z          =',z
-      WRITE(7,*)' PAIR MASS IN NUCLEAR     =',dmx
-      WRITE(7,*)' RESPONSE ENERGY IN GEV   =',bd
-      WRITE(7,*)' FERMI MOMETUM            =',pferm
-      WRITE(7,*)' VALUE OF HIGH COMPONENT  =',ps
-      WRITE(7,*)' LEVINGER PARAMETER       =',apair
-      WRITE(7,*)' NUCLEON DIPOL PARAMETER  =',ga
-      WRITE(7,*)' ================================================'
-      v_m = v_measure
-      IF(v_m.EQ.1000000.)WRITE(7,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
-      IF(v_m.EQ.1000.)   WRITE(7,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
-      IF(v_m.EQ.1.)      WRITE(7,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
-      IF(v_m.EQ.0.001)   WRITE(7,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
-      WRITE(7,*)' ================================================'
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 *********************************************************************
 *     scattered angle range determination
 *********************************************************************
@@ -1927,7 +1739,6 @@ c      WRITE(7,*)' ================================================'
         IF(k_tet_sum.EQ.1) uet = the_fix
         IF(k_tet_sum.GT.1) uet = the_low + float(k_tet-1) * the_step
         ue=uet*pi/180.
-<<<<<<< HEAD
 c        WRITE(7,*)'                                              '
 c        WRITE(7,*)' ================================================'
 c        WRITE(7,19)uet
@@ -1938,18 +1749,6 @@ c	WRITE(7,20)
 	WRITE(6,20)
 	endif
 c        IF(type_rad.EQ.1.0)WRITE(7,21)
-=======
-        WRITE(7,*)'                                              '
-        WRITE(7,*)' ================================================'
-        WRITE(7,19)uet
-        WRITE(7,*)' ================================================'
-   19   FORMAT(2x,'ANGLE OF SCATTERED ELECTRONS ( degr.) =',f9.5)
-        IF(type_rad.EQ.0.0)then
-	WRITE(7,20)
-	WRITE(6,20)
-	endif
-        IF(type_rad.EQ.1.0)WRITE(7,21)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 **********************************************************************
 *     selection electron spectra type
 **********************************************************************
@@ -1960,11 +1759,7 @@ c        IF(type_rad.EQ.1.0)WRITE(7,21)
         ELSEIF(sub_type_spec.EQ.13.0)THEN
           k_sum = (w_up - w_low) / w_step + 1
         ELSEIF(sub_type_spec.EQ.14.0)THEN
-<<<<<<< HEAD
           k_sum = (x_up - x_low) / x_step + 1
-=======
-          k_sum = (x_up - x_low) / x_step
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
         ENDIF
 **********************************************************
 *        TYPE *,'TOTAL CALCULATION NUMBER =',k_sum
@@ -2033,15 +1828,9 @@ C-----------------------------------------------------------
             dgw2d   =dged/(2.*pm+4.*ei*sin(ue/2.)**2)
             rel=(2.*dgea)/(a*dged)
             if(type_rad.NE.1.0)then
-<<<<<<< HEAD
 c            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
 c     &        dged,
 c     &dgw2d,rel,gp2
-=======
-            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
             endif
             WRITE(6,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
      &        dged,
@@ -2075,11 +1864,7 @@ c     &dgw2d,rel,gp2
             k_process = 2
             tdg_in    = tspec_a(ei,er,ue) / v_m    !  inelastic scattering
             tdg_tot   = tdg_ql + tdg_in
-<<<<<<< HEAD
 c            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2
-=======
-            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 ****************************************************************
 C             Fort.27-Output for PAW, Kim
@@ -2111,15 +1896,9 @@ C             Fort.27-Output for PAW, Kim
     1   CONTINUE
         IF(type_rad.EQ.0.0)then
 	WRITE(6,22)
-<<<<<<< HEAD
 c	WRITE(7,22)
 	endif
 c        IF(type_rad.EQ.1.0)WRITE(7,23)
-=======
-	WRITE(7,22)
-	endif
-        IF(type_rad.EQ.1.0)WRITE(7,23)
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
       ENDDO
 *********************************************************
 *     Init line
@@ -3619,14 +3398,9 @@ cStep        IF(k_tet_sum.GT.1) q2 = the_low + float(k_tet-1) * the_step
         ELSEIF(sub_type_spec.EQ.13.0)THEN
           k_sum = (w_up - w_low) / w_step + 1
         ELSEIF(sub_type_spec.EQ.14.0)THEN
-<<<<<<< HEAD
           k_sum = (x_up - x_low) / x_step + 1
         ENDIF
 c        k_sum = 1
-=======
-          k_sum = (x_up - x_low) / x_step
-        ENDIF
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 **********************************************************
         write(6,*)'TOTAL NUMBERS TO BE CALCULATED =',k_sum
 **********************************************************
@@ -3923,7 +3697,6 @@ C....................................
       END
 
 *zverev.f
-<<<<<<< HEAD
 C **********************************************************************
 C *             WAVE FUNCTION FOR ALUMINIUM-27                         *
 C *  DN AND DP NON REGULAR DISTRIBUTIONS NEUTRONS AND PROTONS IN AL-27 *
@@ -4294,378 +4067,6 @@ C  **** D PARTIAL WAVE *****
       WW=A*F/SQRT(4.*3.14159265)                                        
       RETURN                                                            
       END                                                               
-=======
-C **********************************************************************ZVE00010
-C *             WAVE FUNCTION FOR ALUMINIUM-27                         *ZVE00020
-C *  DN AND DP NON REGULAR DISTRIBUTIONS NEUTRONS AND PROTONS IN AL-27 *ZVE00030
-C *  CALCULATED BY ZVEREV.                                             *ZVE00040
-C *  REGUL IS REGULAR PART OF ----- WAVE FUNCTION,                     *ZVE00050
-C *  FHNCIC IS ANOTHER ----- WAVE FUNCTION,                            *ZVE00060
-C *  SUB IS A FHNCIC-REGUL, ALL THIS WAVE FUNCTIONS TAKING             *ZVE00070
-C *  FROM THE WORKS:E.KROTSCHECK,NP.A317(1979)149,PHYS.REV.B24(1981)   *ZVE00080
-C *  6383 AND M.F.FLYNN ET AL,NP.A427(1984)253.                        *ZVE00090
-C *  ALL FUNCTIONS NORMALIZED TO UNITY.                                *ZVE00100
-C *                     ---- SARGSYAN M.M.  05.06.1989Y YEREVAN ---    *ZVE00110
-C **********************************************************************ZVE00120
-C                                                                       ZVE00130
-      FUNCTION DN27(X)                                                  ZVE00140
-      DIMENSION P(50),RN(50)                                            ZVE00150
-      DATA RN/1.24833,1.24856,1.25047,1.25552,1.26447,                  ZVE00160
-     *1.27665,1.28973,1.29989,1.30259,1.29339,1.26884,                  ZVE00170
-     *1.22710,1.16816,1.09375,1.00687,9.11319E-1,8.11148E-1,            ZVE00180
-     *7.10195E-1,6.11803E-1,5.18652E-1,4.32709E-1,3.55261E-1,           ZVE00190
-     *2.86986E-1,2.28049E-1,1.78200E-1,1.36878E-1,1.03299E-1,           ZVE00200
-     *7.65495E-2,5.56593E-2,3.96678E-2,2.76722E-2,1.88606E-2,           ZVE00210
-     *1.25291E-2,8.08649E-2,5.05017E-3,3.03570E-3,1.74421E-3,           ZVE00220
-     *9.49025E-4,4.82772E-4,2.25624E-4,9.48727E-5,3.58386E-5,           ZVE00230
-     *1.41900E-5,9.67978E-6,1.12923E-5,1.37003E-5,1.48380E-5,           ZVE00240
-     *1.43409E-5,1.26035E-5,1.02445E-5/                                 ZVE00250
-      PY=X/0.197328                                                     ZVE00260
-      DO 1 K=1,50                                                       ZVE00270
-      P(K)=FLOAT(K)*0.050                                               ZVE00280
-1     CONTINUE                                                          ZVE00290
-      DN27=RN(1)/(0.197328**3)/6.018759                                 ZVE00300
-      IF(PY.LE.P(1)) RETURN                                             ZVE00310
-      DO 2 N=1,49                                                       ZVE00320
-      IF(PY.GE.P(N).AND.PY.LE.P(N+1)) GO TO 3                           ZVE00330
-      GO TO 2                                                           ZVE00340
-3     DN27=(RN(N)+(RN(N+1)-RN(N))/(P(N+1)-P(N))*(PY-P(N)))/0.197328**3  ZVE00350
-     */6.018759                                                         ZVE00360
-      RETURN                                                            ZVE00370
-2     CONTINUE                                                          ZVE00380
-      DN27=0.                                                           ZVE00390
-      RETURN                                                            ZVE00400
-      END                                                               ZVE00410
-C--------------------------------------------------------------------   ZVE00420
-      FUNCTION DP27(X)                                                  ZVE00430
-      DIMENSION P(50),RP(50)                                            ZVE00440
-      DATA RP/9.43535E-1,9.67375E-1,1.00532E-0,1.05449E-0,1.11061E-0,   ZVE00450
-     *1.16815E-0,1.22075E-0,1.26194E-0,1.28600E-0,1.28873E-0,           ZVE00460
-     *1.26803E-0,1.22406E-0,1.15904E-0,1.07677E-0,9.81978E-1,           ZVE00470
-     *8.79663E-1,7.74558E-1,6.70754E-1,5.71511E-1,4.79223E-1,           ZVE00480
-     *3.95472E-1,3.21144E-1,2.56550E-1,2.01545E-1,1.55638E-1,           ZVE00490
-     *1.18083E-1,8.79733E-2,6.43137E-2,4.60947E-2,3.23483E-2,           ZVE00500
-     *2.21900E-2,1.48441E-2,9.65347E-3,6.07796E-3,3.68470E-3,           ZVE00510
-     *2.13514E-3,1.17067E-3,5.98665E-4,2.79661E-4,1.15973E-4,           ZVE00520
-     *4.19127E-5,1.54387E-5,1.12200E-5,1.50839E-5,1.98747E-5,           ZVE00530
-     *2.26100E-5,2.26524E-5,2.05452E-5,1.72506E-5,1.36724E-5/           ZVE00540
-      PY=X/0.197328                                                     ZVE00550
-      DO 1 K=1,50                                                       ZVE00560
-      P(K)=FLOAT(K)*0.050                                               ZVE00570
-1     CONTINUE                                                          ZVE00580
-      DP27=RP(1)/(0.197328**3)/5.50747                                  ZVE00590
-      IF(PY.LE.P(1)) RETURN                                             ZVE00600
-      DO 2 N=1,49                                                       ZVE00610
-      IF(PY.GE.P(N).AND.PY.LE.P(N+1)) GO TO 3                           ZVE00620
-      GO TO 2                                                           ZVE00630
-3     DP27=(RP(N)+(RP(N+1)-RP(N))/(P(N+1)-P(N))*(PY-P(N)))/0.197328**3  ZVE00640
-     */5.50747                                                          ZVE00650
-      RETURN                                                            ZVE00660
-2     CONTINUE                                                          ZVE00670
-      DP27=0.                                                           ZVE00680
-      RETURN                                                            ZVE00690
-      END                                                               ZVE00700
-C--------------------------------------------------------------------   ZVE00710
-C **********************************************************************ZVE00720
-C *             WAVE FUNCTION FOR FERRUM-56                            *ZVE00730
-C *  DN AND DP NON REGULAR DISTRIBUTIONS NEUTRONS AND PROTONS IN FE-56 *ZVE00740
-C *  CALCULATED BY ZVEREV.                                             *ZVE00750
-C *                     ---- SARGSYAN M.M.  17.12.1989  YEREVAN ---    *ZVE00760
-C **********************************************************************ZVE00770
-      FUNCTION DN56(X)                                                  ZVE00780
-      DIMENSION P(50),RN(50)                                            ZVE00790
-      DATA RN/1.60035,1.59084,1.57212,1.54160,1.49829,                  ZVE00800
-     *1.44376,1.38214,1.31899,1.25961,1.20741,1.16306,                  ZVE00810
-     *1.12441,1.08744,1.04741,1.00023,9.43264E-1,8.75781E-1,            ZVE00820
-     *7.98812E-1,7.14738E-1,6.26728E-1,5.38185E-1,4.52307E-1,           ZVE00830
-     *3.71794E-1,2.98687E-1,2.34312E-1,1.79307E-1,1.33697E-1,           ZVE00840
-     *9.70024E-2,6.83746E-2,4.67326E-2,3.08947E-2,1.96908E-2,           ZVE00850
-     *1.20448E-2,7.02718E-3,3.87601E-3,1.99651E-3,9.44553E-4,           ZVE00860
-     *4.02825E-4,1.54968E-4,6.12694E-5,3.75839E-5,3.79774E-5,           ZVE00870
-     *4.10407E-5,3.96047E-5,3.35351E-5,2.51842E-5,1.69575E-5,           ZVE00880
-     *1.03633E-5,5.92871E-6,3.48951E-6/                                 ZVE00890
-      PY=X/0.197328                                                     ZVE00900
-      DO 1 K=1,50                                                       ZVE00910
-      P(K)=FLOAT(K)*0.050                                               ZVE00920
-1     CONTINUE                                                          ZVE00930
-      DN56 = RN(1)/(0.197328**3)/6.505547                               ZVE00940
-      IF(PY.LE.P(1)) RETURN                                             ZVE00950
-      DO 2 N=1,49                                                       ZVE00960
-      IF(PY.GE.P(N).AND.PY.LE.P(N+1)) GO TO 3                           ZVE00970
-      GO TO 2                                                           ZVE00980
-3     DN56 = (RN(N)+(RN(N+1)-RN(N))/(P(N+1)-P(N))*(PY-P(N)))/0.197328**3ZVE00990
-     */6.505547                                                         ZVE01000
-      RETURN                                                            ZVE01010
-2     CONTINUE                                                          ZVE01020
-      DN56 = 0.                                                         ZVE01030
-      RETURN                                                            ZVE01040
-      END                                                               ZVE01050
-C--------------------------------------------------------------------   ZVE01060
-      FUNCTION DP56(X)                                                  ZVE01070
-      DIMENSION P(50),RP(50)                                            ZVE01080
-      DATA RP/1.67581E+0,1.62246E+0,1.54290E-0,1.44902E-0,1.35375E-0,   ZVE01090
-     *1.26853E-0,1.20116E-0,1.15474E-0,1.12757E-0,1.11413E-0,           ZVE01100
-     *1.10666E-0,1.09690E-0,1.07772E-0,1.04418E-0,9.93997E-1,           ZVE01110
-     *9.27507E-1,8.47147E-1,7.56771E-1,6.60903E-1,5.64089E-1,           ZVE01120
-     *4.70398E-1,3.83118E-1,3.04597E-1,2.36240E-1,1.78580E-1,           ZVE01130
-     *1.31426E-1,9.40372E-2,6.53029E-2,4.39159E-2,2.85186E-2,           ZVE01140
-     *1.78159E-2,1.06524E-2,6.05360E-3,3.23855E-3,1.61017E-3,           ZVE01150
-     *7.32758E-4,3.03068E-4,1.20630E-4,6.06806E-5,5.13609E-5,           ZVE01160
-     *5.56611E-5,5.78716E-5,5.39761E-5,4.53014E-5,3.47223E-5,           ZVE01170
-     *2.47412E-5,1.68112E-5,1.13674E-5,8.15491E-6,6.59340E-6/           ZVE01180
-      PY=X/0.197328                                                     ZVE01190
-      DO 1 K=1,50                                                       ZVE01200
-      P(K)=FLOAT(K)*0.050                                               ZVE01210
-1     CONTINUE                                                          ZVE01220
-      DP56 = RP(1)/(0.197328**3)/5.772066                               ZVE01230
-      IF(PY.LE.P(1)) RETURN                                             ZVE01240
-      DO 2 N=1,49                                                       ZVE01250
-      IF(PY.GE.P(N).AND.PY.LE.P(N+1)) GO TO 3                           ZVE01260
-      GO TO 2                                                           ZVE01270
-3     DP56 = (RP(N)+(RP(N+1)-RP(N))/(P(N+1)-P(N))*(PY-P(N)))/0.197328**3ZVE01280
-     */5.772066                                                         ZVE01290
-      RETURN                                                            ZVE01300
-2     CONTINUE                                                          ZVE01310
-      DP56 = 0.0                                                        ZVE01320
-      RETURN                                                            ZVE01330
-      END                                                               ZVE01340
-C--------------------------------------------------------------------   ZVE01350
-C **********************************************************************ZVE01360
-C *             WAVE FUNCTION FOR PLUMBUM-208                          *ZVE01370
-C * DN AND DP NON REGULAR DISTRIBUTIONS NEUTRONS AND PROTONS IN PB-208 *ZVE01380
-C *  CALCULATED BY ZVEREV.                                             *ZVE01390
-C *                     ---- SARGSYAN M.M.  17.12.1989  YEREVAN ---    *ZVE01400
-C **********************************************************************ZVE01410
-      FUNCTION DN208(X)                                                 ZVE01420
-      DIMENSION P(50),RN(50)                                            ZVE01430
-      DATA RN/1.29961,1.35167,1.40915,1.44407,                          ZVE01440
-     *1.43986,1.39784,1.33403,1.26884,1.21629,1.17860,                  ZVE01450
-     *1.14811,1.11422,1.07049,1.01802,9.63719E-1,9.15426E-1,            ZVE01460
-     *8.77124E-1,8.46715E-1,8.17132E-1,7.79661E-1,7.27552E-1,           ZVE01470
-     *6.58335E-1,5.74222E-1,4.80913E-1,3.85664E-1,2.95416E-1,           ZVE01480
-     *2.15512E-1,1.49140E-1,9.73540E-2,5.94746E-2,3.36391E-2,           ZVE01490
-     *1.73647E-2,8.03887E-3,3.29158E-3,1.22703E-3,5.11621E-4,           ZVE01500
-     *3.37123E-4,3.01381E-4,2.59759E-4,1.94161E-4,1.25528E-4,           ZVE01510
-     *7.18848E-5,3.81535E-5,2.03938E-5,1.22410E-5,8.61691E-6,           ZVE01520
-     *6.63022E-6,5.09218E-6,3.73824E-6,2.62382E-6/                      ZVE01530
-      PY=X/0.197328                                                     ZVE01540
-      DO 1 K=1,50                                                       ZVE01550
-      P(K)=FLOAT(K)*0.050                                               ZVE01560
-1     CONTINUE                                                          ZVE01570
-      DN208=RN(1)/(0.197328**3)/7.695439                                ZVE01580
-      IF(PY.LE.P(1)) RETURN                                             ZVE01590
-      DO 2 N=1,49                                                       ZVE01600
-      IF(PY.GE.P(N).AND.PY.LE.P(N+1)) GO TO 3                           ZVE01610
-      GO TO 2                                                           ZVE01620
-3     DN208=(RN(N)+(RN(N+1)-RN(N))/(P(N+1)-P(N))*(PY-P(N)))/0.197328**3 ZVE01630
-     */7.695439                                                         ZVE01640
-      RETURN                                                            ZVE01650
-2     CONTINUE                                                          ZVE01660
-      DN208=0.                                                          ZVE01670
-      RETURN                                                            ZVE01680
-      END                                                               ZVE01690
-C--------------------------------------------------------------------   ZVE01700
-      FUNCTION DP208(X)                                                 ZVE01710
-      DIMENSION P(50),RP(50)                                            ZVE01720
-      DATA RP/1.35392E-0,1.31349E-0,1.26056E-0,1.20992E-0,1.17201E-0,   ZVE01730
-     *1.14910E-0,1.13562E-0,1.12206E-0,1.10028E-0,1.06738E-0,           ZVE01740
-     *1.02649E-0,9.84450E-1,9.47747E-1,9.18996E-1,8.95426E-1,           ZVE01750
-     *8.69918E-1,8.33839E-1,7.80325E-1,7.06671E-1,6.15108E-1,           ZVE01760
-     *5.11952E-1,4.05713E-1,3.04922E-1,2.16379E-1,1.44173E-1,           ZVE01770
-     *8.95262E-2,5.12774E-2,2.67074E-2,1.24215E-2,5.08549E-3,           ZVE01780
-     *1.90952E-3,8.63332E-4,6.72629E-4,6.75389E-4,6.21798E-4,           ZVE01790
-     *4.84233E-4,3.16398E-4,1.72770E-4,7.87667E-5,3.22318E-5,           ZVE01800
-     *1.70535E-5,1.60156E-5,1.75914E-5,1.69472E-5,1.38052E-5,           ZVE01810
-     *9.73508E-6,6.27645E-6,4.16784E-6,3.35893E-6,3.35988E-6/           ZVE01820
-      PY=X/0.197328                                                     ZVE01830
-      DO 1 K=1,50                                                       ZVE01840
-      P(K)=FLOAT(K)*0.050                                               ZVE01850
-1     CONTINUE                                                          ZVE01860
-      DP208=RP(1)/(0.197328**3)/5.3400306                               ZVE01870
-      IF(PY.LE.P(1)) RETURN                                             ZVE01880
-      DO 2 N=1,49                                                       ZVE01890
-      IF(PY.GE.P(N).AND.PY.LE.P(N+1)) GO TO 3                           ZVE01900
-      GO TO 2                                                           ZVE01910
-3     DP208=(RP(N)+(RP(N+1)-RP(N))/(P(N+1)-P(N))*(PY-P(N)))/0.197328**3 ZVE01920
-     */5.3400306                                                        ZVE01930
-      RETURN                                                            ZVE01940
-2     CONTINUE                                                          ZVE01950
-      DP208=0.                                                          ZVE01960
-      RETURN                                                            ZVE01970
-      END                                                               ZVE01980
-C---------------------------------------------------------------------- ZVE01990
-      FUNCTION REGUL(X)                                                 ZVE02000
-      COMMON/KFIF/PFIF                                                  ZVE02010
-      DIMENSION P(12),REG(12)                                           ZVE02020
-      DATA REG/1.78E-2,1.77E-2,1.75E-2,1.72E-2,1.67E-2,1.588E-2,        ZVE02030
-     *1.307E-2,8.489E-3,4.473E-3,1.959E-3,7.329E-4,2.471E-4/            ZVE02040
-      P(1)=0.                                                           ZVE02050
-      P(2)=0.2*PFIF                                                     ZVE02060
-      P(3)=0.4*PFIF                                                     ZVE02070
-      P(4)=0.6*PFIF                                                     ZVE02080
-      P(5)=0.8*PFIF                                                     ZVE02090
-      P(6)=1.*PFIF                                                      ZVE02100
-      P(7)=1.4*PFIF                                                     ZVE02110
-      P(8)=1.8*PFIF                                                     ZVE02120
-      P(9)=2.2*PFIF                                                     ZVE02130
-      P(10)=2.6*PFIF                                                    ZVE02140
-      P(11)=3.0*PFIF                                                    ZVE02150
-      P(12)=3.4*PFIF                                                    ZVE02160
-      PY=X/0.197328                                                     ZVE02170
-      DO 1 K=1,11                                                       ZVE02180
-      IF(PY.GE.P(K).AND.PY.LE.P(K+1)) GO TO 3                           ZVE02190
-      GO TO 1                                                           ZVE02200
-3     REGUL=(REG(K)+(REG(K+1)-REG(K))/(P(K+1)-P(K))*(PY-P(K)))          ZVE02210
-     */0.197328**3/1.397281                                             ZVE02220
-      RETURN                                                            ZVE02230
-1     CONTINUE                                                          ZVE02240
-      REGUL=0.                                                          ZVE02250
-      RETURN                                                            ZVE02260
-      END                                                               ZVE02270
-C----------------------------------------------------------------       ZVE02280
-      FUNCTION FHNCIC(X)                                                ZVE02290
-      COMMON/KFIF/PFIF                                                  ZVE02300
-      DIMENSION FH(13),P(13)                                            ZVE02310
-      DATA FH/0.8595,0.8594,0.8592,0.8589,0.8584,0.8576,1.588E-2,       ZVE02320
-     *1.307E-2,8.489E-3,4.473E-3,1.959E-3,7.329E-4,2.471E-4/            ZVE02330
-      P(1)=0.                                                           ZVE02340
-      P(2)=0.2*PFIF                                                     ZVE02350
-      P(3)=0.4*PFIF                                                     ZVE02360
-      P(4)=0.6*PFIF                                                     ZVE02370
-      P(5)=0.8*PFIF                                                     ZVE02380
-      P(6)=0.99*PFIF                                                    ZVE02390
-      P(7)=1.01*PFIF                                                    ZVE02400
-      P(8)=1.4*PFIF                                                     ZVE02410
-      P(9)=1.8*PFIF                                                     ZVE02420
-      P(10)=2.2*PFIF                                                    ZVE02430
-      P(11)=2.6*PFIF                                                    ZVE02440
-      P(12)=3.0*PFIF                                                    ZVE02450
-      P(13)=3.4*PFIF                                                    ZVE02460
-      PY=X/0.197328                                                     ZVE02470
-      DO 1 K=1,12                                                       ZVE02480
-      IF(PY.GE.P(K).AND.PY.LE.P(K+1)) GO TO 3                           ZVE02490
-      GO TO 1                                                           ZVE02500
-3     FHNCIC=(FH(K)+(FH(K+1)-FH(K))/(P(K+1)-P(K))*(PY-P(K)))            ZVE02510
-     */0.197328**3/9.6400775                                            ZVE02520
-      RETURN                                                            ZVE02530
-1     CONTINUE                                                          ZVE02540
-      FHNCIC=0.                                                         ZVE02550
-      RETURN                                                            ZVE02560
-      END                                                               ZVE02570
-C----------------------------------------------------------------       ZVE02580
-      FUNCTION SUB(X)                                                   ZVE02590
-      COMMON/KFIF/PFIF                                                  ZVE02600
-      DIMENSION SB(13),P(13)                                            ZVE02610
-      P(1)=0.                                                           ZVE02620
-      P(2)=0.2*PFIF                                                     ZVE02630
-      P(3)=0.4*PFIF                                                     ZVE02640
-      P(4)=0.6*PFIF                                                     ZVE02650
-      P(5)=0.8*PFIF                                                     ZVE02660
-      P(6)=0.99*PFIF                                                    ZVE02670
-      P(7)=1.01*PFIF                                                    ZVE02680
-      P(8)=1.4*PFIF                                                     ZVE02690
-      P(9)=1.8*PFIF                                                     ZVE02700
-      P(10)=2.2*PFIF                                                    ZVE02710
-      P(11)=2.6*PFIF                                                    ZVE02720
-      P(12)=3.0*PFIF                                                    ZVE02730
-      P(13)=3.4*PFIF                                                    ZVE02740
-      SB(1)=0.8595-0.0178                                               ZVE02750
-      SB(2)=0.8594-0.0177                                               ZVE02760
-      SB(3)=0.8592-0.0175                                               ZVE02770
-      SB(4)=0.8589-0.0172                                               ZVE02780
-      SB(5)=0.8584-0.0167                                               ZVE02790
-      SB(6)=0.8576-0.01588                                              ZVE02800
-      SB(7)=0.                                                          ZVE02810
-      SB(8)=0.                                                          ZVE02820
-      SB(9)=0.                                                          ZVE02830
-      SB(10)=0.                                                         ZVE02840
-      SB(11)=0.                                                         ZVE02850
-      SB(12)=0.                                                         ZVE02860
-      SB(13)=0.                                                         ZVE02870
-      PY=X/0.197328                                                     ZVE02880
-      DO 1 K=1,12                                                       ZVE02890
-      IF(PY.GE.P(K).AND.PY.LT.P(K+1))GO TO 3                            ZVE02900
-      GO TO 1                                                           ZVE02910
-3     SUB=(SB(K)+(SB(K+1)-SB(K))/(P(K+1)-P(K))*(PY-P(K)))/0.197328**3   ZVE02920
-     */8.242601                                                         ZVE02930
-      RETURN                                                            ZVE02940
-1     CONTINUE                                                          ZVE02950
-      SUB=0.                                                            ZVE02960
-      RETURN                                                            ZVE02970
-      END                                                               ZVE02980
-
-
-*fd.f
-      FUNCTION FD(X)                                                    A1507010
-C ************************************************                      A1506980
-C *  DEUTRON WAVE FUNCTION WITH PARIS POTENTIAL  *                      A1506990
-C ************************************************                      A1507000
-      COMMON/PARIS/C(13),D(13),BM(13)                                   A1507020
-      C(1)=0.88688076                                                   A1507030
-      C(2)=-0.34717093                                                  A1507040
-      C(3)=-3.050238                                                    A1507050
-      C(4)=56.207766                                                    A1507060
-      C(5)=-749.57334                                                   A1507070
-      C(6)=5336.5279                                                    A1507080
-      C(7)=-22706.863                                                   A1507090
-      C(8)=60434.4690                                                   A1507100
-      C(9)=-102920.58                                                   A1507110
-      C(10)=112233.57                                                   A1507120
-      C(11)=-75925.226                                                  A1507130
-      C(12)=29059.715                                                   A1507140
-      A=0.                                                              A1507150
-      DO 401 J=1,12                                                     A1507160
-401   A=A+C(J)                                                          A1507170
-      C(13)=-A                                                          A1507180
-      D(1)=0.023135193                                                  A1507190
-      D(2)=-0.85604572                                                  A1507200
-      D(3)=5.6068193                                                    A1507210
-      D(4)=-69.462922                                                   A1507220
-      D(5)=416.31118                                                    A1507230
-      D(6)=-1254.6621                                                   A1507240
-      D(7)=1238.783                                                     A1507250
-      D(8)=3373.9172                                                    A1507260
-      D(9)=-13041.151                                                   A1507270
-      D(10)=19512.524                                                   A1507280
-      DO 402 J=1,13                                                     A1507290
-402   BM(J)=0.23162461+(J-1)                                            A1507300
-      A=0.                                                              A1507310
-      B=0.                                                              A1507320
-      CC=0.                                                             A1507330
-      DO 3 J=1,10                                                       A1507340
-      A=A+D(J)/BM(J)**2                                                 A1507350
-      B=B+D(J)                                                          A1507360
-3     CC=CC+D(J)*BM(J)**2                                               A1507370
-      D(11)=BM(11)**2/(BM(13)**2-BM(11)**2)/(BM(12)**2-BM(11)           A1507380
-     ***2)*(-BM(12)**2*BM(13)**2*A+(BM(12)**2+BM(13)**2)*B-CC)          A1507390
-      D(12)=BM(12)**2/(BM(11)**2-BM(12)**2)/(BM(13)**2-BM(12)           A1507400
-     ***2)*(-BM(13)**2*BM(11)**2*A+(BM(13)**2+BM(11)**2)*B-CC)          A1507410
-      D(13)=BM(13)**2/(BM(12)**2-BM(13)**2)/(BM(11)**2-BM(13)           A1507420
-     ***2)*(-BM(11)**2*BM(12)**2*A+(BM(11)**2+BM(12)**2)*B-CC)          A1507430
-      FD=(U(X/0.197328)**2+WW(X/0.197328)**2)/0.197328**3               A1507440
-      RETURN                                                            A1507450
-      END                                                               A1507460
-C ***** S PARTIAL WAVE ******                                           A1507470
-      FUNCTION U(X)                                                     A1507480
-      COMMON/PARIS/C(13),D(13),BM(13)                                   A1507490
-      A=0.                                                              A1507500
-      DO 1 J=1,13                                                       A1507510
-1     A=C(J)/(X*X+BM(J)**2)+A                                           A1507520
-      F=0.79788456                                                      A1507530
-      U=A*F/SQRT(4.*3.14159265)                                         A1507540
-      RETURN                                                            A1507550
-      END                                                               A1507560
-C  **** D PARTIAL WAVE *****                                            A1507570
-      FUNCTION WW(X)                                                    A1507580
-      COMMON/PARIS/C(13),D(13),BM(13)                                   A1507590
-      A=0.                                                              A1507600
-      DO 1 J=1,13                                                       A1507610
-1     A=D(J)/(X*X+BM(J)**2)+A                                           A1507620
-      F=0.79788456                                                      A1507630
-      WW=A*F/SQRT(4.*3.14159265)                                        A1507640
-      RETURN                                                            A1507650
-      END                                                               A1507660
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
 
@@ -4869,7 +4270,6 @@ C  **** D PARTIAL WAVE *****                                            A1507570
 
 
 * b.f
-<<<<<<< HEAD
 C  *******************************                                      
 C  *    BODEK PARAMETRIZATION    *                                      
 C  *******************************                                      
@@ -4891,55 +4291,23 @@ C  *******************************
       X=1./OMEGA                                                        
       XPX=C(22)+C(23)*(X-C(24))**2                                      
       PIEMSQ=(C(1)-PM)**2                                               
-=======
-C  *******************************                                      A1505970
-C  *    BODEK PARAMETRIZATION    *                                      A1505980
-C  *******************************                                      A1505990
-      FUNCTION B(WM,QSQ)                                                A1506000
-      DIMENSION C(24)                                                   A1506010
-      INTEGER LSPIN(4)                                                  A1506020
-      DATA PMSQ/0.880324/,PM2/1.876512/,PM/0.938256/                    A1506030
-      DATA NRES/4/,NBKG/5/                                              A1506040
-      DATA LSPIN/1,2,3,2/                                               A1506050
-      DATA C/1.0741163,0.75531124,3.3506491,1.7447015,3.5102405,1.040004A1506060
-     *,1.2299128,0.10625394,0.48132786,1.5101467,0.081661975,0.65587179,A1506070
-     *1.7176216,0.12551987,0.7473379,1.953819,0.19891522,-0.17498537,   A1506080
-     *0.0096701919,-0.035256748,3.5185207,-0.59993696,4.7615828,0.411675A1506090
-     *89/                                                               A1506100
-      B=0.                                                              A1506110
-      IF(WM.LE.0.94)RETURN                                              A1506120
-      WSQ=WM**2                                                         A1506130
-      OMEGA=1.+(WSQ-PMSQ)/QSQ                                           A1506140
-      X=1./OMEGA                                                        A1506150
-      XPX=C(22)+C(23)*(X-C(24))**2                                      A1506160
-      PIEMSQ=(C(1)-PM)**2                                               A1506170
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 ********************************************************
 *     added part
 ********************************************************
       B1 = 0.0
       IF(WM.EQ.C(1))GOTO 11 
 ******************************************************** 
-<<<<<<< HEAD
       B1=AMAX1(0.,(WM-C(1)))/(WM-C(1))*C(2)       ! 0/0                 
 ********************************************************
 11    EB1=C(3)*(WM-C(1))                                                
       IF(EB1.GT.25.)GO TO 1                                             
       B1=B1*(1.0-EXP(-EB1))                                             
-=======
-      B1=AMAX1(0.,(WM-C(1)))/(WM-C(1))*C(2)       ! 0/0                 A1506180
-********************************************************
-11    EB1=C(3)*(WM-C(1))                                                A1506190
-      IF(EB1.GT.25.)GO TO 1                                             A1506200
-      B1=B1*(1.0-EXP(-EB1))                                             A1506210
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 *********************************************************
 *     added part
 *********************************************************  
       B2 = 0.0
       IF(WM.EQ.C(4))GOTO 12  
 *********************************************************
-<<<<<<< HEAD
 1     B2=AMAX1(0.,(WM-C(4)))/(WM-C(4))*(1.-C(2))   ! 0/0                
 *********************************************************
 12    EB2=C(5)*(WSQ-C(4)**2)                                            
@@ -4973,41 +4341,6 @@ C  *******************************                                      A1505990
       B=BBKG*(1.+(1.-BBKG)*XPX)+RESSUM*(1.-BRES)                        
       RETURN                                                            
       END                                                               
-=======
-1     B2=AMAX1(0.,(WM-C(4)))/(WM-C(4))*(1.-C(2))   ! 0/0                A1506220
-*********************************************************
-12    EB2=C(5)*(WSQ-C(4)**2)                                            A1506230
-      IF(EB2.GT.25.) GO TO 2                                            A1506240
-      B2=B2*(1.-EXP(-EB2))                                              A1506250
-2     CONTINUE                                                          A1506260
-      BBKG=B1+B2                                                        A1506270
-      BRES=C(2)+B2                                                      A1506280
-      RESSUM=0.                                                         A1506290
-      DO 30 I=1,NRES                                                    A1506300
-      INDEX=(I-1)*3+1+NBKG                                              A1506310
-      RAM=C(INDEX)                                                      A1506320
-      IF(I.EQ.1)RAM=C(INDEX)+C(18)*QSQ+C(19)*QSQ**2                     A1506330
-      RMA=C(INDEX+1)                                                    A1506340
-      IF(I.EQ.3)RMA=RMA*(1.+C(20)/(1.+C(21)*QSQ))                       A1506350
-      RWD=C(INDEX+2)                                                    A1506360
-      QSTARN=SQRT(AMAX1(0.,((WSQ+PMSQ-PIEMSQ)/(2.*WM))**2-PMSQ))        A1506370
-      QSTARO=SQRT(AMAX1(0.,((RMA**2-PMSQ+PIEMSQ)/(2.*RMA))**2-PIEMSQ))  A1506380
-      IF(QSTARO.LE.1.E-10)GO TO 40                                      A1506390
-      TERM=6.08974*QSTARN                                               A1506400
-      TERMO=6.08974*QSTARO                                              A1506410
-      J=2*LSPIN(I)                                                      A1506420
-      K=J+1                                                             A1506430
-      GAMRES=RWD*(TERM/TERMO)**K*(1.+TERMO**J)/(1.+TERM**J)             A1506440
-      GAMRES=GAMRES/2.                                                  A1506450
-      BRWIG=GAMRES/((WM-RMA)**2+GAMRES**2)/3.1415926                    A1506460
-      RES=RAM*BRWIG/PM2                                                 A1506470
-      GO TO 30                                                          A1506480
-40    RES=0.                                                            A1506490
-30    RESSUM=RESSUM+RES                                                 A1506500
-      B=BBKG*(1.+(1.-BBKG)*XPX)+RESSUM*(1.-BRES)                        A1506510
-      RETURN                                                            A1506520
-      END                                                               A1506530
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
 

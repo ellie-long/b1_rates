@@ -8,8 +8,4 @@ gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe
 
 
 rm *.o
-<<<<<<< HEAD
 ./ptrates
-=======
-#./ptrates
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7

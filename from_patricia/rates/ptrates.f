@@ -299,10 +299,10 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)

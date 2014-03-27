@@ -252,11 +252,7 @@ with g0
     altyaxis  off
     legend on
     legend loctype view
-<<<<<<< HEAD
     legend 0.38, 0.975
-=======
-    legend 0.38, 0.985
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     legend box color 1
     legend box pattern 1
     legend box linewidth 1.0
@@ -267,11 +263,7 @@ with g0
     legend char size 0.45000
     legend color 1
     legend length 3
-<<<<<<< HEAD
     legend vgap 0
-=======
-    legend vgap 1
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     legend hgap 0
     legend invert false
     frame type 0
@@ -329,11 +321,7 @@ with g0
     s0 errorbar riser clip off
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s0 legend  "D\spol\N"
-=======
-    s0 legend  "D\spol\N (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
     s1 hidden false
@@ -352,12 +340,8 @@ with g0
     s1 line type 1
     s1 line linestyle 4
     s1 line linewidth 1.0
-<<<<<<< HEAD
 #    s1 line color 4
     s1 line color 9
-=======
-    s1 line color 4
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s1 line pattern 1
     s1 baseline type 0
     s1 baseline off
@@ -389,11 +373,7 @@ with g0
     s1 errorbar riser clip off
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s1 legend  "D\sunpol\N"
-=======
-    s1 legend  "D\sunpol\N (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s2 hidden false
 #    s2 hidden true
     s2 type xy
@@ -411,12 +391,8 @@ with g0
     s2 line type 1
     s2 line linestyle 2
     s2 line linewidth 1.0
-<<<<<<< HEAD
 #    s2 line color 4
     s2 line color 15
-=======
-    s2 line color 4
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s2 line pattern 1
     s2 baseline type 0
     s2 baseline off
@@ -448,11 +424,7 @@ with g0
     s2 errorbar riser clip off
     s2 errorbar riser clip length 0.100000
     s2 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s2 legend  "N\s \N"
-=======
-    s2 legend  "N (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s3 hidden false
     s3 type xy
     s3 symbol 0
@@ -469,12 +441,8 @@ with g0
     s3 line type 1
     s3 line linestyle 5
     s3 line linewidth 1.0
-<<<<<<< HEAD
 #    s3 line color 4
     s3 line color 2
-=======
-    s3 line color 4
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s3 line pattern 1
     s3 baseline type 0
     s3 baseline off
@@ -506,11 +474,7 @@ with g0
     s3 errorbar riser clip off
     s3 errorbar riser clip length 0.100000
     s3 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s3 legend  "He\s \N"
-=======
-    s3 legend  "He (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s4 hidden false
     s4 type xy
     s4 symbol 0
@@ -560,11 +524,7 @@ with g0
     s4 errorbar riser clip off
     s4 errorbar riser clip length 0.100000
     s4 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s4 legend  "Li (as He+D)\s \N"
-=======
-    s4 legend  "Li (as He+D)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s5 hidden false
     s5 type xy
     s5 symbol 0
@@ -582,11 +542,7 @@ with g0
     s5 line linestyle 5
     s5 line linewidth 1.0
 #    s5 line color 4
-<<<<<<< HEAD
     s5 line color 11
-=======
-    s5 line color 9
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s5 line pattern 1
     s5 baseline type 0
     s5 baseline off
@@ -618,22 +574,13 @@ with g0
     s5 errorbar riser clip off
     s5 errorbar riser clip length 0.100000
     s5 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s5 legend  "Li \s \N"
-=======
-    s5 legend  "Li (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
 
 
-<<<<<<< HEAD
 #    s6 hidden false
     s6 hidden true
-=======
-    s6 hidden false
-#    s6 hidden true
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s6 type xy
     s6 symbol 0
     s6 symbol size 0.50000
@@ -682,13 +629,8 @@ with g0
     s6 errorbar riser clip length 0.100000
     s6 comment "Cols 1:2:3"
     s6 legend  "D\sunpol\N (Misak)"
-<<<<<<< HEAD
 #    s7 hidden false
     s7 hidden true
-=======
-    s7 hidden false
-#    s7 hidden true
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s7 type xy
     s7 symbol 0
     s7 symbol size 0.50000
@@ -974,11 +916,7 @@ with g1
     legend char size 0.45000
     legend color 1
     legend length 3
-<<<<<<< HEAD
     legend vgap 0
-=======
-    legend vgap 1
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     legend hgap 0
     legend invert true
     frame type 0
@@ -1036,17 +974,10 @@ with g1
     s0 errorbar riser clip off
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s0 legend  ""
 
 #    s1 hidden false
     s1 hidden true
-=======
-    s0 legend  "Bosted"
-
-    s1 hidden false
-#    s1 hidden true
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -1171,11 +1102,7 @@ with g2
     yaxis  bar color 1
     yaxis  bar linestyle 1
     yaxis  bar linewidth 1.0
-<<<<<<< HEAD
     yaxis  label "L*\f{Symbol}s\f{}\N (1/(s*GeV*str))"
-=======
-    yaxis  label "L*\f{Symbol}s\f{}\N (b)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     yaxis  label layout para
     yaxis  label place spec
     yaxis  label place 0.000000, 0.0650000
@@ -1276,11 +1203,7 @@ with g2
     altyaxis  off
     legend on
     legend loctype view
-<<<<<<< HEAD
     legend 0.88, 0.975
-=======
-    legend 0.88, 0.985
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     legend box color 1
     legend box pattern 1
     legend box linewidth 1.0
@@ -1291,11 +1214,7 @@ with g2
     legend char size 0.45000
     legend color 1
     legend length 3
-<<<<<<< HEAD
     legend vgap 0
-=======
-    legend vgap 1
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     legend hgap 0
     legend invert false
     frame type 0
@@ -1353,11 +1272,7 @@ with g2
     s0 errorbar riser clip off
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s0 legend  "D\spol\N"
-=======
-    s0 legend  "D\spol\N (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
     s1 hidden false
@@ -1376,11 +1291,7 @@ with g2
     s1 line type 1
     s1 line linestyle 4
     s1 line linewidth 1.0
-<<<<<<< HEAD
     s1 line color 9
-=======
-    s1 line color 4
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s1 line pattern 1
     s1 baseline type 0
     s1 baseline off
@@ -1412,11 +1323,7 @@ with g2
     s1 errorbar riser clip off
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s1 legend  "D\sunpol\N"
-=======
-    s1 legend  "D\sunpol\N (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s2 hidden false
 #    s2 hidden true
     s2 type xy
@@ -1434,12 +1341,8 @@ with g2
     s2 line type 1
     s2 line linestyle 2
     s2 line linewidth 1.0
-<<<<<<< HEAD
 #    s2 line color 4
     s2 line color 15
-=======
-    s2 line color 4
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s2 line pattern 1
     s2 baseline type 0
     s2 baseline off
@@ -1471,11 +1374,7 @@ with g2
     s2 errorbar riser clip off
     s2 errorbar riser clip length 0.100000
     s2 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s2 legend  "N\s \N"
-=======
-    s2 legend  "N (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s3 hidden false
     s3 type xy
     s3 symbol 0
@@ -1492,12 +1391,8 @@ with g2
     s3 line type 1
     s3 line linestyle 5
     s3 line linewidth 1.0
-<<<<<<< HEAD
 #    s3 line color 4
     s3 line color 2
-=======
-    s3 line color 4
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s3 line pattern 1
     s3 baseline type 0
     s3 baseline off
@@ -1529,11 +1424,7 @@ with g2
     s3 errorbar riser clip off
     s3 errorbar riser clip length 0.100000
     s3 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s3 legend  "He\s \N"
-=======
-    s3 legend  "He (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s4 hidden false
     s4 type xy
     s4 symbol 0
@@ -1551,11 +1442,7 @@ with g2
     s4 line linestyle 1
     s4 line linewidth 1.0
 #    s4 line color 4
-<<<<<<< HEAD
     s4 line color 10
-=======
-    s4 line color 1
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s4 line pattern 1
     s4 baseline type 0
     s4 baseline off
@@ -1587,11 +1474,7 @@ with g2
     s4 errorbar riser clip off
     s4 errorbar riser clip length 0.100000
     s4 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s4 legend  "Li (as He+D)\s \N"
-=======
-    s4 legend  "Li (as He+D)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s5 hidden false
     s5 type xy
     s5 symbol 0
@@ -1609,11 +1492,7 @@ with g2
     s5 line linestyle 5
     s5 line linewidth 1.0
 #    s5 line color 4
-<<<<<<< HEAD
     s5 line color 11
-=======
-    s5 line color 2
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
     s5 line pattern 1
     s5 baseline type 0
     s5 baseline off
@@ -1645,10 +1524,6 @@ with g2
     s5 errorbar riser clip off
     s5 errorbar riser clip length 0.100000
     s5 comment "Cols 1:2:3"
-<<<<<<< HEAD
     s5 legend  "Li\s \N"
-=======
-    s5 legend  "Li (Bosted)"
->>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
