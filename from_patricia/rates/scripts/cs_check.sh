@@ -71,7 +71,10 @@ awk '$12!="NaN" {print $1,$12}' $file1 >> temp_fdil
 awk '$12!="NaN" {print $1,$13}' $file1 >> temp_sigma_c
 awk '$12!="NaN" {print $1,$17}' $file1 >> temp_sigma_li
 awk '$12!="NaN" {print $1,$11+$9}' $file1 >> temp_sigma_li_hed
+<<<<<<< HEAD
 #awk '$12!="NaN" {print $1,0}' $file1 >> temp_sigma_li_hed
+=======
+>>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 echo '-1 1' >> temp_lumsig_d_pol
 echo '-1 1' >> temp_lumsig_d_unpol
@@ -146,8 +149,12 @@ awk '$3==11.671 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$
 #awk '$2>4 && $2<11.0 {print $3,$6*1E-6}'          $file8 >> temp_misak_n_x
 #awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file8 >> temp_misak_fdil
 
+<<<<<<< HEAD
 #file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/misak_shms_66_GeV_0951deg_607GeV.dat"
 file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/test_66GeV_607GeV_0951deg.dat"
+=======
+file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/misak_shms_66_GeV_0951deg_607GeV.dat"
+>>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 awk '$2>4 && $2<11.0 {print 6.6-$2,$9*1E-6}'      $file9 >> temp_misak_d_nu
 awk '$2>4 && $2<11.0 {print $3,$9*1E-6}'          $file9 >> temp_misak_d_x
 awk '$2>4 && $2<11.0 {print 6.6-$2,$6*1E-6}'      $file9 >> temp_misak_n_nu

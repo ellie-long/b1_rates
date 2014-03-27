@@ -400,7 +400,11 @@ with g0
     s0 errorbar riser clip off
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2"
+<<<<<<< HEAD
     s0 legend  "SHMS (Used)"
+=======
+    s0 legend  "SHMS (Bosted, Used)"
+>>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
     s1 hidden false
@@ -451,7 +455,11 @@ with g0
     s1 errorbar riser clip off
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2"
+<<<<<<< HEAD
     s1 legend  "HMS (Unused)"
+=======
+    s1 legend  "HMS (Bosted, Unused)"
+>>>>>>> b85eb872ead3b5fade5627051d74516280f3bda7
 
 
 
