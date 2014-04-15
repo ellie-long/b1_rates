@@ -8,7 +8,7 @@ c         thit = 9.51
 c         a = 4
 c         z = 2
 c         call init_incl(e_in,pit,thit,a,z,xsec)
-c         write(6,*) "Cross Section:",xsec
+c         ! write(6,*) "Cross Section:",xsec
 c      END
 
         SUBROUTINE init_incl(e_in,eprime,theta,x_in,a_in,z_in,xsec)
@@ -32,7 +32,7 @@ c        PROGRAM init_incl
 *   Radiative correction code is corrected to include the 
 *   radiative tail from x> 1 region
 *   for He3 - Simula's parameterization is used
-*   write(27,*) gives the output of nonrad, rad and rad/nonrad 
+*   ! write(27,*) gives the output of nonrad, rad and rad/nonrad 
 *   cross sections 
 *
 *   June-July-2010
@@ -72,21 +72,21 @@ C        INCLUDE 'inclusive$src:COMMON_INCL.CMN'
         REAL*8 e_in,eprime,theta,x_in
         REAL*8 a_in,z_in
         REAL*8 xsec
-        write(6,1)
+c        ! write(6,1)
 **********************************************************************
 *       read initial conditions file
 **********************************************************************
-        DO 101 isetup = 1,121
-          OPEN (unit=15,file='init_incl.dat',status='OLD')
+c        DO 101 isetup = 1,121
+c          OPEN (unit=15,file='init_incl.dat',status='OLD')
 *          OPEN (unit=7,file='out.dat',status='UNKNOWN')
-          OPEN (unit=7,file='out.dat')
-          IF(isetup.LE.6)THEN
-            titles  = ' '
-            READ(15,24)titles
+c          OPEN (unit=7,file='out.dat')
+c          IF(isetup.LE.6)THEN
+c            titles  = ' '
+c            READ(15,24)titles
 c            WRITE(7,25)titles
 *            TYPE 25,titles
-            GOTO 101
-          ENDIF
+c            GOTO 101
+c          ENDIF
           name(1) = ' '
           name(2) = ' '
           initial_data(1) = 0.0
@@ -95,44 +95,46 @@ c            WRITE(7,25)titles
           initial_data(4) = 0.0
           initial_data(5) = 0.0
           initial_data(6) = 0.0
-          READ(15,26,end = 102)name,initial_data
+c          READ(15,26,end = 102)name,initial_data
 ************************************************************************
 *         exit loop if blank line encountered
 ************************************************************************
-          IF(name(1).EQ.' ')then
+c          IF(name(1).EQ.' ')then
 c            WRITE(7,27)name
-            GOTO 101
-          END IF
+c            GOTO 101
+c          END IF
 c          WRITE(7,27)name,initial_data
 ************************************************************************
 *         initialize beam conditions
 ************************************************************************
-          IF(name(1).EQ.'INCIDENT')then
-            ei_0   = initial_data(1)
-            ei_1   = initial_data(2)/1000.
+c          IF(name(1).EQ.'INCIDENT')then
+c            ei_0   = initial_data(1)
+c            ei_1   = initial_data(2)/1000.
 c            ei     = ei_0 + ei_1
             ei     = e_in
-            IF(name(2).EQ.' ELECTRON')then
+c            IF(name(2).EQ.' ELECTRON')then
               lepin = 7
-            ELSEIF(name(2).EQ.' PHOTON')then
-              lepin = 1
-            ENDIF
-            lepin = 7
-            ics = int(initial_data(6))
-          ENDIF
+c            ELSEIF(name(2).EQ.' PHOTON')then
+c              lepin = 1
+c            ENDIF
+c            lepin = 7
+c            ics = int(initial_data(6))
+            ics = 3.000
+c          ENDIF
 ************************************************************************
 *          initialize target conditions
 ************************************************************************
-          IF(name(1).EQ.'TARGET')then
+c          IF(name(1).EQ.'TARGET')then
             a      = a_in
 c            a      = initial_data(1)
             z      = z_in
 c            z      = initial_data(2)
-            pferm  = initial_data(3)
-            ps     = initial_data(4) / 100.
-            bd     = initial_data(5)
+c            pferm  = initial_data(3)
+c            ps     = initial_data(4) / 100.
+c            bd     = initial_data(5)
             dd     = 0.0 !initial_data(6)
-            a3case = initial_data(6)
+c            a3case = initial_data(6)
+            a3case = 0.010
                if (z.eq.1.and.a.eq.2) then
                   nuclei = " D"
                   pferm  = 0.099
@@ -153,7 +155,7 @@ c            z      = initial_data(2)
                   pferm  = 0.220
                   ps     = 25.000 / 100.
                   bd     = 0.025
-c                  write(6,*) "I'M HERE!! SEE?!"
+c                  ! write(6,*) "I'M HERE!! SEE?!"
                elseif (z.eq.6.and.a.eq.12) then
                   nuclei = " C"
                   pferm  = 0.221
@@ -163,58 +165,66 @@ c                  write(6,*) "I'M HERE!! SEE?!"
       if(a.gt.2.9.and.a.lt.3.1.and.a3case.gt.1.5)then
             if(a3case.lt.2.1)ifl=-2
             if(a3case.gt.2.9)ifl=-1
-      call he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
+c      call he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
       endif
-      print *,a3case,ifl
+c      print *,a3case,ifl
 
 c            CALL targ_r_length(name(2),rl)
             CALL targ_r_length(nuclei,rl)
             
-          ENDIF
+c          ENDIF
 ************************************************************************
 *          initialize target radiative conditions
 ************************************************************************
-          IF(name(1).EQ.'RAD_EFFECT')then
+c          IF(name(1).EQ.'RAD_EFFECT')then
 c
-            sm        = initial_data(1)           ! target thicness i
-            dt        = initial_data(2)
-            width_e   = initial_data(3)
-            width_u   = initial_data(4)
-            eps_r     = initial_data(5)
-            i_case    = initial_data(6)
+c            sm        = initial_data(1)           ! target thicness i
+c            dt        = initial_data(2)
+c            width_e   = initial_data(3)
+c            width_u   = initial_data(4)
+c            eps_r     = initial_data(5)
+c            i_case    = initial_data(6)
+            sm        = 0.150           ! target thicness i
+            dt        = 0.020
+            width_e   = 0.010
+            width_u   = 0.010
+            eps_r     = 0.050
+            i_case    = 0.000
+
             tt     = sm * rl
-            IF(name(2).EQ.' YES')then
-              type_rad = 1.
-            ELSEIF(name(2).EQ.' NO')then
+c            IF(name(2).EQ.' YES')then
+c              type_rad = 1.
+c            ELSEIF(name(2).EQ.' NO')then
               type_rad = 0.
-            ENDIF
-          ENDIF
+c            ENDIF
+c          ENDIF
 ************************************************************************
 *          nucleon swelling effects
 ************************************************************************
-          IF(name(1).EQ.'SWELLING')then
-            IF(name(2).EQ.' V1')then
-              psg     = initial_data(1)   !average nucleon swelling in
-              k_swell = 1
-            ELSEIF(name(2).EQ.' V2')then
+c          IF(name(1).EQ.'SWELLING')then
+c            IF(name(2).EQ.' V1')then
+c              psg     = initial_data(1)   !average nucleon swelling in
+c              k_swell = 1
+c            ELSEIF(name(2).EQ.' V2')then
               k_swell = 2                 !dynamic  nucleon swelling
               p_pl    = initial_data(2)   !prob. of p.l. configuration
-            ENDIF
-          ENDIF
+c            ENDIF
+c          ENDIF
 ************************************************************************
 ************************************************************************
 *          EMC  effects
 ************************************************************************
-          IF(name(1).EQ.'EMC')then
-            k_emc = 0
-            IF(name(2).EQ.' YES')k_emc = 1
-            IF(name(2).EQ.' YES-V2')k_emc = 2
-          ENDIF
+c          IF(name(1).EQ.'EMC')then
+c            k_emc = 0
+c            IF(name(2).EQ.' YES')k_emc = 1
+c            IF(name(2).EQ.' YES-V2')k_emc = 2
+            k_emc = 1
+c          ENDIF
 ************************************************************************
 ************************************************************************
 *          scattered electron spectra
 ************************************************************************
-          IF(name(1).EQ.'Ee` -RANGE')then
+c          IF(name(1).EQ.'Ee` -RANGE')then
 c            er_low    = initial_data(1)
 c            er_up     = initial_data(2)
 c            er_step   = initial_data(3)
@@ -226,12 +236,12 @@ c            er_fix    = initial_data(4)
 ************************************************************************
 *          electron spectra at E'
 ************************************************************************
-            IF(name(2).EQ.' YES') sub_type_spec = 11.
-          ENDIF
+c            IF(name(2).EQ.' YES') sub_type_spec = 11.
+c          ENDIF
 ************************************************************************
 *          TETAe range initialization
 ************************************************************************
-          IF(name(1).EQ.'THe -RANGE')then
+c          IF(name(1).EQ.'THe -RANGE')then
 c            the_low    = initial_data(1)
 c            the_up     = initial_data(2)
 c            the_step   = initial_data(3)
@@ -240,8 +250,8 @@ c            the_fix    = initial_data(4) + initial_data(5)/1000.
             the_up     = 0.000
             the_step   = 0.000
             the_fix    = theta
-          ENDIF
-          IF(name(1).EQ.'Q0  -RANGE')then
+c          ENDIF
+c          IF(name(1).EQ.'Q0  -RANGE')then
 c            q0_low    = initial_data(1)
 c            q0_up     = initial_data(2)
 c            q0_step   = initial_data(3)
@@ -253,9 +263,9 @@ c            q0_fix    = initial_data(4)
 ************************************************************************
 *          electron spectra at Q0
 ************************************************************************
-            IF(name(2).EQ.' YES') sub_type_spec = 12.
-          ENDIF
-          IF(name(1).EQ.'W   -RANGE')then
+c            IF(name(2).EQ.' YES') sub_type_spec = 12.
+c          ENDIF
+c          IF(name(1).EQ.'W   -RANGE')then
 c            w_low    = initial_data(1)
 c            w_up     = initial_data(2)
 c            w_step   = initial_data(3)
@@ -267,9 +277,9 @@ c            w_fix    = initial_data(4)
 ************************************************************************
 *          electron spectra at W
 ************************************************************************
-            IF(name(2).EQ.' YES') sub_type_spec = 13.
-          ENDIF
-          IF(name(1).EQ.'X   -RANGE')then
+c            IF(name(2).EQ.' YES') sub_type_spec = 13.
+c          ENDIF
+c          IF(name(1).EQ.'X   -RANGE')then
 c            x_low    = initial_data(1)
 c            x_up     = initial_data(2)
 c            x_step   = initial_data(3)
@@ -281,56 +291,67 @@ c            x_fix    = initial_data(4)
 ************************************************************************
 *          electron spectra at X
 ************************************************************************
-            IF(name(2).EQ.' YES') sub_type_spec = 14.
-          ENDIF
+c            IF(name(2).EQ.' YES') sub_type_spec = 14.
+            sub_type_spec = 14.
+c          ENDIF
 ************************************************************************
 *          integration accuracy
 ************************************************************************
-          IF(name(1).EQ.'INTEGRATIO')then
+c          IF(name(1).EQ.'INTEGRATIO')then
                             k_int = 0
-            r_acc = initial_data(1)
-            rep   = initial_data(2)
-            reu   = initial_data(3)
-            s_int = initial_data(4)
-            a_acc = initial_data(5)
-            nw0   = initial_data(6)
+c            r_acc = initial_data(1)
+c            rep   = initial_data(2)
+c            reu   = initial_data(3)
+c            s_int = initial_data(4)
+c            a_acc = initial_data(5)
+c            nw0   = initial_data(6)
+
+            r_acc = 0.050
+            rep   = 0.000
+            reu   = 0.050
+            s_int = 0.010
+            a_acc = 0.000
+            nw0   = 0.000
 
             a_acc = 2.0
             IF(r_acc.EQ.0.0)k_int = 1
             if(nw0.gt.0)    k_int = 2
-          ENDIF
+c          ENDIF
 ************************************************************************
 ************************************************************************
 *          theoretical model selection
 ************************************************************************
-          IF(name(1).EQ.'VIRT.NUCL.'.and.name(2).EQ.' YES')num_model = 1
-          IF(name(1).EQ.'LIGHT-CONE'.and.name(2).EQ.' YES')num_model = 2
-          IF(name(1).EQ.'HYDROGEN  '.and.name(2).EQ.' YES')num_model = 3
+c          IF(name(1).EQ.'VIRT.NUCL.'.and.name(2).EQ.' YES')num_model = 1
+c          IF(name(1).EQ.'LIGHT-CONE'.and.name(2).EQ.' YES')num_model = 2
+c          IF(name(1).EQ.'HYDROGEN  '.and.name(2).EQ.' YES')num_model = 3
+          num_model = 2
 ************************************************************************
 *          process selection
 ************************************************************************
-          IF(name(1).EQ.'QUASIELAST')then
+c          IF(name(1).EQ.'QUASIELAST')then
             k_select(1) = 1
-          ELSEIF(name(1).EQ.'INELASTIC')then
+c          ELSEIF(name(1).EQ.'INELASTIC')then
             k_select(2) = 1
-          ENDIF
+c          ENDIF
 ************************************************************************
 *          measure of cross section
 ************************************************************************
-          IF(name(1).EQ.'MEASURE')then
-            IF(name(2).EQ.' MILIBARN ') v_measure = 1000000.
-            IF(name(2).EQ.' MICROBARN') v_measure = 1000.
-            IF(name(2).EQ.' NANOBARN ') v_measure = 1.
-            IF(name(2).EQ.' PICOBARN ') v_measure = 0.001
-          ENDIF
+c          IF(name(1).EQ.'MEASURE')then
+c            IF(name(2).EQ.' MILIBARN ') v_measure = 1000000.
+c            IF(name(2).EQ.' MICROBARN') v_measure = 1000.
+c            IF(name(2).EQ.' NANOBARN ') v_measure = 1.
+c            IF(name(2).EQ.' PICOBARN ') v_measure = 0.001
+c          ENDIF
+          v_measure = 1000.
+          GOTO 101
 ************************************************************************
   101   CONTINUE
   102   CONTINUE
-        CLOSE(unit=15)
+c        CLOSE(unit=15)
 *        CALL datime(jd,jt)
 *        WRITE(6,28)jd,jt
 *        TYPE 28,jd,jt
-c        write(7,1)
+c        ! write(7,1)
 ************************************************************************
 *          beginning of calculations
 ************************************************************************
@@ -349,9 +370,9 @@ c        write(7,1)
    28   FORMAT(80('=')/17x,'Data  --  ',i6,1x,'-- Time --  ',i4,'  --'
      &        /80('='))
 *        CALL datime(jd,jt)
-*        write(7,28)jd,jt
-        write(6,28)jd,jt
-	close(unit=7)
+*        ! write(7,28)jd,jt
+c        ! write(6,28)jd,jt
+c	close(unit=7)
         STOP
         END
 
@@ -458,7 +479,7 @@ C      WRITE(6,*)' +       FOR INELASTIC AND QUASIELASTIC PART  +'
 C      WRITE(6,*)' +            no available yet                +'
 C      WRITE(6,*)' ++++++++++++++++++++++++++++++++++++++++++++++'
 C      ENDIF
-      WRITE(7,*)' ================================================'
+c      WRITE(7,*)' ================================================'
       IF(kswell.EQ.1)THEN
         IF(psg.EQ.0.0)THEN
 c          WRITE(7,*)' +--------------------------------------------+'
@@ -526,8 +547,8 @@ c        IF(type_rad.EQ.1.0)WRITE(7,21)
           k_sum = (x_up - x_low) / x_step + 1
         ENDIF
 **********************************************************
-        write(6,*)'TOTAL NUMBERS TO BE CALCULATED  =',k_sum
-        WRITE(6,20)
+c        ! write(6,*)'TOTAL NUMBERS TO BE CALCULATED  =',k_sum
+c        WRITE(6,20)
 **********************************************************
         kb = 0
         DO 1 ke = 1,k_sum
@@ -591,9 +612,9 @@ C-------------------------------------------------------
 c            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
 c     &        dged,
 c     &dgw2d,rel,gp2
-            WRITE(6,103)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2,cross_section,uet,ei
+c            WRITE(6,103)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
+c     &        dged,
+c     &dgw2d,rel,gp2,cross_section,uet,ei
 *            WRITE(27,*)uet,er,dgea,tdg_tot,x,epni
 ************************************************
 * New addition 25-Apr-2000
@@ -606,9 +627,9 @@ c     &dgw2d,rel,gp2
       afact = 1.0 + (1.0-epsil)/epsil * 1.0/(1.0+rtiv)
       f2be_a = dgea * gp0/(smott*afact)/a 
       f2be_d = dged * gp0/(smott*afact)/2.0 
-*      write(6,*)ue*180.0/pi
-*      write(23,*)"uet=",uet
-      write(23,25)gp2,x,er,gp0,dgea,dged,f2be_a,f2be_d
+*      ! write(6,*)ue*180.0/pi
+*      ! write(23,*)"uet=",uet
+      ! write(23,25)gp2,x,er,gp0,dgea,dged,f2be_a,f2be_d
  25   format(f7.4,3(f8.4),4(e11.3))
       ENDIF ! 23-Oct-2000 ! needs to be commented if rad and nonrad crss needed at the same time
                  
@@ -622,7 +643,7 @@ c     &dgw2d,rel,gp2
             tdg_in    = tspec(ei,er,ue) / v_m
             tdg_tot   = tdg_ql + tdg_in
 c            WRITE(7,102)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
-            write(21,*)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
+            ! write(21,*)w2,er,x,tdg_ql,tdg_in,tdg_tot,gp0,gp2,uet
 
 ****************************************************************
 C             Fort.27-Output for PAW, Kim
@@ -639,7 +660,7 @@ C             Fort.27-Output for PAW, Kim
 ********************************************************
           ENDIF
 ********************************************************
-*          write(6,*)'CALCULATED NUMBER =',ke
+*          ! write(6,*)'CALCULATED NUMBER =',ke
 ********************************************************
     1   CONTINUE
 c        IF(type_rad.EQ.0.0)WRITE(7,22)
@@ -774,7 +795,7 @@ C--------------------------------
         CALL gadap(pfa,pfb,w2aii,rep,rol)
       Elseif(k_int.eq.2)then
 	nw = 1000*nw0
-*	write(6,*)"nw0",nw,nw0
+*	! write(6,*)"nw0",nw,nw0
         CALL simpson(pfa,pfb,w2aii,nw,rol)
       ENDIF
       w2ci=1./2./pm*rol/4. / 1000000.
@@ -1746,7 +1767,7 @@ c        WRITE(7,*)' ================================================'
    19   FORMAT(2x,'ANGLE OF SCATTERED ELECTRONS ( degr.) =',f9.5)
         IF(type_rad.EQ.0.0)then
 c	WRITE(7,20)
-	WRITE(6,20)
+c	WRITE(6,20)
 	endif
 c        IF(type_rad.EQ.1.0)WRITE(7,21)
 **********************************************************************
@@ -1763,7 +1784,7 @@ c        IF(type_rad.EQ.1.0)WRITE(7,21)
         ENDIF
 **********************************************************
 *        TYPE *,'TOTAL CALCULATION NUMBER =',k_sum
-        write(6,*)'TOTAL NUMBERS TO BE CALCULATED =',k_sum
+c        ! write(6,*)'TOTAL NUMBERS TO BE CALCULATED =',k_sum
 **********************************************************
         kb = 0
         DO 1 ke = 1,k_sum
@@ -1832,9 +1853,9 @@ c            WRITE(7,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
 c     &        dged,
 c     &dgw2d,rel,gp2
             endif
-            WRITE(6,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
-     &        dged,
-     &dgw2d,rel,gp2
+c            WRITE(6,101)w2,er,x,sp_ql_a,sp_in_a,dgea,sp_ql_d,sp_in_d,
+c     &        dged,
+c     &dgw2d,rel,gp2
 
 	wd2 =  -gp2 + 2.0*gp0*dm + dm**2
 	if(wd2.lt.0.0)wd2 = dm**2
@@ -1848,8 +1869,8 @@ c     &dgw2d,rel,gp2
       afact = 1.0 + (1.0-epsil)/epsil * 1.0/(1.0+rtiv)
       f2be_a = dgea * gp0/(smott*afact) 
       f2be_d = dged * gp0/(smott*afact) 
-      write(6,*)ue*180.0/pi
-      write(23,25)uet,gp2,x,er,gp0,dgea,dged,f2be_a,f2be_d
+c      ! write(6,*)ue*180.0/pi
+      ! write(23,25)uet,gp2,x,er,gp0,dgea,dged,f2be_a,f2be_d
  25   format(2(1x,f7.4),3(f8.4),4(e11.3))
 
 *            WRITE(27,*)uet,er,dgea,tdg_tot,x,epni ! 20-Oct
@@ -1878,8 +1899,8 @@ C             Fort.27-Output for PAW, Kim
 *****************************************************
             ratiot = tdg_tot/dgea
 
-          WRITE(27,*)uet,er,dgea,tdg_tot,ratiot,x !,epni ! 19- Nov 2001
-          write(6,*)"rad_effects",uet,er,dgea,tdg_tot,ratiot,x !,epni ! 19- Nov 2001
+c          WRITE(27,*)uet,er,dgea,tdg_tot,ratiot,x !,epni ! 19- Nov 2001
+c          ! write(6,*)"rad_effects",uet,er,dgea,tdg_tot,ratiot,x !,epni ! 19- Nov 2001
 ********************************************************
    
           dgea_qx = dgea *(3.14*gp0)/(ei*er*x) 
@@ -1891,11 +1912,11 @@ C             Fort.27-Output for PAW, Kim
           ENDIF
 ********************************************************
 *          TYPE *,'CALCULATED NUMBER =',ke
-*          write(6,*)'CALCULATED NUMBER =',ke
+*          ! write(6,*)'CALCULATED NUMBER =',ke
 ********************************************************
     1   CONTINUE
         IF(type_rad.EQ.0.0)then
-	WRITE(6,22)
+c	WRITE(6,22)
 c	WRITE(7,22)
 	endif
 c        IF(type_rad.EQ.1.0)WRITE(7,23)
@@ -2446,7 +2467,7 @@ C.................................
       ap4 = (ap2+ap3)*t2_3(pp,qn2p,qp2,a,z,zn,ga)/pm**2
       ap  = ap1 + ap4
       pod2m = podip * ap/west
-*      write(6,*)pferm
+*      ! write(6,*)pferm
       if(pod2m.gt.0.0)goto 17
 
    13 continue
@@ -2463,7 +2484,7 @@ C.................................
       p2m = pr**2 + qpv**2 - 2.*pr*qpv*csm
       if(p2m.gt.0.0) ppm = sqrt(p2m)
 *      if(ppm.lt.pferm)goto 17
-*      if(ppm.le.0.4)write(6,*)ppm,csm,pm,dmx
+*      if(ppm.le.0.4)! write(6,*)ppm,csm,pm,dmx
       epm = sqrt(pm**2+p2m)
       west = (dmx - epm) / pm
       if(west.le.0.0)goto 17
@@ -2533,7 +2554,7 @@ C.................................
 *     angle between knocked-out nucleon and q in two-body break-up
       csp=(dm**2-tm**2-pm**2+qp2-2.*qp0*tm+2.*(qp0+tm)*epr)/2./pr/qpv
 
-*      write(6,*)dm,tm,pm,qp2,qp0,epr,qpv
+*      ! write(6,*)dm,tm,pm,qp2,qp0,epr,qpv
 
       if(csp**2.gt.1.)goto 12
       ktype = 1
@@ -2939,7 +2960,7 @@ C     ****** NEUTRON INELASTIC CONTRIBUTION ******
 *      tl_x_3 = q2/(2.0*pm*q0)/al
 
 
-*      write(14,*)"wfin2",q2
+*      ! write(14,*)"wfin2",q2
 ****************************************************************
 * definition of pr_nu, which is the four-product of p*q
 * where p is the interacting nucleon's four momenta
@@ -2988,7 +3009,7 @@ C     ****** NEUTRON INELASTIC CONTRIBUTION ******
 ******************************************************************************
       if(zp.gt.1.0)then !helium target
 	it = 1 ! he3
-*	write(6,*)tl_x_2,Q2,q2
+*	! write(6,*)tl_x_2,Q2,q2
       term2bb = zp* rho_2(al,pt,it)*f2p_in(tl_x_2,Q2)*a_2
       term3bb =(zp* rho_3(al,pt,it,1)*f2p_in(tl_x_3,Q2)
      &	       +zn* rho_3(al,pt,it,0)*f2n_in(tl_x_3,Q2))*a_3
@@ -3285,7 +3306,7 @@ C  **** UNDERINTEGRAL FUNCTIONS FOR TELIN ****
       gp0=e-er
       gp2=4.*e*er*sin(ue/2.)**2
       x = gp2/2.0/gp0/pm
-*      write(42,*)"aha",teli_a,spec_a(e,er,ue),af_a(e,er,ue),b1,e,er,ue,x
+*      ! write(42,*)"aha",teli_a,spec_a(e,er,ue),af_a(e,er,ue),b1,e,er,ue,x
       RETURN
       END
 C  -----------------------
@@ -3357,24 +3378,24 @@ C=======================================================================
       x0=a/x01
       xsi=0.000154*z/a*tt*x0
 ************************************************************************
-      WRITE(6,*)'                                               '
-      WRITE(6,*)' ================================================'
-      WRITE(6,18)ei
+c      WRITE(6,*)'                                               '
+c      WRITE(6,*)' ================================================'
+c      WRITE(6,18)ei
    18 FORMAT(2x,'ENERGY OF INCIDENT ELECTRONS  ( GeV ) =',f9.5)
-      WRITE(6,*)' ================================================'
-      WRITE(6,*)' TARGET THICNESS IN MM    =',sm
-      WRITE(6,*)' ATOMIC WEIGHT A          =',a
-      WRITE(6,*)' CHARG NUMBER  Z          =',z
-      WRITE(6,*)' ================================================'
+c      WRITE(6,*)' ================================================'
+c      WRITE(6,*)' TARGET THICNESS IN MM    =',sm
+c      WRITE(6,*)' ATOMIC WEIGHT A          =',a
+c      WRITE(6,*)' CHARG NUMBER  Z          =',z
+c      WRITE(6,*)' ================================================'
 **********************************************************************
 *     measure of cross section
 **********************************************************************
       v_m = v_measure
-      IF(v_m.EQ.1000000.)WRITE(6,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
-      IF(v_m.EQ.1000.)   WRITE(6,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
-      IF(v_m.EQ.1.)      WRITE(6,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
-      IF(v_m.EQ.0.001)   WRITE(6,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
-      WRITE(6,*)' ================================================'
+c      IF(v_m.EQ.1000000.)WRITE(6,*)' =CROSS SECTION IN (mlbn/GeV/Str)='
+c      IF(v_m.EQ.1000.)   WRITE(6,*)' =CROSS SECTION IN (mcbn/GeV/Str)='
+c      IF(v_m.EQ.1.)      WRITE(6,*)' =CROSS SECTION IN (nbn/GeV/Str)= '
+c      IF(v_m.EQ.0.001)   WRITE(6,*)' =CROSS SECTION IN (pkbn/GeV/Str)='
+c      WRITE(6,*)' ================================================'
 *********************************************************************
 *     scattered angle range determination
 *********************************************************************
@@ -3386,8 +3407,8 @@ cStep        IF(k_tet_sum.EQ.1) q2 = the_fix
         IF(k_tet_sum.GT.1) uet = the_low + float(k_tet-1) * the_step
 cStep        IF(k_tet_sum.GT.1) q2 = the_low + float(k_tet-1) * the_step
         ue=uet*pi/180.
-        WRITE(6,20)
-        write(6,*)'Type of spectra   ',sub_type_spec,w_up,w_low,w_step
+c        WRITE(6,20)
+c        ! write(6,*)'Type of spectra   ',sub_type_spec,w_up,w_low,w_step
 **********************************************************************
 *     selection electron spectra type
 **********************************************************************
@@ -3402,7 +3423,7 @@ cStep        IF(k_tet_sum.GT.1) q2 = the_low + float(k_tet-1) * the_step
         ENDIF
 c        k_sum = 1
 **********************************************************
-        write(6,*)'TOTAL NUMBERS TO BE CALCULATED =',k_sum
+c        ! write(6,*)'TOTAL NUMBERS TO BE CALCULATED =',k_sum
 **********************************************************
         DO 1 ke = 1,k_sum
           IF(sub_type_spec.EQ.11.0)THEN
@@ -3416,7 +3437,7 @@ c        k_sum = 1
             sinuet2=sqrt(q2/4./ei/er)
             ue=asin(sinuet2)*2.
             uet=ue*180./pi
-            write(6,*)uet,er,sinuet2
+c            ! write(6,*)uet,er,sinuet2
 c            er=(pm**2+2.*pm*ei-w2)/(2.*pm+4.*ei*sin(ue/2.)**2)
           ELSEIF(sub_type_spec.EQ.14.0)THEN
             x = x_low + float(ke-1)*x_step
@@ -3424,17 +3445,17 @@ c            er=(pm**2+2.*pm*ei-w2)/(2.*pm+4.*ei*sin(ue/2.)**2)
           ENDIF
         ero = ei / (1.+2*ei/pm*sin(ue/2.)**2)
         if(ero.lt.er)GOTO 1
-        WRITE(6,*)'                                               '
-        WRITE(6,*)' ================================================'
-        WRITE(6,19)uet
+c        WRITE(6,*)'                                               '
+c        WRITE(6,*)' ================================================'
+c        WRITE(6,19)uet
 c        WRITE(6,19)q2
-        WRITE(6,*)' ================================================'
+c        WRITE(6,*)' ================================================'
    19   FORMAT(2x,'ANGLE OF SCATTERED ELECTRONS ( degr.) =',f9.5)
-        WRITE(6,*)' Elastic scattering at Ee` = ',er,' GeV'
-        WRITE(6,*)' Elastic cross section in (nbn/GeV/Str) = ',
-     &                                       h_elast(ei,ue)
-        WRITE(6,*)' Radiative elastic cross sect. in (nbn/GeV/Str) = ',
-     &                                       h_elast_r(ei,ue)
+c        WRITE(6,*)' Elastic scattering at Ee` = ',er,' GeV'
+c        WRITE(6,*)' Elastic cross section in (nbn/GeV/Str) = ',
+c     &                                       h_elast(ei,ue)
+c        WRITE(6,*)' Radiative elastic cross sect. in (nbn/GeV/Str) = ',
+c     &                                       h_elast_r(ei,ue)
           gp0 = ei-er
           gp2 = 4.*ei*er*sin(ue/2.)**2
           gpv = sqrt(gp0**2+gp2)
@@ -3468,8 +3489,8 @@ c        WRITE(6,19)q2
 *
           t_su  = t_el + t_tl + t_in         !  Elastic + Tail + Inelastic
 ********************************************************
-          WRITE(6,101)w,er,x,y_el,y_in,y_su,t_el,
-     &            t_tl,t_in,t_su,gp2
+c          WRITE(6,101)w,er,x,y_el,y_in,y_su,t_el,
+c     &            t_tl,t_in,t_su,gp2
          y_su_w=y_su*jacob
          t_su_w=t_su*jacob
          y_su_t=y_su/gamma_t
@@ -3477,15 +3498,15 @@ c        WRITE(6,19)q2
          y_su_tw=y_su_w/gamma_w
          t_su_tw=t_su_w/gamma_w
 cStep          WRITE(26,*)gp2,uet,w,er,y_su_w,t_su_w
-          WRITE(26,*)uet,er,y_su,t_su,gp2,w,
-     &       h_elast(ei,ue), h_elast_r(ei,ue)
+c          WRITE(26,*)uet,er,y_su,t_su,gp2,w,
+c     &       h_elast(ei,ue), h_elast_r(ei,ue)
 c     &    y_su_w,t_su_w
 c     &    y_su_t,t_su_t,y_su_tw,t_su_tw
 ********************************************************
-          write(6,*)'CALCULATED NUMBER =',ke
+c          ! write(6,*)'CALCULATED NUMBER =',ke
 ********************************************************
     1   CONTINUE
-        WRITE(6,22)
+c        WRITE(6,22)
 c        endif
       ENDDO
 ***************************************************************
@@ -4147,7 +4168,7 @@ C  **** D PARTIAL WAVE *****
       dngr = dngr0/(4*acos(-1.0))/0.197327**3
       else
       ifl = 0
-      call he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
+c      call he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
 
       dngr = 3.0/2.0*dist_p
 *      print *,ifl,p,dngr
@@ -4184,7 +4205,7 @@ C  **** D PARTIAL WAVE *****
 
       else   ! new Bochum wave function
          ifl = 0
-      call he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
+c      call he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
       if(in.eq.0)then 
       dnex = 3.0*dist_n
       else      
@@ -4199,70 +4220,70 @@ C  **** D PARTIAL WAVE *****
 
 
 
-      subroutine he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
-********************************************************************************************
-*  Calculates momentum distribution of nucleon, proton,neutron, pn and pp
-*  ifl=-1,-2, initialization, 0 calculation
-*  ifl=-1 v8_ix wave function of He3
-*  ifl=-2 v8_tm wave function of He3
-*
-* Source from ghenn/code_wkng, data points are calculated using norm_check.f
-*
-* 10-Dec-08
-* Miami, FL
-* 
-**********************************************************************************************
-
-      common/dists/a_dist(0:100),a_dist_p(0:100),a_dist_n(0:100),
-     &             a_dist_pn(0:100),a_dist_pp(0:100),a_p(0:100)
-      dist    = 0.0
-      dist_p  = 0.0
-      dist_n  = 0.0
-      dist_pn = 0.0
-      dist_pp = 0.0
-      if(ifl.lt.0)then
-      if(ifl.eq.-1)then
-      open(unit=5,file='mom_dist_v8_ix.calc')
-      elseif(ifl.eq.-2)then
-      open(unit=5,file='mom_dist_v8_tm.calc')
-      endif
-*      print *,'aha'
-      do i = 0,100
-      read(5,12)a_p(i),a_dist(i),a_dist_p(i), a_dist_n(i),
-     &                  a_dist_pn(i),a_dist_pp(i)
-      write(20,12)a_p(i),a_dist(i),a_dist_p(i), a_dist_n(i),
-     &                  a_dist_pn(i),a_dist_pp(i)
-      enddo
-
-      close(unit=5)
- 12   format(f7.3,5(1x,e11.3))
-      endif
-
-      if(p.gt.1.0)return
-      
-      do i=0,99
-      if(p.ge.a_p(i).and.p.le.a_p(i+1))then
-
-	dist = a_dist(i) 
-     &       + (p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist(i+1)-a_dist(i))
-   
-	dist_p = a_dist_p(i) 
-     &       + (p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_p(i+1)-a_dist_p(i))
-   
-	dist_n = a_dist_n(i) 
-     &       + (p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_n(i+1)-a_dist_n(i))
-
-	dist_pn = a_dist_pn(i) 
-     &       +(p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_pn(i+1)-a_dist_pn(i))
-	dist_pp = a_dist_pp(i) 
-     &       +(p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_pp(i+1)-a_dist_pp(i))
-        endif
-
-       enddo
-
-       return
-       end
-
+c      subroutine he3_mom_dist(p,dist,dist_p,dist_n,dist_pn,dist_pp,ifl)
+c********************************************************************************************
+c*  Calculates momentum distribution of nucleon, proton,neutron, pn and pp
+c*  ifl=-1,-2, initialization, 0 calculation
+c*  ifl=-1 v8_ix wave function of He3
+c*  ifl=-2 v8_tm wave function of He3
+c*
+c* Source from ghenn/code_wkng, data points are calculated using norm_check.f
+c*
+c* 10-Dec-08
+c* Miami, FL
+c* 
+c**********************************************************************************************
+c
+c      common/dists/a_dist(0:100),a_dist_p(0:100),a_dist_n(0:100),
+c     &             a_dist_pn(0:100),a_dist_pp(0:100),a_p(0:100)
+c      dist    = 0.0
+c      dist_p  = 0.0
+c      dist_n  = 0.0
+c      dist_pn = 0.0
+c      dist_pp = 0.0
+c      if(ifl.lt.0)then
+c      if(ifl.eq.-1)then
+c      open(unit=5,file='mom_dist_v8_ix.calc')
+c      elseif(ifl.eq.-2)then
+c      open(unit=5,file='mom_dist_v8_tm.calc')
+c      endif
+c*      print *,'aha'
+c      do i = 0,100
+c      read(5,12)a_p(i),a_dist(i),a_dist_p(i), a_dist_n(i),
+c     &                  a_dist_pn(i),a_dist_pp(i)
+c      ! write(20,12)a_p(i),a_dist(i),a_dist_p(i), a_dist_n(i),
+c     &                  a_dist_pn(i),a_dist_pp(i)
+c      enddo
+c
+c      close(unit=5)
+c 12   format(f7.3,5(1x,e11.3))
+c      endif
+c
+c      if(p.gt.1.0)return
+c      
+c      do i=0,99
+c      if(p.ge.a_p(i).and.p.le.a_p(i+1))then
+c
+c	dist = a_dist(i) 
+c     &       + (p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist(i+1)-a_dist(i))
+c   
+c	dist_p = a_dist_p(i) 
+c     &       + (p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_p(i+1)-a_dist_p(i))
+c   
+c	dist_n = a_dist_n(i) 
+c     &       + (p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_n(i+1)-a_dist_n(i))
+c
+c	dist_pn = a_dist_pn(i) 
+c     &       +(p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_pn(i+1)-a_dist_pn(i))
+c	dist_pp = a_dist_pp(i) 
+c     &       +(p-a_p(i))/(a_p(i+1)-a_p(i))*(a_dist_pp(i+1)-a_dist_pp(i))
+c        endif
+c
+c       enddo
+c
+c       return
+c       end
+cc
 
 
 
@@ -4880,7 +4901,7 @@ C.......................................................................
 	x = a0 + float(i)*width 
 	sumi = sumi + f(x)* width
 	enddo
-*	write(6,*)"sumi",sumi
+*	! write(6,*)"sumi",sumi
 	sum = sumi
 	return
 	end

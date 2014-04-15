@@ -700,29 +700,29 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 
 
-display b1_rates_hms_shms.png
+#display b1_rates_hms_shms.png
 
-#xmgrace \
-#		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_b16q			-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_b16q_Rm10		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_b16q_Rp10		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_b16q_mm10		-graph 0 -bxy 1:2 \
-#		-settype xy		-block temp_model_b16q_mp10		-graph 0 -bxy 1:2 \
-#		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
-#		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
-#		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
-#		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
-#		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
-#		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
-#        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+xmgrace \
+		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_Rm10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_Rp10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_mm10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_model_b16q_mp10		-graph 0 -bxy 1:2 \
+		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
+		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
+		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
+		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
+		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
+		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
+        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 #
 #
 #xmgrace \

@@ -5,7 +5,11 @@ rm ./ptrates
 
 #gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f 
 gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
+#fort77 -fopenmp -ffixed-line-length-none -frecursive -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
 
 
 rm *.o
 ./ptrates
+
+sort -g ./output/cs-check.out > ./output/cs-check2.out
+mv ./output/cs-check2.out ./output/cs-check.out

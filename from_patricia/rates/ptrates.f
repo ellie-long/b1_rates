@@ -6,6 +6,8 @@ c--   Patricia Solvignon, Nov. 16, 2010
 c Edited heavily by Elena Long, 4/10/2013
 c 
 
+
+
       integer :: clck_counts_beg, clck_counts_end, clck_rate
       integer :: clck_counts_beg2, clck_counts_end2, clck_rate2
       REAL*8 pi,alpha,mp,e_ch,picobarn,nanobarn,Navo
@@ -162,7 +164,17 @@ c
       REAL*8 rr1,rr2,phistar,thstar
       REAL*8 thq,thq_r,cosqvec
       REAL*8 xdx
+      REAL*8 P(0:23)
+      REAL*8 sigrsv(7),sig_nr,sigmec
       COMMON /VPLRZ/ E0_PASS,TH_PASS,EP_PASS
+
+c      COMMON /PARCORR/ P
+c      common/tst2/sigrsv,sig_nr,sig_mec
+
+c !$OMP THREADPRIVATE(/PARCORR/)
+c !$OMP THREADPRIVATE(/tst2/)
+
+
       call system_clock ( clck_counts_beg, clck_rate ) 
 
 
@@ -171,15 +183,20 @@ c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1
 c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
 c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
-      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
-      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
-      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
+c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
+c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
+c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
 
 
 c For b1, our target range is 0.09 < x < 0.58
 c      DATA cent_x/      0.16, 0.275, 0.36, 0.49, 0.64,  0.7,  0.8,  0.9,  1.0,  1.1,  1.2/ 
 c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.58, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
 c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+
+      DATA cent_x/      0.16, 0.29, 0.40, 0.515, 0.64,  0.8,  0.9,  1.0,  1.1,  1.2, 1.3/ 
+      DATA cent_x_min/  0.09, 0.23, 0.35, 0.45,  0.58, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+      DATA cent_x_max/  0.23, 0.35, 0.45, 0.58,  0.70, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35/ 
+
 
 
 
@@ -194,15 +211,21 @@ c      DATA qqval1/    99, 99, 99, 99, 99/
 c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
 c      DATA xval1/    1.3, 100, 100, 100, 100/
 
-      DATA xval1/    0.9, 100, 100, 100, 100/
+
+c      DATA xval1/    0.9, 100, 100, 100, 100/
+c      DATA xval1/    100, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
-      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
+      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
+c      DATA prec1/    3.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA qqval1/   99, 99, 99, 99, 3.82/   
 c      DATA qqval1/    1.8, 99, 99, 99, 99 /   
 
-      DATA qqval1/    1.3, 99, 99, 99, 99/   
+c      DATA qqval1/    1.3, 99, 99, 99, 99 /   
+c      DATA qqval1/     99, 99, 99, 99, 99/   
+
+      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.41/
+      DATA qqval1/   99, 99, 99, 99, 3.33/   
 
 c      DATA qqval1/    0.81, 99, 99, 99, 99/   
 cc      DATA qqval1/    1.4, 99, 99, 99, 99 /   
@@ -213,15 +236,25 @@ c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
-      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
+c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
+c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
+
+      DATA prec2/    360.0,  168.0,  168.0,  168.0, 168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
-       DATA xval2/    1.3, 100, 100, 100, 100/
+c       DATA xval2/    1.3, 100, 100, 100, 100/
+c       DATA xval2/    1.3, 100, 100, 100, 100/
+c       DATA xval2/    1.3, 100, 100, 100, 100/
+
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
 c      DATA qqval2/    0.85, 99, 99, 99, 99/   
 
-      DATA qqval2/    1.3, 99, 99, 99, 99/   
+c      DATA qqval2/    1.3, 99, 99, 99, 99 /   
+c      DATA qqval2/    2.0, 99, 99, 99, 99/   
+
+      DATA xval2/    0.28, 100.0, 100.0, 100.0, 100.0/
+      DATA qqval2/   1.47, 99, 99, 99, 99/   
 
 c      DATA qqval2/    0.6, 99, 99, 99, 99 /   
 c      DATA qqval2/    1.2, 99, 99, 99, 99 /   
@@ -304,15 +337,15 @@ c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sec
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.85**2  ! Cut on W
-c      w2min     =  1.8**2  ! Cut on W
-      w2min     =  0.0  ! Cut on W
+      w2min     =  1.50**2  ! Cut on W
+c      w2min     =  0.0  ! Cut on W
 c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
@@ -338,7 +371,7 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
 c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-      Pzz_in    =  0.30    ! expected improvement on the target
+      Pzz_in    =  0.15    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
       fsyst_xs  =  0.05     ! add a 5% from F1
@@ -370,9 +403,9 @@ c----- MAIN ------------------------------------------------
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
-c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
+            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) qqval1(ib)=99
-            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
+c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99 
          endif
       enddo
@@ -494,6 +527,7 @@ cLoop over the spectrometers
 cvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      do ispectro = 1,6
       do ispectro = 1,2
+c      do ispectro = 2,2
 
          tot_time(ispectro)    = 0.0
          ! for physics extraction
@@ -643,7 +677,9 @@ c            do ib=1,nx
 
             ! Binning over the momentum bite
 c            dep    = 0.02*ep_in
+c            dep    = 0.005*ep_in
             dep    = 0.001*ep_in
+c            dep    = ep_in
             epmin  = ep_in*(1.-dp_m)
             epmax  = ep_in*(1.+dp_p)
             npbin  = int((epmax-epmin)/dep)+1
@@ -655,6 +691,7 @@ c            ntbin  = int((thmax - thmin)/theta_res)+1
 c            ntbin  = 19
 c            ntbin  = 10
             ntbin  = 25
+c            ntbin  = 1
 c            ntbin  = 3
             thincr = dtheta*2.0/float(ntbin)/d_r
             thmin  = th_in - float(ntbin/2-1/2)*thincr
@@ -690,6 +727,8 @@ c      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                endif   
 c         Looping over theta bins 
 c         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+
                do it=1,ntbin
                   if (central) then
                      thit = th_in
@@ -724,10 +763,10 @@ c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c                 vvv The Mott cross sections below are in barns/GeV*str (1E-24 cm^2/(GeV*str))
                   mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-                  mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-                  mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-                  mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-                  mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c                  mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c                  mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c                  mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c                  mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c                 vvvvvvvvv This part gives us the total, non-physics info vvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                   b1out   = 0; Aout    = 0; F1out   = 0;
                   F1      = 0; F2      = 0; F1n     = 0; F2n    = 0;
@@ -739,37 +778,21 @@ c                 vvvvvvvvv This part gives us the total, non-physics info vvvvv
                   F1li    = 0; F1li_ie = 0; F1li_qe = 0; rcli   = 0;
                   F2li    = 0; F2li_ie = 0; F2li_qe = 0;
                   rc      = 0; rche    = 0; rcn     = 0; rcc    = 0;
-                  call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
-                  call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
-                  call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 6Li
-                  call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
-                  call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
-                  call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
-                  call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
-                  call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 6Li
-                  call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
-                  call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
+                  if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
+                  if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+                  if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 6Li
+                  if (lumi_n.gt.0) call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
+                  if (lumi_c.gt.0) call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
+                  if (lumi_d.gt.0) call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
+                  if (lumi_he.gt.0) call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
+                  if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 6Li
+                  if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
+                  if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
                   if (x.ge.0.8.and.x.le.5.0) then   ! If QE:
                       call get_qe_b1d(x,q2,Aout,F1out,b1out)
                   elseif (x.lt.0.8.and.x.gt.0) then ! If DIS:
                       call get_b1d(x,q2,Aout,F1out,b1out)
                   endif
-c                  if (.not.(F1d_ie.gt.0)) F1d_ie = 0
-c                  if (.not.(F1d_qe.gt.0)) F1d_qe = 0
-c                  if (.not.(F1n_ie.gt.0)) F1n_ie = 0
-c                  if (.not.(F1n_qe.gt.0)) F1n_qe = 0
-c                  if (.not.(F1c_ie.gt.0)) F1c_ie = 0
-c                  if (.not.(F1c_qe.gt.0)) F1c_qe = 0
-c                  if (.not.(F1he_ie.gt.0)) F1he_ie = 0
-c                  if (.not.(F1he_qe.gt.0)) F1he_qe = 0
-c                  if (.not.(F2d_ie.gt.0)) F2d_ie = 0
-c                  if (.not.(F2d_qe.gt.0)) F2d_qe = 0
-c                  if (.not.(F2n_ie.gt.0)) F2n_ie = 0
-c                  if (.not.(F2n_qe.gt.0)) F2n_qe = 0
-c                  if (.not.(F2c_ie.gt.0)) F2c_ie = 0
-c                  if (.not.(F2c_qe.gt.0)) F2c_qe = 0
-c                  if (.not.(F2he_ie.gt.0)) F2he_ie = 0
-c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
 
                   if (.not.(F1d_ie.gt.0)) F1d_ie = 0
                   if (.not.(F1d_qe.gt.0)) F1d_qe = 0
@@ -791,12 +814,21 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   if (.not.(F2li_ie.gt.0)) F2li_ie = 0
                   if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-                  write(6,*) "First cross-section measurement..."
+                  sigma_unpol=0; sigma_unpol_d=0; sigma_unpol_n=0;
+                  sigma_unpol_li=0; sigma_unpol_he=0; sigma_unpol_c=0;
+                  write(6,1010) "First cross-section measurement...",
+     &                        ispectro,ip,it,"(",npbin,ntbin,")"
+c                  write(6,*)"nu = ",nu
+c                  write(6,*)"mott_p = ",mott_p
+c                  write(6,*)"F1d_ie = ",F1d_ie
+c                  write(6,*)"F2d_ie = ",F2d_ie
+c                  write(6,*)"F1d_qe = ",F1d_qe
+c                  write(6,*)"F2d_qe = ",F2d_qe
                   if (csmodel.eq.'Bosted_full') then
                      sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                                  + ((F2d_ie+F2d_qe)/2.)/nu)
-                     sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
-     +                                  + ((F2d_ie+F2d_qe)/2.)/nu)
+c                     sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                                  + ((F2d_ie+F2d_qe)/2.)/nu)
                      sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
      +                                  + ((F2li_ie+F2li_qe)/6.)/nu)
                      sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
@@ -809,8 +841,8 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   if (csmodel.eq.'Bosted_dis') then
                      sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
      +                                  + ((F2d_ie+0)/2.)/nu)
-                     sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
-     +                                  + ((F2d_ie+0)/2.)/nu)
+c                     sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+0)/2.)*tnsq/mp
+c     +                                  + ((F2d_ie+0)/2.)/nu)
                      sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+0)/6.)*tnsq/mp
      +                                  + ((F2li_ie+0)/6.)/nu)
                      sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+0)/4.)*tnsq/mp
@@ -823,8 +855,8 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                   if (csmodel.eq.'Bosted_qe') then
                      sigma_unpol    =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
      +                                  + ((0+F2d_qe)/2.)/nu)
-                     sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
-     +                                  + ((0+F2d_qe)/2.)/nu)
+c                     sigma_unpol_d  =  2.*mott_p*(2.*((0+F1d_qe)/2.)*tnsq/mp
+c     +                                  + ((0+F2d_qe)/2.)/nu)
                      sigma_unpol_li =  6.*mott_p*(2.*((0+F1li_qe)/6.)*tnsq/mp
      +                                  + ((0+F2li_qe)/6.)/nu)
                      sigma_unpol_he =  4.*mott_p*(2.*((0+F1he_qe)/4.)*tnsq/mp
@@ -834,16 +866,30 @@ c                  if (.not.(F2he_qe.gt.0)) F2he_qe = 0
                      sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
      +                                  + ((0+F2c_qe)/12.)/nu)
                   endif
-                  if (csmodel.eq.'Sargsian') then
-                     call init_incl(e_in,pit,thit,x,a_d,z_d,sigma_unpol)
-                     call init_incl(e_in,pit,thit,x,a_li,z_li,sigma_unpol_li)
-                     call init_incl(e_in,pit,thit,x,a_he,z_he,sigma_unpol_he)
-                     call init_incl(e_in,pit,thit,x,a_n,z_n,sigma_unpol_n)
-                     call init_incl(e_in,pit,thit,x,a_c,z_c,sigma_unpol_c)
-                     sigma_unpol_d  = sigma_unpol
+                  if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
+                     if(x.lt.1.1) then
+                        sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
+                        sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                                     + ((F2li_ie+F2li_qe)/6.)/nu)
+                        sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                                     + ((F2he_ie+F2he_qe)/4.)/nu)
+                        sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                                     + ((F2n_ie+F2n_qe)/14.)/nu)
+                        sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                                     + ((F2c_ie+F2c_qe)/12.)/nu)
+                     elseif (x.gt.1.1.or.x.eq.1.1) then
+                        if (lumi_d.gt.0) call init_incl(e_in,pit,thit,x,a_d,z_d,sigma_unpol)
+                        if (lumi_li.gt.0) call init_incl(e_in,pit,thit,x,a_li,z_li,sigma_unpol_li)
+                        if (lumi_he.gt.0) call init_incl(e_in,pit,thit,x,a_he,z_he,sigma_unpol_he)
+                        if (lumi_n.gt.0) call init_incl(e_in,pit,thit,x,a_n,z_n,sigma_unpol_n)
+                        if (lumi_c.gt.0) call init_incl(e_in,pit,thit,x,a_c,z_c,sigma_unpol_c)
+                     endif
                   endif
+                  sigma_unpol_d  = sigma_unpol
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
+c                  write(6,*)"sigma_unpol = ",sigma_unpol
 
                   if (targ.eq.'ND3') then
                      tot_allsigma = sigma_unpol_d + sigma_unpol_he + sigma_unpol_n
@@ -884,8 +930,8 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                  + (lumi_li*sigma_unpol_li*dep*thincr*d_r*2*dphi*1E-24)
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
-c                 if (w2.le.w2min) then
-                 if (x.lt.0.75) then
+                 if (w2.le.w2min) then
+c                 if (x.lt.0.75) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -894,25 +940,25 @@ c                 if (w2.le.w2min) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-                 if (x.gt.1.85) then
+c                 if (x.gt.1.85) then
 c                 if (w2.ge.w2max) then
-                    sigma_unpol    = 0.0
-                    sigma_unpol_d  = 0.0
-                    sigma_unpol_li = 0.0
-                    sigma_unpol_he = 0.0
-                    sigma_unpol_n  = 0.0
-                    sigma_unpol_c  = 0.0
-                    sigma_pol_d    = 0.0
-                 endif
-                 if (q2.lt.1.0) then
-                    sigma_unpol    = 0.0
-                    sigma_unpol_d  = 0.0
-                    sigma_unpol_li = 0.0
-                    sigma_unpol_he = 0.0
-                    sigma_unpol_n  = 0.0
-                    sigma_unpol_c  = 0.0
-                    sigma_pol_d    = 0.0
-                 endif
+c                    sigma_unpol    = 0.0
+c                    sigma_unpol_d  = 0.0
+c                    sigma_unpol_li = 0.0
+c                    sigma_unpol_he = 0.0
+c                    sigma_unpol_n  = 0.0
+c                    sigma_unpol_c  = 0.0
+c                    sigma_pol_d    = 0.0
+c                 endif
+c                 if (q2.lt.1.0) then
+c                    sigma_unpol    = 0.0
+c                    sigma_unpol_d  = 0.0
+c                    sigma_unpol_li = 0.0
+c                    sigma_unpol_he = 0.0
+c                    sigma_unpol_n  = 0.0
+c                    sigma_unpol_c  = 0.0
+c                    sigma_pol_d    = 0.0
+c                 endif
 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   lumiSig = lumi_d*sigma_pol_d 
@@ -930,6 +976,9 @@ c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   ! Radiative correction need to be implemented here
 c                  sigma_meas   = sigma_born
 c
+
+
+
                   do ib=1,11
                      if (x.gt.cent_x_min(ib).and.x.lt.cent_x_max(ib).and.sigma_unpol.gt.0.0) then
                         N_for_x(ib) = lumi_d*sigma_pol_d 
@@ -942,7 +991,7 @@ c
      +                    + lumi_he*sigma_unpol_he
      +                    + lumi_heli*sigma_unpol_he
      +                    + lumi_n*sigma_unpol_n
-
+c                        write(6,*)"Nunpol_for_x(",ib,") = ",Nunpol_for_x(ib)
                           xsum(ib) = xsum(ib) + 1
                           w_ave(ib) = w_ave(ib) + tot_allsigma*sqrt(w2)
                           sigma_sum(ib) = sigma_sum(ib) + tot_allsigma
@@ -955,10 +1004,12 @@ c
                           thisNunpolforx(ib) = thisNunpolforx(ib) + 
      +                        Nunpol_for_x(ib)*dep*thincr*d_r*2*dphi*1E-24*prec*3600
 
+c                        write(6,*)"Nunpolgood_for_x(",ib,") = ",Nunpolgood_for_x(ib)
                      endif
                   enddo
 
-
+c                  write(6,*)"sigma_unpol = ",sigma_unpol
+c                  write(6,*)"sigma_unpol_d = ",sigma_unpol_d
                   if (sigma_unpol.gt.0.0) then ! DIS
                      sigradsum         = sigradsum + sigma_pol_d
                      d_unpol_sigradsum = d_unpol_sigradsum + sigma_unpol_d
@@ -969,6 +1020,8 @@ c
                      isum              = isum + 1
                      ave_x             = ave_x + x*sigma_unpol_d
                      totsig_for_ave_x  = totsig_for_ave_x + sigma_unpol_d
+c                     write(6,*)"totsig_for_ave_x = ",totsig_for_ave_x
+c                     write(6,*)"ave_x = ",ave_x
                      if (x.lt.good_x_min) then 
                         good_x_min = x
                      endif
@@ -984,6 +1037,8 @@ c
      &              tot_allsigma,sigma_unpol_li
 
                enddo ! loop over theta bins
+
+
 c         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                write(8,*)ispectro,x,th_in,pit,sigradsum,isum
                write(13,*)ispectro,x,th_in,pit,sigradsum,isum
@@ -1218,16 +1273,16 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   drift_scale = thisNforx(ib)*0.20/Pzz_in
                   if (spec_x.eq.0.15) then
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0032*drift_scale
-                  endif 
-                  if (spec_x.eq.0.3) then
+                  elseif (spec_x.eq.0.3) then
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0037*drift_scale
-                  endif 
-                  if (spec_x.eq.0.452) then
+                  elseif (spec_x.eq.0.452) then
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0029*drift_scale
-                  endif 
-                  if (spec_x.eq.0.55) then
+                  elseif (spec_x.eq.0.55) then
+                     dAzz_drift(ib) = dAzz_drift(ib) +0.0019*drift_scale
+                  else 
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0019*drift_scale
                   endif 
+
                endif
 c               dAzz_drift(ib) = 0 ! To be fixed later 
    
@@ -1261,12 +1316,15 @@ c         do ib=1,nx
 
             if(Ngood_for_x(ib).gt.0.0) then
                if(ispectro.eq.1.or.ispectro.eq.2) then
+c                  write(6,*) "*(&)&*(^$#*(^*&%$*&#$ HEY LOOK AT ME WHOO----------------"
                   Ntotal_for_x(ib) = Ntotal_for_x(ib) + Ngood_for_x(ib)
                   Nunpoltotal_for_x(ib) = Nunpoltotal_for_x(ib) + Nunpolgood_for_x(ib)
                   total_w_ave(ib)  = total_w_ave(ib)  
      +                                      + w_ave(ib)*Ngood_for_x(ib)
                endif
             endif
+            write(6,*) "Ntotal_for_x(",ib,") = ",Ntotal_for_x(ib)
+            write(6,*) "Nunpoltotal_for_x(",ib,") = ",Nunpoltotal_for_x(ib)
             w2 = w_ave(ib)**2
             qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
 
@@ -1313,10 +1371,10 @@ c            x     = q2/(2.*mp*nu)
             w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-            mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-            mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-            mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-            mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             b1out   = 0; Aout    = 0; F1out   = 0;
             F1      = 0; F2      = 0; F1n     = 0; F2n     = 0;
             F1n_qe  = 0; F2n_qe  = 0; F1c_qe  = 0; F2c_qe  = 0;
@@ -1327,16 +1385,16 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             rc      = 0; rche    = 0; rcn     = 0; rcc     = 0;
             F1li_qe = 0; F1li_ie = 0; F2li_qe = 0; F2li_ie = 0;
             F1li    = 0; F2li    = 0; rcli    = 0;
-            call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
-            call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
-            call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 4He
-            call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
-            call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
-            call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
-            call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
-            call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 4He
-            call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
-            call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
+            if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
+            if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+            if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 4He
+            if (lumi_n.gt.0) call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
+            if (lumi_c.gt.0) call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
+            if (lumi_d.gt.0) call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
+            if (lumi_he.gt.0) call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
+            if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 4He
+            if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
+            if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
             if (x.ge.0.75.and.x.le.5.0) then   ! If QE:
                 call get_qe_b1d(x,q2,Aout,F1out,b1out)
             elseif (x.lt.0.75.and.x.gt.0) then ! If DIS:
@@ -1368,7 +1426,10 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (.not.(F2he_qe.gt.0)) F2he_qe = 0
             if (.not.(F2li_ie.gt.0)) F2li_ie = 0
             if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-            write(6,*) "Second cross-section measurement..."
+            write(6,1010) "Second cross-section measurement...",
+     &           ispectro,ib,0,"(",11,0,")"
+            sigma_unpol=0; sigma_unpol_d=0; sigma_unpol_n=0;
+            sigma_unpol_li=0; sigma_unpol_he=0; sigma_unpol_c=0;
             if (csmodel.eq.'Bosted_full') then
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
@@ -1411,12 +1472,25 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
      +                            + ((0+F2c_qe)/12.)/nu)
             endif
-            if (csmodel.eq.'Sargsian') then
-               call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
-               call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
-               call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
-               call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
-               call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+            if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
+                     if(x.lt.1.1) then
+                        sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
+                        sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                                     + ((F2li_ie+F2li_qe)/6.)/nu)
+                        sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                                     + ((F2he_ie+F2he_qe)/4.)/nu)
+                        sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                                     + ((F2n_ie+F2n_qe)/14.)/nu)
+                        sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                                     + ((F2c_ie+F2c_qe)/12.)/nu)
+                     elseif (x.gt.1.1.or.x.eq.1.1) then
+                        if (lumi_d.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
+                        if (lumi_li.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
+                        if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
+                        if (lumi_n.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
+                        if (lumi_c.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+                     endif
                sigma_unpol_d  = sigma_unpol
             endif
 
@@ -1427,7 +1501,13 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                + lumi_n*sigma_unpol_n
      +                + lumi_d*sigma_unpol_d
      +                + lumi_li*sigma_unpol_li)
-
+            write(6,*)"x = ",x
+            write(6,*)"sigma_unpol_d = ",sigma_unpol_d
+            write(6,*)"lumi_d*sigma_unpol_d = ",lumi_d*sigma_unpol_d
+            write(6,*)"lumi_he*sigma_unpol_he = ",lumi_he*sigma_unpol_he
+            write(6,*)"lumi_heli*sigma_unpol_he = ",lumi_he*sigma_unpol_he
+            write(6,*)"lumi_n*sigma_unpol_n = ",lumi_n*sigma_unpol_n
+            write(6,*)"lumi_li*sigma_unpol_li = ",lumi_li*sigma_unpol_li
             
 c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1436,6 +1516,11 @@ c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
             dAzz = (2./(f_dil*Pzz))*SQRT(Ntotal_for_x(ib)/Nunpoltotal_for_x(ib)**2
      +                 + Ntotal_for_x(ib)**2/Nunpoltotal_for_x(ib)**3)
+            write(6,*)"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! dAzz = ",dAzz
+            write(6,*)"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! f_dil = ",f_dil
+            write(6,*)"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Pzz = ",Pzz
+            write(6,*)"!!!!!!!!!!!!!!!! Ntotal_for_x(",ib,") = ",Ntotal_for_x(ib)
+            write(6,*)"!!!!!!!!!!! Nunpoltotal_for_x(",ib,") = ",Nunpoltotal_for_x(ib)
 
 c            dAzz = sqrt(Aout**2)*0.092
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
@@ -1474,7 +1559,16 @@ c        do ib=0,6000
 c     vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      do ib=1,2
 c     vvvvvvvvvvv SHMS vvvvvvvvvvvvvvvvvvv
+
+c      write(6,*) "Entering Parallel" 
+
+c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel,z_d,a_d,lumi_d,z_he,a_he,lumi_he,z_n,a_n,lumi_n,a_li,z_li,lumi_li,a_c,z_c,lumi_c)
+
+c !$OMP DO
+
       do ib=10,200
+c      write(6,*)"ib",ib
+
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -1497,11 +1591,11 @@ c         x       = cent_x(ib)
          xplat=1.64203-0.177032*log(q2)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          b1out   = 0; Aout    = 0; F1out = 0;
          F1      = 0; F2      = 0; F1n    = 0; F2n    = 0;
          F1n_qe  = 0; F2n_qe  = 0; F1c_qe = 0; F2c_qe = 0;
@@ -1513,43 +1607,55 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          F1li_qe = 0; F2li_qe = 0;
          F1li_ie = 0; F2li_ie = 0; rcli   = 0;
          rc      = 0; rche    = 0; rcn    = 0; rcc    = 0;
-         call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
-         call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
-         call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
-         call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
-         call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
-         call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
-         call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
-         call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
-         call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
-         call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
+
+c !$OMP CRITICAL
          if (x.ge.0.75.and.x.le.5.0) then       ! If Quasi-Elastic:
              call get_qe_b1d(x,q2,Aout,F1out,b1out)
          elseif (x.lt.0.75.and.x.gt.0) then          ! If DIS:
              call get_b1d(x,q2,Aout,F1out,b1out)
          endif
-         if (.not.(F1d_ie.gt.0)) F1d_ie = 0
-         if (.not.(F1d_qe.gt.0)) F1d_qe = 0
-         if (.not.(F1n_ie.gt.0)) F1n_ie = 0
-         if (.not.(F1n_qe.gt.0)) F1n_qe = 0
-         if (.not.(F1c_ie.gt.0)) F1c_ie = 0
-         if (.not.(F1c_qe.gt.0)) F1c_qe = 0
-         if (.not.(F1he_ie.gt.0)) F1he_ie = 0
-         if (.not.(F1he_qe.gt.0)) F1he_qe = 0
-         if (.not.(F1li_ie.gt.0)) F1li_ie = 0
-         if (.not.(F1li_qe.gt.0)) F1li_qe = 0
-         if (.not.(F2d_ie.gt.0)) F2d_ie = 0
-         if (.not.(F2d_qe.gt.0)) F2d_qe = 0
-         if (.not.(F2n_ie.gt.0)) F2n_ie = 0
-         if (.not.(F2n_qe.gt.0)) F2n_qe = 0
-         if (.not.(F2c_ie.gt.0)) F2c_ie = 0
-         if (.not.(F2c_qe.gt.0)) F2c_qe = 0
-         if (.not.(F2he_ie.gt.0)) F2he_ie = 0
-         if (.not.(F2he_qe.gt.0)) F2he_qe = 0
-         if (.not.(F2li_ie.gt.0)) F2li_ie = 0
-         if (.not.(F2li_qe.gt.0)) F2li_qe = 0
+c !$OMP END CRITICAL
 
-         write(6,*) "Third cross-section measurement..."
+         if(csmodel.eq.'Bosted_full'.or.csmodel.eq.'Bosted_dis'.or.csmodel.eq.'Bosted_qe') then
+
+
+            if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
+            if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+            if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Lithium-6
+            if (lumi_n.gt.0) call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
+            if (lumi_c.gt.0) call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Carbon-12
+            if (lumi_d.gt.0) call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
+            if (lumi_he.gt.0) call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
+            if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Lithium-6
+            if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
+            if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Carbon-12
+   
+            if (.not.(F1d_ie.gt.0)) F1d_ie = 0
+            if (.not.(F1d_qe.gt.0)) F1d_qe = 0
+            if (.not.(F1n_ie.gt.0)) F1n_ie = 0
+            if (.not.(F1n_qe.gt.0)) F1n_qe = 0
+            if (.not.(F1c_ie.gt.0)) F1c_ie = 0
+            if (.not.(F1c_qe.gt.0)) F1c_qe = 0
+            if (.not.(F1he_ie.gt.0)) F1he_ie = 0
+            if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+            if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+            if (.not.(F1li_qe.gt.0)) F1li_qe = 0
+            if (.not.(F2d_ie.gt.0)) F2d_ie = 0
+            if (.not.(F2d_qe.gt.0)) F2d_qe = 0
+            if (.not.(F2n_ie.gt.0)) F2n_ie = 0
+            if (.not.(F2n_qe.gt.0)) F2n_qe = 0
+            if (.not.(F2c_ie.gt.0)) F2c_ie = 0
+            if (.not.(F2c_qe.gt.0)) F2c_qe = 0
+            if (.not.(F2he_ie.gt.0)) F2he_ie = 0
+            if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+            if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+            if (.not.(F2li_qe.gt.0)) F2li_qe = 0
+         endif
+
+         write(6,1010) "Third cross-section measurement...",
+     &         ispectro,ib,0,"(",200,0,")"
+         sigma_unpol=0; sigma_unpol_d=0; sigma_unpol_n=0;
+         sigma_unpol_li=0; sigma_unpol_he=0; sigma_unpol_c=0;
          if (csmodel.eq.'Bosted_full') then
             sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                         + ((F2d_ie+F2d_qe)/2.)/nu)
@@ -1592,17 +1698,65 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
      +                         + ((0+F2c_qe)/12.)/nu)
          endif
-         if (csmodel.eq.'Sargsian') then
-            call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
-            call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
-            call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
-            call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
-            call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+         if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
+c !$OMP CRITICAL
+            if(x.lt.1.1) then
+               if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
+               if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+               if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Lithium-6
+               if (lumi_n.gt.0) call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
+               if (lumi_c.gt.0) call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Carbon-12
+               if (lumi_d.gt.0) call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
+               if (lumi_he.gt.0) call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
+               if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Lithium-6
+               if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
+               if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Carbon-12
+               if (.not.(F1d_ie.gt.0)) F1d_ie = 0
+               if (.not.(F1d_qe.gt.0)) F1d_qe = 0
+               if (.not.(F1n_ie.gt.0)) F1n_ie = 0
+               if (.not.(F1n_qe.gt.0)) F1n_qe = 0
+               if (.not.(F1c_ie.gt.0)) F1c_ie = 0
+               if (.not.(F1c_qe.gt.0)) F1c_qe = 0
+               if (.not.(F1he_ie.gt.0)) F1he_ie = 0
+               if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+               if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+               if (.not.(F1li_qe.gt.0)) F1li_qe = 0
+               if (.not.(F2d_ie.gt.0)) F2d_ie = 0
+               if (.not.(F2d_qe.gt.0)) F2d_qe = 0
+               if (.not.(F2n_ie.gt.0)) F2n_ie = 0
+               if (.not.(F2n_qe.gt.0)) F2n_qe = 0
+               if (.not.(F2c_ie.gt.0)) F2c_ie = 0
+               if (.not.(F2c_qe.gt.0)) F2c_qe = 0
+               if (.not.(F2he_ie.gt.0)) F2he_ie = 0
+               if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+               if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+               if (.not.(F2li_qe.gt.0)) F2li_qe = 0
+
+               sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                            + ((F2li_ie+F2li_qe)/6.)/nu)
+               sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                            + ((F2he_ie+F2he_qe)/4.)/nu)
+               sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                            + ((F2n_ie+F2n_qe)/14.)/nu)
+               sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                            + ((F2c_ie+F2c_qe)/12.)/nu)
+            elseif(x.gt.1.1.or.x.eq.1.1) then
+               if (lumi_d.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
+               if (lumi_li.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
+               if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
+               if (lumi_n.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
+               if (lumi_c.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+            endif
+c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
          endif
 
+c         write(6,*) "sigma_unpol_d = ",sigma_unpol_d
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
 
          lumsig_p_d  = lumi_d*sigma_pol_d
          lumsig_u_d  = lumi_d*sigma_unpol_d
@@ -1646,11 +1800,18 @@ c         endif
      &                  sigma_unpol_li,
      &                  lumsig_p_d,lumsig_u_d,lumsig_he,
      &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
-
+ 
       enddo     
+
+c !$OMP END DO  
+
+c !$OMP END PARALLEL 
+
+      write(6,*) "ispectro = ",ispectro
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 
 c     vvvvvvvvvvvv HMS vvvvvvvvvvvvvvvvvvv
+c       do ib=10,200
        do ib=10,200
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
@@ -1690,16 +1851,16 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          F1li_qe = 0; F2li_qe = 0;
          F1li_ie = 0; F2li_ie = 0; rcli   = 0;
          rc      = 0; rche    = 0; rcn    = 0; rcc    = 0;
-         call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
-         call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
-         call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
-         call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
-         call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
-         call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
-         call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
-         call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
-         call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
-         call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
+         if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
+         if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+         if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
+         if (lumi_n.gt.0) call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
+         if (lumi_c.gt.0) call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
+         if (lumi_d.gt.0) call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       !      Get F1 for Deuterium
+         if (lumi_he.gt.0) call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) !      Get F1 for Helium-4
+         if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
+         if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
+         if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
          if (x.ge.0.75.and.x.le.5.0) then       ! If Quasi-Elastic:
              call get_qe_b1d(x,q2,Aout,F1out,b1out)
          elseif (x.lt.0.75.and.x.gt.0) then          ! If DIS:
@@ -1725,7 +1886,10 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          if (.not.(F2he_qe.gt.0)) F2he_qe = 0
          if (.not.(F2li_ie.gt.0)) F2li_ie = 0
          if (.not.(F2li_qe.gt.0)) F2li_qe = 0
-         write(6,*) "Fourth cross-section measurement..."
+         write(6,1010) "Fourth cross-section measurement...",
+     &        ispectro,ib,0,"(",200,0,")"
+         sigma_unpol=0; sigma_unpol_d=0; sigma_unpol_n=0;
+         sigma_unpol_li=0; sigma_unpol_he=0; sigma_unpol_c=0;
          if (csmodel.eq.'Bosted_full') then
             sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                         + ((F2d_ie+F2d_qe)/2.)/nu)
@@ -1768,16 +1932,30 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             sigma_unpol_c  = 12.*mott_p*(2.*((0+F1c_qe)/12.)*tnsq/mp
      +                         + ((0+F2c_qe)/12.)/nu)
          endif
-         if (csmodel.eq.'Sargsian') then
-            call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
-            call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
-            call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
-            call init_incl(e_in,ep_in2,th_in2,x,a_n,z_n,sigma_unpol_n)
-            call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
+         if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
+            if(x.lt.1.1) then
+               sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+     +                            + ((F2li_ie+F2li_qe)/6.)/nu)
+               sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+     +                            + ((F2he_ie+F2he_qe)/4.)/nu)
+               sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+     +                            + ((F2n_ie+F2n_qe)/14.)/nu)
+               sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+     +                            + ((F2c_ie+F2c_qe)/12.)/nu)
+            elseif(x.gt.1.1.or.x.eq.1.1) then
+               if (lumi_d.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
+               if (lumi_li.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
+               if (lumi_he.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
+               if (lumi_n.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_n,z_n,sigma_unpol_n)
+               if (lumi_c.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
+            endif
             sigma_unpol_d  = sigma_unpol
          endif
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
 
          lumsig_p_d  = lumi_d*sigma_pol_d
          lumsig_u_d  = lumi_d*sigma_unpol_d
@@ -1812,7 +1990,9 @@ c         endif
      &                  lumsig_p_d,lumsig_u_d,lumsig_he,
      &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
 
-      enddo      
+      enddo     
+
+ 
 c     ^^^^^^^^^^^^ HMS ^^^^^^^^^^^^^^^^^^^
 
 c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1865,6 +2045,7 @@ c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c vvvvv Writes out Q^2-dependent Azz curve vvvvvvvv
       tempqq = qqval2(1)
+c      tempqq = qqval1(1)
       write (6,*) "qq:",tempqq
       call QE_b1(tempqq)
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1898,6 +2079,7 @@ c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f1
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
  1008 format(24(E10.3,1x))
  1009 format(A1,4(f10.3))
+ 1010 format(A40,i1," ",i6,i3," ",A1,2(i3),A1)
       end
 
 

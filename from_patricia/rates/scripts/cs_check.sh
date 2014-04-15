@@ -62,6 +62,14 @@ file1="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check.out"
 # 22 = Lumi*Sigma for Unpolarized 12C
 # 23 = Lumi*Sigma for Unpolarized 6Li
 # 24 = Lumi*Sigma for Unpolarized 4He (in lithium)
+echo "0 1E-30" >> temp_sigma_d_pol
+echo "0 1E-30" >> temp_sigma_d_unpol
+echo "0 1E-30" >> temp_sigma_n
+echo "0 1E-30" >> temp_sigma_he
+echo "0 1E-30" >> temp_sigma_c
+echo "0 1E-30" >> temp_sigma_li
+echo "0 1E-30" >> temp_sigma_li_hed
+
 awk '$12!="NaN" {print $1,$8}'  $file1 >> temp_sigma_d_pol
 awk '$12!="NaN" {print $1,$9}'  $file1 >> temp_sigma_d_unpol
 #awk '$12!="NaN" {print $1,$13}'  $file1 >> temp_sigma_d_unpol
@@ -73,13 +81,13 @@ awk '$12!="NaN" {print $1,$17}' $file1 >> temp_sigma_li
 awk '$12!="NaN" {print $1,$11+$9}' $file1 >> temp_sigma_li_hed
 #awk '$12!="NaN" {print $1,0}' $file1 >> temp_sigma_li_hed
 
-echo '-1 1' >> temp_lumsig_d_pol
-echo '-1 1' >> temp_lumsig_d_unpol
-echo '-1 1' >> temp_lumsig_he
-echo '-1 1' >> temp_lumsig_n
-echo '-1 1' >> temp_lumsig_c
-echo '-1 1' >> temp_lumsig_li
-echo '-1 1' >> temp_lumsig_heli
+echo '0 1E-30' >> temp_lumsig_d_pol
+echo '0 1E-30' >> temp_lumsig_d_unpol
+echo '0 1E-30' >> temp_lumsig_he
+echo '0 1E-30' >> temp_lumsig_n
+echo '0 1E-30' >> temp_lumsig_c
+echo '0 1E-30' >> temp_lumsig_li
+echo '0 1E-30' >> temp_lumsig_heli
 
 awk '$12!="NaN" && $18>0 {print $1,$18}'  $file1 >> temp_lumsig_d_pol
 awk '$12!="NaN" && $19>0 {print $1,$19}'  $file1 >> temp_lumsig_d_unpol

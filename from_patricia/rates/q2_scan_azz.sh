@@ -17,7 +17,8 @@
 START=$(date +%s)
 
 file0="./ptrates.f"
-
+rm rates_output.out
+rm rates_output2.out
 i=1
 #while [ $i -le 4 ]
 while [ $i -le 1 ]
@@ -28,6 +29,7 @@ do
 		y=0
 		while [ $y -lt 10 ]
 		do
+            START2=$(date +%s)
 #			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/    ..., ..., ..., ..., .../" $file0`
 #			lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/   ...., 99, 99, 99, 99/" $file0`
 #			echo "qqval1 lineNo: ${lineNo}"
@@ -43,6 +45,7 @@ do
 #				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/    ..., ..., ..., ..., .../" $file0`
 				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval1/   ...., 99, 99, 99, 99/" $file0`
 				echo "qqval1 lineNo: ${lineNo}"
+				echo "qqval1 lineNo: ${lineNo}" >> rates_output2.out
 #				echo "Replacing line #$lineNo..."
 #				sed -i -e "${lineNo}s/.\..,/$x.$y,/g" $file0
 #				sed -i -e "${lineNo}s/\ .\..\//\ $x.$y\//g" $file0
@@ -54,11 +57,12 @@ do
 #				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/   ...., ..., ..., ..., .../" $file0`
 				lineNo=`awk '$0 ~ str{print NR}{b=$0}' str="      DATA qqval2/   ...., 99, 99, 99, 99/" $file0`
 				echo "qqval2 lineNo: ${lineNo}"
+				echo "qqval2 lineNo: ${lineNo}" >> rates_output2.out
 #				echo "Replacing line #$lineNo..."
 #				sed -i -e "${lineNo}s/...,/$x.$y,/g" $file0
 #				sed -i -e "${lineNo}s/\ ...\//\ $x.$y\//g" $file0
 				sed -i -e "${lineNo}s/\ \ ..\..,/\ \ \ $x.$y,/g" $file0
-				outputFolder="/home/ellie/Desktop/b1_plots/x_08_to_19"
+				outputFolder="/home/ellie/Desktop/azz_plots/q2_0_to_10"
 #			fi
 
 
@@ -97,18 +101,27 @@ do
 
 			rm fort.*
 			rm ./ptrates
-			gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f > rates_output.out 2>&1
-			rm *.o >> rates_output.out 2>&1
-			./ptrates >> rates_output.out 2>&1
-	
+#			gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f > rates_output.out 2>&1
+#			rm *.o >> rates_output.out 2>&1
+#			./ptrates >> rates_output.out 2>&1
+			gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
+			rm *.o
+			./ptrates | tee rates_output.out
+
 #			./scripts/rates_b1_png.sh >> rates_output.out 2>&1
-			./scripts/rates_azz.sh >> rates_output.out 2>&1
+#			./scripts/rates_azz.sh >> rates_output.out 2>&1
+			./scripts/rates_azz.sh
 
 #			mv b1_rates_hms_shms.png $outputFolder/q2_${x}${y}_b1_rates_hms_shms.png
 			mv Azz_rates_hms_shms.png $outputFolder/q2_${x}${y}_Azz_rates_hms_shms.png
 			END=$(date +%s)
+			END2=$(date +%s)
 			DIFF=$(( $END - $START ))
-			echo "i=$i, Q2=$x.$y, Running time: $DIFF seconds"
+			DIFF2=$(( $END2 - $START2 ))
+			echo "i=$i, Q2=$x.$y, This run's time: $DIFF2 seconds"
+			echo "i=$i, Q2=$x.$y, This run's time: $DIFF2 seconds" >> rates_output2.out
+			echo "i=$i, Q2=$x.$y, Total running time: $DIFF seconds"
+			echo "i=$i, Q2=$x.$y, Total running time: $DIFF seconds" >> rates_output2.out
 			y=$(( $y + 1 ))
 		done
 		x=$(( $x + 1 ))
@@ -121,3 +134,4 @@ done
 END=$(date +%s)
 DIFF=$(( $END - $START ))
 echo "It took $DIFF seconds"
+echo "It took $DIFF seconds" >> rates_output2.out

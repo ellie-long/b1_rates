@@ -115,6 +115,9 @@ c outputs: F1, F2 (real*8) are structure functions per nucleus
       logical goodfit
       INTEGER ISM
 
+c !$OMP THREADPRIVATE(/PARCORR/)
+
+
 ! new variables for Fermi smearing over +/- 3 sigma. Sum of 
 ! fy values is 1.000, so no effect if W1 is constant with W
       REAL*8 XX(15)/-3.000,-2.571,-2.143,-1.714,-1.286,-0.857,
@@ -296,6 +299,7 @@ cc        if(W .GT. 1.3)
       F1 = pm * W1 * emcfac 
       F2 = nu * W2 * emcfac 
 
+
       RETURN                                                            
       END                                          
 
@@ -318,6 +322,8 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       real*8 p18
 
       real*8 x, f1corr
+
+c !$OMP THREADPRIVATE(/PARCORR/)
 
       f1 = 0.0
       if(w2.le.0.0) return
@@ -447,6 +453,8 @@ c     Peter Bosted's correction params
      >      0.1733E+00, 0.0000E+00, 0.0000E+00, 0.0000E+00,
      >      0.0000E+00, 0.0000E+00, 0.0000E+00, 0.0000E+00/ 
        real*8 y,R
+
+c !$OMP THREADPRIVATE(/PARCORR/)
 
 ! return if proton: future change this to allow for
 ! equivalent W resolution
@@ -661,6 +669,9 @@ c    c       3.1914e-01,  -1.8657e-01,   3.2746e+01,   4.9801e-03/
      c      -3.7464e-01,   1.0414e-01,  -2.6852e-01,   9.6653e-01,
      c      -1.9055e+00,   9.8965e-01,   2.0613e+02,  -4.5536e-02,
      c       2.4902e-01,  -1.3728e-01,   2.9201e+01,   4.9280e-03/
+
+c !$OMP THREADPRIVATE(/PARCORR/)
+
        END
 
 
@@ -894,11 +905,17 @@ c Look up tables for deuteron in fine bins for sub threshold
       
       icall = icall + 1
       if(first) then
+
+c !$OMP CRITICAL
+
         open(unit=9,file='F1F207D2emat.dat')
         do i=1,50
           read(9,'(10E12.4)') (emat(i,j),j=1,50)
         enddo
         close(unit=9)
+
+c !$OMP END CRITICAL
+
         first = .false.
       endif
 
@@ -951,6 +968,9 @@ c new 5/07 values. Values 1 and 7 will be overridden below.
       logical first/.true./
       common/tst2/sigrsv,sig_nr,sig_mec
       real br2(7),br3(7)
+
+c !$OMP THREADPRIVATE(/tst2/)
+
       save
 
       sig = 0.
@@ -1305,6 +1325,8 @@ c    (arXiv:0712.3731). To be submitted to Phys. Rev. C.
       real*8 sig_mec
       logical first/.true./
       common/tst2/sigrsv,sig_nrsv,sig_mec
+
+c !$OMP THREADPRIVATE(/tst2/)
 
 
       mp = 0.9382727

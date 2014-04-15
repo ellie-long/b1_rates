@@ -169,8 +169,10 @@ echo "10 10.4" >> temp_epmax_shms
 
 echo "0 7.3" > temp_epmax_hms
 echo "10 7.3" >> temp_epmax_hms
-echo "0 10.5" > temp_thmin_hms
-echo "10 10.5" >> temp_thmin_hms
+#echo "0 10.5" > temp_thmin_hms
+#echo "10 10.5" >> temp_thmin_hms
+echo "0 12.2" > temp_thmin_hms
+echo "10 12.2" >> temp_thmin_hms
 # vvvv The below are maxed way above the max y so
 # that the HMS stuff doesn't appear on the plot. 
 # To put them back, remove the four lines below 
@@ -247,6 +249,7 @@ hms_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<
 hms_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14>max) max=$14} END {print max}' $file6`
 #hms_csmax="0.263E-05"
 #hms_csmin="0"
+#echo "hms_csmax="$hms_csmax
 hms_scale=`awk 'BEGIN{scale = 19/('$hms_csmax'-'$hms_csmin')} END {print scale}' $file6`
 
 shms_csmin=`awk 'BEGIN {min = 1000} {if ($1==2 && $2==1 && $14>0 && $10>0 && $10<1000 && $14<min) min=$14} END {print min}' $file6`
@@ -685,19 +688,19 @@ display Azz_rates_hms_shms.png
 #		-settype bar		-block temp_shms_time 		-log y	-graph 2 -bxy 1:2 \
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
-#xmgrace \
-#		-settype xy   		-block temp_model_nosea_Azz 		-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_model_sea_Azz			-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
-#		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
-#		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
-#		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
-#		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-#		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
-#		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-#        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+xmgrace \
+		-settype xy   		-block temp_model_nosea_Azz 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_sea_Azz			-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
+		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
+		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
+		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \
