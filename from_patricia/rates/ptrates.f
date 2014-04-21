@@ -208,7 +208,7 @@ c for each of the data points to be run
 c      DATA xval1/    100, 100, 100, 100, 100/
 c      DATA qqval1/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
+c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
 c      DATA xval1/    1.3, 100, 100, 100, 100/
 
 
@@ -218,14 +218,14 @@ c      DATA xval1/    100, 100, 100, 100, 100/
       DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
 c      DATA prec1/    168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA qqval1/   99, 99, 99, 99, 3.82/   
+c      DATA qqval1/   99, 99, 99, 99, 3.82/   
 c      DATA qqval1/    1.8, 99, 99, 99, 99 /   
 
 c      DATA qqval1/    1.3, 99, 99, 99, 99 /   
 c      DATA qqval1/     99, 99, 99, 99, 99/   
 
-c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.41/
-c      DATA qqval1/   99, 99, 99, 99, 3.33/   
+      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.41/
+      DATA qqval1/   99, 99, 99, 99, 3.33/   
 
 c      DATA qqval1/    0.81, 99, 99, 99, 99/   
 cc      DATA qqval1/    1.4, 99, 99, 99, 99 /   
@@ -235,27 +235,28 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec2/    72.0,  108.0,  180.0,  168.0,  168.0/
+c      DATA prec2/    72.0,  108.0,  180.0,  168.0,  168.0/
 c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
 c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
 c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
 
-c      DATA prec2/    360.0,  168.0,  168.0,  168.0, 168.0/
+      DATA prec2/    360.0,  168.0,  168.0,  168.0, 168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
+c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
 c       DATA xval2/    1.3, 100, 100, 100, 100/
 c       DATA xval2/    1.3, 100, 100, 100, 100/
 c       DATA xval2/    1.3, 100, 100, 100, 100/
 
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
 c      DATA qqval2/    0.85, 99, 99, 99, 99/   
 
 c      DATA qqval2/    1.3, 99, 99, 99, 99 /   
 c      DATA qqval2/    2.0, 99, 99, 99, 99/   
 
 c      DATA xval2/    0.28, 100.0, 100.0, 100.0, 100.0/
-c      DATA qqval2/   1.47, 99, 99, 99, 99/   
+      DATA xval2/    0.29, 100.0, 100.0, 100.0, 100.0/
+      DATA qqval2/   1.8, 99, 99, 99, 99/   
 
 c      DATA qqval2/    0.6, 99, 99, 99, 99 /   
 c      DATA qqval2/    1.2, 99, 99, 99, 99 /   
@@ -344,7 +345,7 @@ c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
-      w2min     =  1.85**2  ! Cut on W
+      w2min     =  1.8**2  ! Cut on W
 c      w2min     =  1.50**2  ! Cut on W
 c      w2min     =  0.0  ! Cut on W
 c      w2max     =  1.85**2  ! Cut on W
@@ -373,7 +374,7 @@ c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
-      Pzz_in    =  0.3    ! expected improvement on the target
+      Pzz_in    =  0.30    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
       fsyst_xs  =  0.05     ! add a 5% from F1

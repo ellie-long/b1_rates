@@ -228,6 +228,7 @@ awk '$1==2 && $5!="NaN" {print $2,$12,0,$5}' $file7 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 awk '$1==2 && $5!="NaN" {print $2,$12,0,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
+awk '$1==2 && $5!="NaN" {print $2,$12,0,sqrt($5*$5+$10*$10),0.00503/sqrt($5*$5+$10*$10)}' $file7 > b1d_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 
 awk '$1==2 && $5!="NaN" {print $2-$3,-0.025,"\n"$2-$3,-0.025+$9"\n"$2+$3,-0.025+$9,"\n"$2+$3,-0.025}' $file7 > temp_shms_azz_sys_bar
@@ -734,27 +735,27 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 
 #display b1_rates_hms_shms.png
 
-xmgrace \
-		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_117			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_176			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_212			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_325			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_r35			-graph 0 -bxy 1:2 \
-		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
-		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
-		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
-		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
-		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
-		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
-        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+#xmgrace \
+#		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_117			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_176			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_212			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_325			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_r35			-graph 0 -bxy 1:2 \
+#		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
+#		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
+#		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
+#        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 #
 #
 #xmgrace \
