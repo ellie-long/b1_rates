@@ -1,12 +1,23 @@
       PROGRAM RATES
-c----------
-c     Get rates for the b1d proposal
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c
-c--   Patricia Solvignon, Nov. 16, 2010
-c Edited heavily by Elena Long, 4/10/2013
+c     ptrates.f
+c
+c     This program is designed to calculate X(e,e') rates and is optimized for Hall C
+c     during the 12 GeV era. It started as code written by Patricia Solvignon (circa 
+c     2010), and has since been modified to include Peter Bosted's fits for the low x 
+c     region, and Misak Sargsian's light-cone calculations for the high x region.
+c
+c     It is compiled by:
+c          gfortran -ffixed-line-length-none -o ptrates ptrates.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
 c 
-
-
+c     It has been successfully tested with GNU Fortran 4.6.3 on Ubuntu 12.04
+c
+c     Elena Long
+c     ellie@jlab.org
+c     4/4/2013 - 4/21/2014
+c
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       integer :: clck_counts_beg, clck_counts_end, clck_rate
       integer :: clck_counts_beg2, clck_counts_end2, clck_rate2
