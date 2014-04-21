@@ -696,8 +696,8 @@ with g0
     s6 comment "Cols 1:2:3"
 #    s6 legend  "Bacchetta's limits"
 
-#    s7 hidden false
-    s7 hidden true
+    s7 hidden false
+#    s7 hidden true
     s7 type xy
     s7 symbol 0
     s7 symbol size 0.50000
@@ -748,8 +748,8 @@ with g0
     s7 legend  "Miller b16q"
 
 
-#    s8 hidden false
-    s8 hidden true
+    s8 hidden false
+#    s8 hidden true
     s8 type xy
     s8 symbol 0
     s8 symbol size 0.50000
@@ -799,8 +799,8 @@ with g0
     s8 comment "Cols 1:2:3"
 #    s8 legend  "Bacchetta's limits"
 
-#    s9 hidden false
-    s9 hidden true
+    s9 hidden false
+#    s9 hidden true
     s9 type xy
     s9 symbol 0
     s9 symbol size 0.50000
@@ -850,8 +850,8 @@ with g0
     s9 comment "Cols 1:2:3"
 #    s9 legend  "Bacchetta's limits"
 
-#    s10 hidden false
-    s10 hidden true
+    s10 hidden false
+#    s10 hidden true
     s10 type xy
     s10 symbol 0
     s10 symbol size 0.50000
@@ -901,8 +901,8 @@ with g0
     s10 comment "Cols 1:2:3"
 #    s10 legend  "Bacchetta's limits"
 
-#    s11 hidden false
-    s11 hidden true
+    s11 hidden false
+#    s11 hidden true
     s11 type xy
     s11 symbol 0
     s11 symbol size 0.50000

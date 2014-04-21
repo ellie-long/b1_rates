@@ -412,12 +412,12 @@ c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
       thrad = 2.*asin(sqrt(s2))
       th_in2 = thrad/d_r
 
-      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
-      read (*,*) e_in1
-      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
-      read (*,*) ep_in1
-      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
-      read (*,*) th_in1
+c      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
+c      read (*,*) e_in1
+c      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
+c      read (*,*) ep_in1
+c      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
+c      read (*,*) th_in1
       call system_clock ( clck_counts_beg2, clck_rate2 ) 
 
 

@@ -61,11 +61,18 @@ awk '$1==1 && $2!=0.0{print $2,$5/$2}' $file5 > temp_model_bacchetta_up
 file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
 awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R12_m338.dat temp_model_b16q
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R-10.dat temp_model_b16q_Rm10
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R+10.dat temp_model_b16q_Rp10
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m-10.dat temp_model_b16q_mm10
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m+10.dat temp_model_b16q_mp10
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R12_m338.dat temp_model_b16q
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R-10.dat temp_model_b16q_Rm10
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R+10.dat temp_model_b16q_Rp10
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m-10.dat temp_model_b16q_mm10
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m+10.dat temp_model_b16q_mp10
+
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_117.dat temp_6qhc_117
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_176.dat temp_6qhc_176
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_212.dat temp_6qhc_212
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_325.dat temp_6qhc_325
+cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_ref_35.dat temp_6qhc_r35
+
 
 # In file4, the columns are defined by:
 # $1  = Spectrometer Type
@@ -573,6 +580,31 @@ awk '{print $2,$14}' $file4 > temp_syst
 #			  -settype bar	-block temp_shms_time 	-log y	-graph 2 -bxy 1:2 \
 #              -p b1_proj_new.par -noask
 
+#gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
+#		-settype xy			-block temp_model_miller			-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_nosea_mstw		-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_sea_mstw			-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_sargsian_vn		-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_sargsian_lc		-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_bacchetta_low		-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_bacchetta_up		-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_b16q				-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_b16q_Rm10			-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_b16q_Rp10			-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_b16q_mm10			-graph 0 -bxy 1:2 \
+#		-settype xy			-block temp_model_b16q_mp10			-graph 0 -bxy 1:2 \
+#		-settype xydy		-block temp_xb1_tot					-graph 0 -bxy 1:2:3 \
+#		-settype xydy		-block temp_xb1_stat				-graph 0 -bxy 1:2:3 \
+#		-settype xydxdy		-block temp_hms_tot					-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_hms_stat				-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_shms_tot				-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_shms_stat				-graph 0 -bxy 1:2:3:4 \
+#        -settype xy     	-block temp_shms_b1_sys_bar			-graph 0 -bxy 1:2 \
+
+
+
+
+
 #gracebat -hdevice EPS -printfile b1_rates_hms_shms.eps \
 gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-settype xy			-block temp_model_miller			-graph 0 -bxy 1:2 \
@@ -582,11 +614,11 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-settype xy			-block temp_model_sargsian_lc		-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_model_bacchetta_low		-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_model_bacchetta_up		-graph 0 -bxy 1:2 \
-		-settype xy			-block temp_model_b16q				-graph 0 -bxy 1:2 \
-		-settype xy			-block temp_model_b16q_Rm10			-graph 0 -bxy 1:2 \
-		-settype xy			-block temp_model_b16q_Rp10			-graph 0 -bxy 1:2 \
-		-settype xy			-block temp_model_b16q_mm10			-graph 0 -bxy 1:2 \
-		-settype xy			-block temp_model_b16q_mp10			-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_6qhc_117				-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_6qhc_176				-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_6qhc_212				-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_6qhc_325				-graph 0 -bxy 1:2 \
+		-settype xy			-block temp_6qhc_r35				-graph 0 -bxy 1:2 \
 		-settype xydy		-block temp_xb1_tot					-graph 0 -bxy 1:2:3 \
 		-settype xydy		-block temp_xb1_stat				-graph 0 -bxy 1:2:3 \
 		-settype xydxdy		-block temp_hms_tot					-graph 0 -bxy 1:2:3:4 \
@@ -710,11 +742,11 @@ xmgrace \
 		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
 		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
 		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_b16q			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_b16q_Rm10		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_b16q_Rp10		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_b16q_mm10		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_b16q_mp10		-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_6qhc_117			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_6qhc_176			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_6qhc_212			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_6qhc_325			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_6qhc_r35			-graph 0 -bxy 1:2 \
 		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
 		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
 		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
