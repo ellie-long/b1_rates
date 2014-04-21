@@ -179,9 +179,9 @@ c !$OMP THREADPRIVATE(/tst2/)
 
 
 c For Azz, our target range is 0.9 < x < 1.8
-c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
-c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
-c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
+      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
+      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
+      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
 c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
 c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
@@ -193,9 +193,9 @@ c      DATA cent_x/      0.16, 0.275, 0.36, 0.49, 0.64,  0.7,  0.8,  0.9,  1.0, 
 c      DATA cent_x_min/  0.09, 0.23,  0.32, 0.40, 0.58, 0.65, 0.75, 0.85, 0.95, 1.05, 1.15/ 
 c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
 
-      DATA cent_x/      0.16, 0.29, 0.40, 0.515, 0.64,  0.8,  0.9,  1.0,  1.1,  1.2, 1.3/ 
-      DATA cent_x_min/  0.09, 0.23, 0.35, 0.45,  0.58, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
-      DATA cent_x_max/  0.23, 0.35, 0.45, 0.58,  0.70, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35/ 
+c      DATA cent_x/      0.16, 0.29, 0.40, 0.515, 0.64,  0.8,  0.9,  1.0,  1.1,  1.2, 1.3/ 
+c      DATA cent_x_min/  0.09, 0.23, 0.35, 0.45,  0.58, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+c      DATA cent_x_max/  0.23, 0.35, 0.45, 0.58,  0.70, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35/ 
 
 
 
@@ -203,68 +203,95 @@ c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.75, 0.85, 0.95, 1.05, 
 c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c This section creates the x and Q^2 values to be used
 c for each of the data points to be run
-      ! 11 GeV kinematics
       ! HMS
+c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
 c      DATA xval1/    100, 100, 100, 100, 100/
 c      DATA qqval1/    99, 99, 99, 99, 99/   
-      ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+     ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
 c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
-c      DATA xval1/    1.3, 100, 100, 100, 100/
-
-
-c      DATA xval1/    0.9, 100, 100, 100, 100/
-c      DATA xval1/    100, 100, 100, 100, 100/
-      ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
-c      DATA prec1/    168.0,  168.0,  168.0,  168.0,  168.0/
-      ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA qqval1/   99, 99, 99, 99, 3.82/   
-c      DATA qqval1/    1.8, 99, 99, 99, 99 /   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-c      DATA qqval1/    1.3, 99, 99, 99, 99 /   
-c      DATA qqval1/     99, 99, 99, 99, 99/   
+     ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    168.0, 168.0, 336.0, 720.0, 360.0/
+c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.41/
+c      DATA qqval1/   99,    99,    99,    99,    3.33/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.41/
-      DATA qqval1/   99, 99, 99, 99, 3.33/   
+     ! vvvvv Proposal Azz at E0!=2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec1/    3.0,  168, 336, 720, 360/
+      DATA xval1/    100,  100, 100, 100, 100/
+      DATA qqval1/   99,   99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-c      DATA qqval1/    0.81, 99, 99, 99, 99/   
-cc      DATA qqval1/    1.4, 99, 99, 99, 99 /   
-c      DATA qqval1/    0.37, 99, 99, 99, 99/   
+     ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    3.0,  168, 336, 720, 360/
+c      DATA xval1/    1.3,  100, 100, 100, 100/
+c      DATA qqval1/   0.37, 99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+
+c ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! SHMS
+c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
-      ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA prec2/    72.0,  108.0,  180.0,  168.0,  168.0/
-c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
-c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
-c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
 
-      DATA prec2/    360.0,  168.0,  168.0,  168.0, 168.0/
-      ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
-c       DATA xval2/    1.3, 100, 100, 100, 100/
-c       DATA xval2/    1.3, 100, 100, 100, 100/
-c       DATA xval2/    1.3, 100, 100, 100, 100/
+     ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/    72.0, 108.0, 180.0, 168.0, 168.0/
+c      DATA xval2/    0.15, 0.3,   0.452, 100.0, 100.0/
+c      DATA qqval2/   1.21, 2.0,   2.58,  99,    99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-      ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
-c      DATA qqval2/    0.85, 99, 99, 99, 99/   
+     ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/    360.0, 168.0, 168.0, 168.0, 168.0/
+c      DATA xval2/    0.29,  100.0, 100.0, 100.0, 100.0/
+c      DATA qqval2/   1.8,   99,    99,    99,    99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-c      DATA qqval2/    1.3, 99, 99, 99, 99 /   
-c      DATA qqval2/    2.0, 99, 99, 99, 99/   
+     ! vvvvv Proposal Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec2/    168, 216, 360, 168, 168/
+      DATA xval2/    1.3, 100, 100, 100, 100/
+      DATA qqval2/   2.0, 99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-c      DATA xval2/    0.28, 100.0, 100.0, 100.0, 100.0/
-      DATA xval2/    0.29, 100.0, 100.0, 100.0, 100.0/
-      DATA qqval2/   1.8, 99, 99, 99, 99/   
+     ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec2/     84, 216, 360, 168, 168/
+      DATA xval2/    1.3, 100, 100, 100, 100/
+      DATA qqval2/   1.2, 99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-c      DATA qqval2/    0.6, 99, 99, 99, 99 /   
-c      DATA qqval2/    1.2, 99, 99, 99, 99 /   
-c      DATA qqval2/    0.33, 99, 99, 99, 99/   
-c     vvvvv HERMES
+     ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec2/     18, 216, 360, 168, 168/
+      DATA xval2/    1.3, 100, 100, 100, 100/
+      DATA qqval2/   0.8, 99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+     ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec2/      6, 216, 360, 168, 168/
+      DATA xval2/    1.3, 100, 100, 100, 100/
+      DATA qqval2/   0.6, 99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+     ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec2/      3, 216, 360, 168, 168/
+      DATA xval2/    1.3, 100, 100, 100, 100/
+      DATA qqval2/   0.3, 99,  99,  99,  99/   
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+     ! vvvvv Matching HERMES Results vvv vvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA xval2/    0.1, 0.3, 0.452, 0.128, 0.248/
 c      DATA qqval2/   1.01, 1.5, 4.69, 2.33, 3.11/   
 c      DATA prec2/    168.0,  168.0,  117.4,  982.2,  59.65/
+     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+c ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       ! HRSs
 c      DATA xval3/    0.1, 0.3, 0.5, 0.75, 1.00/
       DATA xval3/    100, 100, 100, 100, 100/
