@@ -114,14 +114,26 @@ awk '$1==6 {print $2,0,sqrt($11*S11)}' $file4 > temp_sbs_tot
 
 # This fills files that will be used to make bar graphs of the 
 # rates vs x_Bjorken
-awk '$1==1 && $2!="NaN" {print $29,$7}' $file4 > temp_hms_rates
-awk '$1==2 && $2!="NaN" {print $29,$7}' $file4 > temp_shms_rates
+echo "0	0" > temp_hms_rates
+echo "0	0" > temp_hms_totrates
+echo "0	0" > temp_shms_rates
+echo "0	0" > temp_shms_totrates
+#awk '$1==1 && $2!="NaN" {print $29,$7}' $file4 > temp_hms_rates
+#awk '$1==2 && $2!="NaN" {print $29,$7}' $file4 > temp_shms_rates
+awk '$1==1 && $2!="NaN" && $29<2 {print $29,$7}' $file4 >> temp_hms_rates
+awk '$1==1 && $2!="NaN" && $29>1.99 {print 0.7,$7}' $file4 >> temp_hms_rates
+awk '$1==2 && $2!="NaN" && $29<2 {print $29,$7}' $file4 >> temp_shms_rates
+awk '$1==2 && $2!="NaN" && $29>1.99 {print 0.7,$7}' $file4 >> temp_shms_rates
 awk '$1==3 && $2!="NaN" {print $29,$7}' $file4 > temp_hrs_rates
 awk '$1==4 && $2!="NaN" {print $29,$7}' $file4 > temp_solid_rates
 awk '$1==5 && $2!="NaN" {print $29,$7}' $file4 > temp_bb_rates
 awk '$1==6 && $2!="NaN" {print $29,$7}' $file4 > temp_sbs_rates
-awk '$1==1 && $2!="NaN" {print $29,$25}' $file4 > temp_hms_totrates
-awk '$1==2 && $2!="NaN" {print $29,$25}' $file4 > temp_shms_totrates
+#awk '$1==1 && $2!="NaN" {print $29,$25}' $file4 > temp_hms_totrates
+#awk '$1==2 && $2!="NaN" {print $29,$25}' $file4 > temp_shms_totrates
+awk '$1==1 && $2!="NaN" && $29<2 {print $29,$25}' $file4 >> temp_hms_totrates
+awk '$1==1 && $2!="NaN" && $29>1.99 {print 0.7,$25}' $file4 >> temp_hms_totrates
+awk '$1==2 && $2!="NaN" && $29<2 {print $29,$25}' $file4 >> temp_shms_totrates
+awk '$1==2 && $2!="NaN" && $29>1.99 {print 0.7,$25}' $file4 >> temp_shms_totrates
 awk '$1==3 && $2!="NaN" {print $29,$25}' $file4 > temp_hrs_totrates
 awk '$1==4 && $2!="NaN" {print $29,$25}' $file4 > temp_solid_totrates
 awk '$1==5 && $2!="NaN" {print $29,$25}' $file4 > temp_bb_totrates
@@ -130,8 +142,12 @@ awk '$1==6 && $2!="NaN" {print $29,$25}' $file4 > temp_sbs_totrates
 
 # This fills files that will be used to make bar graphs of the 
 # time needed vs x_Bjorken
-awk '$1==1 && $2!="NaN" {print $29,$12}' $file4 > temp_hms_time
-awk '$1==2 && $2!="NaN" {print $29,$12}' $file4 > temp_shms_time
+#awk '$1==1 && $2!="NaN" {print $29,$12}' $file4 > temp_hms_time
+#awk '$1==2 && $2!="NaN" {print $29,$12}' $file4 > temp_shms_time
+awk '$1==1 && $2!="NaN" && $29<2 {print $29,$12}' $file4 > temp_hms_time
+awk '$1==1 && $2!="NaN" && $29>1.99 {print 0.7,$12}' $file4 > temp_hms_time
+awk '$1==2 && $2!="NaN" && $29<2 {print $29,$12}' $file4 > temp_shms_time
+awk '$1==2 && $2!="NaN" && $29>1.99 {print 0.7,$12}' $file4 > temp_shms_time
 awk '$1==3 && $2!="NaN" {print $29,$12}' $file4 > temp_hrs_time
 awk '$1==4 && $2!="NaN" {print $29,$12}' $file4 > temp_solid_time
 awk '$1==5 && $2!="NaN" {print $29,$12}' $file4 > temp_bb_time
@@ -396,8 +412,8 @@ awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'
 awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q23
 awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q24
 awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q25
-#echo "0.0	0.0	0.0" >> temp_hms_cq2
-#echo "0.0	0.0	0.0" >> temp_hms_q21
+echo "0.0	0.0	0.0" >> temp_hms_cq2
+echo "0.0	0.0	0.0" >> temp_hms_q21
 echo "0.0	0.0	0.0" >> temp_hms_q22
 echo "0.0	0.0	0.0" >> temp_hms_q23
 echo "0.0	0.0	0.0" >> temp_hms_q24
@@ -409,8 +425,8 @@ awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale
 awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q23
 awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q24
 awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q25
-#echo "0.0	0.0	0.0" >> temp_shms_cq2
-#echo "0.0	0.0	0.0" >> temp_shms_q21
+echo "0.0	0.0	0.0" >> temp_shms_cq2
+echo "0.0	0.0	0.0" >> temp_shms_q21
 echo "0.0	0.0	0.0" >> temp_shms_q22
 echo "0.0	0.0	0.0" >> temp_shms_q23
 echo "0.0	0.0	0.0" >> temp_shms_q24
@@ -427,8 +443,8 @@ awk '$1==3 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_hrs_aq2
 awk '$1==4 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_solid_aq2
 awk '$1==5 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_bb_aq2
 awk '$1==6 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_sbs_aq2
-#echo "0.0	0.0	0.0" >> temp_hms_aq2
-#echo "0.0	0.0	0.0" >> temp_shms_aq2
+echo "0.0	0.0	0.0" >> temp_hms_aq2
+echo "0.0	0.0	0.0" >> temp_shms_aq2
 
 
 # This fills temporary files for E'

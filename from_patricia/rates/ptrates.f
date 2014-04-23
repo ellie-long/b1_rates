@@ -220,30 +220,50 @@ c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
 c      DATA xval1/    100, 100, 100, 100, 100/
 c      DATA qqval1/    99, 99, 99, 99, 99/   
 
-     ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+      ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
 c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.55/
 c      DATA qqval1/   99, 99, 99, 99, 3.82/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+      ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec1/    168.0, 168.0, 336.0, 720.0, 360.0/
 c      DATA xval1/    100.0, 100.0, 100.0, 100.0, 0.41/
 c      DATA qqval1/   99,    99,    99,    99,    3.33/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0!=2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec1/    3.0,  168, 336, 720, 360/
-      DATA xval1/    100,  100, 100, 100, 100/
-      DATA qqval1/   99,   99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvvvv Proposal Azz at E0!=2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    3.0,  168, 336, 720, 360/
+c      DATA xval1/    100,  100, 100, 100, 100/
+c      DATA qqval1/   99,   99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    333, 216, 360, 168, 168/
+c      DATA xval1/    1.4, 100, 100, 100, 100/
+c      DATA qqval1/   4.0, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec1/    50, 216, 360, 168, 168/
+c      DATA xval1/    1.0, 100, 100, 100, 100/
+c      DATA qqval1/   1.7, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+      ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec1/    3.0,  168, 336, 720, 360/
 c      DATA xval1/    1.3,  100, 100, 100, 100/
 c      DATA qqval1/   0.37, 99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
+      ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec1/     15, 216, 360, 168, 168/
+      DATA xval1/    1.65, 100, 100, 100, 100/
+      DATA qqval1/   0.31, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 
 c ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -253,53 +273,54 @@ c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
 
-     ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+      ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec2/    72.0, 108.0, 180.0, 168.0, 168.0/
 c      DATA xval2/    0.15, 0.3,   0.452, 100.0, 100.0/
 c      DATA qqval2/   1.21, 2.0,   2.58,  99,    99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+      ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec2/    360.0, 168.0, 168.0, 168.0, 168.0/
 c      DATA xval2/    0.29,  100.0, 100.0, 100.0, 100.0/
 c      DATA qqval2/   1.8,   99,    99,    99,    99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/    168, 216, 360, 168, 168/
-      DATA xval2/    1.3, 100, 100, 100, 100/
-      DATA qqval2/   2.0, 99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/     84, 216, 360, 168, 168/
-      DATA xval2/    1.3, 100, 100, 100, 100/
-      DATA qqval2/   1.2, 99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/    300, 216, 360, 168, 168/
+c      DATA xval2/    1.8, 100, 100, 100, 100/
+c      DATA qqval2/   1.5, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/     18, 216, 360, 168, 168/
-      DATA xval2/    1.3, 100, 100, 100, 100/
-      DATA qqval2/   0.8, 99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/    45, 216, 360, 168, 168/
+c      DATA xval2/    3.7, 100, 100, 100, 100/
+c      DATA qqval2/   0.71, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/      6, 216, 360, 168, 168/
-      DATA xval2/    1.3, 100, 100, 100, 100/
-      DATA qqval2/   0.6, 99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      DATA prec2/     15, 216, 360, 168, 168/
+      DATA xval2/    1.54, 100, 100, 100, 100/
+      DATA qqval2/   0.29, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/      3, 216, 360, 168, 168/
-      DATA xval2/    1.3, 100, 100, 100, 100/
-      DATA qqval2/   0.3, 99,  99,  99,  99/   
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvvvv Potential Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/    168, 216, 360, 168, 168/
+c      DATA xval2/    1.3, 100, 100, 100, 100/
+c      DATA qqval2/   2.0, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-     ! vvvvv Matching HERMES Results vvv vvvvvvvvvvvvvvvvvvvvvvvv
+      ! vvvvv Potential Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec2/      6, 216, 360, 168, 168/
+c      DATA xval2/    1.3, 100, 100, 100, 100/
+c      DATA qqval2/   0.6, 99,  99,  99,  99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Matching HERMES Results vvv vvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA xval2/    0.1, 0.3, 0.452, 0.128, 0.248/
 c      DATA qqval2/   1.01, 1.5, 4.69, 2.33, 3.11/   
 c      DATA prec2/    168.0,  168.0,  117.4,  982.2,  59.65/
-     ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 c ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -372,20 +393,20 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
-      w2min     =  1.8**2  ! Cut on W
+c      w2min     =  1.8**2  ! Cut on W
 c      w2min     =  1.50**2  ! Cut on W
-c      w2min     =  0.0  ! Cut on W
+      w2min     =  0.0  ! Cut on W
 c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
@@ -408,11 +429,10 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-c      Pzz_in    =  0.2    ! expected improvement on the target
-c      Pzz_in    =  0.15    ! expected improvement on the target
-c      Pzz_in    =  0.25    ! expected improvement on the target
-c      Pzz_in    =  0.15    ! expected improvement on the target
       Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.25    ! expected improvement on the target
+c      Pzz_in    =  0.20    ! expected improvement on the target
+c      Pzz_in    =  0.15    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
       fsyst_xs  =  0.05     ! add a 5% from F1
@@ -497,8 +517,11 @@ c      write (6,*) "Please enter E' (GeV) you wish to use for f_dil:"
 c      read (*,*) ep_in1
 c      write (6,*) "Please enter theta (deg) you wish to use for f_dil:"
 c      read (*,*) th_in1
+c      write(6,*) "Q^2: ", 4.0*e_in1*ep_in1*(sin(th_in1*d_r)**2)
+c      write(6,*) "x: ", 4.0*e_in1*ep_in1*(sin(th_in1*d_r)**2)/(2*mp*(e_in1-ep_in1))
 
       call system_clock ( clck_counts_beg2, clck_rate2 ) 
+
 
 
 
@@ -908,7 +931,7 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
      +                                  + ((0+F2c_qe)/12.)/nu)
                   endif
                   if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-                     if(x.lt.1.1) then
+                     if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
                         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
                         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -919,7 +942,7 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
      +                                     + ((F2n_ie+F2n_qe)/14.)/nu)
                         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                                     + ((F2c_ie+F2c_qe)/12.)/nu)
-                     elseif (x.gt.1.1.or.x.eq.1.1) then
+                     elseif ((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
                         if (lumi_d.gt.0) call init_incl(e_in,pit,thit,x,a_d,z_d,sigma_unpol)
                         if (lumi_li.gt.0) call init_incl(e_in,pit,thit,x,a_li,z_li,sigma_unpol_li)
                         if (lumi_he.gt.0) call init_incl(e_in,pit,thit,x,a_he,z_he,sigma_unpol_he)
@@ -971,8 +994,8 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                  + (lumi_li*sigma_unpol_li*dep*thincr*d_r*2*dphi*1E-24)
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
-                 if (w2.le.w2min) then
-c                 if (x.lt.0.75) then
+c                 if (w2.le.w2min) then
+                 if (x.lt.0.75) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -981,16 +1004,16 @@ c                 if (x.lt.0.75) then
                     sigma_unpol_c  = 0.0
                     sigma_pol_d    = 0.0
                  endif
-c                 if (x.gt.1.85) then
 c                 if (w2.ge.w2max) then
-c                    sigma_unpol    = 0.0
-c                    sigma_unpol_d  = 0.0
-c                    sigma_unpol_li = 0.0
-c                    sigma_unpol_he = 0.0
-c                    sigma_unpol_n  = 0.0
-c                    sigma_unpol_c  = 0.0
-c                    sigma_pol_d    = 0.0
-c                 endif
+                 if (x.gt.1.85) then
+                    sigma_unpol    = 0.0
+                    sigma_unpol_d  = 0.0
+                    sigma_unpol_li = 0.0
+                    sigma_unpol_he = 0.0
+                    sigma_unpol_n  = 0.0
+                    sigma_unpol_c  = 0.0
+                    sigma_pol_d    = 0.0
+                 endif
 c                 if (q2.lt.1.0) then
 c                    sigma_unpol    = 0.0
 c                    sigma_unpol_d  = 0.0
@@ -1402,11 +1425,14 @@ c           The section below calculates the dilution factor based on the cross-
 c           at the central angle/energy of the detectors and x
 c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
             thrad = th_in1*d_r
+            if (qqval2(1).eq.99.and.xval2(1).eq.100) thrad = th_in2*d_r
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
             tnsq  = tan(thrad/2.)**2.
             nu    = e_in - ep_in1
+            if (qqval2(1).eq.99.and.xval2(1).eq.100) nu = e_in - ep_in2
             q2    = 4.*e_in*ep_in1*snsq
+            if (qqval2(1).eq.99.and.xval2(1).eq.100) q2 = 4.*e_in*ep_in2*snsq
 c            x     = q2/(2.*mp*nu)
             x     = cent_x(ib)
             w2    = mp*mp + q2/x - q2
@@ -1514,7 +1540,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                            + ((0+F2c_qe)/12.)/nu)
             endif
             if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-                     if(x.lt.1.1) then
+                     if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
                         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
                         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -1525,13 +1551,15 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                                     + ((F2n_ie+F2n_qe)/14.)/nu)
                         sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                                     + ((F2c_ie+F2c_qe)/12.)/nu)
-                     elseif (x.gt.1.1.or.x.eq.1.1) then
+                     elseif ((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
+                        if (qqval2(1).eq.99.and.xval2(1).eq.100) ep_in1 = ep_in2
                         if (lumi_d.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
                         if (lumi_li.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
                         if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
                         if (lumi_n.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
                         if (lumi_c.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
-                     endif
+
+                    endif
                sigma_unpol_d  = sigma_unpol
             endif
 
@@ -1741,7 +1769,7 @@ c !$OMP END CRITICAL
          endif
          if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
 c !$OMP CRITICAL
-            if(x.lt.1.1) then
+            if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
                if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
                if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
                if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Lithium-6
@@ -1783,7 +1811,7 @@ c !$OMP CRITICAL
      +                            + ((F2n_ie+F2n_qe)/14.)/nu)
                sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                            + ((F2c_ie+F2c_qe)/12.)/nu)
-            elseif(x.gt.1.1.or.x.eq.1.1) then
+            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
                if (lumi_d.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
                if (lumi_li.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
                if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
@@ -1843,10 +1871,6 @@ c         endif
      &                  lumsig_n,lumsig_c,lumsig_li,lumsig_heli
  
       enddo     
-
-c !$OMP END DO  
-
-c !$OMP END PARALLEL 
 
       write(6,*) "ispectro = ",ispectro
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
@@ -1974,7 +1998,7 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      +                         + ((0+F2c_qe)/12.)/nu)
          endif
          if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-            if(x.lt.1.1) then
+            if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
                sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -1985,7 +2009,7 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      +                            + ((F2n_ie+F2n_qe)/14.)/nu)
                sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                            + ((F2c_ie+F2c_qe)/12.)/nu)
-            elseif(x.gt.1.1.or.x.eq.1.1) then
+            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
                if (lumi_d.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
                if (lumi_li.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
                if (lumi_he.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
@@ -2022,7 +2046,27 @@ c         endif
          src_ratio_he = (sigma_unpol_he/sigma_unpol_d)*(a_d/a_he)
          src_ratio_c  = (sigma_unpol_c /sigma_unpol_d)*(a_d/a_c)
 
-         write(18,1008) x,q2,th_in1,e_in,ep_in1,nu,w2,
+
+         if (qqval2(1).eq.99.and.xval2(1).eq.100) then
+            write(16,1008) x,q2,th_in2,e_in,ep_in2,nu,w2,
+     &                     sigma_pol_d,
+     &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
+     &                     f_dil,sigma_unpol_c,
+     &                     src_ratio_n,src_ratio_he,src_ratio_c,
+     &                     sigma_unpol_li,
+     &                     lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                     lumsig_n,lumsig_c,lumsig_li,lumsig_heli
+            write(17,1008) x,q2,th_in2,e_in,ep_in2,nu,w2,
+     &                     sigma_pol_d,
+     &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
+     &                     f_dil,sigma_unpol_c,
+     &                     src_ratio_n,src_ratio_he,src_ratio_c,
+     &                     sigma_unpol_li,
+     &                     lumsig_p_d,lumsig_u_d,lumsig_he,
+     &                     lumsig_n,lumsig_c,lumsig_li,lumsig_heli
+         endif
+
+         write(18,1008) x,q2,th_in2,e_in,ep_in2,nu,w2,
      &                  sigma_pol_d,
      &                  sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                  f_dil,sigma_unpol_c,
@@ -2086,7 +2130,7 @@ c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c vvvvv Writes out Q^2-dependent Azz curve vvvvvvvv
       tempqq = qqval2(1)
-c      tempqq = qqval1(1)
+      if(qqval2(1).eq.99.) tempqq = qqval1(1)
       write (6,*) "qq:",tempqq
       call QE_b1(tempqq)
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
