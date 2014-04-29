@@ -216,9 +216,9 @@ c This section creates the x and Q^2 values to be used
 c for each of the data points to be run
       ! HMS
 c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
-c      DATA xval1/    100, 100, 100, 100, 100/
-c      DATA qqval1/    99, 99, 99, 99, 99/   
+      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
+      DATA xval1/    100, 100, 100, 100, 100/
+      DATA qqval1/    99, 99, 99, 99, 99/   
 
       ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
@@ -258,9 +258,9 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec1/     15, 216, 360, 168, 168/
-      DATA xval1/    1.65, 100, 100, 100, 100/
-      DATA qqval1/   0.31, 99,  99,  99,  99/   
+c      DATA prec1/     15, 216, 360, 168, 168/
+c      DATA xval1/    1.8, 100, 100, 100, 100/
+c      DATA qqval1/   0.31, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -287,9 +287,9 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
 
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec2/    300, 216, 360, 168, 168/
-c      DATA xval2/    1.8, 100, 100, 100, 100/
-c      DATA qqval2/   1.5, 99,  99,  99,  99/   
+      DATA prec2/    300, 216, 360, 168, 168/
+      DATA xval2/    1.8, 100, 100, 100, 100/
+      DATA qqval2/   1.5, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
@@ -299,9 +299,9 @@ c      DATA qqval2/   0.71, 99,  99,  99,  99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/     15, 216, 360, 168, 168/
-      DATA xval2/    1.54, 100, 100, 100, 100/
-      DATA qqval2/   0.29, 99,  99,  99,  99/   
+c      DATA prec2/     15, 216, 360, 168, 168/
+c      DATA xval2/    1.8, 100, 100, 100, 100/
+c      DATA qqval2/   0.29, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Potential Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvv
@@ -399,10 +399,10 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
       csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
 c      w2min     =  1.50**2  ! Cut on W
