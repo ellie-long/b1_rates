@@ -3235,8 +3235,8 @@ with g5
 #    world 0, 0, 0.7, 5.5
 #    world 0.001, 0.09, 1.0, 20
 ##    world 0, 0, 1.15, 5.5
-    world 0, 0, 2.0, 5.5
-#    world 0, 0, 2.000, 2.5
+#    world 0, 0, 2.0, 5.5
+    world 0, 0, 2.000, 2.5
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.7000, 1.49000, 0.98
@@ -4876,7 +4876,7 @@ with g7
 #    world 0, 0, 0.7, 3.25
 ##    world 0, 0, 1.15, 3.25
 #    world 0, 0, 2.0, 3.25
-    world 0, 0, 2.000, 2
+    world 0, 0, 2.000, 1.5
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.08000, 1.4900, 0.30
@@ -4961,7 +4961,7 @@ with g7
     yaxis  label color 1
     yaxis  label place normal
     yaxis  tick on
-    yaxis  tick major 1
+    yaxis  tick major 0.2
     yaxis  tick minor ticks 3
     yaxis  tick default 6
     yaxis  tick place rounded true

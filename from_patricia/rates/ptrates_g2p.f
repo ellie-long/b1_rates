@@ -1705,26 +1705,26 @@ c !$OMP END CRITICAL
             if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
             if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Carbon-12
    
-#            if (.not.(F1d_ie.gt.0)) F1d_ie = 0
-#            if (.not.(F1d_qe.gt.0)) F1d_qe = 0
-#            if (.not.(F1n_ie.gt.0)) F1n_ie = 0
-#            if (.not.(F1n_qe.gt.0)) F1n_qe = 0
-#            if (.not.(F1c_ie.gt.0)) F1c_ie = 0
-#            if (.not.(F1c_qe.gt.0)) F1c_qe = 0
-#            if (.not.(F1he_ie.gt.0)) F1he_ie = 0
-#            if (.not.(F1he_qe.gt.0)) F1he_qe = 0
-#            if (.not.(F1li_ie.gt.0)) F1li_ie = 0
-#            if (.not.(F1li_qe.gt.0)) F1li_qe = 0
-#            if (.not.(F2d_ie.gt.0)) F2d_ie = 0
-#            if (.not.(F2d_qe.gt.0)) F2d_qe = 0
-#            if (.not.(F2n_ie.gt.0)) F2n_ie = 0
-#            if (.not.(F2n_qe.gt.0)) F2n_qe = 0
-#            if (.not.(F2c_ie.gt.0)) F2c_ie = 0
-#            if (.not.(F2c_qe.gt.0)) F2c_qe = 0
-#            if (.not.(F2he_ie.gt.0)) F2he_ie = 0
-#            if (.not.(F2he_qe.gt.0)) F2he_qe = 0
-#            if (.not.(F2li_ie.gt.0)) F2li_ie = 0
-#            if (.not.(F2li_qe.gt.0)) F2li_qe = 0
+c            if (.not.(F1d_ie.gt.0)) F1d_ie = 0
+c            if (.not.(F1d_qe.gt.0)) F1d_qe = 0
+c            if (.not.(F1n_ie.gt.0)) F1n_ie = 0
+c            if (.not.(F1n_qe.gt.0)) F1n_qe = 0
+c            if (.not.(F1c_ie.gt.0)) F1c_ie = 0
+c            if (.not.(F1c_qe.gt.0)) F1c_qe = 0
+c            if (.not.(F1he_ie.gt.0)) F1he_ie = 0
+c            if (.not.(F1he_qe.gt.0)) F1he_qe = 0
+c            if (.not.(F1li_ie.gt.0)) F1li_ie = 0
+c            if (.not.(F1li_qe.gt.0)) F1li_qe = 0
+c            if (.not.(F2d_ie.gt.0)) F2d_ie = 0
+c            if (.not.(F2d_qe.gt.0)) F2d_qe = 0
+c            if (.not.(F2n_ie.gt.0)) F2n_ie = 0
+c            if (.not.(F2n_qe.gt.0)) F2n_qe = 0
+c            if (.not.(F2c_ie.gt.0)) F2c_ie = 0
+c            if (.not.(F2c_qe.gt.0)) F2c_qe = 0
+c            if (.not.(F2he_ie.gt.0)) F2he_ie = 0
+c            if (.not.(F2he_qe.gt.0)) F2he_qe = 0
+c            if (.not.(F2li_ie.gt.0)) F2li_ie = 0
+c            if (.not.(F2li_qe.gt.0)) F2li_qe = 0
          endif
 
          write(6,1010) "Third cross-section measurement...",

@@ -150,16 +150,15 @@ c            a3case = initial_data(6)
                   pferm  = 0.169 
                   ps     = 22.00 / 100.
                   bd     = 0.025
-               elseif (z.eq.7.and.a.eq.14) then
-                  nuclei = " N2"
-                  pferm  = 0.220
-                  ps     = 25.000 / 100.
-                  bd     = 0.025
-c                  ! write(6,*) "I'M HERE!! SEE?!"
                elseif (z.eq.6.and.a.eq.12) then
                   nuclei = " C"
                   pferm  = 0.221
                   ps     = 25.00 / 100.
+                  bd     = 0.025
+               elseif (z.eq.7.and.a.eq.14) then
+                  nuclei = " N2"
+                  pferm  = 0.220
+                  ps     = 25.000 / 100.
                   bd     = 0.025
                endif
       if(a.gt.2.9.and.a.lt.3.1.and.a3case.gt.1.5)then

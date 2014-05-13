@@ -389,10 +389,10 @@ with g0
     s2 symbol char font 0
     s2 symbol skip 0
     s2 line type 1
-    s2 line linestyle 2
+    s2 line linestyle 1
     s2 line linewidth 1.0
-#    s2 line color 4
-    s2 line color 15
+    s2 line color 1
+#    s2 line color 15
     s2 line pattern 1
     s2 baseline type 0
     s2 baseline off
@@ -1339,10 +1339,10 @@ with g2
     s2 symbol char font 0
     s2 symbol skip 0
     s2 line type 1
-    s2 line linestyle 2
+    s2 line linestyle 1
     s2 line linewidth 1.0
-#    s2 line color 4
-    s2 line color 15
+    s2 line color 1
+#    s2 line color 15
     s2 line pattern 1
     s2 baseline type 0
     s2 baseline off

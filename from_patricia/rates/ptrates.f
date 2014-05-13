@@ -177,6 +177,9 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 xdx
       REAL*8 P(0:23)
       REAL*8 sigrsv(7),sig_nr,sigmec
+
+      INTEGER test
+
       COMMON /VPLRZ/ E0_PASS,TH_PASS,EP_PASS
 
 c      COMMON /PARCORR/ P
@@ -188,6 +191,8 @@ c !$OMP THREADPRIVATE(/tst2/)
 
       call system_clock ( clck_counts_beg, clck_rate ) 
 
+      test = 0   ! Test Mode OFF
+c      test = 1   ! Test Mode ON
 
 c For Azz, our target range is 0.9 < x < 1.8
       DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
@@ -447,6 +452,11 @@ c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
       z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3;
       a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6;
 c----- MAIN ------------------------------------------------
+      if (test.eq.1) then
+         write(6,*) "*******************************************"
+         write(6,*) "************* TEST MODE ON ****************"
+         write(6,*) "*******************************************"
+      endif
       write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
       write (6,*) "------------------------------------------"
@@ -567,6 +577,7 @@ c         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! lumin
          write(6,*) "Using (HeD)D..."
       end if
 
+      lumi_c = 1E-20
       write(6,*) "lumi_d  = ",lumi_d
       write(6,*) "lumi_n  = ",lumi_n
       write(6,*) "lumi_he = ",lumi_he
@@ -587,11 +598,13 @@ c     &      DAzz    time '
       enddo
 
 
+      if (test.eq.1) GOTO 42
 cLoop over the spectrometers
 cvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      do ispectro = 1,6
       do ispectro = 1,2
 c      do ispectro = 2,2
+
 
          tot_time(ispectro)    = 0.0
          ! for physics extraction
@@ -1635,7 +1648,7 @@ c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel
 
 c !$OMP DO
 
-      do ib=10,200
+42    do ib=10,200
 c      write(6,*)"ib",ib
 
 c         e_in    = 11.0 ! GeV
@@ -1872,6 +1885,8 @@ c         endif
  
       enddo     
 
+      if (test.eq.1.) GOTO 43
+
       write(6,*) "ispectro = ",ispectro
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 
@@ -2083,7 +2098,7 @@ c     ^^^^^^^^^^^^ HMS ^^^^^^^^^^^^^^^^^^^
 c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-      write (6,*) "------------------------------------------"
+43    write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
       write (6,*) "------------------------------------------"
       write (6,*) "  HMS:             E'max=7.3  Thmin=12.2"
@@ -2126,6 +2141,11 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
       write (6,*) "Theta used for f_dil:",th_in1
       write (6,*) "Pzz used:",Pzz_in
       write (6,*) "Target material used:",targ
+      if (test.eq.1) then
+         write(6,*) "*******************************************"
+         write(6,*) "************* TEST MODE ON ****************"
+         write(6,*) "*******************************************"
+      endif
 c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c vvvvv Writes out Q^2-dependent Azz curve vvvvvvvv
