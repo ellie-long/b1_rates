@@ -46,7 +46,8 @@ nimj3_azz	= open("./azz_calc/nimj3_azz.dat", "wb")
 input_file = av18_wf
 output_file = av18_azz
 
-theta = 180
+m_d		= 1.876
+theta	= 180
 for wf in range(1,9):
 	if (wf == 1):
 		print "Working on F&S"
@@ -84,19 +85,28 @@ for wf in range(1,9):
 		columns = line.split()
 		k_fm  = float(columns[0])
 		k_gev = k_fm*0.197327
+		k = k_gev
 		u	= float(columns[1])
 		w	= float(columns[2])
 		if (wf>1): w = -w
-		R	= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
-#		k1	= k_gev
-		k1	= k_gev**2/1.876
-		k2	= k_gev
-#		k3	= k_gev
-		k3	= k_gev*math.cos(theta*3.14159/180)
-#		azz	= 1 - ((3/(k_gev**2))*(k3**2 - k1**2 + k2**2) + 1)*R
-#		azz	= 1 - ((3/(k_gev**2))*(k3**2) + 1)*R
-		azz	= ((3/(k_gev**2))*(k1**2/2-k3**2))*R
-		print >> output_file, k_gev, azz
+		R		= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
+		k1		= 0
+#		k1		= k**2/m_d
+		k2		= 0
+		k3		= k
+#		k3		= k*math.cos(theta*3.14159/180)
+#		x		= (((m_d**2+k**2)**(0.5))-k3)/(2*((m_d**2+k**2)**(0.5)))
+		x		= k/0.938
+		r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+		r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+		r_t0	= 1 + ((3*k3**2/(k**2))-1)*R
+#		azz		= 1 - ((3/(k_gev**2))*(k3**2 - k1**2 + k2**2) + 1)*R
+#		azz		= 1 - ((3/(k_gev**2))*(k3**2) + 1)*R
+#		azz		= ((3/(k_gev**2))*(k1**2/2-k3**2))*R
+#		azz		= r_t0 - r_vp - r_vm
+#		azz		= r_t0 - r_vp
+		azz		= r_vp - r_t0
+		print >> output_file, k, azz, r_t0, r_vm, r_vp
 
 
 av18_wf.close()
