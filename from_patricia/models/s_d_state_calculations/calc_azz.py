@@ -46,67 +46,97 @@ nimj3_azz	= open("./azz_calc/nimj3_azz.dat", "wb")
 input_file = av18_wf
 output_file = av18_azz
 
-m_d		= 1.876
-theta	= 180
+m_d			= 1.876
+theta		= 90
+theta_min	= 0
+theta_max	= 360
+phi			= 180
+phi_min		= 0
+phi_max		= 180
 for wf in range(1,9):
+#for wf in range(2,3):
 	if (wf == 1):
-		print "Working on F&S"
+		print "\nWorking on F&S"
 		input_file = fs_wf
 		output_file = fs_azz
  	elif (wf == 2):
-		print "Working on AV18"
+		print "\nWorking on AV18"
 		input_file = av18_wf
 		output_file = av18_azz
  	elif (wf == 3):
-		print "Working on CDBonn"
+		print "\nWorking on CDBonn"
 		input_file = cdbonn_wf
 		output_file = cdbonn_azz
  	elif (wf == 4):
-		print "Working on n3lo500"
+		print "\nWorking on n3lo500"
 		input_file = n3lo500_wf
 		output_file = n3lo500_azz
  	elif (wf == 5):
-		print "Working on n3lo600"
+		print "\nWorking on n3lo600"
 		input_file = n3lo600_wf
 		output_file = n3lo600_azz
  	elif (wf == 6):
-		print "Working on Nimj1"
+		print "\nWorking on Nimj1"
 		input_file = nimj1_wf
 		output_file = nimj1_azz
  	elif (wf == 7):
-		print "Working on Nimj2"
+		print "\nWorking on Nimj2"
 		input_file = nimj2_wf
 		output_file = nimj2_azz
  	elif (wf == 8):
-		print "Working on Nimj3"
+		print "\nWorking on Nimj3"
 		input_file = nimj3_wf
 		output_file = nimj3_azz
+	linenum	= 0
 	for line in input_file:
-		columns = line.split()
-		k_fm  = float(columns[0])
-		k_gev = k_fm*0.197327
-		k = k_gev
-		u	= float(columns[1])
-		w	= float(columns[2])
+		linenum = linenum+1
+		columns	= line.split()
+		k_fm 	= float(columns[0])
+		k_gev	= k_fm*0.197327
+		k		= k_gev
+		u		= float(columns[1])
+		w		= float(columns[2])
 		if (wf>1): w = -w
 		R		= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
-		k1		= 0
-#		k1		= k**2/m_d
-		k2		= 0
-		k3		= k
-#		k3		= k*math.cos(theta*3.14159/180)
-#		x		= (((m_d**2+k**2)**(0.5))-k3)/(2*((m_d**2+k**2)**(0.5)))
-		x		= k/0.938
-		r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
-		r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
-		r_t0	= 1 + ((3*k3**2/(k**2))-1)*R
-#		azz		= 1 - ((3/(k_gev**2))*(k3**2 - k1**2 + k2**2) + 1)*R
-#		azz		= 1 - ((3/(k_gev**2))*(k3**2) + 1)*R
-#		azz		= ((3/(k_gev**2))*(k1**2/2-k3**2))*R
-#		azz		= r_t0 - r_vp - r_vm
-#		azz		= r_t0 - r_vp
-		azz		= r_vp - r_t0
-		print >> output_file, k, azz, r_t0, r_vm, r_vp
+		azz 	= 0
+		r_t0 	= 0
+		r_vm 	= 0
+		r_vp 	= 0
+		if (k<1.2 and (linenum%3)==0):
+			print wf,k
+			for phi in range(phi_min,phi_max+1):
+#			for phi in range(0,1):
+				for theta in range(theta_min,theta_max+1):
+#					if ((theta%10) == 0): print wf,k,phi,theta
+					k1		= k*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
+#					k1		= k*math.sin(theta*3.14159/180)*0
+#					k1		= k*math.sin(theta*3.14159/180)
+					k2		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
+#					k2		= k*math.sin(theta*3.14159/180)*1
+#					k2		= 0
+#					k3		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
+					k3		= k*math.cos(theta*3.14159/180)
+#					k1		= 0
+#					k1		= k**2/m_d
+#					k2		= 0
+#					k3		= k
+#					k3		= k*math.cos(theta*3.14159/180)
+#					x		= (((m_d**2+k**2)**(0.5))+k3)/(2*((m_d**2+k**2)**(0.5)))
+#					x		= k/0.938
+					r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+					r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+					r_t0	= 1 + ((3*k3**2/(k**2))-1)*R
+#					azz		= 1 - ((3/(k_gev**2))*(k3**2 - k1**2 + k2**2) + 1)*R
+#					azz		= 1 - ((3/(k_gev**2))*(k3**2) + 1)*R
+#					azz		= ((3/(k_gev**2))*(k1**2/2-k3**2))*R
+#					azz		= r_t0 - r_vp - r_vm
+#					azz		= r_t0 - r_vp
+					azz		= azz + (r_vp - r_t0)/((theta_max-theta_min)*(phi_max-phi_min))
+#					azz		= azz + (r_vp - r_t0)/(theta_max-theta_min)
+#					azz		= (r_vp - r_t0)
+#					print >> output_file, k, azz, r_t0, r_vm, r_vp
+#		azz	= azz/(theta_max-theta_min)
+			print >> output_file, k, azz, r_t0, r_vm, r_vp
 
 
 av18_wf.close()
