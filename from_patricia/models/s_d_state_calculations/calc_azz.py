@@ -47,12 +47,13 @@ input_file = av18_wf
 output_file = av18_azz
 
 m_d			= 1.876
+m_n			= 0.939
 theta		= 90
 theta_min	= 0
-theta_max	= 360
+theta_max	= 180
 phi			= 180
 phi_min		= 0
-phi_max		= 180
+phi_max		= 360
 for wf in range(1,9):
 #for wf in range(2,3):
 	if (wf == 1):
@@ -102,16 +103,24 @@ for wf in range(1,9):
 		r_t0 	= 0
 		r_vm 	= 0
 		r_vp 	= 0
-		if (k<1.2 and (linenum%3)==0):
-			print wf,k
-			for phi in range(phi_min,phi_max+1):
-#			for phi in range(0,1):
-				for theta in range(theta_min,theta_max+1):
+		if (k<1.1):
+#		if (k<1.2 and (linenum%4)==0):
+#		if ((wf>1 and (k>0.30 and k<0.31)) or(wf==1 and (k>0.25 and k<0.26))):
+			print wf,k,R
+#			theta_min	= 0
+#			theta_max	= 360
+			for theta in range(theta_min,theta_max+1):
+#				azz			= 0
+#				phi_min		= 0
+#				phi_max		= 0
+				for phi in range(phi_min,phi_max+1):
 #					if ((theta%10) == 0): print wf,k,phi,theta
-					k1		= k*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
+					k1		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
 #					k1		= k*math.sin(theta*3.14159/180)*0
 #					k1		= k*math.sin(theta*3.14159/180)
-					k2		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
+					k2		= k*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
+					k1		= (k1**2 + k2**2)**(0.5)
+					k2		= 0
 #					k2		= k*math.sin(theta*3.14159/180)*1
 #					k2		= 0
 #					k3		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
@@ -123,6 +132,8 @@ for wf in range(1,9):
 #					k3		= k*math.cos(theta*3.14159/180)
 #					x		= (((m_d**2+k**2)**(0.5))+k3)/(2*((m_d**2+k**2)**(0.5)))
 #					x		= k/0.938
+					alpha	= (m_d-(m_n**2+k**2)**(0.5)-k3)/m_n
+					x		= (m_d-(m_n**2+k**2)**(0.5)+k3)/m_n
 					r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
 					r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
 					r_t0	= 1 + ((3*k3**2/(k**2))-1)*R
@@ -133,8 +144,9 @@ for wf in range(1,9):
 #					azz		= r_t0 - r_vp
 					azz		= azz + (r_vp - r_t0)/((theta_max-theta_min)*(phi_max-phi_min))
 #					azz		= azz + (r_vp - r_t0)/(theta_max-theta_min)
+#					azz		= azz + (r_vp - r_t0)/(phi_max-phi_min)
 #					azz		= (r_vp - r_t0)
-#					print >> output_file, k, azz, r_t0, r_vm, r_vp
+#				print >> output_file, theta, azz, r_t0, r_vm, r_vp
 #		azz	= azz/(theta_max-theta_min)
 			print >> output_file, k, azz, r_t0, r_vm, r_vp
 
