@@ -116,38 +116,20 @@ for wf in range(1,9):
 				for phi in range(phi_min,phi_max+1):
 #					if ((theta%10) == 0): print wf,k,phi,theta
 					k1		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
-#					k1		= k*math.sin(theta*3.14159/180)*0
-#					k1		= k*math.sin(theta*3.14159/180)
 					k2		= k*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
 					k1		= (k1**2 + k2**2)**(0.5)
 					k2		= 0
-#					k2		= k*math.sin(theta*3.14159/180)*1
-#					k2		= 0
-#					k3		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
 					k3		= k*math.cos(theta*3.14159/180)
-#					k1		= 0
-#					k1		= k**2/m_d
-#					k2		= 0
-#					k3		= k
-#					k3		= k*math.cos(theta*3.14159/180)
-#					x		= (((m_d**2+k**2)**(0.5))+k3)/(2*((m_d**2+k**2)**(0.5)))
-#					x		= k/0.938
 					alpha	= (m_d-(m_n**2+k**2)**(0.5)-k3)/m_n
-					x		= (m_d-(m_n**2+k**2)**(0.5)+k3)/m_n
 					r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
 					r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
 					r_t0	= 1 + ((3*k3**2/(k**2))-1)*R
-#					azz		= 1 - ((3/(k_gev**2))*(k3**2 - k1**2 + k2**2) + 1)*R
-#					azz		= 1 - ((3/(k_gev**2))*(k3**2) + 1)*R
-#					azz		= ((3/(k_gev**2))*(k1**2/2-k3**2))*R
-#					azz		= r_t0 - r_vp - r_vm
 #					azz		= r_t0 - r_vp
+#					azz		= (r_vp - r_t0)
 					azz		= azz + (r_vp - r_t0)/((theta_max-theta_min)*(phi_max-phi_min))
 #					azz		= azz + (r_vp - r_t0)/(theta_max-theta_min)
 #					azz		= azz + (r_vp - r_t0)/(phi_max-phi_min)
-#					azz		= (r_vp - r_t0)
 #				print >> output_file, theta, azz, r_t0, r_vm, r_vp
-#		azz	= azz/(theta_max-theta_min)
 			print >> output_file, k, azz, r_t0, r_vm, r_vp
 
 
