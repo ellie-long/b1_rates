@@ -92,45 +92,70 @@ for wf in range(1,9):
 	for line in input_file:
 		linenum = linenum+1
 		columns	= line.split()
-		k_fm 	= float(columns[0])
-		k_gev	= k_fm*0.197327
-		k		= k_gev
+		p_fm 	= float(columns[0])
+		p_gev	= p_fm*0.197327
+		p		= p_gev
 		u		= float(columns[1])
 		w		= float(columns[2])
 		if (wf>1): w = -w
 		R		= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
-		azz 	= 0
-		r_t0 	= 0
-		r_vm 	= 0
-		r_vp 	= 0
-		if (k<1.1):
-#		if (k<1.2 and (linenum%4)==0):
-#		if ((wf>1 and (k>0.30 and k<0.31)) or(wf==1 and (k>0.25 and k<0.26))):
-			print wf,k,R
-#			theta_min	= 0
-#			theta_max	= 360
+		azz 	= 0.0
+		r_t0 	= 0.0
+		r_vm 	= 0.0
+		r_vp 	= 0.0
+#		if (p>0 and p<1.1):
+#		if (p<1.2 and (linenum%4)==0):
+#		if ((wf>1 and (p>0.30 and p<0.31)) or(wf==1 and (p>0.25 and p<0.26))):
+#		if ((wf>1 and (p>0.34 and p<0.35)) or(wf==1 and (p>0.29 and p<0.30))):
+		if ((wf>1 and (p>0.40 and p<0.41)) or(wf==1 and (p>0.35 and p<0.36))):
+			print "wf	p		R"
+			print wf,p,R
+#			theta_min	= 180
+#			theta_max	= 180
 			for theta in range(theta_min,theta_max+1):
-#				azz			= 0
+				azz			= 0.0
 #				phi_min		= 0
 #				phi_max		= 0
 				for phi in range(phi_min,phi_max+1):
-#					if ((theta%10) == 0): print wf,k,phi,theta
-					k1		= k*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
-					k2		= k*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
-					k1		= (k1**2 + k2**2)**(0.5)
-					k2		= 0
-					k3		= k*math.cos(theta*3.14159/180)
-					alpha	= (m_d-(m_n**2+k**2)**(0.5)-k3)/m_n
-					r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
-					r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
-					r_t0	= 1 + ((3*k3**2/(k**2))-1)*R
+					p1		= p*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
+					p2		= p*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
+					pt		= (p1**2 + p2**2)**(0.5)
+					p3		= p*math.cos(theta*3.14159/180)
+#					alpha	= (m_d-(m_n**2+p**2)**(0.5)-p3)/m_n
+#					print alpha, theta, phi
+					alpha	= (2*((m_n**2+p**2)**(0.5)+p3))/m_d
+#					alpha	= (((m_n**2+p**2)**(0.5)-p3))/((m_n**2+p**2)**(0.5))
+					kt		= pt
+					k		= ((m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2)**(0.5)
+					k_sq	= (m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2
+					k3		= (k_sq-kt**2)**(0.5)
+					k3_sq	= (k_sq-kt**2)
+#					r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+#					r_vp	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+#					r_vm	= 1 + ((((3/2)*k1**2 - (3/2)*k2**2)/(k**2))-1)*R
+#					vvvvvvv Relativistic vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+#					r_vp	= 1 + ((((3/2)*(kt**2))/(k_sq))-1)*R
+#					r_vm	= 1 + ((((3/2)*(kt**2))/(k_sq))-1)*R
+#					r_t0	= 1 + ((3*(k3_sq)/(k_sq))-1)*R
+#					^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#					vvvvvvv Non-Relativistic vvvvvvvvvvvvvvvvvvvvvvvvvv
+					r_vp	= 1 + ((((3/2)*(pt**2))/(p**2))-1)*R
+					r_vm	= 1 + ((((3/2)*(pt**2))/(p**2))-1)*R
+					r_t0	= 1 + ((3*(p3**2)/(p**2))-1)*R
+#					^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#					if ((theta%10) == 0 and phi == 0): print "wf    p       ph th     p3              k_sq           kt           k3_sq         alpha"
+#					if ((theta%10) == 0 and (phi%20) == 0): print wf,p,phi,theta,p3,k_sq,kt,k3_sq,alpha
 #					azz		= r_t0 - r_vp
 #					azz		= (r_vp - r_t0)
-					azz		= azz + (r_vp - r_t0)/((theta_max-theta_min)*(phi_max-phi_min))
+#					azz		= azz + (r_vp - r_t0)/((theta_max-theta_min)*(phi_max-phi_min))
 #					azz		= azz + (r_vp - r_t0)/(theta_max-theta_min)
-#					azz		= azz + (r_vp - r_t0)/(phi_max-phi_min)
-#				print >> output_file, theta, azz, r_t0, r_vm, r_vp
-			print >> output_file, k, azz, r_t0, r_vm, r_vp
+					azz		= azz + (r_vp - r_t0)/(phi_max-phi_min)
+#					azz		= azz + (r_t0)/(phi_max-phi_min)
+#					azz		= azz + ((3*(kt**2/2-k3_sq)/(k_sq))*R)/(phi_max-phi_min)
+#					azz		= ((3*(kt**2/2-k3_sq)/(k_sq))*R)
+#				print >> output_file, k, azz, r_t0, r_vm, r_vp
+				print >> output_file, theta, azz, r_t0, r_vm, r_vp
+#			print >> output_file, p, azz, r_t0, r_vm, r_vp
 
 
 av18_wf.close()
