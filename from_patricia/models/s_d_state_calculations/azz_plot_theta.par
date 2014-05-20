@@ -152,7 +152,7 @@ with g0
     yaxis  bar color 1
     yaxis  bar linestyle 1
     yaxis  bar linewidth 1.0
-    yaxis  label "A\szz\N"
+    yaxis  label "-(3/2)A\szz\N"
     yaxis  label layout para
     yaxis  label place spec
     yaxis  label place 0.000000, 0.0650000
