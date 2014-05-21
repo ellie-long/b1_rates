@@ -16,6 +16,7 @@
 import os
 import os.path
 import math
+import bisect
 from bisect import bisect_left
 from bisect import bisect_right
 
@@ -95,6 +96,23 @@ phi_max		= 360
 p_list		= []
 #R_klist		= [[],[]]
 R_klist		= []
+alpha_list	= []
+azz_alpha	= []
+azz_x		= []
+
+xalpha	= []
+for i in range (1,2000):
+	x		= i/1000.0
+	q2		= 1.5 # (GeV/c)^2
+	q0		= q2/(2.0*m_n*x) # GeV
+	q3		= (q2+q2**2/(4*m_n**2*x**2))**(0.5) # GeV
+	qm		= q0 - q3
+	w		= (4*m_n**2+4*q0*m_n-q2)**(0.5)
+	alpha	= 2 - ((qm+2*m_n)/(2*m_n))*(1+((w**2-4*m_n**2)**(0.5))/w)
+	alpha = float("%.2f" % round(alpha,2))
+	xalpha.append(alpha)
+
+
 for wf in range(1,9):
 #for wf in range(2,3):
 	if (wf == 1):
@@ -130,8 +148,10 @@ for wf in range(1,9):
 		input_file = nimj3_wf
 		output_file = nimj3_azz
 	linenum	= int(0)
-	p_list[:] = []
-	R_klist[:] = []
+	p_list[:]		= []
+	R_klist[:]		= []
+	alpha_list[:]	= []
+	azz_alpha[:]	= []
 	for line in input_file:
 		linenum = linenum+1
 		columns	= line.split()
@@ -147,11 +167,14 @@ for wf in range(1,9):
 	for i in range(1,len(R_klist)):
 		p		= R_klist[i][0]
 		R_p		= R_klist[i][1]
+		alpha 	= 0.0
 		azz 	= 0.0
 		r_t0 	= 0.0
 		r_vm 	= 0.0
 		r_vp 	= 0.0
+		if (p>0):
 #		if (p>0 and p<0.7):
+#		if (p>0 and p<0.01):
 #		if (p>0 and p<1.2):
 #		if (p<1.2 and (linenum%4)==0):
 #		if ((wf>1 and (p>0.25 and p<0.26)) or(wf==1 and (p>0.20 and p<0.21))):
@@ -159,12 +182,12 @@ for wf in range(1,9):
 #		if (p>0.25 and p<0.26):
 #		if (p>0.29 and p<0.30):
 #		if (p>0.34 and p<0.35):
-		if (p>0.48 and p<0.49):
+#		if (p>0.48 and p<0.49):
 #		if ((wf>1 and (p>0.30 and p<0.31)) or(wf==1 and (p>0.25 and p<0.26))):
 #		if ((wf>1 and (p>0.34 and p<0.35)) or(wf==1 and (p>0.29 and p<0.30))):
 #		if ((wf>1 and (p>0.48 and p<0.49)) or(wf==1 and (p>0.49 and p<0.50))):
-			print "wf	p		R_p"
-			print wf,p,R_p
+#			print "wf	p		R_p"
+#			print wf,p,R_p
 #			theta_min	= 180
 #			theta_max	= 180
 			for theta in range(theta_min,theta_max+1):
@@ -177,14 +200,20 @@ for wf in range(1,9):
 #				alpha	= (m_d-(m_n**2+p**2)**(0.5)-p3)/m_n
 #				print alpha, theta, phi
 				alpha	= (2*((m_n**2+p**2)**(0.5)-p3))/m_d
-				kt		= pt
-#				print  p,((m_n**2+kt**2)/(alpha*(2-alpha))),m_n**2
-				k		= ((m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2)**(0.5)
-				R_k = find_closest(p_list,k,R_klist,1)
-#				print  wf,theta,k,find_closest(p_list,k,R_klist,0),R_k
-				k_sq	=  (m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2
-#				k3		= (k_sq-kt**2)**(0.5)
-				k3_sq	= (k_sq-kt**2)
+				try:
+					kt		= pt
+#					print  p,((m_n**2+kt**2)/(alpha*(2-alpha))),m_n**2
+					k		= ((m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2)**(0.5)
+					R_k = find_closest(p_list,k,R_klist,1)
+#					print  wf,theta,k,find_closest(p_list,k,R_klist,0),R_k
+					k_sq	=  (m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2
+#					k3		= (k_sq-kt**2)**(0.5)
+					k3_sq	= (k_sq-kt**2)
+				except Exception:
+					k		= 0
+					k_sq	= 0.0001
+					k3_sq	= 0
+					kt		= 0
 				
 #				vvvvvvv Relativistic vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 				r_vp	= 1 + ((((3/2)*(kt**2))/(k_sq))-1)*R_k
@@ -198,19 +227,46 @@ for wf in range(1,9):
 #				r_t0	= 1 + ((3*(p3**2)/(p**2))-1)*R_p
 #				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 				
-#				if ((theta%10) == 0 and phi == 0): print "wf    p       ph th     p3              k_sq           kt           k3_sq         alpha"
-#				if ((theta%10) == 0 and (phi%20) == 0): print wf,p,phi,theta,p3,k_sq,kt,k3_sq,alpha
-#				azz		= r_t0 - r_vp
+#				azz		= 2.0/3.0*(r_t0 - r_vp)
 				azz		= (r_vp - r_t0)
-#				azz		= azz + (r_vp - r_t0)/((theta_max-theta_min)*(phi_max-phi_min))
 #				azz		= azz + (r_vp - r_t0)/(theta_max-theta_min)
-#				azz		= azz + (r_vp - r_t0)/(phi_max-phi_min)
-#				azz		= azz + (r_t0)/(phi_max-phi_min)
-#				azz		= azz + ((3*(kt**2/2-k3_sq)/(k_sq))*R_p)/(phi_max-phi_min)
-#				azz		= ((3*(kt**2/2-k3_sq)/(k_sq))*R_p)
+				alpha = float("%.2f" % round(alpha,2))
+#				print alpha
+				try:
+					azz_alpha[index(alpha_list,alpha)][1] = azz_alpha[index(alpha_list,alpha)][1] + 1
+					azz_alpha[index(alpha_list,alpha)][2] = azz_alpha[index(alpha_list,alpha)][2] + azz
+					azz_alpha[index(alpha_list,alpha)][3] = azz_alpha[index(alpha_list,alpha)][3] + r_vp
+					azz_alpha[index(alpha_list,alpha)][4] = azz_alpha[index(alpha_list,alpha)][4] + r_vm
+					azz_alpha[index(alpha_list,alpha)][5] = azz_alpha[index(alpha_list,alpha)][5] + r_t0
+				except Exception:
+					pos		= bisect.bisect(alpha_list,alpha)
+					bisect.insort(alpha_list,alpha)
+					bisect.insort(azz_alpha,[alpha,1,azz,r_vp,r_vm,r_t0])
+#				print len(azz_alpha),len(alpha_list)	
+#				print pos,alpha
 #				print >> output_file, k, azz, r_t0, r_vm, r_vp
-				print >> output_file, theta, azz, r_t0, r_vm, r_vp
+#				print >> output_file, theta, azz, r_t0, r_vm, r_vp
 #			print >> output_file, p, azz, r_t0, r_vm, r_vp
+	# ADD ALPHA/X STUFF HERE
+	for i in range (0,len(azz_alpha)):
+		alpha	= azz_alpha[i][0]
+		azz		= azz_alpha[i][2]/azz_alpha[i][1]
+		r_vp	= azz_alpha[i][3]/azz_alpha[i][1]
+		r_vm	= azz_alpha[i][4]/azz_alpha[i][1]
+		r_t0	= azz_alpha[i][5]/azz_alpha[i][1]
+		try:
+			x		= index(xalpha,alpha)/1000.0
+			pos		= bisect.insort(azz_x,[x,azz,r_vp,r_vm,r_t0])
+		except Exception:
+			warning = "alpha > 1.47 Not Allowed"
+	for i in range(0,len(azz_x)):
+		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+
+print "Warning:",warning
+#print xalpha
+
+
+#print alpha_list[16],azz_alpha[16][0]
 
 #print(R_klist[0][1])
 

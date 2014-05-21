@@ -77,8 +77,9 @@ timestamp font 0
 timestamp char size 1.000000
 timestamp def "4/24/2014"
 with g0
+    world 0.0, -3, 2, 3
 #    world 0.0, -3, 3, 3
-    world 0.0, -3, 1, 3
+#    world 0.0, -3, 1, 3
 #    world 0.0, -3, 180, 3
     stack world 0, 0, 0, 0
     znorm 1
@@ -102,8 +103,8 @@ with g0
     xaxis  bar color 1
     xaxis  bar linestyle 1
     xaxis  bar linewidth 1.0
-#    xaxis  label "alpha"
-    xaxis  label "p\sN\N (GeV/c)"
+    xaxis  label "x\sBjorken\N"
+#    xaxis  label "p\sN\N (GeV/c)"
     xaxis  label layout para
     xaxis  label place auto
     xaxis  label char size 1.0000
@@ -154,6 +155,7 @@ with g0
     yaxis  bar color 1
     yaxis  bar linestyle 1
     yaxis  bar linewidth 1.0
+#    yaxis  label "A\szz\N"
     yaxis  label "-(3/2)A\szz\N"
     yaxis  label layout para
     yaxis  label place spec
@@ -688,8 +690,9 @@ with g0
     s7 comment "Cols 1:2"
     s7 legend  "Nimj3"
 with g1
+    world 0.0, -3, 2, 3
 #    world 0.0, -3, 3, 3
-    world 0.0, -3, 1, 3
+#    world 0.0, -3, 1, 3
     stack world 0, 0, 0, 0
     znorm 1
     view 0.100, 0.1, 0.73, 0.48
@@ -712,8 +715,8 @@ with g1
     xaxis  bar color 1
     xaxis  bar linestyle 1
     xaxis  bar linewidth 1.0
-#    xaxis  label "alpha"
-    xaxis  label "p\sN\N (GeV/c)"
+    xaxis  label "x\sBjorken\N"
+#    xaxis  label "p\sN\N (GeV/c)"
     xaxis  label layout para
     xaxis  label place auto
     xaxis  label char size 1.0000
@@ -1298,8 +1301,9 @@ with g1
     s7 comment "Cols 1:2"
     s7 legend  "Nimj3"
 with g2
+    world 0.0, -3, 2, 3
 #	world 0.0, -3, 3, 3
-    world 0.0, -3, 1, 3
+#    world 0.0, -3, 1, 3
     stack world 0, 0, 0, 0
     znorm 1
     view 0.85, 0.6, 1.48, 0.98
@@ -1322,8 +1326,8 @@ with g2
     xaxis  bar color 1
     xaxis  bar linestyle 1
     xaxis  bar linewidth 1.0
-#    xaxis  label "alpha"
-    xaxis  label "p\sN\N (GeV/c)"
+    xaxis  label "x\sBjorken\N"
+#    xaxis  label "p\sN\N (GeV/c)"
     xaxis  label layout para
     xaxis  label place auto
     xaxis  label char size 1.0000
@@ -1908,8 +1912,9 @@ with g2
     s7 comment "Cols 1:2"
     s7 legend  "Nimj3"
 with g3
+    world 0.0, -3, 2, 3
 #    world 0.0, -3, 3, 3
-    world 0.0, -3, 1, 3
+#    world 0.0, -3, 1, 3
     stack world 0, 0, 0, 0
     znorm 1
     view 0.85, 0.1, 1.48, 0.48
@@ -1932,8 +1937,8 @@ with g3
     xaxis  bar color 1
     xaxis  bar linestyle 1
     xaxis  bar linewidth 1.0
-#    xaxis  label "alpha"
-    xaxis  label "p\sN\N (GeV/c)"
+    xaxis  label "x\sBjorken\N"
+#    xaxis  label "p\sN\N (GeV/c)"
     xaxis  label layout para
     xaxis  label place auto
     xaxis  label char size 1.0000

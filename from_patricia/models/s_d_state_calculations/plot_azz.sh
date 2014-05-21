@@ -98,8 +98,8 @@ xmgrace\
 	-settype xy		-block temp_rvm_nimj1			 	-graph 3 -bxy 1:2\
 	-settype xy		-block temp_rvm_nimj2			 	-graph 3 -bxy 1:2\
 	-settype xy		-block temp_rvm_nimj3			 	-graph 3 -bxy 1:2\
-	-p ./azz_plot_theta.par -noask
-#	-p ./azz_plot.par -noask
+	-p ./azz_plot.par -noask
+#	-p ./azz_plot_theta.par -noask
 
 
 #display cs_check.png
