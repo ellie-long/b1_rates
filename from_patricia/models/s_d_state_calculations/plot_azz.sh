@@ -64,7 +64,7 @@ awk '$1>0 && $1<2000 {print $1,$5}'  $file5 >> temp_rvm_nimj1
 awk '$1>0 && $1<2000 {print $1,$5}'  $file6 >> temp_rvm_nimj2
 awk '$1>0 && $1<2000 {print $1,$5}'  $file7 >> temp_rvm_nimj3
 
-#gracebat -hdevice PNG -printfile cs_check.png \
+#gracebat -hdevice PNG -printfile plot_azz.png \
 xmgrace\
 	-settype xy		-block temp_azz_av18			 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_azz_cdbonn			 	-graph 0 -bxy 1:2\

@@ -16,6 +16,43 @@
 import os
 import os.path
 import math
+from bisect import bisect_left
+from bisect import bisect_right
+
+def find_le(a,x):
+	'Find rightmost value less than or equal to x'
+	i = bisect_right(a,x)
+	if i:
+		return i-1
+	raise ValueError
+
+def find_ge(a,x):
+	'Find leftmost value greater than x'
+	i = bisect_left(a,x)
+	if i != len(a):
+		return i
+	raise ValueError
+
+def find_closest(a,x,b,i):
+	try:
+		lt = find_le(a,x)
+		gt = find_ge(a,x)
+		ltdiff = abs(x-b[lt][0])
+		gtdiff = abs(x-b[gt][0])
+		if (ltdiff < gtdiff):
+			return b[lt][i]
+		else:
+			return b[gt][i]
+	except Exception:
+		return 0
+
+	
+def index(a, x):
+	'Locate the leftmost value exactly equal to x'
+	i = bisect_left(a, x)
+	if i != len(a) and a[i] == x:
+		return i
+	raise ValueError
 
 if (os.path.exists("./azz_calc/av18_azz.dat")): os.remove("./azz_calc/av18_azz.dat")
 if (os.path.exists("./azz_calc/fs_azz.dat")): os.remove("./azz_calc/fs_azz.dat")
@@ -54,7 +91,10 @@ theta_max	= 180
 phi			= 180
 phi_min		= 0
 phi_max		= 360
-values		= [[],[],[]]
+#R_klist		= [[],[]]
+p_list		= []
+#R_klist		= [[],[]]
+R_klist		= []
 for wf in range(1,9):
 #for wf in range(2,3):
 	if (wf == 1):
@@ -90,6 +130,8 @@ for wf in range(1,9):
 		input_file = nimj3_wf
 		output_file = nimj3_azz
 	linenum	= int(0)
+	p_list[:] = []
+	R_klist[:] = []
 	for line in input_file:
 		linenum = linenum+1
 		columns	= line.split()
@@ -98,16 +140,26 @@ for wf in range(1,9):
 		p		= p_gev
 		u		= float(columns[1])
 		w		= float(columns[2])
-		values.append([p,u,w])
 		if (wf>1): w = -w
 		R_p		= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
-		R_k		= R_p
+		p_list.append(p)
+		R_klist.append([p,R_p])
+	for i in range(1,len(R_klist)):
+		p		= R_klist[i][0]
+		R_p		= R_klist[i][1]
 		azz 	= 0.0
 		r_t0 	= 0.0
 		r_vm 	= 0.0
 		r_vp 	= 0.0
-		if (p>0 and p<1.2):
+#		if (p>0 and p<0.7):
+#		if (p>0 and p<1.2):
 #		if (p<1.2 and (linenum%4)==0):
+#		if ((wf>1 and (p>0.25 and p<0.26)) or(wf==1 and (p>0.20 and p<0.21))):
+#		if (p>0.20 and p<0.21):
+#		if (p>0.25 and p<0.26):
+#		if (p>0.29 and p<0.30):
+#		if (p>0.34 and p<0.35):
+		if (p>0.48 and p<0.49):
 #		if ((wf>1 and (p>0.30 and p<0.31)) or(wf==1 and (p>0.25 and p<0.26))):
 #		if ((wf>1 and (p>0.34 and p<0.35)) or(wf==1 and (p>0.29 and p<0.30))):
 #		if ((wf>1 and (p>0.48 and p<0.49)) or(wf==1 and (p>0.49 and p<0.50))):
@@ -126,9 +178,10 @@ for wf in range(1,9):
 #				print alpha, theta, phi
 				alpha	= (2*((m_n**2+p**2)**(0.5)-p3))/m_d
 				kt		= pt
-				print  p,((m_n**2+kt**2)/(alpha*(2-alpha))),m_n**2
+#				print  p,((m_n**2+kt**2)/(alpha*(2-alpha))),m_n**2
 				k		= ((m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2)**(0.5)
-				print  wf,k
+				R_k = find_closest(p_list,k,R_klist,1)
+#				print  wf,theta,k,find_closest(p_list,k,R_klist,0),R_k
 				k_sq	=  (m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2
 #				k3		= (k_sq-kt**2)**(0.5)
 				k3_sq	= (k_sq-kt**2)
@@ -159,16 +212,37 @@ for wf in range(1,9):
 				print >> output_file, theta, azz, r_t0, r_vm, r_vp
 #			print >> output_file, p, azz, r_t0, r_vm, r_vp
 
-#print(values[0][1])
+#print(R_klist[0][1])
 
-#for eachList in values:
+#for eachList in R_klist:
 #	print(eachList)
 
-print "-----------------"
-print values[15]
-print values[15][0]
-print values[15][1]
-print values[15][2]
+#print "-----------------"
+#print R_klist[15]
+#print R_klist[15][0]
+#print R_klist[15][1]
+
+#print len(R_klist)
+#print len(p_list)
+#R_k = binary_search(R_klist,0.4341194,0,0)
+#R_k = index(R_klist,0.4341194)
+#R_k = find_le(R_klist,0.41)
+
+#print R_klist[find_le(p_list,0.40)][0]
+#print R_klist[find_ge(p_list,0.40)][0]
+#print find_closest(p_list,0.40,R_klist)
+#print ""
+#print R_klist[find_le(p_list,0.41)][0]
+#print R_klist[find_ge(p_list,0.41)][0]
+#print find_closest(p_list,0.41,R_klist)
+#print ""
+#print R_klist[find_le(p_list,0.42)][0]
+#print R_klist[find_ge(p_list,0.42)][0]
+#print find_closest(p_list,0.42,R_klist)
+#print ""
+
+#for i in range(1,15):
+#	print i,p_list[i], R_klist[i][0], R_klist[i][1]
 
 av18_wf.close()
 av18_azz.close()
