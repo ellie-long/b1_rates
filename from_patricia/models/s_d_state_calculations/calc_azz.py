@@ -35,17 +35,31 @@ def find_ge(a,x):
 	raise ValueError
 
 def find_closest(a,x,b,i):
-	try:
-		lt = find_le(a,x)
-		gt = find_ge(a,x)
-		ltdiff = abs(x-b[lt][0])
-		gtdiff = abs(x-b[gt][0])
-		if (ltdiff < gtdiff):
-			return b[lt][i]
-		else:
-			return b[gt][i]
-	except Exception:
-		return 0
+	lt = find_le(a,x)
+	gt = find_ge(a,x)
+	ltdiff = abs(x-b[lt][0])
+	gtdiff = abs(x-b[gt][0])
+	if (ltdiff < gtdiff):
+		return b[lt][i]
+	else:
+		return b[gt][i]
+	raise ValueError
+
+def get_R_k(a,k,b,i):
+	lt		= find_le(a,k)
+	gt		= find_ge(a,k)
+	klt		= b[lt][0]
+	kgt		= b[gt][0]
+	ult		= b[lt][2]
+	ugt		= b[gt][2]
+	wlt		= b[lt][3]
+	wgt		= b[gt][3]
+	u		= ((ult-ugt)/(klt-kgt))*(k-kgt)+ugt
+	w		= ((wlt-wgt)/(klt-kgt))*(k-kgt)+wgt
+	R_k		= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
+#	print "get_R_k:",b[lt][1],b[gt][1],R_k
+	return R_k
+	raise ValueError
 
 	
 def index(a, x):
@@ -92,9 +106,7 @@ theta_max	= 180
 phi			= 180
 phi_min		= 0
 phi_max		= 360
-#R_klist		= [[],[]]
 p_list		= []
-#R_klist		= [[],[]]
 R_klist		= []
 alpha_list	= []
 azz_alpha	= []
@@ -111,7 +123,7 @@ for i in range (1,2000):
 	alpha	= 2 - ((qm+2*m_n)/(2*m_n))*(1+((w**2-4*m_n**2)**(0.5))/w)
 	alpha = float("%.2f" % round(alpha,2))
 	xalpha.append(alpha)
-
+#	azz_x.append([x,0,0,0,0,0])
 
 for wf in range(1,9):
 #for wf in range(2,3):
@@ -152,6 +164,7 @@ for wf in range(1,9):
 	R_klist[:]		= []
 	alpha_list[:]	= []
 	azz_alpha[:]	= []
+	azz_x[:]	= []
 	for line in input_file:
 		linenum = linenum+1
 		columns	= line.split()
@@ -163,7 +176,7 @@ for wf in range(1,9):
 		if (wf>1): w = -w
 		R_p		= (2**(0.5)*u*w+w*w/2)/(u*u+w*w)
 		p_list.append(p)
-		R_klist.append([p,R_p])
+		R_klist.append([p,R_p,u,w])
 	for i in range(1,len(R_klist)):
 		p		= R_klist[i][0]
 		R_p		= R_klist[i][1]
@@ -204,12 +217,13 @@ for wf in range(1,9):
 					kt		= pt
 #					print  p,((m_n**2+kt**2)/(alpha*(2-alpha))),m_n**2
 					k		= ((m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2)**(0.5)
-					R_k = find_closest(p_list,k,R_klist,1)
+					R_k		= get_R_k(p_list,k,R_klist,1)
 #					print  wf,theta,k,find_closest(p_list,k,R_klist,0),R_k
 					k_sq	=  (m_n**2+kt**2)/(alpha*(2-alpha))-m_n**2
 #					k3		= (k_sq-kt**2)**(0.5)
 					k3_sq	= (k_sq-kt**2)
 				except Exception:
+#					continue
 					k		= 0
 					k_sq	= 0.0001
 					k3_sq	= 0
@@ -254,13 +268,15 @@ for wf in range(1,9):
 		r_vp	= azz_alpha[i][3]/azz_alpha[i][1]
 		r_vm	= azz_alpha[i][4]/azz_alpha[i][1]
 		r_t0	= azz_alpha[i][5]/azz_alpha[i][1]
+		if (alpha < 1.47): print >> output_file, alpha, azz, r_t0, r_vm, r_vp, azz_alpha[i][1]
 		try:
 			x		= index(xalpha,alpha)/1000.0
 			pos		= bisect.insort(azz_x,[x,azz,r_vp,r_vm,r_t0])
 		except Exception:
 			warning = "alpha > 1.47 Not Allowed"
-	for i in range(0,len(azz_x)):
-		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+#	for i in range(0,len(azz_x)):
+#		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+
 
 print "Warning:",warning
 #print xalpha
