@@ -17,6 +17,7 @@ import os
 import os.path
 import math
 import bisect
+import time
 from bisect import bisect_left
 from bisect import bisect_right
 
@@ -69,31 +70,48 @@ def index(a, x):
 		return i
 	raise ValueError
 
+start_time = time.time()
 if (os.path.exists("./azz_calc/av18_azz.dat")): os.remove("./azz_calc/av18_azz.dat")
+if (os.path.exists("./azz_calc/av18_azz_x.dat")): os.remove("./azz_calc/av18_azz_x.dat")
 if (os.path.exists("./azz_calc/fs_azz.dat")): os.remove("./azz_calc/fs_azz.dat")
+if (os.path.exists("./azz_calc/fs_azz_x.dat")): os.remove("./azz_calc/fs_azz_x.dat")
 if (os.path.exists("./azz_calc/cdbonn_azz.dat")): os.remove("./azz_calc/cdbonn_azz.dat")
+if (os.path.exists("./azz_calc/cdbonn_azz_x.dat")): os.remove("./azz_calc/cdbonn_azz_x.dat")
 if (os.path.exists("./azz_calc/n3lo500_azz.dat")): os.remove("./azz_calc/n3lo500_azz.dat")
+if (os.path.exists("./azz_calc/n3lo500_azz_x.dat")): os.remove("./azz_calc/n3lo500_azz_x.dat")
 if (os.path.exists("./azz_calc/n3lo600_azz.dat")): os.remove("./azz_calc/n3lo600_azz.dat")
+if (os.path.exists("./azz_calc/n3lo600_azz_x.dat")): os.remove("./azz_calc/n3lo600_azz_x.dat")
 if (os.path.exists("./azz_calc/nimj1_azz.dat")): os.remove("./azz_calc/nimj1_azz.dat")
+if (os.path.exists("./azz_calc/nimj1_azz_x.dat")): os.remove("./azz_calc/nimj1_azz_x.dat")
 if (os.path.exists("./azz_calc/nimj2_azz.dat")): os.remove("./azz_calc/nimj2_azz.dat")
+if (os.path.exists("./azz_calc/nimj2_azz_x.dat")): os.remove("./azz_calc/nimj2_azz_x.dat")
 if (os.path.exists("./azz_calc/nimj3_azz.dat")): os.remove("./azz_calc/nimj3_azz.dat")
+if (os.path.exists("./azz_calc/nimj3_azz_x.dat")): os.remove("./azz_calc/nimj3_azz_x.dat")
 
-av18_wf		= open("./col_wfs/dwav_av18_term.data", "r")
-av18_azz	= open("./azz_calc/av18_azz.dat", "wb")
-fs_wf		= open("./col_wfs/frankfurt_strikman.data", "r")
-fs_azz		= open("./azz_calc/fs_azz.dat", "wb")
-cdbonn_wf	= open("./col_wfs/dwav_cdb_term.data", "r")
-cdbonn_azz	= open("./azz_calc/cdbonn_azz.dat", "wb")
-n3lo500_wf	= open("./col_wfs/dwav_n3lo500_term.data", "r")
-n3lo500_azz	= open("./azz_calc/n3lo500_azz.dat", "wb")
-n3lo600_wf	= open("./col_wfs/dwav_n3lo600_term.data", "r")
-n3lo600_azz	= open("./azz_calc/n3lo600_azz.dat", "wb")
-nimj1_wf	= open("./col_wfs/dwav_nimj1_term.data", "r")
-nimj1_azz	= open("./azz_calc/nimj1_azz.dat", "wb")
-nimj2_wf	= open("./col_wfs/dwav_nimj2_term.data", "r")
-nimj2_azz	= open("./azz_calc/nimj2_azz.dat", "wb")
-nimj3_wf	= open("./col_wfs/dwav_nimj3_term.data", "r")
-nimj3_azz	= open("./azz_calc/nimj3_azz.dat", "wb")
+av18_wf			= open("./col_wfs/dwav_av18_term.data", "r")
+av18_azz		= open("./azz_calc/av18_azz.dat", "wb")
+av18_azz_x		= open("./azz_calc/av18_azz_x.dat", "wb")
+fs_wf			= open("./col_wfs/frankfurt_strikman.data", "r")
+fs_azz			= open("./azz_calc/fs_azz.dat", "wb")
+fs_azz_x		= open("./azz_calc/fs_azz_x.dat", "wb")
+cdbonn_wf		= open("./col_wfs/dwav_cdb_term.data", "r")
+cdbonn_azz		= open("./azz_calc/cdbonn_azz.dat", "wb")
+cdbonn_azz_x	= open("./azz_calc/cdbonn_azz_x.dat", "wb")
+n3lo500_wf		= open("./col_wfs/dwav_n3lo500_term.data", "r")
+n3lo500_azz		= open("./azz_calc/n3lo500_azz.dat", "wb")
+n3lo500_azz_x	= open("./azz_calc/n3lo500_azz_x.dat", "wb")
+n3lo600_wf		= open("./col_wfs/dwav_n3lo600_term.data", "r")
+n3lo600_azz		= open("./azz_calc/n3lo600_azz.dat", "wb")
+n3lo600_azz_x	= open("./azz_calc/n3lo600_azz_x.dat", "wb")
+nimj1_wf		= open("./col_wfs/dwav_nimj1_term.data", "r")
+nimj1_azz		= open("./azz_calc/nimj1_azz.dat", "wb")
+nimj1_azz_x		= open("./azz_calc/nimj1_azz_x.dat", "wb")
+nimj2_wf		= open("./col_wfs/dwav_nimj2_term.data", "r")
+nimj2_azz		= open("./azz_calc/nimj2_azz.dat", "wb")
+nimj2_azz_x		= open("./azz_calc/nimj2_azz_x.dat", "wb")
+nimj3_wf		= open("./col_wfs/dwav_nimj3_term.data", "r")
+nimj3_azz		= open("./azz_calc/nimj3_azz.dat", "wb")
+nimj3_azz_x		= open("./azz_calc/nimj3_azz_x.dat", "wb")
 
 input_file = av18_wf
 output_file = av18_azz
@@ -103,6 +121,7 @@ m_n			= 0.939
 theta		= 90
 theta_min	= 0
 theta_max	= 180
+theta_bins	= 1000
 phi			= 180
 phi_min		= 0
 phi_max		= 360
@@ -131,34 +150,42 @@ for wf in range(1,9):
 		print "\nWorking on F&S"
 		input_file = fs_wf
 		output_file = fs_azz
+		output_file1 = fs_azz_x
  	elif (wf == 2):
 		print "\nWorking on AV18"
 		input_file = av18_wf
 		output_file = av18_azz
+		output_file1 = av18_azz_x
  	elif (wf == 3):
 		print "\nWorking on CDBonn"
 		input_file = cdbonn_wf
 		output_file = cdbonn_azz
+		output_file1 = cdbonn_azz_x
  	elif (wf == 4):
 		print "\nWorking on n3lo500"
 		input_file = n3lo500_wf
 		output_file = n3lo500_azz
+		output_file1 = n3lo500_azz_x
  	elif (wf == 5):
 		print "\nWorking on n3lo600"
 		input_file = n3lo600_wf
 		output_file = n3lo600_azz
+		output_file1 = n3lo600_azz_x
  	elif (wf == 6):
 		print "\nWorking on Nimj1"
 		input_file = nimj1_wf
 		output_file = nimj1_azz
+		output_file1 = nimj1_azz_x
  	elif (wf == 7):
 		print "\nWorking on Nimj2"
 		input_file = nimj2_wf
 		output_file = nimj2_azz
+		output_file1 = nimj2_azz_x
  	elif (wf == 8):
 		print "\nWorking on Nimj3"
 		input_file = nimj3_wf
 		output_file = nimj3_azz
+		output_file1 = nimj3_azz_x
 	linenum	= int(0)
 	p_list[:]		= []
 	R_klist[:]		= []
@@ -203,7 +230,9 @@ for wf in range(1,9):
 #			print wf,p,R_p
 #			theta_min	= 180
 #			theta_max	= 180
-			for theta in range(theta_min,theta_max+1):
+			theta_max = 180*theta_bins
+			for theta_calc in range(theta_min,theta_max+1):
+				theta = 1.0*theta_calc/theta_bins
 				azz			= 0.0
 #				p1		= p*math.sin(theta*3.14159/180)*math.sin(phi*3.14159/180)
 #				p2		= p*math.sin(theta*3.14159/180)*math.cos(phi*3.14159/180)
@@ -223,11 +252,11 @@ for wf in range(1,9):
 #					k3		= (k_sq-kt**2)**(0.5)
 					k3_sq	= (k_sq-kt**2)
 				except Exception:
-#					continue
-					k		= 0
-					k_sq	= 0.0001
-					k3_sq	= 0
-					kt		= 0
+					continue
+#					k		= 0
+#					k_sq	= 0.0001
+#					k3_sq	= 0
+#					kt		= 0
 				
 #				vvvvvvv Relativistic vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 				r_vp	= 1 + ((((3/2)*(kt**2))/(k_sq))-1)*R_k
@@ -268,68 +297,54 @@ for wf in range(1,9):
 		r_vp	= azz_alpha[i][3]/azz_alpha[i][1]
 		r_vm	= azz_alpha[i][4]/azz_alpha[i][1]
 		r_t0	= azz_alpha[i][5]/azz_alpha[i][1]
-		if (alpha < 1.47): print >> output_file, alpha, azz, r_t0, r_vm, r_vp, azz_alpha[i][1]
+#		if (alpha < 1.47): print >> output_file, alpha, azz, r_t0, r_vm, r_vp, azz_alpha[i][1]
 		try:
 			x		= index(xalpha,alpha)/1000.0
 			pos		= bisect.insort(azz_x,[x,azz,r_vp,r_vm,r_t0])
 		except Exception:
 			warning = "alpha > 1.47 Not Allowed"
-#	for i in range(0,len(azz_x)):
-#		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+	for i in range(0,len(azz_x)):
+#		the_azz = -2.0/3.0*azz_x[i][1]
+		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+		print >> output_file1, azz_x[i][0], -2.0/3*azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+	end_time = time.time()
+	print("Elapsed time so far: %.2f seconds" % (end_time - start_time))
+	print("                     (%.2f minutes)\n" % (float((end_time - start_time))/60.0))
 
+print "Theta Bins:",180*theta_bins,"\n"
 
-print "Warning:",warning
+print "Warning:",warning,"\n"
+
 #print xalpha
 
 
-#print alpha_list[16],azz_alpha[16][0]
-
-#print(R_klist[0][1])
-
-#for eachList in R_klist:
-#	print(eachList)
-
-#print "-----------------"
-#print R_klist[15]
-#print R_klist[15][0]
-#print R_klist[15][1]
-
-#print len(R_klist)
-#print len(p_list)
-#R_k = binary_search(R_klist,0.4341194,0,0)
-#R_k = index(R_klist,0.4341194)
-#R_k = find_le(R_klist,0.41)
-
-#print R_klist[find_le(p_list,0.40)][0]
-#print R_klist[find_ge(p_list,0.40)][0]
-#print find_closest(p_list,0.40,R_klist)
-#print ""
-#print R_klist[find_le(p_list,0.41)][0]
-#print R_klist[find_ge(p_list,0.41)][0]
-#print find_closest(p_list,0.41,R_klist)
-#print ""
-#print R_klist[find_le(p_list,0.42)][0]
-#print R_klist[find_ge(p_list,0.42)][0]
-#print find_closest(p_list,0.42,R_klist)
-#print ""
-
-#for i in range(1,15):
-#	print i,p_list[i], R_klist[i][0], R_klist[i][1]
 
 av18_wf.close()
 av18_azz.close()
+av18_azz_x.close()
 fs_wf.close()
 fs_azz.close()
+fs_azz_x.close()
 cdbonn_wf.close()
 cdbonn_azz.close()
+cdbonn_azz_x.close()
 n3lo500_wf.close()
 n3lo500_azz.close()
+n3lo500_azz_x.close()
 n3lo600_wf.close()
 n3lo600_azz.close()
+n3lo600_azz_x.close()
 nimj1_wf.close()
 nimj1_azz.close()
+nimj1_azz_x.close()
 nimj2_wf.close()
 nimj2_azz.close()
+nimj2_azz_x.close()
 nimj3_wf.close()
 nimj3_azz.close()
+nimj3_azz_x.close()
 
+
+end_time = time.time()
+print("Elapsed time was %.2f seconds" % (end_time - start_time))
+print("                 (%.2f minutes)\n" % (float((end_time - start_time))/60.0))
