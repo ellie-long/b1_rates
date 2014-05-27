@@ -104,7 +104,8 @@ with g0
     xaxis  bar color 1
     xaxis  bar linestyle 1
     xaxis  bar linewidth 1.0
-    xaxis  label "x\sBjorken\N"
+    xaxis  label "alpha"
+#    xaxis  label "x\sBjorken\N"
 #    xaxis  label "p\sN\N (GeV/c)"
     xaxis  label layout para
     xaxis  label place auto
@@ -306,7 +307,7 @@ with g0
     s0 dropline off
     s0 fill type 0
     s0 fill rule 0
-    s0 fill color 16
+    s0 fill color 4
     s0 fill pattern 1
     s0 avalue off
     s0 avalue type 2
@@ -321,7 +322,7 @@ with g0
     s0 avalue offset 0.000000 , 0.000000
     s0 errorbar on
     s0 errorbar place both
-    s0 errorbar color 11
+    s0 errorbar color 4
     s0 errorbar pattern 1
     s0 errorbar size 0.460000
     s0 errorbar linewidth 2.0
@@ -335,6 +336,7 @@ with g0
 
 
     s1 hidden false
+#    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -357,7 +359,7 @@ with g0
     s1 dropline off
     s1 fill type 0
     s1 fill rule 0
-    s1 fill color 16
+    s1 fill color 2
     s1 fill pattern 1
     s1 avalue off
     s1 avalue type 2
@@ -409,7 +411,7 @@ with g0
     s2 dropline off
     s2 fill type 0
     s2 fill rule 0
-    s2 fill color 16
+    s2 fill color 1
     s2 fill pattern 1
     s2 avalue off
     s2 avalue type 2
@@ -438,6 +440,7 @@ with g0
 
 
     s3 hidden false
+#    s3 hidden true
     s3 type xy
     s3 symbol 0
     s3 symbol size 0.50000
@@ -460,7 +463,7 @@ with g0
     s3 dropline off
     s3 fill type 0
     s3 fill rule 0
-    s3 fill color 16
+    s3 fill color 9
     s3 fill pattern 1
     s3 avalue off
     s3 avalue type 2
@@ -489,6 +492,7 @@ with g0
 
 
     s4 hidden false
+#    s4 hidden true
     s4 type xy
     s4 symbol 0
     s4 symbol size 0.50000
@@ -511,7 +515,7 @@ with g0
     s4 dropline off
     s4 fill type 0
     s4 fill rule 0
-    s4 fill color 16
+    s4 fill color 9
     s4 fill pattern 1
     s4 avalue off
     s4 avalue type 2
@@ -563,7 +567,7 @@ with g0
     s5 dropline off
     s5 fill type 0
     s5 fill rule 0
-    s5 fill color 16
+    s5 fill color 92
     s5 fill pattern 1
     s5 avalue off
     s5 avalue type 2
@@ -592,6 +596,7 @@ with g0
 
 
     s6 hidden false
+#    s6 hidden true
     s6 type xy
     s6 symbol 0
     s6 symbol size 0.50000
@@ -614,7 +619,7 @@ with g0
     s6 dropline off
     s6 fill type 0
     s6 fill rule 0
-    s6 fill color 16
+    s6 fill color 92
     s6 fill pattern 1
     s6 avalue off
     s6 avalue type 2
@@ -643,6 +648,7 @@ with g0
 
 
     s7 hidden false
+#    s7 hidden true
     s7 type xy
     s7 symbol 0
     s7 symbol size 0.50000
@@ -665,7 +671,7 @@ with g0
     s7 dropline off
     s7 fill type 0
     s7 fill rule 0
-    s7 fill color 16
+    s7 fill color 92
     s7 fill pattern 1
     s7 avalue off
     s7 avalue type 2

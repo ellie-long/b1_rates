@@ -39,6 +39,7 @@ c           elseif (x.ge.1.425) then
 c                Aout = 1
 c           endif
 c           Aout = (2./(0.3*0.35))*Aout
+           Aout = -Aout
            write(8,1001)x,Aout
       enddo
 

@@ -18,8 +18,12 @@ import os.path
 import math
 import bisect
 import time
+import statistics
 from bisect import bisect_left
 from bisect import bisect_right
+
+
+
 
 def find_le(a,x):
 	'Find rightmost value less than or equal to x'
@@ -121,7 +125,7 @@ m_n			= 0.939
 theta		= 90
 theta_min	= 0
 theta_max	= 180
-theta_bins	= 1000
+theta_bins	= 10
 phi			= 180
 phi_min		= 0
 phi_max		= 360
@@ -129,6 +133,7 @@ p_list		= []
 R_klist		= []
 alpha_list	= []
 azz_alpha	= []
+azz_stat	= []
 azz_x		= []
 
 xalpha	= []
@@ -146,6 +151,7 @@ for i in range (1,2000):
 
 for wf in range(1,9):
 #for wf in range(2,3):
+	new_start_time = time.time()
 	if (wf == 1):
 		print "\nWorking on F&S"
 		input_file = fs_wf
@@ -191,6 +197,7 @@ for wf in range(1,9):
 	R_klist[:]		= []
 	alpha_list[:]	= []
 	azz_alpha[:]	= []
+	azz_stat[:]	= []
 	azz_x[:]	= []
 	for line in input_file:
 		linenum = linenum+1
@@ -212,6 +219,15 @@ for wf in range(1,9):
 		r_t0 	= 0.0
 		r_vm 	= 0.0
 		r_vp 	= 0.0
+		if (i>1): 
+			pbef	= (R_klist[i-1][0] - R_klist[i][0])/2.0+R_klist[i-1][0]
+		elif (i==1):
+			pbef	= 0
+		if (i==len(R_klist)): 
+			paft	= R_klist[i][0]
+		elif (i<len(R_klist)):
+			paft	= (R_klist[i-1][0] - R_klist[i][0])/2.0+R_klist[i][0]
+		p_bin	= paft-pbef
 		if (p>0):
 #		if (p>0 and p<0.7):
 #		if (p>0 and p<0.01):
@@ -271,20 +287,27 @@ for wf in range(1,9):
 #				^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 				
 #				azz		= 2.0/3.0*(r_t0 - r_vp)
-				azz		= (r_vp - r_t0)
+#				azz		= (r_vp - r_t0)
+				azz		= (r_vp - r_t0)*(1.0/theta_bins)*p_bin
+#				azz		= (r_vp - r_t0)/((theta_max-theta_min)*theta_bins)
 #				azz		= azz + (r_vp - r_t0)/(theta_max-theta_min)
 				alpha = float("%.2f" % round(alpha,2))
 #				print alpha
-				try:
-					azz_alpha[index(alpha_list,alpha)][1] = azz_alpha[index(alpha_list,alpha)][1] + 1
-					azz_alpha[index(alpha_list,alpha)][2] = azz_alpha[index(alpha_list,alpha)][2] + azz
-					azz_alpha[index(alpha_list,alpha)][3] = azz_alpha[index(alpha_list,alpha)][3] + r_vp
-					azz_alpha[index(alpha_list,alpha)][4] = azz_alpha[index(alpha_list,alpha)][4] + r_vm
-					azz_alpha[index(alpha_list,alpha)][5] = azz_alpha[index(alpha_list,alpha)][5] + r_t0
-				except Exception:
-					pos		= bisect.bisect(alpha_list,alpha)
-					bisect.insort(alpha_list,alpha)
-					bisect.insort(azz_alpha,[alpha,1,azz,r_vp,r_vm,r_t0])
+				if (alpha<1.47):
+					try:
+						azz_alpha[index(alpha_list,alpha)][1] = azz_alpha[index(alpha_list,alpha)][1] + 1
+						azz_alpha[index(alpha_list,alpha)][2] = azz_alpha[index(alpha_list,alpha)][2] + azz
+						azz_alpha[index(alpha_list,alpha)][3] = azz_alpha[index(alpha_list,alpha)][3] + r_vp
+						azz_alpha[index(alpha_list,alpha)][4] = azz_alpha[index(alpha_list,alpha)][4] + r_vm
+						azz_alpha[index(alpha_list,alpha)][5] = azz_alpha[index(alpha_list,alpha)][5] + r_t0
+						azz_stat[index(alpha_list,alpha)][0]  = alpha
+						azz_stat[index(alpha_list,alpha)][1].append(azz)
+					except Exception:
+						pos		= bisect.bisect(alpha_list,alpha)
+						bisect.insort(alpha_list,alpha)
+#						bisect.insort(azz_alpha,[alpha,1,azz,r_vp,r_vm,r_t0])
+						bisect.insort(azz_alpha,[alpha,1,azz,r_vp,r_vm,r_t0,0])
+						bisect.insort(azz_stat,[alpha,[azz]])
 #				print len(azz_alpha),len(alpha_list)	
 #				print pos,alpha
 #				print >> output_file, k, azz, r_t0, r_vm, r_vp
@@ -293,27 +316,41 @@ for wf in range(1,9):
 	# ADD ALPHA/X STUFF HERE
 	for i in range (0,len(azz_alpha)):
 		alpha	= azz_alpha[i][0]
-		azz		= azz_alpha[i][2]/azz_alpha[i][1]
-		r_vp	= azz_alpha[i][3]/azz_alpha[i][1]
-		r_vm	= azz_alpha[i][4]/azz_alpha[i][1]
-		r_t0	= azz_alpha[i][5]/azz_alpha[i][1]
+#		azz		= azz_alpha[i][2]/azz_alpha[i][1]
+#		r_vp	= azz_alpha[i][3]/azz_alpha[i][1]
+#		r_vm	= azz_alpha[i][4]/azz_alpha[i][1]
+#		r_t0	= azz_alpha[i][5]/azz_alpha[i][1]
+		azz		= azz_alpha[i][2]
+		r_vp	= azz_alpha[i][3]
+		r_vm	= azz_alpha[i][4]
+		r_t0	= azz_alpha[i][5]
+		e_azz	= 1/(azz_alpha[i][1])**(0.5)
+#		e_azz	= statistics.stdev(azz_stat[i][1])
+		ave_azz	= statistics.mean(azz_stat[i][1])
 #		if (alpha < 1.47): print >> output_file, alpha, azz, r_t0, r_vm, r_vp, azz_alpha[i][1]
 		try:
 			x		= index(xalpha,alpha)/1000.0
-			pos		= bisect.insort(azz_x,[x,azz,r_vp,r_vm,r_t0])
+			pos		= bisect.insort(azz_x,[x,azz,r_vp,r_vm,r_t0,e_azz,ave_azz])
+			azz_alpha[i][6] = x
+#			print >> output_file, alpha, azz, r_t0, r_vm, r_vp, azz_alpha[i][1], x
+			print >> output_file, alpha, azz, r_t0, r_vm, r_vp, e_azz, x
 		except Exception:
 			warning = "alpha > 1.47 Not Allowed"
 	for i in range(0,len(azz_x)):
 #		the_azz = -2.0/3.0*azz_x[i][1]
-		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
-		print >> output_file1, azz_x[i][0], -2.0/3*azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+#		print >> output_file, azz_x[i][0], azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+#		print >> output_file1, azz_x[i][0], -2.0/3*azz_x[i][1], azz_x[i][4], azz_x[i][3], azz_x[i][2]
+		print >> output_file1, azz_x[i][0], -2.0/3*azz_x[i][1], azz_x[i][4], azz_x[i][3], 2.0/3*azz_x[i][5], -2.0/3*azz_x[i][6]
 	end_time = time.time()
-	print("Elapsed time so far: %.2f seconds" % (end_time - start_time))
-	print("                     (%.2f minutes)\n" % (float((end_time - start_time))/60.0))
+	print("     Total elapsed time so far:    %.2f seconds" % (end_time - start_time))
+	print("                                   (%.2f minutes)" % (float((end_time - start_time))/60.0))
+	print("     Elapsed time in this section: %.2f seconds" % (end_time - new_start_time))
+	print("                                   (%.2f minutes)" % (float((end_time - start_time))/60.0))
+#	print azz_stat
 
 print "Theta Bins:",180*theta_bins,"\n"
 
-print "Warning:",warning,"\n"
+#print "Warning:",warning,"\n"
 
 #print xalpha
 

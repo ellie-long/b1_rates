@@ -195,7 +195,7 @@ c !$OMP THREADPRIVATE(/tst2/)
 c      test = 1   ! Test Mode ON
 
 c For Azz, our target range is 0.9 < x < 1.8
-      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
+      DATA cent_x/      0.8,  0.9,  1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
       DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
       DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
@@ -221,9 +221,9 @@ c This section creates the x and Q^2 values to be used
 c for each of the data points to be run
       ! HMS
 c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
-c      DATA xval1/    100, 100, 100, 100, 100/
-c      DATA qqval1/    99, 99, 99, 99, 99/   
+      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
+      DATA xval1/    100, 100, 100, 100, 100/
+      DATA qqval1/    99, 99, 99, 99, 99/   
 
       ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
@@ -263,9 +263,9 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec1/     15, 216, 360, 168, 168/
-      DATA xval1/    1.8, 100, 100, 100, 100/
-      DATA qqval1/   0.31, 99,  99,  99,  99/   
+c      DATA prec1/     15, 216, 360, 168, 168/
+c      DATA xval1/    1.8, 100, 100, 100, 100/
+c      DATA qqval1/   0.31, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -298,15 +298,15 @@ c      DATA qqval2/   1.5, 99,  99,  99,  99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec2/    45, 216, 360, 168, 168/
-c      DATA xval2/    3.7, 100, 100, 100, 100/
-c      DATA qqval2/   0.71, 99,  99,  99,  99/   
+      DATA prec2/    45, 216, 360, 168, 168/
+      DATA xval2/    3.7, 100, 100, 100, 100/
+      DATA qqval2/   0.71, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/     15, 216, 360, 168, 168/
-      DATA xval2/    1.8, 100, 100, 100, 100/
-      DATA qqval2/   0.29, 99,  99,  99,  99/   
+c      DATA prec2/     15, 216, 360, 168, 168/
+c      DATA xval2/    1.8, 100, 100, 100, 100/
+c      DATA qqval2/   0.29, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Potential Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvv
@@ -405,9 +405,9 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
 c      w2min     =  1.50**2  ! Cut on W
@@ -416,7 +416,7 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-      bcurrent  =  0.115    ! 0.085    ! microAmps
+      bcurrent  =  0.100    ! 0.085    ! microAmps
       tgt_len   =  3.0*1.0  ! cm
 c      tgt_len   =  6.0*1.0  ! cm
       ! ND3 specs
@@ -435,9 +435,9 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-c      Pzz_in    =  0.30    ! expected improvement on the target
+      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-      Pzz_in    =  0.20    ! expected improvement on the target
+c      Pzz_in    =  0.20    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
@@ -579,10 +579,10 @@ c         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! lumin
       end if
 
       lumi_c = 1E-20
-      write(6,*) "lumi_d  = ",lumi_d
-      write(6,*) "lumi_n  = ",lumi_n
-      write(6,*) "lumi_he = ",lumi_he
-      write(6,*) "lumi_li = ",lumi_li
+      write(6,*) "lumi_d  = ",lumi_d,"1/(s*cm^2)"
+      write(6,*) "lumi_n  = ",lumi_n,"1/(s*cm^2)"
+      write(6,*) "lumi_he = ",lumi_he,"1/(s*cm^2)"
+      write(6,*) "lumi_li = ",lumi_li,"1/(s*cm^2)"
 
 
 c      Pzz   = Pzz_fact *(2. - sqrt(4. - 3.*Pz**2))    ! tensor polarization
@@ -1230,7 +1230,8 @@ c            F1d = F1out*2
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
             if (spec_x.ge.0.6) then
-               syst_Azz  = Aout*0.1   ! to be adjusted
+c               syst_Azz  = Aout*0.1   ! to be adjusted
+               syst_Azz  = Aout*0.14
             endif
             if (spec_x.eq.0.15) then
                syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
@@ -1343,7 +1344,8 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    
                syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
                if (spec_x.gt.0.6) then
-                  syst_Azz = Aout*0.1
+c                  syst_Azz = Aout*0.1
+                  syst_Azz = Aout*0.14
                endif
                syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
                if (thisNforx(ib).ne.0.0) then
@@ -1612,15 +1614,30 @@ c            dAzz = sqrt(Aout**2)*0.092
 
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)
 c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+            if (e_in.eq.8.8) then
+               if (cent_x(ib).eq.0.8)  Aout = -6.2808628/43.223160
+               if (cent_x(ib).eq.0.9)  Aout =  8.9649267/217.15784
+               if (cent_x(ib).eq.1.01) Aout =  47.345345/656.46704
+               if (cent_x(ib).eq.1.1)  Aout =  3.9828267/271.58017
+               if (cent_x(ib).eq.1.2)  Aout = -14.298948/84.742477
+               if (cent_x(ib).eq.1.3)  Aout = -14.969424/33.356781
+               if (cent_x(ib).eq.1.4)  Aout = -11.588662/15.864805
+               if (cent_x(ib).eq.1.5)  Aout = -7.9374537/8.7540216
+               if (cent_x(ib).eq.1.6)  Aout = -4.9408193/5.3990588
+               if (cent_x(ib).eq.1.7)  Aout = -2.7280214/3.5652487
+               if (cent_x(ib).eq.1.8)  Aout = -1.2216212/2.3818970
+            endif
             if (cent_x(ib).ge.0.6) then
-               syst_Azz = Aout*0.1 ! To be fixed later
+c               syst_Azz = Aout*0.1 ! To be fixed later
+               syst_Azz = abs(Aout*0.14) ! To be fixed later
             endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
             write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
      &                     syst_Azz,syst_b1d,
-     &                     Aout,b1out,
+c     &                     Aout,b1out,
+     &                     0.0,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                     f_dil,sigma_unpol_li
