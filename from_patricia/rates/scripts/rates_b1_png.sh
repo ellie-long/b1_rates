@@ -733,7 +733,7 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 
 
-#display b1_rates_hms_shms.png
+display b1_rates_hms_shms.png
 
 #xmgrace \
 #		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
