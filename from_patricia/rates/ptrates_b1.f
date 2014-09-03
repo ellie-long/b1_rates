@@ -291,7 +291,7 @@ c---- PARAMETER -------------------------------------------
 
       central   = .false.   ! true --> use only central angle
                             ! false --> use acceptance phase space
-
+ 
       scale_time= 1.0 
       scale     = 5.0            ! scale b1 kumano model
       type      = 1              ! 1=physics rates, 2=total rates
