@@ -1155,8 +1155,8 @@ with g0
     s15 errorbar riser clip length 0.100000
     s15 comment "Cols 1:2:3"
 #    s15 legend  ""
-#    s16 hidden false
-    s16 hidden true
+    s16 hidden false
+#    s16 hidden true
     s16 type xydxdy
 #    s16 symbol 4
     s16 symbol 3
@@ -1264,8 +1264,8 @@ with g0
     s17 legend  "Projected"
 #    s17 legend  ""
 
-    s18 hidden false
-#    s18 hidden true
+#    s18 hidden false
+    s18 hidden true
     s18 type xy
     s18 symbol 0
     s18 symbol size 0.50000
@@ -3081,7 +3081,7 @@ with g3
     s7 comment "Cols 1:2:3"
     s7 legend  ""
     s8 hidden false
-    s8 hidden true
+#    s8 hidden true
 #    s8 type xydxdy
 #    s8 symbol 4
     s8 symbol 3
@@ -3189,8 +3189,8 @@ with g3
     s9 comment "Cols 1:2:3"
     s9 legend  "Projected"
 
-    s10 hidden false
-#    s10 hidden true
+#    s10 hidden false
+    s10 hidden true
     s10 type xy
     s10 symbol 0
     s10 symbol size 0.50000
