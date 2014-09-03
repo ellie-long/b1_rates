@@ -295,8 +295,8 @@ c---- PARAMETER -------------------------------------------
       scale_time= 1.0 
       scale     = 5.0            ! scale b1 kumano model
       type      = 1              ! 1=physics rates, 2=total rates
-c      targ      = 'ND3'          ! ND3 target
-      targ      = 'LiD'          ! LiD
+      targ      = 'ND3'          ! ND3 target
+c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
       e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -333,7 +333,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
 c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
+      Pzz_in    =  0.35    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
       fsyst_xs  =  0.05     ! add a 5% from F1
@@ -1158,8 +1159,8 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                   call get_qe_b1d(cent_x(ib),qq,Aout,F1out,b1out)
                endif
    
-               dAzz = (2./(f_dil*Pzz))*SQRT(thisNforx(ib)/thisNunpolforx(ib)**2
-     +                    + thisNforx(ib)**2/thisNunpolforx(ib)**3)
+               dAzz = (2./(f_dil*Pzz))*SQRT((thisNforx(ib)/2)/(thisNunpolforx(ib)/2)**2
+     +                    + (thisNforx(ib)/2)**2/(thisNunpolforx(ib)/2)**3)
 
                db1d  = abs(-1.5*dAzz)*F1d/2
    
@@ -1350,8 +1351,8 @@ c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
-            dAzz = (2./(f_dil*Pzz))*SQRT(Ntotal_for_x(ib)/Nunpoltotal_for_x(ib)**2
-     +                 + Ntotal_for_x(ib)**2/Nunpoltotal_for_x(ib)**3)
+            dAzz = (2./(f_dil*Pzz))*SQRT((Ntotal_for_x(ib)/2)/(Nunpoltotal_for_x(ib)/2)**2
+     +                 + (Ntotal_for_x(ib)/2)**2/(Nunpoltotal_for_x(ib)/2)**3)
 
 c            dAzz = sqrt(Aout**2)*0.092
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
