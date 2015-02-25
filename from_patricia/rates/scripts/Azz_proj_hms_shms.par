@@ -158,7 +158,7 @@ timestamp char size 1.000000
 timestamp def "Sun Aug 21 22:19:23 2011"
 
 with g0
-    world 0.6, 0, 2.0, 0.6
+    world 0.6, 0, 2.3, 0.6
 #    world 0.6, 0, 3.0, 0.6
     stack world 0, 0, 0, 0
     znorm 1
@@ -463,7 +463,7 @@ with g1
 #    world 0, 1, 2.0, 100000
 ##    world 0, 0, 0.70, 2000
 #    world 0.6, 0, 2.0, 3050
-    world 0.6, 0, 2.0, 5050
+    world 0.6, 0, 2.3, 5050
 #    world 0.6, 0, 5.0, 5050
     stack world 0, 0, 0, 0
     znorm 1
@@ -1617,7 +1617,7 @@ with g3
 #    world 0.6, -0.5, 2.0, 1.5
 ##    world 0, -0.03, 0.70, 0.03
 #    world 0.6, -0.3, 2.0, 1.3
-    world 0.6, -1.3, 2.0, 0.3
+    world 0.6, -1.3, 2.3, 0.3
     stack world 0, 0, 0, 0
     znorm 1
     view 0.60000, 0.70, 1.0000, 0.98
@@ -2390,7 +2390,7 @@ with g4
 #    world 0, 0, 1.2, 90
 #    world 0, 5, 0.7, 15
 ##    world 0, 5, 1.15, 15
-    world 0, 5, 2.0, 25
+    world 0, 5, 2.3, 25
 #    world 0, 5, 2.000, 15
     stack world 0, 0, 0, 0
     znorm 1
@@ -3238,7 +3238,7 @@ with g5
 #    world 0.001, 0.09, 1.0, 20
 ##    world 0, 0, 1.15, 5.5
 #    world 0, 0, 2.0, 5.5
-    world 0, 0, 2.000, 2.5
+    world 0, 0, 2.300, 2.5
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.7000, 1.49000, 0.98
@@ -3991,7 +3991,7 @@ with g6
 ##    world 0, 5.5, 1.15, 10.5
 #    world 0, 0, 2.0, 11.5
 #    world 0, 5, 2.000, 7
-    world 0, 0, 2.000, 12
+    world 0, 0, 2.300, 12
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.38000, 1.49000, 0.61
@@ -4878,7 +4878,7 @@ with g7
 #    world 0, 0, 0.7, 3.25
 ##    world 0, 0, 1.15, 3.25
 #    world 0, 0, 2.0, 3.25
-    world 0, 0, 2.000, 1.5
+    world 0, 0, 2.300, 1.5
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.08000, 1.4900, 0.30
@@ -5726,7 +5726,7 @@ with g8
 #    world 0, 0, 1.2, 90
 #    world 0, 0, 0.7, 50
 ##    world 0, 0, 1.15, 50
-    world 0, 0, 2.0, 90
+    world 0, 0, 2.3, 90
 #    world 0, 30, 2.000, 90
     stack world 0, 0, 0, 0
     znorm 1

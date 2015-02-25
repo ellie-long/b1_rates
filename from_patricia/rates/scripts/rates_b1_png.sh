@@ -67,6 +67,7 @@ awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 #cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m-10.dat temp_model_b16q_mm10
 #cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m+10.dat temp_model_b16q_mp10
 
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_hermes.dat temp_6qhc_117
 cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_117.dat temp_6qhc_117
 cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_176.dat temp_6qhc_176
 cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_212.dat temp_6qhc_212

@@ -111,8 +111,9 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8  lumiSig, goodRateTotal, physRateTotal
       REAL*8  goodRate_d, goodRate_n, goodRate_he, goodRate_li
 
-      INTEGER ixsum(11),ib
-      INTEGER allixsum(11)
+      INTEGER, PARAMETER :: binMax = 14
+      INTEGER ixsum(binMax),ib
+      INTEGER allixsum(binMax)
       REAL*8  sigpara,sigperp,e_fact,scale,b1d_scaled,scale_time
       REAL*8  Azz,dAzz,time,pac_time,dAzz_rel
       REAL*8  b1d,db1d
@@ -159,14 +160,14 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       REAL*8 good_x_min,good_x_max
       REAL*8 xmin(5),xmax(5)
-      REAL*8 cent_x(11),cent_x_min(11),cent_x_max(11)
-      REAL*8 N_for_x(11),Ngood_for_x(11),Ntotal_for_x(11)
-      REAL*8 Nunpol_for_x(11),Nunpolgood_for_x(11),Nunpoltotal_for_x(11)
-      REAL*8 thisNforx(11),xsum(11)
-      REAL*8 thisNunpolforx(11)
-      REAL*8 w_ave(11),sigma_sum(11)
-      REAL*8 total_w_ave(11),N_sum(11)
-      REAL*8 dAzz_drift(11)
+      REAL*8 cent_x(binMax),cent_x_min(binMax),cent_x_max(binMax)
+      REAL*8 N_for_x(binMax),Ngood_for_x(binMax),Ntotal_for_x(binMax)
+      REAL*8 Nunpol_for_x(binMax),Nunpolgood_for_x(binMax),Nunpoltotal_for_x(binMax)
+      REAL*8 thisNforx(binMax),xsum(binMax)
+      REAL*8 thisNunpolforx(binMax)
+      REAL*8 w_ave(binMax),sigma_sum(binMax)
+      REAL*8 total_w_ave(binMax),N_sum(binMax)
+      REAL*8 dAzz_drift(binMax)
       REAL*8 drift_scale
       REAL*8 ave_x,spec_x
       REAL*8 totsig_for_ave_x
@@ -194,10 +195,21 @@ c !$OMP THREADPRIVATE(/tst2/)
       test = 0   ! Test Mode OFF
 c      test = 1   ! Test Mode ON
 
-c For Azz, our target range is 0.9 < x < 1.8
-      DATA cent_x/      0.8,  0.9,  1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
-      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
-      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
+
+
+c vvvv binMax = 11 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c For Azz, our target range is 0.8 < x < 2.2
+      DATA cent_x/      0.8,  0.9,  1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  1.9,  2.0,  2.1/ 
+      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.95, 2.05/ 
+      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.95, 2.05, 2.15/ 
+
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+c vvvv binMax = 11 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c For Azz, our target range is 0.8 < x < 1.8
+c      DATA cent_x/      0.8,  0.9,  1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8/ 
+c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
+c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
 c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
 c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
@@ -212,6 +224,7 @@ c      DATA cent_x_max/  0.23, 0.32,  0.40, 0.58, 0.70, 0.75, 0.85, 0.95, 1.05, 
 c      DATA cent_x/      0.16, 0.29, 0.40, 0.515, 0.64,  0.8,  0.9,  1.0,  1.1,  1.2, 1.3/ 
 c      DATA cent_x_min/  0.09, 0.23, 0.35, 0.45,  0.58, 0.75, 0.85, 0.95, 1.05, 1.15, 1.25/ 
 c      DATA cent_x_max/  0.23, 0.35, 0.45, 0.58,  0.70, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35/ 
+c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 
@@ -593,7 +606,7 @@ c      write(10,*)'#    q2     x       w    rate(kHz)     Azz
 c     &      DAzz    time '
 
 
-      do ib=1,11
+      do ib=1,binMax
          Ntotal_for_x(ib)=0
          Nunpoltotal_for_x(ib)=0
          dAzz_drift(ib) = 0
@@ -684,7 +697,7 @@ c            nx      =  nx2
          endif
 
 c         do ib=1,nx
-         do ib=1,11
+         do ib=1,binMax
             N_for_x(ib) = 0.0
             Nunpol_for_x(ib) = 0.0
             Ngood_for_x(ib) = 0.0
@@ -699,7 +712,7 @@ c   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          do ix = 1,nx ! number of x
             ib = 0
 c            do ib=1,nx
-            do ib=1,11
+            do ib=1,binMax
                thisNforx(ib) = 0
                thisNunpolforx(ib) = 0
             enddo
@@ -712,7 +725,7 @@ c            do ib=1,nx
             ave_x              = 0.0
             totsig_for_ave_x  = 0.0
 
-            do ib=1,11
+            do ib=1,binMax
                N_for_x(ib)            = 0.0
                xsum(ib)               = 0.0
             enddo
@@ -965,6 +978,13 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
                         if (lumi_c.gt.0) call init_incl(e_in,pit,thit,x,a_c,z_c,sigma_unpol_c)
                      endif
                   endif
+c                  if (x.gt.1.75) then
+c                        call elastic(z_d,a_d,q2,thit,e_in,sigma_unpol)
+c                        call elastic(z_li,a_li,q2,thit,e_in,sigma_unpol_li)
+c                        call elastic(z_he,a_he,q2,thit,e_in,sigma_unpol_he)
+c                        call elastic(z_n,a_n,q2,thit,e_in,sigma_unpol_n)
+c                        call elastic(z_c,a_c,q2,thit,e_in,sigma_unpol_c)
+c                  endif
                   sigma_unpol_d  = sigma_unpol
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
@@ -1020,7 +1040,8 @@ c                 if (w2.le.w2min) then
                     sigma_pol_d    = 0.0
                  endif
 c                 if (w2.ge.w2max) then
-                 if (x.gt.1.85) then
+                 if (x.gt.2.15) then
+c                 if (x.gt.1.85) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_li = 0.0
@@ -1058,7 +1079,7 @@ c
 
 
 
-                  do ib=1,11
+                  do ib=1,binMax
                      if (x.gt.cent_x_min(ib).and.x.lt.cent_x_max(ib).and.sigma_unpol.gt.0.0) then
                         N_for_x(ib) = lumi_d*sigma_pol_d 
      +                    + lumi_li*sigma_unpol_li
@@ -1297,7 +1318,7 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      &                    good_x_min,good_x_max,
      &                    goodRate_li
 
-            do ib=1,11
+            do ib=1,binMax
                F1d = 0
                F2d = 0
                rc  = 0
@@ -1388,7 +1409,7 @@ c   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
          f_dil = 0.95*0.3
 c         do ib=1,nx
-         do ib=1,11
+         do ib=1,binMax
             F1d = 0
             F2d = 0
             rc  = 0
@@ -1411,7 +1432,7 @@ c                  write(6,*) "*(&)&*(^$#*(^*&%$*&#$ HEY LOOK AT ME WHOO--------
 
             xdx = cent_x_max(ib) - cent_x(ib)
 
-            if (cent_x(ib).gt.0.9.and.cent_x(ib).lt.2.0) then
+            if (cent_x(ib).gt.0.9.and.cent_x(ib).lt.3.0) then
                call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)
             elseif (cent_x(ib).lt.0.9.and.cent_x(ib).gt.0) then
                call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)
@@ -1427,7 +1448,7 @@ c            db1d  = abs(-1.5*dAzz)*F1d/2
 c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
          f_dil = 0.95*0.3
-         do ib=1,11
+         do ib=1,binMax
             F1d = 0
             F2d = 0
             rc  = 0
@@ -1667,7 +1688,7 @@ c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel
 
 c !$OMP DO
 
-42    do ib=10,200
+42    do ib=10,230
 c      write(6,*)"ib",ib
 
 c         e_in    = 11.0 ! GeV
@@ -1852,6 +1873,13 @@ c !$OMP CRITICAL
             endif
 c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
+         endif
+         if (x.gt.0.1) then
+               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
+               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
+               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
+               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
+               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
          endif
 
 c         write(6,*) "sigma_unpol_d = ",sigma_unpol_d
