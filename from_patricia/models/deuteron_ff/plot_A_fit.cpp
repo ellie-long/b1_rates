@@ -23,18 +23,18 @@ using namespace std;
 datafile_t datafiles[] = {
 //{ "data file.dat", "Data Name", "Q^2", "A", "Error Up", "Error Down", ?, ?, Shape, Color}
 	{ "data_A/all_data.dat", 	"", 			"[0]", "[1]", "[2]", "[2]", 0,0,1,10 },
-	{ "data_A/Buchanan.dat", 	"Buchanan",		"[0]", "[1]", "[2]", "[2]", 0,0,31,6 },
-	{ "data_A/Elias.dat", 		"Elias", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,6 },
-	{ "data_A/Benaksas.dat", 	"Benaksas", 	"[0]", "[1]", "[2]", "[2]", 0,0,21,6 },
-	{ "data_A/Arnold.dat", 		"Arnold", 		"[0]", "[1]", "[2]", "[2]", 0,0,22,6 },
-	{ "data_A/Platchkov.dat", 	"Platchkov",	"[0]", "[1]", "[2]", "[2]", 0,0,23,6 },
-	{ "data_A/Galster.dat", 	"Galster", 		"[0]", "[1]", "[2]", "[2]", 0,0,24,6 },
-	{ "data_A/Cramer.dat", 		"Cramer", 		"[0]", "[1]", "[2]", "[2]", 0,0,25,6 },
-	{ "data_A/Simon.dat", 		"Simon", 		"[0]", "[1]", "[2]", "[2]", 0,0,26,6 },
-	{ "data_A/Abbot.dat", 		"Abbot", 		"[0]", "[1]", "[2]", "[2]", 0,0,27,6 },
-	{ "data_A/Alexa.dat", 		"Alexa", 		"[0]", "[1]", "[2]", "[2]", 0,0,28,6 },
-	{ "data_A/Berard.dat", 		"Berard", 		"[0]", "[1]", "[2]", "[2]", 0,0,29,6 },
-	{ "data_A/Akimov.dat", 		"Akimov", 		"[0]", "[1]", "[2]", "[2]", 0,0,30,6 },
+	{ "data_A/Buchanan.dat", 	"Buchanan",		"[0]", "[1]", "[2]", "[2]", 0,0,31,1 },
+	{ "data_A/Elias.dat", 		"Elias", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,1 },
+	{ "data_A/Benaksas.dat", 	"Benaksas", 	"[0]", "[1]", "[2]", "[2]", 0,0,21,1 },
+	{ "data_A/Arnold.dat", 		"Arnold", 		"[0]", "[1]", "[2]", "[2]", 0,0,22,1 },
+	{ "data_A/Platchkov.dat", 	"Platchkov",	"[0]", "[1]", "[2]", "[2]", 0,0,23,1 },
+	{ "data_A/Galster.dat", 	"Galster", 		"[0]", "[1]", "[2]", "[2]", 0,0,24,1 },
+	{ "data_A/Cramer.dat", 		"Cramer", 		"[0]", "[1]", "[2]", "[2]", 0,0,25,1 },
+	{ "data_A/Simon.dat", 		"Simon", 		"[0]", "[1]", "[2]", "[2]", 0,0,26,1 },
+	{ "data_A/Abbot.dat", 		"Abbot", 		"[0]", "[1]", "[2]", "[2]", 0,0,27,1 },
+	{ "data_A/Alexa.dat", 		"Alexa", 		"[0]", "[1]", "[2]", "[2]", 0,0,28,1 },
+	{ "data_A/Berard.dat", 		"Berard", 		"[0]", "[1]", "[2]", "[2]", 0,0,29,1 },
+	{ "data_A/Akimov.dat", 		"Akimov", 		"[0]", "[1]", "[2]", "[2]", 0,0,30,1 },
 	{ NULL }
 };	
 
@@ -73,41 +73,68 @@ void plot_A_fit() {
 	
 	datafile_t *f = datafiles;
 	TGraph* gr=0;
-	TF1 *theFit = new TF1("theFit","[0]+[1]*x+[2]*x^2+[3]*x^3+[4]*x^4+[5]*x^5+[6]*x^6",0,7);
+//	TF1 *fitLong = new TF1("fitLong","10^([0]+[1]*x+[2]*x^2)",0.75,6);
+	TF1 *fitLong = new TF1("fitLong","10^([0]+[1]*x+[2]*x^2+[3]*x^3)+10^(-2.68235-1.47849*x+0.0782541*x^2)",0,6);
+//	fitLong->SetParameters(1,-2.5275,-1.5704,0.09667);
+/*	fitLong->SetParLimits(0,-1.85931000001e-02,-1.85931e-02);
+	fitLong->SetParLimits(1,-1.37215000001e+01,-1.37215e+01);
+	fitLong->SetParLimits(2,3.23622e+01,3.23622000001e+01);
+	fitLong->SetParLimits(3,-4.29740000001e+01,-4.29740e+01);
+*/	TLegend *legFits = new TLegend(0.5,0.4,0.9,0.6,"","brNDC");
+	legFits->SetBorderSize(0);
+	legFits->SetFillStyle(0);
+	TString label = "";
+	double chi2 = 0;
+	double ndf = 0;
 	while ( f && f->filename ) {
-	cout << "f: " << f->filename << endl;
+		cout << "f: " << f->filename << endl;
 		gr=OneGraph(f);
-	if (gr) {
-		if (f->lnpt) {
-			mgrDta->Add(gr,f->lnpt);
-			legDta->AddEntry(gr,f->label,f->lnpt);
-		 	 }
-		else if (f->filename=="data_A/all_data.dat") {
-			gr->SetMarkerSize(0);
-			gr->SetLineWidth(1);
-			mgrDta->Add(gr,"p");
-			legDta->AddEntry(gr,f->label,"p");
-			gr->Fit(theFit);
-		 	}	
-		 	else if (gr->GetMarkerStyle()>=20) {
-			mgrDta->Add(gr,"p");
-			legDta->AddEntry(gr,f->label,"p");
-		 	}	
-				else {
-			mgrDta->Add(gr,"l");
-			legDta->AddEntry(gr,f->label,"l");
-				}
+		if (gr) {
+			if (f->lnpt) {
+				mgrDta->Add(gr,f->lnpt);
+				legDta->AddEntry(gr,f->label,f->lnpt);
+			}
+			else if (f->filename=="data_A/all_data.dat") {
+				gr->SetMarkerSize(0);
+				gr->SetLineWidth(1);
+				mgrDta->Add(gr,"p");
+				legDta->AddEntry(gr,f->label,"p");
+				gr->Fit(fitLong,"R");
+				chi2 = fitLong->GetChisquare();
+				ndf = fitLong->GetNDF();
+				chi2 = chi2/ndf;
+				label = "chi2/ndf(0-6 GeV^2)=";
+				label += chi2;
+				legFits->AddEntry(fitLong,"Long Fit","l");
+				legFits->AddEntry(fitLong,label,"l");
+				legFits->AddEntry(fitLong,"chi2/ndf(1-6 GeV^2)=3.25","l");
+			 }	
+			else if (gr->GetMarkerStyle()>=20) {
+				mgrDta->Add(gr,"p");
+				legDta->AddEntry(gr,f->label,"p");
+			}	
+			else {
+				mgrDta->Add(gr,"l");
+				legDta->AddEntry(gr,f->label,"l");
+			}
 		}
 		f++;
 	}
 		
 
+	TF1 *fitPetratos = new TF1("fitPetratos","10^(-2.5275-1.5704*x+0.09667*x^2)",0,6);
 	mgrDta->Draw("p");
 	legDta->Draw();
-	theFit->Draw("same");	
+	legFits->Draw();
+	fitLong->Draw("same");	
+	fitPetratos->SetLineColor(kBlue);	
+	fitPetratos->Draw("same");	
+	legFits->AddEntry(fitPetratos,"Petratos Fit","l");
+	legFits->AddEntry(fitPetratos,"chi2/ndf(0-6 GeV^2)=17277.7","l");
+	legFits->AddEntry(fitPetratos,"chi2/ndf(1-6 GeV^2)=6.65","l");
+//	legDta->AddEntry();	
 	TMultiGraph* mgrThry = new TMultiGraph("Theory","A Theory");
 	TLegend *legThry = new TLegend(.54,.3,.875,.6,"","brNDC");
-
 	wgr = mgrThry;
 	wlg = legThry;
 
@@ -150,8 +177,9 @@ void plot_A_fit() {
 
 	cn->Update();
 	cn->SaveAs(Form("eps/%s.eps",psfile));
+	cn->SaveAs(Form("png/%s.png",psfile));
 	cn->SaveAs(Form("root/%s.root",psfile));
-	gSystem->Exec(Form("./replace_symbols.pl eps_%s.eps",psfile));
+	gSystem->Exec(Form("./replace_symbols.pl eps/%s.eps",psfile));
 
 	return;	// LEAVING HERE
 
