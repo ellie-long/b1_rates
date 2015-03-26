@@ -124,9 +124,9 @@ file5="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data
 # 7 = Cross section uncertainty
 # 8 = Citation
 #awk '$3==6.519 {print $5,$6*1E-9,$7*1E-9}'  $file2 >> temp_sigma_d_exp_nu
-#awk '$3==6.519 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_x
+awk '$3==6.519 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_x
 #awk '$3==11.671 {print $5,$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_nu
-awk '$3==11.671 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_x
+#awk '$3==11.671 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_x
 #awk '{print $1,$2*1E-6,$3*1E-6}'           $file4 >> temp_sigma_d_exp_nu
 #awk '{print 4*5.766*(5.766-$1)*(sin((18.0/2)*(3.14159/180))^2)/(2*0.938*$1),$2*1E-6,$3*1E-6}' $file4 >> temp_sigma_d_exp_x
 #awk '{print $1,$2*1E-6,$3*1E-6}'           $file5 >> temp_sigma_d_exp_nu
@@ -205,6 +205,7 @@ xmgrace\
 	-settype xy		-block temp_lumsig_heli		-log y		-graph 2 -bxy 1:2\
 	-settype xy		-block temp_lumsig_li		-log y		-graph 2 -bxy 1:2\
 	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check.par -noask
+#	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/he_cs_check.par -noask
 
 #xmgrace\
 #	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 0 -bxy 1:2\

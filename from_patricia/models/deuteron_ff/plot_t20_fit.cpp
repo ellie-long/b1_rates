@@ -22,18 +22,19 @@ using namespace std;
 
 datafile_t datafiles[] = {
 //{ "data file.dat", "Data Name", "Q", "t20", "Error Up", "Error Down", ?, ?, Shape, Color}
-	{ "data_t20/all_data.dat", 		"", 				"[0]", "[1]", "[2]", "[2]", 0,0,1,10 },
-	{ "data_t20/Dmitriev.dat", 		"Dmitriev", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,6 },
-	{ "data_t20/Voitsekhovskii.dat","Voitsekhovskii", 	"[0]", "[1]", "[2]", "[2]", 0,0,21,6 },
-	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi", 		"[0]", "[1]", "[2]", "[2]", 0,0,22,6 },
-	{ "data_t20/Schulze.dat", 		"Schulze", 			"[0]", "[1]", "[2]", "[2]", 0,0,23,6 },
-	{ "data_t20/Bowhuis.dat", 		"Bowhuis", 			"[0]", "[1]", "[2]", "[2]", 0,0,24,6 },
-	{ "data_t20/Gilman.dat", 		"Gilman", 			"[0]", "[1]", "[2]", "[2]", 0,0,25,6 },
-	{ "data_t20/Boden.dat", 		"Boden", 			"[0]", "[1]", "[2]", "[2]", 0,0,26,6 },
-	{ "data_t20/Garcon.dat", 		"Garcon", 			"[0]", "[1]", "[2]", "[2]", 0,0,27,6 },
-	{ "data_t20/Abbott.dat", 		"Abbott", 			"[0]", "[1]", "[2]", "[2]", 0,0,28,6 },
-	{ "data_t20/Nikolenko.dat", 	"Nikolenko", 		"[0]", "[1]", "[2]", "[2]", 0,0,29,6 },
-	{ "data_t20/Zhang.dat", 		"Zhang", 			"[0]", "[1]", "[2]", "[2]", 0,0,30,6 },
+	{ "data_t20/all_data.dat", 		"", 				"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,1,10 },
+	{ "data_t20/Dmitriev.dat", 		"Dmitriev", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,6 },
+	{ "data_t20/Voitsekhovskii.dat","Voitsekhovskii", 	"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,21,6 },
+	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,22,6 },
+	{ "data_t20/Schulze.dat", 		"Schulze", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,6 },
+	{ "data_t20/Bowhuis.dat", 		"Bowhuis", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,24,6 },
+	{ "data_t20/Gilman.dat", 		"Gilman", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,25,6 },
+	{ "data_t20/Boden.dat", 		"Boden", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,26,6 },
+	{ "data_t20/Garcon.dat", 		"Garcon", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,27,6 },
+	{ "data_t20/Abbott.dat", 		"Abbott", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,28,6 },
+	{ "data_t20/Nikolenko.dat", 	"Nikolenko", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,29,6 },
+	{ "data_t20/Zhang.dat", 		"Zhang", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,30,6 },
+	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,30,1 },
 	{ NULL }
 };	
 
@@ -48,9 +49,9 @@ void plot_t20_fit() {
 	TCanvas *cn = new TCanvas("cn","cn",800,600);
 	cn->Draw();
 	cn->UseCurrentStyle();
-	TH1F *frm = new TH1F("frm","",100,0.0,7.);
+	TH1F *frm = new TH1F("frm","",100,0.0,2.);
 //	gPad->SetLogy();
-	frm->GetXaxis()->SetTitle("Q	(1/fm)");
+	frm->GetXaxis()->SetTitle("Q^2	(GeV^2)");
 	frm->GetYaxis()->SetTitle("t_{20}(70^{\\circ})");
 	frm->SetMinimum(-1.75);
 	frm->SetMaximum(1.0);
@@ -149,8 +150,9 @@ void plot_t20_fit() {
 
 	cn->Update();
 	cn->SaveAs(Form("eps/%s.eps",psfile));
+	cn->SaveAs(Form("png/%s.png",psfile));
 	cn->SaveAs(Form("root/%s.root",psfile));
-	gSystem->Exec(Form("./replace_symbols.pl eps_%s.eps",psfile));
+	gSystem->Exec(Form("./replace_symbols.pl eps/%s.eps",psfile));
 
 	return;	// LEAVING HERE
 

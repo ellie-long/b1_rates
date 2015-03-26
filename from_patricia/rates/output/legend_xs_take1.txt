@@ -1,2 +1,1 @@
-:q
-
+sp	x p t	sum	th		th_in	q2_in	q2		x_in	x		w2			w*w	sig_d		sig_he		sig_n	F1d			F2d			F1he		F2he		F1n			F2n			pit		thit		thq		tot_sig		sig_li		nu

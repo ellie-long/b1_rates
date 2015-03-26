@@ -170,9 +170,9 @@ c      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1
 c      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75/ 
 c      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85/ 
 
-      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  3.0, 3.0/ 
-      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 2.95, 2.95/ 
-      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 3.05, 3.05/ 
+      DATA cent_x/      0.8,  0.9,  1.0,  1.1,  1.2,  1.3,  1.4,  1.55, 1.75,  2.0, 3.0/ 
+      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 2.95/ 
+      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 2.15, 3.05/ 
 
 
 c For b1, our target range is 0.09 < x < 0.58
@@ -1375,7 +1375,8 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
      &                     syst_Azz,syst_b1d,
-     &                     Aout,b1out,
+     &                     0.0,b1out,
+c     &                     Aout,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                     f_dil,sigma_unpol_li

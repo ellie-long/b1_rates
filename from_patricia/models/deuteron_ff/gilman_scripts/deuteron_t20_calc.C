@@ -36,14 +36,14 @@ Double_t x,y;
 thePad->SetTopMargin(0.15);
 TH1F *hr = thePad->DrawFrame(xmin,ymin,xmax,ymax);
 hr->SetXTitle("Q (GeV)");
-hr->SetYTitle("T_{20}");
-hr->GetYaxis()->SetTitleOffset(1.5);
+hr->SetYTitle("t_{20}");
+/*hr->GetYaxis()->SetTitleOffset(1.5);
 hr->GetYaxis()->SetTitleSize(.06);
 hr->GetYaxis()->SetTitleFont(42);
 hr->GetYaxis()->CenterTitle();
 hr->GetXaxis()->SetTitleSize(.06);
 hr->GetXaxis()->SetTitleFont(42);
-/*****************************************************
+*//*****************************************************
   Draw legend
 *****************************************************/
 

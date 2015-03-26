@@ -25,9 +25,14 @@ file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
 awk '$1!="#" {print $1,$3,$4}' $file0 > temp_Azz_stat
 awk '$1!="#" {print $1,$3,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 
-file_misak="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_azz_vn_lc.dat"
-awk '$1>0 && $1<100 {print $1,$2}' $file_misak > temp_misak_vn
-awk '$1>0 && $1<100 {print $1,$3}' $file_misak > temp_misak_lc
+file_misak1="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/vn-av18.dat"
+file_misak2="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/vn-cdbonn.dat"
+file_misak3="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-av18.dat"
+file_misak4="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-cdbonn.dat"
+awk '$1>0 && $1<100 {print $1,$2}' $file_misak1 > temp_misak_vn_av18
+awk '$1>0 && $1<100 {print $1,$2}' $file_misak2 > temp_misak_vn_cdbonn
+awk '$1>0 && $1<100 {print $1,$2}' $file_misak3 > temp_misak_lc_av18
+awk '$1>0 && $1<100 {print $1,$2}' $file_misak4 > temp_misak_lc_cdbonn
 
 #awk '$1!="#" {print $1,0,$7}' $file0 > temp_xb1_stat
 #awk '$1!="#" {print $1,0,sqrt($7*$7+$8*$8)}' $file0 > temp_xb1_tot
@@ -182,6 +187,12 @@ echo "0 1.85" > temp_wmin
 echo "10 1.85" >> temp_wmin
 echo "0 0.938" > temp_wqe
 echo "10 0.938" >> temp_wqe
+echo "0 1.85" > temp_wnnmin
+echo "10 1.85" >> temp_wnnmin
+echo "0 1.926" > temp_wnnqe
+echo "10 1.926" >> temp_wnnqe
+
+
 echo "0 7.3" > temp_thmin_shms
 echo "10 7.3" >> temp_thmin_shms
 echo "0 10.4" > temp_epmax_shms
@@ -231,7 +242,7 @@ awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shm
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 
 #awk '$1==2 && $5!="NaN" {print $2-$3,-0.025,"\n"$2-$3,-0.025+$9"\n"$2+$3,-0.025+$9,"\n"$2+$3,-0.025}' $file7 > temp_shms_azz_sys_bar
-awk '$1==2 && $5!="NaN" {print $2-$3,-0.25,"\n"$2-$3,-0.25+sqrt($9*$9)"\n"$2+$3,-0.25+sqrt($9*$9),"\n"$2+$3,-0.25}' $file7 > temp_shms_azz_sys_bar
+awk '$1==2 && $5!="NaN" {print $2-$3,-1.35,"\n"$2-$3,-1.35+sqrt($9*$9)"\n"$2+$3,-1.35+sqrt($9*$9),"\n"$2+$3,-1.35}' $file7 > temp_shms_azz_sys_bar
 awk '$1==2 && $5!="NaN" {print $2-$3,-0.013,"\n"$2-$3,-0.013+$10"\n"$2+$3,-0.013+$10,"\n"$2+$3,-0.013}' $file7 > temp_shms_b1_sys_bar
 #awk '$1==2 && $5!="NaN" {print $2-$3,-0.0065,"\n"$2-$3,-0.0065+$10"\n"$2+$3,-0.0065+$10,"\n"$2+$3,-0.0065}' $file7 > temp_shms_b1_sys_bar
 
@@ -409,6 +420,56 @@ awk '$1==6 && $26>0 && $10>0 && $10<1000 {print $10,$25}' $file6 > temp_sbs_thet
 echo "0.0	0.0	0.0" >> temp_hms_theta_aq
 echo "0.0	0.0	0.0" >> temp_shms_theta_aq
 
+# This fills temporary files for nu
+#   vvv Central Values vvv
+awk '$1==1 && $2!="NaN" {print $29,$33}' $file4 > temp_hms_nu_c
+#awk '$1==1 {print 1000,1000}' $file4 > temp_hms_nu_c
+awk '$1==2 && $2!="NaN" {print $29,$33}' $file4 > temp_shms_nu_c
+awk '$1==3 && $2!="NaN" {print $29,$33}' $file4 > temp_hrs_nu_c
+awk '$1==4 && $2!="NaN" {print $29,$33}' $file4 > temp_solid_nu_c
+awk '$1==5 && $2!="NaN" {print $29,$33}' $file4 > temp_bb_nu_c
+awk '$1==6 && $2!="NaN" {print $29,$33}' $file4 > temp_sbs_nu_c
+#   vvv Full Spread vvv
+awk '$1==1 && $14>0 {print $10,$28}' $file6 > temp_hms_nu
+awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu1
+awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu2
+awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu3
+awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu4
+awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu5
+echo "0.0	0.0	0.0" >> temp_hms_nu_c
+echo "0.0	0.0	0.0" >> temp_hms_nu1
+echo "0.0	0.0	0.0" >> temp_hms_nu2
+echo "0.0	0.0	0.0" >> temp_hms_nu3
+echo "0.0	0.0	0.0" >> temp_hms_nu4
+echo "0.0	0.0	0.0" >> temp_hms_nu5
+#awk '$1==1 {print 1000,1000}' $file6 > temp_hms_nu
+awk '$1==2 && $14>0 {print $10,$28}' $file6 > temp_shms_nu
+awk '$1==2 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu1
+awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu2
+awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu3
+awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu4
+awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu5
+echo "0.0	0.0	0.0" >> temp_shms_nu_c
+echo "0.0	0.0	0.0" >> temp_shms_nu1
+echo "0.0	0.0	0.0" >> temp_shms_nu2
+echo "0.0	0.0	0.0" >> temp_shms_nu3
+echo "0.0	0.0	0.0" >> temp_shms_nu4
+echo "0.0	0.0	0.0" >> temp_shms_nu5
+awk '$1==3 && $14>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_hrs_nu
+awk '$1==4 && $14>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_solid_nu
+awk '$1==5 && $14>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_bb_nu
+awk '$1==6 && $14>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_sbs_nu
+#   vvv Include Non-Physics Events vvv
+awk '$1==1 && $26>0 && $10>0 && $10<1000 {print $10,$28,$26*'$hmsa_scale'+60}' $file6 > temp_hms_nu_a
+#awk '$1==1 {print 1000,1000}' $file6 > temp_hms_nu_a
+awk '$1==2 && $26>0 && $10>0 && $10<1000 {print $10,$28,$26*'$shmsa_scale'+60}' $file6 > temp_shms_nu_a
+awk '$1==3 && $26>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_hrs_nu_a
+awk '$1==4 && $26>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_solid_nu_a
+awk '$1==5 && $26>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_bb_nu_a
+awk '$1==6 && $26>0 && $10>0 && $10<1000 {print $10,$28}' $file6 > temp_sbs_nu_a
+
+echo "0.0	0.0	0.0" >> temp_hms_nu_a
+echo "0.0	0.0	0.0" >> temp_shms_nu_a
 
 
 # This fills temporary files for Q^2
@@ -526,7 +587,7 @@ awk '$1==5 && $2==0.10 {print 10,$23}' $file4 >> temp_bb_e0
 
 # This fills temporary files for W
 #   vvv Central Values vvv
-awk '$1==1 && $2!="NaN" {print $29,$4}' $file4 > temp_hms_cw
+awk '$1==1 && $2!="NaN" && $4!="NaN" {print $29,$4}' $file4 > temp_hms_cw
 #awk '$1==1 {print 1000,1000}' $file4 > temp_hms_cw
 awk '$1==2 && $2!="NaN" {print $29,$4}' $file4 > temp_shms_cw
 awk '$1==3 && $2!="NaN" {print $29,$4}' $file4 > temp_hrs_cw
@@ -574,6 +635,58 @@ awk '$1==6 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,sqrt($12)}' $file6 
 echo "0.0	0.0	0.0" >> temp_hms_aw
 echo "0.0	0.0	0.0" >> temp_shms_aw
 
+
+# This fills temporary files for W_NN
+#   vvv Central Values vvv
+awk '$1==1 && $2!="NaN" && $35!="NaN" {print $29,$35}' $file4 > temp_hms_cwnn
+#awk '$1==1 {print 1000,1000}' $file4 > temp_hms_cwnn
+awk '$1==2 && $2!="NaN" {print $29,$35}' $file4 > temp_shms_cwnn
+awk '$1==3 && $2!="NaN" {print $29,$35}' $file4 > temp_hrs_cwnn
+awk '$1==4 && $2!="NaN" {print $29,$35}' $file4 > temp_solid_cwnn
+awk '$1==5 && $2!="NaN" {print $29,$35}' $file4 > temp_bb_cwnn
+awk '$1==6 && $2!="NaN" {print $29,$35}' $file4 > temp_sbs_cwnn
+#   vvv Full Spread vvv
+awk '$1==1 && $14>0 && $12>0 {print $10,$30}' $file6 > temp_hms_wnn
+awk '$1==1 && $2==1 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$hms_scale'+20}' $file6 > temp_hms_wnn1
+awk '$1==1 && $2==2 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$hms_scale'+20}' $file6 > temp_hms_wnn2
+awk '$1==1 && $2==3 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$hms_scale'+20}' $file6 > temp_hms_wnn3
+awk '$1==1 && $2==4 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$hms_scale'+20}' $file6 > temp_hms_wnn4
+awk '$1==1 && $2==5 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$hms_scale'+20}' $file6 > temp_hms_wnn5
+echo "0.0	0.0	0.0" >> temp_hms_cwnn
+echo "0.0	0.0	0.0" >> temp_hms_wnn1
+echo "0.0	0.0	0.0" >> temp_hms_wnn2
+echo "0.0	0.0	0.0" >> temp_hms_wnn3
+echo "0.0	0.0	0.0" >> temp_hms_wnn4
+echo "0.0	0.0	0.0" >> temp_hms_wnn5
+#awk '$1==1 {print 1000,1000}' $file6 > temp_hms_wnn
+awk '$1==2 && $14>0 && $12>0 {print $10,$30}' $file6 > temp_shms_wnn
+awk '$1==2 && $2==1 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$shms_scale'+40}' $file6 > temp_shms_wnn1
+awk '$1==2 && $2==2 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$shms_scale'+40}' $file6 > temp_shms_wnn2
+awk '$1==2 && $2==3 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$shms_scale'+40}' $file6 > temp_shms_wnn3
+awk '$1==2 && $2==4 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$shms_scale'+40}' $file6 > temp_shms_wnn4
+awk '$1==2 && $2==5 && $14>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$14*'$shms_scale'+40}' $file6 > temp_shms_wnn5
+echo "0.0	0.0	0.0" >> temp_shms_cwnn
+echo "0.0	0.0	0.0" >> temp_shms_wnn1
+echo "0.0	0.0	0.0" >> temp_shms_wnn2
+echo "0.0	0.0	0.0" >> temp_shms_wnn3
+echo "0.0	0.0	0.0" >> temp_shms_wnn4
+echo "0.0	0.0	0.0" >> temp_shms_wnn5
+awk '$1==3 && $14>0 && $12>0 {print $10,$30}' $file6 > temp_hrs_wnn
+awk '$1==4 && $14>0 && $12>0 {print $10,$30}' $file6 > temp_solid_wnn
+awk '$1==5 && $14>0 && $12>0 {print $10,$30}' $file6 > temp_bb_wnn
+awk '$1==6 && $14>0 && $12>0 {print $10,$30}' $file6 > temp_sbs_wnn
+#   vvv Include Non-Physics Events vvv
+awk '$1==1 && $2==1 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$26*'$hmsa_scale'+60}' $file6 > temp_hms_awnn
+#awk '$1==1 {print 1000,1000}' $file6 > temp_hms_awnn
+awk '$1==2 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,$30,$26*'$shmsa_scale'+60}' $file6 > temp_shms_awnn
+awk '$1==3 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,$30}' $file6 > temp_hrs_awnn
+awk '$1==4 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,$30}' $file6 > temp_solid_awnn
+awk '$1==5 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,$30}' $file6 > temp_bb_awnn
+awk '$1==6 && $26>0 && $12>0 && $10>0 && $10<1000 {print $10,$30}' $file6 > temp_sbs_awnn
+echo "0.0	0.0	0.0" >> temp_hms_awnn
+echo "0.0	0.0	0.0" >> temp_shms_awnn
+
+
 file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-shms.out"
 file10="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-hms.out"
 awk '$12!="NaN" {print $1,$12}' $file9 > temp_shms_fdil
@@ -585,23 +698,23 @@ awk '$12!="NaN" {print $1,$12}' $file10 > temp_hms_fdil
 gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xy			-block temp_shms_fdil				-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_hms_fdil				-graph 0 -bxy 1:2 \
-		-settype bar		-block temp_1kHz			-log y	-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_50kHz			-log y	-graph 1 -bxy 1:2 \
-		-settype xy			-block temp_3kHz			-log y	-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_shms_totrates	-log y	-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_shms_rates		-log y	-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_hms_totrates	-log y	-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_hms_rates		-log y	-graph 1 -bxy 1:2 \
-		-settype xy			-block temp_1day	 		-log y	-graph 2 -bxy 1:2 \
-		-settype xy			-block temp_1week	 		-log y	-graph 2 -bxy 1:2 \
-		-settype xy			-block temp_1month	 		-log y	-graph 2 -bxy 1:2 \
-		-settype xy			-block temp_1year			-log y	-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_hms_pactm		-log y	-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_hms_time		-log y	-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_shms_pactm 		-log y	-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_shms_time 		-log y	-graph 2 -bxy 1:2 \
-		-settype xy   		-block temp_misak_vn		 		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_lc				-graph 3 -bxy 1:2 \
+		-settype bar		-block temp_1kHz					-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_50kHz					-graph 1 -bxy 1:2 \
+		-settype xy			-block temp_3kHz					-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_shms_totrates			-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_shms_rates				-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_hms_totrates			-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_hms_rates				-graph 1 -bxy 1:2 \
+		-settype xy			-block temp_1day	 				-graph 2 -bxy 1:2 \
+		-settype xy			-block temp_1week	 				-graph 2 -bxy 1:2 \
+		-settype xy			-block temp_1month	 				-graph 2 -bxy 1:2 \
+		-settype xy			-block temp_1year					-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_hms_pactm				-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_hms_time				-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_shms_pactm 				-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_shms_time 				-graph 2 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
 		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
 		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
 		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
@@ -611,6 +724,8 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
 		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
         -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
 		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \
 		-settype xy			-block temp_thmin_shms				-graph 4 -bxy 1:2 \
 		-settype xycolor	-block temp_hms_atheta				-graph 4 -bxy 1:2:3 \
@@ -658,22 +773,22 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xycolor	-block temp_shms_ep5				-graph 6 -bxy 1:2:3 \
 		-settype xy			-block temp_hms_cep					-graph 6 -bxy 1:2 \
 		-settype xy			-block temp_shms_cep				-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_wqe						-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_wmin					-graph 7 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_aw					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_aw					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w1					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w2					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w3					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w4					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w5					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w1					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w2					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w3					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w4					-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w5					-graph 7 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_cw					-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_shms_cw					-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_wnnqe					-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_wnnmin					-graph 7 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_awnn				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_awnn				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_wnn1				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_wnn2				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_wnn3				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_wnn4				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_wnn5				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_wnn1				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_wnn2				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_wnn3				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_wnn4				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_wnn5				-graph 7 -bxy 1:2:3 \
+		-settype xy			-block temp_hms_cwnn				-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_shms_cwnn				-graph 7 -bxy 1:2 \
 		-settype xycolor	-block temp_hms_theta_aq			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_shms_theta_aq			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_theta_q1			-graph 8 -bxy 1:2:3 \
@@ -688,6 +803,20 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xycolor	-block temp_shms_theta_q5			-graph 8 -bxy 1:2:3 \
 		-settype xy			-block temp_hms_theta_cq			-graph 8 -bxy 1:2 \
 		-settype xy			-block temp_shms_theta_cq			-graph 8 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_nu_a				-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu_a				-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu1					-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu2					-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu3					-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu4					-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu5					-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu1				-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu2				-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu3				-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu4				-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu5				-graph 9 -bxy 1:2:3 \
+		-settype xy			-block temp_hms_nu_c				-graph 9 -bxy 1:2 \
+		-settype xy			-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 
 
@@ -720,19 +849,21 @@ display Azz_rates_hms_shms.png
 #		-settype bar		-block temp_shms_time 		-log y	-graph 2 -bxy 1:2 \
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
-xmgrace \
-		-settype xy   		-block temp_misak_vn		 		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_lc				-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
-		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
-		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
-		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#xmgrace \
+#		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
+#		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
+#		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
+#		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+#       -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \

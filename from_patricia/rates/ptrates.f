@@ -22,17 +22,18 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       integer :: clck_counts_beg, clck_counts_end, clck_rate
       integer :: clck_counts_beg2, clck_counts_end2, clck_rate2
       REAL*8 pi,alpha,mp,e_ch,picobarn,nanobarn,Navo
-      REAL*8 mass_D,mass_N,mass_He
+      REAL*8 mass_D,mass_N,mass_He,md
       PARAMETER( hbarc2   = 0.389379E-3) ! barn.GeV^2
       PARAMETER( pi       = 3.14159265 )
-      PARAMETER( mp       = 0.938272   )
-      PARAMETER( mass_D   = 1.876      )
-      PARAMETER( mass_N   = 14.0067    )
-      PARAMETER( mass_He  = 3.7284     )
-      PARAMETER( e_ch     = 1.602E-19  )
+      PARAMETER( mp       = 0.938272   ) ! GeV/c^2
+      PARAMETER( md       = 1.876      ) ! GeV/c^2
+      PARAMETER( mass_D   = 1.876      ) ! GeV/c^2
+      PARAMETER( mass_N   = 14.0067    ) ! GeV/c^2
+      PARAMETER( mass_He  = 3.7284     ) ! GeV/c^2
+      PARAMETER( e_ch     = 1.602E-19  ) ! C
       PARAMETER( picobarn = 1E12       )
       PARAMETER( nanobarn = 1E9        )
-      PARAMETER( Navo     = 6.022E23   )   ! mol-1
+      PARAMETER( Navo     = 6.022E23   ) ! mol-1
 
       INTEGER kin_in
       INTEGER npbin,ntbin
@@ -45,7 +46,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
       REAL*8 deg,thrad,thincr,thmin,thmax
       REAL*8 dep,epmin,epmax
-      REAL*8 s2,t2,xx,qq,w,tempqq
+      REAL*8 s2,t2,xx,qq,w,tempqq,wnn,cent_wnn
       REAL*8 rc,rche,rcn,rcc,rcli
 
       REAL*8 ND
@@ -60,13 +61,13 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 src_ratio_c,src_ratio_n,src_ratio_he
 
       REAL*8 deltae
-      REAL*8 w2min,w2max,w2pion,K_fact
+      REAL*8 w2min,w2max,w2pion,K_fact,w2nn,cent_w2nn
 
       REAL*8 tb,ta,teff
       REAL*8 aux(7)
 
       REAL*8 pit,thit
-      REAL*8 snsq,cssq,tnsq,nu,q2,w2,x,cstheta
+      REAL*8 snsq,cssq,tnsq,nu,q2,w2,x,cstheta,cent_nu
       REAL*8 w2end
 
       REAL*8 bcurrent,tgt_thick,tgt_len
@@ -199,9 +200,15 @@ c      test = 1   ! Test Mode ON
 
 c vvvv binMax = 11 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c For Azz, our target range is 0.8 < x < 2.2
-      DATA cent_x/      0.8,  0.9,  1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  1.9,  2.0,  2.1/ 
-      DATA cent_x_min/  0.75, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.95, 2.05/ 
-      DATA cent_x_max/  0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.95, 2.05, 2.15/ 
+c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  3.0,  4.0,  4.1/ 
+c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 2.85, 3.95, 4.05/ 
+c      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 3.15, 4.05, 4.15/ 
+c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3, 1.45, 1.65, 1.8,  2.0,  3.8,  3.0,  4.0,  4.1/ 
+c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 3.75, 2.85, 3.95, 4.05/ 
+c      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 2.15, 3.85, 3.15, 4.05, 4.15/ 
+      DATA cent_x/     0.8, 0.9,  1.01,  1.1,   1.2,   1.35,  1.55, 1.75, 2.0,  3.0,   3.8, 3.0, 4.0, 4.0/
+      DATA cent_x_min/ 0.75, 0.85, 0.955,1.055, 1.15,  1.275, 1.45, 1.65, 1.85, 1.925, 2.9, 3.4, 3.5, 4.0/
+      DATA cent_x_max/ 0.85, 0.955,1.055,1.15,  1.275, 1.45,  1.65, 1.85, 2.15, 2.825, 3.4, 3.5, 4.0, 4.0/
 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -226,6 +233,79 @@ c      DATA cent_x_min/  0.09, 0.23, 0.35, 0.45,  0.58, 0.75, 0.85, 0.95, 1.05, 
 c      DATA cent_x_max/  0.23, 0.35, 0.45, 0.58,  0.70, 0.85, 0.95, 1.05, 1.15, 1.25, 1.35/ 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+c---- CONSTANT -------------------------------------------
+
+      alpha   =  1.0/137.0
+      d_r     =  pi/180.0     ! deg --> rad
+      m_e     = .5109991D-03  ! Electron mass in GeV/c^2.
+      m_amu   = .9314943D0    ! Atomic mass unit in GeV/c^2.
+c
+c---- PARAMETER -------------------------------------------
+
+      central   = .false.   ! true --> use only central angle
+                            ! false --> use acceptance phase space
+
+      scale_time= 1.0 
+      scale     = 5.0            ! scale b1 kumano model
+      type      = 1              ! 1=physics rates, 2=total rates
+      targ      = 'ND3'          ! ND3 target
+c      targ      = 'LiD'          ! LiD
+c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
+      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
+c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
+c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      w2pion    =  1.18**2  ! pion threshold
+c      w2min     =  1.8**2  ! Cut on W
+c      w2min     =  1.50**2  ! Cut on W
+      w2min     =  0.0  ! Cut on W
+c      w2max     =  1.85**2  ! Cut on W
+      w2max     =  30**2  ! Cut on W
+c      w2max     =  0.8**2  ! Cut on W
+      m_atom    =  2.0
+c      bcurrent  =  0.100    ! 0.085    ! microAmps
+      bcurrent  =  0.090    ! 0.085    ! microAmps
+      tgt_len   =  3.0*1.0  ! cm
+c      tgt_len   =  6.0*1.0  ! cm
+      ! ND3 specs
+      rho_nd3   =  1.007 ! g/cm3
+
+      dil_nd3   =  6.0/20.0 !
+c      pack_nd3  =  0.80 !0.55     ! packing fraction
+      pack_nd3  =  0.65 !0.55     ! packing fraction
+      Pz_nd3    =  0.42 !0.35     ! vector polarization
+      M_nd3     =  20.0     ! g/mole
+      ! LiD specs
+      rho_lid   =  0.82     ! g/cm3
+      dil_lid   =  0.50     !
+      pack_lid  =  0.65 !0.55     ! packing fraction
+      Pz_lid    =  0.50 !0.30     !0.50     ! 64% vector polarization, Bueltman NIM A425 
+      M_lid     =  9.0      ! g/mole
+
+      ND        =  1.0     ! D-wave component
+      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.25    ! expected improvement on the target
+c      Pzz_in    =  0.20    ! expected improvement on the target
+c      Pzz_in    =  0.15    ! expected improvement on the target
+
+c      fsyst_xs  =  0.13     ! add a 5% from F1
+      fsyst_xs  =  0.05     ! add a 5% from F1
+
+c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
+c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
+      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+
+      ! General Parameters
+      rho_he = 0.1412 ! 0.1412 g/cm^3
+      m_he = 4.0026
+      z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3;
+      a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6;
 
 
 
@@ -233,10 +313,12 @@ c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c This section creates the x and Q^2 values to be used
 c for each of the data points to be run
       ! HMS
-c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
-c      DATA xval1/    100, 100, 100, 100, 100/
-c      DATA qqval1/    99, 99, 99, 99, 99/   
+c vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      if (e_in.ne.2.2) then
+         DATA prec1/    300.0,  168.0,  336.0,  720.0,  360.0/
+         DATA xval1/    100, 100, 100, 100, 100/
+         DATA qqval1/    99, 99, 99, 99, 99/   
+c      endif
 
       ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  360.0/
@@ -257,15 +339,19 @@ c      DATA qqval1/   99,   99,  99,  99,  99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec1/    333, 216, 360, 168, 168/
-c      DATA xval1/    1.4, 100, 100, 100, 100/
-c      DATA qqval1/   4.0, 99,  99,  99,  99/   
+c      if (e_in.eq.8.8) then
+c         DATA prec1/    300, 216, 360, 168, 168/
+c         DATA xval1/    1.4, 100, 100, 100, 100/
+c         DATA qqval1/   1.5, 99,  99,  99,  99/   
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec1/    50, 216, 360, 168, 168/
-c      DATA xval1/    1.0, 100, 100, 100, 100/
-c      DATA qqval1/   1.7, 99,  99,  99,  99/   
+c      if (e_in.eq.6.6) then
+c         DATA prec1/    50, 216, 360, 168, 168/
+c         DATA xval1/    1.0, 100, 100, 100, 100/
+c         DATA qqval1/   1.7, 99,  99,  99,  99/   
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -275,10 +361,21 @@ c      DATA xval1/    1.3,  100, 100, 100, 100/
 c      DATA qqval1/   0.37, 99,  99,  99,  99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.8.8) then
+c         prec1(1) = 300
+c         xval1(1) = 1.6
+c         qqval1(1) = 4.51
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec1/     15, 216, 360, 168, 168/
-      DATA xval1/    1.8, 100, 100, 100, 100/
-      DATA qqval1/   0.31, 99,  99,  99,  99/   
+      if (e_in.eq.2.2) then
+        prec1(1)  = 15
+        xval1(1)  = 1.8
+        qqval1(1) = 0.31 
+      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -287,6 +384,14 @@ c ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! SHMS
 c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+      ! vvvvv Initialize all values to not record any rates vvvvvv
+       DATA prec2/    168.0,  168.0,  336.0,  720.0,  360.0/
+       DATA xval2/    100, 100, 100, 100, 100/
+       DATA qqval2/    99, 99, 99, 99, 99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
@@ -303,35 +408,53 @@ c      DATA xval2/    0.29,  100.0, 100.0, 100.0, 100.0/
 c      DATA qqval2/   1.8,   99,    99,    99,    99/   
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+      ! vvvvv Proposal Azz at E0= 11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.11.0) then
+         prec2(1) = 300
+         xval2(1) = 0.953
+         qqval2(1) = 1.788
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec2/    300, 216, 360, 168, 168/
-c      DATA xval2/    1.8, 100, 100, 100, 100/
-c      DATA qqval2/   1.5, 99,  99,  99,  99/   
+      if (e_in.eq.8.8) then
+         prec2(1) = 300
+         xval2(1) = 1.8
+c         xval2(1) = 0.5
+         qqval2(1) = 1.5
+      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec2/    45, 216, 360, 168, 168/
-c      DATA xval2/    3.7, 100, 100, 100, 100/
-c      DATA qqval2/   0.71, 99,  99,  99,  99/   
+      if (e_in.eq.6.6) then
+         prec2(1) = 45
+         xval2(1) = 3.7
+         qqval2(1) = 0.71
+      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      DATA prec2/     15, 216, 360, 168, 168/
-      DATA xval2/    1.8, 100, 100, 100, 100/
-      DATA qqval2/   0.29, 99,  99,  99,  99/   
+      if (e_in.eq.2.2) then
+         prec2(1) = 15
+         xval2(1) = 1.8
+         qqval2(1) = 0.29
+      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Potential Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec2/    168, 216, 360, 168, 168/
-c      DATA xval2/    1.3, 100, 100, 100, 100/
-c      DATA qqval2/   2.0, 99,  99,  99,  99/   
+c      if (e_in.eq.11.0) then
+c         DATA prec2/    168, 216, 360, 168, 168/
+c         DATA xval2/    1.3, 100, 100, 100, 100/
+c         DATA qqval2/   2.0, 99,  99,  99,  99/   
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Potential Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvv
-c      DATA prec2/      6, 216, 360, 168, 168/
-c      DATA xval2/    1.3, 100, 100, 100, 100/
-c      DATA qqval2/   0.6, 99,  99,  99,  99/   
+      if (e_in.eq.4.4) then
+         prec2(1) = 6
+         xval2(1) = 1.3
+         qqval2(1) = 0.6
+      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Matching HERMES Results vvv vvvvvvvvvvvvvvvvvvvvvvvv
@@ -393,80 +516,20 @@ c---- INPUT/OUTPUT -----------------------------------------
       OPEN(UNIT=17, FILE='output/cs-check-shms.out', STATUS='UNKNOWN')
       OPEN(UNIT=18, FILE='output/cs-check-hms.out',  STATUS='UNKNOWN')
 
-c---- CONSTANT -------------------------------------------
-
-      alpha   =  1.0/137.0
-      d_r     =  pi/180.0     ! deg --> rad
-      m_e     = .5109991D-03  ! Electron mass in GeV/c^2.
-      m_amu   = .9314943D0    ! Atomic mass unit in GeV/c^2.
-c
-c---- PARAMETER -------------------------------------------
-
-      central   = .false.   ! true --> use only central angle
-                            ! false --> use acceptance phase space
-
-      scale_time= 1.0 
-      scale     = 5.0            ! scale b1 kumano model
-      type      = 1              ! 1=physics rates, 2=total rates
-      targ      = 'ND3'          ! ND3 target
-c      targ      = 'LiD'          ! LiD
-c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
-c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
-c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
-c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      w2pion    =  1.18**2  ! pion threshold
-c      w2min     =  1.8**2  ! Cut on W
-c      w2min     =  1.50**2  ! Cut on W
-      w2min     =  0.0  ! Cut on W
-c      w2max     =  1.85**2  ! Cut on W
-      w2max     =  30**2  ! Cut on W
-c      w2max     =  0.8**2  ! Cut on W
-      m_atom    =  2.0
-c      bcurrent  =  0.100    ! 0.085    ! microAmps
-      bcurrent  =  0.090    ! 0.085    ! microAmps
-      tgt_len   =  3.0*1.0  ! cm
-c      tgt_len   =  6.0*1.0  ! cm
-      ! ND3 specs
-      rho_nd3   =  1.007 ! g/cm3
-
-      dil_nd3   =  6.0/20.0 !
-c      pack_nd3  =  0.80 !0.55     ! packing fraction
-      pack_nd3  =  0.65 !0.55     ! packing fraction
-      Pz_nd3    =  0.42 !0.35     ! vector polarization
-      M_nd3     =  20.0     ! g/mole
-      ! LiD specs
-      rho_lid   =  0.82     ! g/cm3
-      dil_lid   =  0.50     !
-      pack_lid  =  0.65 !0.55     ! packing fraction
-      Pz_lid    =  0.50 !0.30     !0.50     ! 64% vector polarization, Bueltman NIM A425 
-      M_lid     =  9.0      ! g/mole
-
-      ND        =  1.0     ! D-wave component
-      Pzz_in    =  0.30    ! expected improvement on the target
-c      Pzz_in    =  0.25    ! expected improvement on the target
-c      Pzz_in    =  0.20    ! expected improvement on the target
-c      Pzz_in    =  0.15    ! expected improvement on the target
-
-c      fsyst_xs  =  0.13     ! add a 5% from F1
-      fsyst_xs  =  0.05     ! add a 5% from F1
-
-c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
-c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
-      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
-
-      ! General Parameters
-      rho_he = 0.1412 ! 0.1412 g/cm^3
-      m_he = 4.0026
-      z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3;
-      a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6;
 c----- MAIN ------------------------------------------------
+c      thrad=20*d_r
+c      ep_in=7.29
+c      qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
+c      x  = qq/(2*mp*(e_in-ep_in))
+c      write (6,*) "e_in:",e_in
+c      write (6,*) "ep_in:",ep_in
+c      write (6,*) "qq:",qq
+c      write (6,*) "x:",x
+c      qqval2(1) = qq
+c      xval2(1)  = x
+c      qqval1(1) = qq
+c      xval1(1)  = x
+
       if (test.eq.1) then
          write(6,*) "*******************************************"
          write(6,*) "************* TEST MODE ON ****************"
@@ -482,14 +545,16 @@ c----- MAIN ------------------------------------------------
          qq = qqval1(ib)
          w     = sqrt(mp**2+qq/xx-qq)
          nu    = qq/2./mp/xx
+         w2nn  = 2*nu*md+md**2-qq
+         wnn   = sqrt(w2nn)
          y_in  = nu/e_in
          ep_in = e_in - nu
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
-            write (6,1009) "",xx,qq,ep_in,th_in
-            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
+            write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
+c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) qqval1(ib)=99
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99 
@@ -497,29 +562,35 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99
       enddo
       write (6,*) "------------------------------------------"
       write (6,*) "  SHMS:           E'max=10.4  Thmin=7.3"
-      write (6,*) "      x         Q2        E'       Th"
+      write (6,*) "      x         Q2        E'       Th       W2nn         Wnn"
+c "
       do ib=1,5
          xx = xval2(ib)
          qq = qqval2(ib)
          w     = sqrt(mp**2+qq/xx-qq)
          nu    = qq/2./mp/xx
+         w2nn  = 2*nu*md+md*md-qq
+         wnn   = sqrt(w2nn)
          y_in  = nu/e_in
          ep_in = e_in - nu
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
-            write (6,1009) "",xx,qq,ep_in,th_in
+            write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
             if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
       write (6,*) "------------------------------------------"
 
+
       xx =  xval2(1)
       qq = qqval2(1)
       w     = sqrt(mp**2+qq/xx-qq)
       nu    = qq/2./mp/xx
+      w2nn  = 2*nu*md+md**2-qq
+      wnn   = sqrt(w2nn)
       y_in  = nu/e_in
       ep_in1 = e_in - nu
       s2    = qq/4.0/e_in/ep_in1
@@ -530,6 +601,8 @@ c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
       qq = qqval1(1)
       w     = sqrt(mp**2+qq/xx-qq)
       nu    = qq/2./mp/xx
+      w2nn  = 2*nu*md+md**2-qq
+      wnn   = sqrt(w2nn)
       y_in  = nu/e_in
       ep_in2 = e_in - nu
       s2    = qq/4.0/e_in/ep_in2
@@ -758,14 +831,20 @@ c            do ib=1,nx
             good_x_min = xx
             good_x_max = xx
 
- 10         w     = sqrt(mp**2+qq/xx-qq)
-            nu    = qq/2./mp/xx
-            y_in  = nu/e_in
-            ep_in = e_in - nu
-            s2    = qq/4.0/e_in/ep_in
-            thrad = 2.*asin(sqrt(s2))
-            th_in = thrad/d_r
+ 10         w          = sqrt(mp**2+qq/xx-qq)
+            nu         = qq/2./mp/xx
+            w2nn       = 2*nu*md+md**2-qq
+            wnn        = sqrt(w2nn)
+            y_in       = nu/e_in
+            ep_in      = e_in - nu
+            s2         = qq/4.0/e_in/ep_in
+            thrad      = 2.*asin(sqrt(s2))
+            th_in      = thrad/d_r
             superth_in = thrad/d_r
+            cent_nu    = nu
+            cent_w2nn  = w2nn
+            cent_wnn   = wnn
+            write(6,*) "c_nu:",cent_nu,"c_w2nn:",cent_w2nn,"c_wnn:",cent_wnn
 
             ! Binning over the momentum bite
 c            dep    = 0.02*ep_in
@@ -836,6 +915,8 @@ c         vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                   q2    = 4.*e_in*pit*snsq
                   x     = q2/(2.*mp*nu)
                   w2    = mp*mp + q2/x - q2
+                  w2nn  = 2*nu*md+md**2-q2
+                  wnn   = sqrt(w2nn)
 
 c                 The section below uses x_Bjorken (xx) and theta_e' (th_in) to determine
 c                 the angle of the q-vector (thq) in degrees
@@ -959,7 +1040,7 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
      +                                  + ((0+F2c_qe)/12.)/nu)
                   endif
                   if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-                     if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
+                     if(x.lt.1.1.or.x.gt.3.0.or.x.eq.3.0.or.e_in.lt.3.0) then
                         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
                         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -1134,7 +1215,7 @@ c                     write(6,*)"ave_x = ",ave_x
      &              sigma_unpol_d,sigma_unpol_he,sigma_unpol_n,
      &              F1d,F2d,F1he,F2he,F1n,F2n,
      &              pit,thit,thq,
-     &              tot_allsigma,sigma_unpol_li
+     &              tot_allsigma,sigma_unpol_li,nu,w2nn,wnn
 
                enddo ! loop over theta bins
 
@@ -1281,7 +1362,7 @@ c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
             tnsq  = tan(thrad/2.)**2.
             nu    = qq/2./mp/xx
             cstheta = cos(thrad/2.)
-
+            nu    = e_in - pit
 c           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -1316,7 +1397,7 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      &                    goodRateTotal,goodRate_he,goodRate_n,
      &                    f_dil,spec_x,
      &                    good_x_min,good_x_max,
-     &                    goodRate_li
+     &                    goodRate_li,cent_nu,cent_w2nn,cent_wnn
 
             do ib=1,binMax
                F1d = 0
@@ -1578,7 +1659,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                            + ((0+F2c_qe)/12.)/nu)
             endif
             if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-                     if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
+                     if(x.lt.1.1.or.x.gt.3.00.or.x.eq.3.0.or.e_in.lt.3.0) then
                         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
                         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -1688,7 +1769,7 @@ c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel
 
 c !$OMP DO
 
-42    do ib=10,230
+42    do ib=10,400
 c      write(6,*)"ib",ib
 
 c         e_in    = 11.0 ! GeV
@@ -1696,10 +1777,13 @@ c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
 c         e_in    = 11.671 ! GeV
 c         e_in    = 5.766 ! GeV
+c         e_in    = 1.245  ! GeV
 c         ep_in1  = e_in - ib*0.001 ! GeV
          x       = ib*0.01
-c         th_in1  = 18.00 ! Degrees
-c         ep_in1  = 5.80 ! GeV
+c         th_in1  = 17.00 ! Degrees
+c         th_in1  = 8.00 ! Degrees
+c         ep_in1  = 4.045 ! GeV
+c         write(6,*) "th_in1 = ", th_in1
          thrad   = th_in1*d_r
          snsq    = sin(thrad/2.)**2.
          cssq    = cos(thrad/2.)**2.
@@ -1822,7 +1906,7 @@ c !$OMP END CRITICAL
          endif
          if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
 c !$OMP CRITICAL
-            if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
+            if(x.lt.1.1.or.x.gt.3.0.or.x.eq.3.0.or.e_in.lt.3.0) then
                if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
                if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
                if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Lithium-6
@@ -1874,14 +1958,15 @@ c !$OMP CRITICAL
 c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
          endif
-         if (x.gt.0.1) then
-               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
-               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
-               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
-               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
-               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
-         endif
+c         if (x.gt.0) then
+c               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
+c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
+c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
+c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
+c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+c         endif
 
+c         sigma_unpol_d  = 2*mott_p
 c         write(6,*) "sigma_unpol_d = ",sigma_unpol_d
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
@@ -1938,8 +2023,8 @@ c         endif
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 
 c     vvvvvvvvvvvv HMS vvvvvvvvvvvvvvvvvvv
-c       do ib=10,200
-       do ib=10,200
+c       do ib=10,300
+       do ib=10,300
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -2060,7 +2145,7 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
      +                         + ((0+F2c_qe)/12.)/nu)
          endif
          if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-            if(x.lt.1.1.or.x.gt.3.30.or.x.eq.3.0.or.e_in.lt.3.0) then
+            if(x.lt.1.1.or.x.gt.3.0.or.x.eq.3.0.or.e_in.lt.3.0) then
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
                sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -2155,13 +2240,15 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          qq = qqval1(ib)
          w     = sqrt(mp**2+qq/xx-qq)
          nu    = qq/2./mp/xx
+         w2nn  = 2*nu*md+md**2-qq
+         wnn   = sqrt(w2nn)
          y_in  = nu/e_in
          ep_in = e_in - nu
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
          if (.not.xx.gt.98) then
-            write (6,1009) "",xx,qq,ep_in,th_in
+            write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
          endif
       enddo
       write (6,*) "------------------------------------------"
@@ -2172,13 +2259,15 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          qq = qqval2(ib)
          w     = sqrt(mp**2+qq/xx-qq)
          nu    = qq/2./mp/xx
+         w2nn  = 2*nu*md+md**2-qq
+         wnn   = sqrt(w2nn)
          y_in  = nu/e_in
          ep_in = e_in - nu
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
          if (.not.xx.gt.98) then
-            write (6,1009) "",xx,qq,ep_in,th_in
+            write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
          endif
 
       enddo
@@ -2219,18 +2308,18 @@ C =========================== Format Statements ================================
  1001 format(a)
 c 1002 format(2(i2,1x),f7.3,1x,f6.1,1x,2f7.3,4(1x,E10.3))
  1022 format(A7,1x,E10.3)
- 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),2(E10.3,1x))
+ 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),5(E10.3,1x))
 c 1003 format(2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3))
  1003 format(i1,2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3),4(1x,E10.3))
  1004 format(i1,1x,f6.1,1x,f7.3,1x,f7.3,3(1x,E10.3),1x,f7.1,2(1x,E10.3),2(1x,f7.3),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
- 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),1x,E10.3)
+ 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
  1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),10(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
  1008 format(24(E10.3,1x))
- 1009 format(A1,4(f10.3))
+ 1009 format(A1,6(f10.3))
  1010 format(A40,i1," ",i6,i3," ",A1,2(i3),A1)
       end
 

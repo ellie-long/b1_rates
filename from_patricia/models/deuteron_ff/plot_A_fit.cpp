@@ -75,7 +75,10 @@ void plot_A_fit() {
 	TGraph* gr=0;
 //	TF1 *fitLong = new TF1("fitLong","10^([0]+[1]*x+[2]*x^2)",0.75,6);
 	TF1 *fitLong = new TF1("fitLong","10^([0]+[1]*x+[2]*x^2+[3]*x^3)+10^(-2.68235-1.47849*x+0.0782541*x^2)",0,6);
+//	TF1 *fitLong = new TF1("fitLong","[0] + [1]/tan(asin(sqrt(x/(4*[2])))/2)^2",0,6);
 //	fitLong->SetParameters(1,-2.5275,-1.5704,0.09667);
+//	fitLong->SetParLimits(2,1.5,20);
+//	fitLong->SetParLimits(1,2.2,2.2);
 /*	fitLong->SetParLimits(0,-1.85931000001e-02,-1.85931e-02);
 	fitLong->SetParLimits(1,-1.37215000001e+01,-1.37215e+01);
 	fitLong->SetParLimits(2,3.23622e+01,3.23622000001e+01);

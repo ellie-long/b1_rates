@@ -25,7 +25,8 @@
  	frec = 1./(1+2.*e/rmt*s2)
 	ef = e*frec
 	omega = e - ef	!energy loss
-	qv = sqrt(e**2 + ef**2 - 2.*e*ef*cosd(theta))
+	qv = sqrt(e**2 + ef**2 - 2.*e*ef*cos(thr))
+!	qv = sqrt(e**2 + ef**2 - 2.*e*ef*cosd(theta))
 	q42=4.*e*ef*s2 
 	qx=e-ef*cost 
 	qy=-ef*sint 

@@ -12,7 +12,7 @@
      &              STATUS='UNKNOWN')
 
 
-      do ix=1,300
+      do ix=1,500
            x = dble(ix)/100
            xplat=1.64203-0.177032*log(QQ)
            if (x.le.0.75) then
