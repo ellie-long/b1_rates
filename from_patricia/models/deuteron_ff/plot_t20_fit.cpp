@@ -23,24 +23,29 @@ using namespace std;
 datafile_t datafiles[] = {
 //{ "data file.dat", "Data Name", "Q", "t20", "Error Up", "Error Down", ?, ?, Shape, Color}
 	{ "data_t20/all_data.dat", 		"", 				"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,1,10 },
-	{ "data_t20/Dmitriev.dat", 		"Dmitriev", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,6 },
-	{ "data_t20/Voitsekhovskii.dat","Voitsekhovskii", 	"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,21,6 },
-	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,22,6 },
-	{ "data_t20/Schulze.dat", 		"Schulze", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,6 },
-	{ "data_t20/Bowhuis.dat", 		"Bowhuis", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,24,6 },
-	{ "data_t20/Gilman.dat", 		"Gilman", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,25,6 },
-	{ "data_t20/Boden.dat", 		"Boden", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,26,6 },
-	{ "data_t20/Garcon.dat", 		"Garcon", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,27,6 },
-	{ "data_t20/Abbott.dat", 		"Abbott", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,28,6 },
-	{ "data_t20/Nikolenko.dat", 	"Nikolenko", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,29,6 },
-	{ "data_t20/Zhang.dat", 		"Zhang", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,30,6 },
-	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,30,1 },
+	{ "data_t20/Dmitriev.dat", 		"Dmitriev", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,1 },
+	{ "data_t20/Voitsekhovskii.dat","Voitsekhovskii", 	"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,21,1 },
+	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,22,1 },
+	{ "data_t20/Schulze.dat", 		"Schulze", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,1 },
+	{ "data_t20/Bowhuis.dat", 		"Bowhuis", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,24,1 },
+	{ "data_t20/Gilman.dat", 		"Gilman", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,25,1 },
+	{ "data_t20/Boden.dat", 		"Boden", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,26,1 },
+	{ "data_t20/Garcon.dat", 		"Garcon", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,27,1 },
+	{ "data_t20/Abbott.dat", 		"Abbott", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,28,1 },
+	{ "data_t20/Nikolenko.dat", 	"Nikolenko", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,29,1 },
+	{ "data_t20/Zhang.dat", 		"Zhang", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,30,1 },
+	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,6 },
+	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,20,6 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,6 },
+	{ "theory_t20/imii.dat", "IMII", "[0]", "[1]", "0", "0", 0, 0, 2, 3 },
+	{ "theory_t20/imii+me.dat", "IM+E II", "[0]", "[1]", "0", "0", 0, 0, 2, 1 },
+	{ "theory_t20/rpg0.dat", "\\rho\\pi\\gamma f/g=0", "[0]", "[1]", "0", "0", 0, 0, 2, 2 },
+	{ "theory_t20/rpg6.dat", "\\rho\\pi\\gamma f/g=6.1", "[0]", "[1]", "0", "0", 0, 0, 2, 4 },
 	{ NULL }
 };	
 
 datafile_t theoryfiles1[] = {
 //{ "theory file.txt", "Data Name", "Q2 (Include range in theory file)", "Ay", "Error Up", "Error Down", ?, ?, 2, 3 },
-//	{ "asym_theory/mami_ay_theory_full.txt", "FSI and MEC (Faddeev)", "[0]", "[1]", "0", "0", 0, 0, 2, 3 },
 	{ NULL }
 };
 
@@ -51,8 +56,9 @@ void plot_t20_fit() {
 	cn->UseCurrentStyle();
 	TH1F *frm = new TH1F("frm","",100,0.0,2.);
 //	gPad->SetLogy();
-	frm->GetXaxis()->SetTitle("Q^2	(GeV^2)");
-	frm->GetYaxis()->SetTitle("t_{20}(70^{\\circ})");
+	frm->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
+//	frm->GetYaxis()->SetTitle("t_{20}(70^{\\circ})");
+	frm->GetYaxis()->SetTitle("t_{20}");
 	frm->SetMinimum(-1.75);
 	frm->SetMaximum(1.0);
 	frm->UseCurrentStyle();
@@ -62,7 +68,7 @@ void plot_t20_fit() {
 
 	
 	TMultiGraph* mgrDta = new TMultiGraph("Data","t_{20} Data");
-	TLegend *legDta = new TLegend(.75,.2,.9,.50,"","brNDC");
+	TLegend *legDta = new TLegend(.7,.13,.95,.58,"","brNDC");
 
 	TMultiGraph* wgr = mgrDta;
 	TLegend *wlg = legDta;
@@ -87,7 +93,7 @@ void plot_t20_fit() {
 			gr->SetLineWidth(1);
 			mgrDta->Add(gr,"p");
 			legDta->AddEntry(gr,f->label,"p");
-			gr->Fit(theFit);
+//			gr->Fit(theFit);
 		 	}	
 		 	else if (gr->GetMarkerStyle()>=20) {
 			mgrDta->Add(gr,"p");
@@ -104,7 +110,7 @@ void plot_t20_fit() {
 
 	mgrDta->Draw("p");
 	legDta->Draw();
-	theFit->Draw("same");	
+//	theFit->Draw("same");	
 	TMultiGraph* mgrThry = new TMultiGraph("Theory","t_{20} Theory");
 	TLegend *legThry = new TLegend(.54,.3,.875,.6,"","brNDC");
 
@@ -115,7 +121,7 @@ void plot_t20_fit() {
 	wlg->SetBorderSize(0); // turn off border
 	wlg->SetFillStyle(0);
 	
-/*	f = theoryfiles1;
+	f = theoryfiles1;
 	gr=0;
 	while ( f && f->filename ) {
 		gr=OneGraph(f);
@@ -140,9 +146,10 @@ void plot_t20_fit() {
 		}
 		f++;
 	}
-*/
+
 	cout << "Am I here?" << endl;	
-	mgrThry->Draw("c");
+//	mgrThry->Draw("c");
+	wgr->Draw("c");
 	legThry->Draw();
 	legDta->Draw();
 	// draw a line at 1

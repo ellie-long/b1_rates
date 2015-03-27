@@ -251,16 +251,16 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
 c      w2min     =  1.50**2  ! Cut on W
@@ -347,11 +347,19 @@ c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-c      if (e_in.eq.6.6) then
-c         DATA prec1/    50, 216, 360, 168, 168/
-c         DATA xval1/    1.0, 100, 100, 100, 100/
-c         DATA qqval1/   1.7, 99,  99,  99,  99/   
-c      endif
+      if (e_in.eq.6.6) then
+c         prec1(1)  = 96
+c         xval1(1)  = 1.5
+c         qqval1(1) = 1.8
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.4.4) then
+c         prec1(1)  = 96
+c         xval1(1)  = 1.5
+c         qqval1(1) = 1.8
+      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -372,7 +380,7 @@ c         qqval1(1) = 4.51
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-        prec1(1)  = 15
+        prec1(1)  = 24
         xval1(1)  = 1.8
         qqval1(1) = 0.31 
       endif
@@ -427,17 +435,18 @@ c         xval2(1) = 0.5
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-         prec2(1) = 45
-         xval2(1) = 3.7
-         qqval2(1) = 0.71
+c         prec2(1) = 96
+c         xval2(1) = 3.7
+c         qqval2(1) = 0.71
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-         prec2(1) = 15
+         prec2(1) = 24
          xval2(1) = 1.8
-         qqval2(1) = 0.29
+c         qqval2(1) = 0.29
+         qqval2(1) = 0.26
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -451,9 +460,9 @@ c      endif
 
       ! vvvvv Potential Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.4.4) then
-         prec2(1) = 6
-         xval2(1) = 1.3
-         qqval2(1) = 0.6
+         prec2(1) = 24
+         xval2(1) = 1.5
+         qqval2(1) = 0.48
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -517,14 +526,14 @@ c---- INPUT/OUTPUT -----------------------------------------
       OPEN(UNIT=18, FILE='output/cs-check-hms.out',  STATUS='UNKNOWN')
 
 c----- MAIN ------------------------------------------------
-c      thrad=20*d_r
-c      ep_in=7.29
-c      qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
-c      x  = qq/(2*mp*(e_in-ep_in))
-c      write (6,*) "e_in:",e_in
-c      write (6,*) "ep_in:",ep_in
-c      write (6,*) "qq:",qq
-c      write (6,*) "x:",x
+      thrad=12.201*d_r
+      ep_in=5.961
+      qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
+      x  = qq/(2*mp*(e_in-ep_in))
+      write (6,*) "e_in:",e_in
+      write (6,*) "ep_in:",ep_in
+      write (6,*) "qq:",qq
+      write (6,*) "x:",x
 c      qqval2(1) = qq
 c      xval2(1)  = x
 c      qqval1(1) = qq
@@ -554,7 +563,7 @@ c      xval1(1)  = x
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
-c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
+            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) qqval1(ib)=99
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99 
