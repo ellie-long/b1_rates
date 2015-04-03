@@ -23,10 +23,10 @@ using namespace std;
 datafile_t datafiles[] = {
 //{ "data file.dat", "Data Name", "Q", "t20", "Error Up", "Error Down", ?, ?, Shape, Color}
 	{ "data_t20/all_data.dat", 		"", 				"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,1,10 },
-	{ "data_t20/Dmitriev.dat", 		"Dmitriev", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,1 },
+	{ "data_t20/Schulze.dat", 		"Schulze, PRL 8, 597 (1984)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,1 },
+	{ "data_t20/Dmitriev.dat", 		"Dmitriev, PLB 157, 143 (1985)", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,1 },
 	{ "data_t20/Voitsekhovskii.dat","Voitsekhovskii", 	"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,21,1 },
 	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,22,1 },
-	{ "data_t20/Schulze.dat", 		"Schulze", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,1 },
 	{ "data_t20/Bowhuis.dat", 		"Bowhuis", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,24,1 },
 	{ "data_t20/Gilman.dat", 		"Gilman", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,25,1 },
 	{ "data_t20/Boden.dat", 		"Boden", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,26,1 },
@@ -68,7 +68,7 @@ void plot_t20_fit() {
 
 	
 	TMultiGraph* mgrDta = new TMultiGraph("Data","t_{20} Data");
-	TLegend *legDta = new TLegend(.7,.13,.95,.58,"","brNDC");
+	TLegend *legDta = new TLegend(.5,.12,.95,.57,"","brNDC");
 
 	TMultiGraph* wgr = mgrDta;
 	TLegend *wlg = legDta;

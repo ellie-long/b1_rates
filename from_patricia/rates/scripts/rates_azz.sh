@@ -179,8 +179,8 @@ echo "0 8760" > temp_1year
 echo "10 8760" >> temp_1year
 echo "0 1000" > temp_1kHz
 echo "10 1000" >> temp_1kHz
-echo "0 50000" > temp_50kHz
-echo "10 50000" >> temp_50kHz
+echo "0 10000" > temp_10kHz
+echo "10 10000" >> temp_10kHz
 echo "0 3000" > temp_3kHz
 echo "10 3000" >> temp_3kHz
 echo "0 1.85" > temp_wmin
@@ -699,7 +699,7 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xy			-block temp_shms_fdil				-graph 0 -bxy 1:2 \
 		-settype xy			-block temp_hms_fdil				-graph 0 -bxy 1:2 \
 		-settype bar		-block temp_1kHz					-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_50kHz					-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_10kHz					-graph 1 -bxy 1:2 \
 		-settype xy			-block temp_3kHz					-graph 1 -bxy 1:2 \
 		-settype bar		-block temp_shms_totrates			-graph 1 -bxy 1:2 \
 		-settype bar		-block temp_shms_rates				-graph 1 -bxy 1:2 \
@@ -773,22 +773,22 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xycolor	-block temp_shms_ep5				-graph 6 -bxy 1:2:3 \
 		-settype xy			-block temp_hms_cep					-graph 6 -bxy 1:2 \
 		-settype xy			-block temp_shms_cep				-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_wnnqe					-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_wnnmin					-graph 7 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_awnn				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_awnn				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn1				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn2				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn3				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn4				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn5				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn1				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn2				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn3				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn4				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn5				-graph 7 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_cwnn				-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_shms_cwnn				-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_wqe					-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_wmin					-graph 7 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_aw				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_aw				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w1				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w2				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w3				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w4				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w5				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w1				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w2				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w3				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w4				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w5				-graph 7 -bxy 1:2:3 \
+		-settype xy			-block temp_hms_cw				-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_shms_cw				-graph 7 -bxy 1:2 \
 		-settype xycolor	-block temp_hms_theta_aq			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_shms_theta_aq			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_theta_q1			-graph 8 -bxy 1:2:3 \
@@ -830,7 +830,7 @@ display Azz_rates_hms_shms.png
 #
 #xmgrace \
 #		-settype bar		-block temp_1kHz			-log y	-graph 1 -bxy 1:2 \
-#		-settype bar		-block temp_50kHz			-log y	-graph 1 -bxy 1:2 \
+#		-settype bar		-block temp_10kHz			-log y	-graph 1 -bxy 1:2 \
 #		-settype xy			-block temp_3kHz			-log y	-graph 1 -bxy 1:2 \
 #		-settype bar		-block temp_shms_totrates	-log y	-graph 1 -bxy 1:2 \
 #		-settype bar		-block temp_shms_rates		-log y	-graph 1 -bxy 1:2 \
@@ -849,21 +849,21 @@ display Azz_rates_hms_shms.png
 #		-settype bar		-block temp_shms_time 		-log y	-graph 2 -bxy 1:2 \
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
-xmgrace \
-		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
-		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
-		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
-		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-       -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#xmgrace \
+#		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
+#		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
+#		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
+#		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
+#		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+#       -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
+#		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \

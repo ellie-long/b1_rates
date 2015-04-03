@@ -463,7 +463,7 @@ with g1
 #    world 0, 1, 2.0, 100000
 ##    world 0, 0, 0.70, 2000
 #    world 0.6, 0, 2.0, 3050
-    world 0.6, 0, 2.3, 5050
+    world 0.6, 0, 2.3, 12000
 #    world 0.6, 0, 5.0, 5050
     stack world 0, 0, 0, 0
     znorm 1
@@ -551,8 +551,8 @@ with g1
     yaxis  tick on
 #    yaxis  tick major 10
 #    yaxis  tick minor ticks 9
-    yaxis  tick major 500
-    yaxis  tick minor ticks 3
+    yaxis  tick major 1000
+    yaxis  tick minor ticks 9
     yaxis  tick default 6
     yaxis  tick place rounded true
     yaxis  tick in

@@ -27,8 +27,9 @@ c ***************************************************************************
       LAMBDASQ = 0.71            ! (GeV/c)^2
       mun      = -1.9130
       mup      = 2.7928
-      hbarc2   = 0.389379E-3     ! barn.GeV^2
+      hbarc2   = 3.89379E-4     ! barn.GeV^2
       alpha    = 1.0/137.0
+      EPRIME = E/(1+((E/mp)*(1-cos(TH))))
 
 ! Define deuteron elastic scattering
       if (A.eq.2.and.Z.eq.1) then
@@ -46,8 +47,11 @@ c ***************************************************************************
          Be = 10**(b0+b1*QSQ+b2*QSQ**2)
 
          ! Define cross section
-         XSmott = hbarc2*((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2)**2))**2.) ! barn/GeV*str 
+         XSmott = hbarc2*((1.*alpha*cos(TH/2.)/(2.*E*sin(TH/2.)**2.))**2.) ! barn/GeV*str 
+c         XSmott = ((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2.)**2))**2.) ! barn/GeV*str 
                                                                         ! (1E-24 cm^2/(GeV/str))
+c         XSmott = XSmott/(1+(2.*E/1.876)*sin(TH/2)**2)
+c         XSmott = XSmott/(1-(QSQ/(2.*1.876**2))*sin(TH/2.)**2/cos(TH/2.)**2)
 c         XS = XSmott
          XS = XSmott*(Ae+Be*tan(TH/2)**2)
 
@@ -105,7 +109,6 @@ c        Define cross section
 
          XSmott = hbarc2*((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2)**2))**2.) ! barn/GeV*str 
                                                                         ! (1E-24 cm^2/(GeV/str))
-         EPRIME = E/(1+((E/mp)*(1-cos(TH))))
 
 
          XSP = XSmott*((GEP**2+tau*GMP**2)/(1+tau) +

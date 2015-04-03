@@ -22,19 +22,19 @@ using namespace std;
 
 datafile_t datafiles[] = {
 //{ "data file.dat", "Data Name", "Q^2", "A", "Error Up", "Error Down", ?, ?, Shape, Color}
-	{ "data_A/all_data.dat", 	"", 			"[0]", "[1]", "[2]", "[2]", 0,0,1,10 },
-	{ "data_A/Buchanan.dat", 	"Buchanan",		"[0]", "[1]", "[2]", "[2]", 0,0,31,1 },
-	{ "data_A/Elias.dat", 		"Elias", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,1 },
-	{ "data_A/Benaksas.dat", 	"Benaksas", 	"[0]", "[1]", "[2]", "[2]", 0,0,21,1 },
-	{ "data_A/Arnold.dat", 		"Arnold", 		"[0]", "[1]", "[2]", "[2]", 0,0,22,1 },
-	{ "data_A/Platchkov.dat", 	"Platchkov",	"[0]", "[1]", "[2]", "[2]", 0,0,23,1 },
-	{ "data_A/Galster.dat", 	"Galster", 		"[0]", "[1]", "[2]", "[2]", 0,0,24,1 },
-	{ "data_A/Cramer.dat", 		"Cramer", 		"[0]", "[1]", "[2]", "[2]", 0,0,25,1 },
-	{ "data_A/Simon.dat", 		"Simon", 		"[0]", "[1]", "[2]", "[2]", 0,0,26,1 },
-	{ "data_A/Abbot.dat", 		"Abbot", 		"[0]", "[1]", "[2]", "[2]", 0,0,27,1 },
+//	{ "data_A/all_data.dat", 	"", 			"[0]", "[1]", "[2]", "[2]", 0,0,1,10 },
+//	{ "data_A/Buchanan.dat", 	"Buchanan",		"[0]", "[1]", "[2]", "[2]", 0,0,31,1 },
+//	{ "data_A/Elias.dat", 		"Elias", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,1 },
+//	{ "data_A/Benaksas.dat", 	"Benaksas", 	"[0]", "[1]", "[2]", "[2]", 0,0,21,1 },
+//	{ "data_A/Arnold.dat", 		"Arnold", 		"[0]", "[1]", "[2]", "[2]", 0,0,22,1 },
+//	{ "data_A/Platchkov.dat", 	"Platchkov",	"[0]", "[1]", "[2]", "[2]", 0,0,23,1 },
+//	{ "data_A/Galster.dat", 	"Galster", 		"[0]", "[1]", "[2]", "[2]", 0,0,24,1 },
+//	{ "data_A/Cramer.dat", 		"Cramer", 		"[0]", "[1]", "[2]", "[2]", 0,0,25,1 },
+//	{ "data_A/Simon.dat", 		"Simon", 		"[0]", "[1]", "[2]", "[2]", 0,0,26,1 },
+//	{ "data_A/Abbot.dat", 		"Abbot", 		"[0]", "[1]", "[2]", "[2]", 0,0,27,1 },
 	{ "data_A/Alexa.dat", 		"Alexa", 		"[0]", "[1]", "[2]", "[2]", 0,0,28,1 },
-	{ "data_A/Berard.dat", 		"Berard", 		"[0]", "[1]", "[2]", "[2]", 0,0,29,1 },
-	{ "data_A/Akimov.dat", 		"Akimov", 		"[0]", "[1]", "[2]", "[2]", 0,0,30,1 },
+//	{ "data_A/Berard.dat", 		"Berard", 		"[0]", "[1]", "[2]", "[2]", 0,0,29,1 },
+//	{ "data_A/Akimov.dat", 		"Akimov", 		"[0]", "[1]", "[2]", "[2]", 0,0,30,1 },
 	{ NULL }
 };	
 

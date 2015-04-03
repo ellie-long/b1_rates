@@ -251,16 +251,17 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
 c      w2min     =  1.50**2  ! Cut on W
@@ -380,7 +381,7 @@ c         qqval1(1) = 4.51
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-        prec1(1)  = 24
+        prec1(1)  = 12
         xval1(1)  = 1.8
         qqval1(1) = 0.31 
       endif
@@ -443,10 +444,9 @@ c         qqval2(1) = 0.71
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-         prec2(1) = 24
+         prec2(1) = 12
          xval2(1) = 1.8
-c         qqval2(1) = 0.29
-         qqval2(1) = 0.26
+         qqval2(1) = 0.18
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -526,8 +526,8 @@ c---- INPUT/OUTPUT -----------------------------------------
       OPEN(UNIT=18, FILE='output/cs-check-hms.out',  STATUS='UNKNOWN')
 
 c----- MAIN ------------------------------------------------
-      thrad=12.201*d_r
-      ep_in=5.961
+      thrad=8.0*d_r
+      ep_in=6.249
       qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
       x  = qq/(2*mp*(e_in-ep_in))
       write (6,*) "e_in:",e_in
@@ -536,6 +536,7 @@ c----- MAIN ------------------------------------------------
       write (6,*) "x:",x
 c      qqval2(1) = qq
 c      xval2(1)  = x
+c      prec2(1)  = 100
 c      qqval1(1) = qq
 c      xval1(1)  = x
 
@@ -1069,12 +1070,13 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
                      endif
                   endif
 c                  if (x.gt.1.75) then
-c                        call elastic(z_d,a_d,q2,thit,e_in,sigma_unpol)
-c                        call elastic(z_li,a_li,q2,thit,e_in,sigma_unpol_li)
-c                        call elastic(z_he,a_he,q2,thit,e_in,sigma_unpol_he)
-c                        call elastic(z_n,a_n,q2,thit,e_in,sigma_unpol_n)
-c                        call elastic(z_c,a_c,q2,thit,e_in,sigma_unpol_c)
-c                  endif
+                  if (x.gt.0) then
+                        call elastic(z_d,a_d,q2,thit,e_in,sigma_unpol)
+                        call elastic(z_li,a_li,q2,thit,e_in,sigma_unpol_li)
+                        call elastic(z_he,a_he,q2,thit,e_in,sigma_unpol_he)
+                        call elastic(z_n,a_n,q2,thit,e_in,sigma_unpol_n)
+                        call elastic(z_c,a_c,q2,thit,e_in,sigma_unpol_c)
+                  endif
                   sigma_unpol_d  = sigma_unpol
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
@@ -1967,13 +1969,13 @@ c !$OMP CRITICAL
 c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
          endif
-c         if (x.gt.0) then
-c               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
-c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
-c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
-c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
-c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
-c         endif
+         if (x.gt.0) then
+               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
+               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
+               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
+               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
+               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+         endif
 
 c         sigma_unpol_d  = 2*mott_p
 c         write(6,*) "sigma_unpol_d = ",sigma_unpol_d
