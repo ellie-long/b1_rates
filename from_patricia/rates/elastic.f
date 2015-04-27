@@ -15,11 +15,12 @@ c ***************************************************************************
 
       SUBROUTINE elastic(Z, A, QSQ, TH, E, XS)
       implicit none
-      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME
+      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME,THETA
       REAL*8 GEN,GEP,GMN,GMP,GD
       REAL*8 a0,a1,a2,a3,b0,b1,b2,b3,Ae,Be,F
+      REAL*8 a4,a5,a6,atot1,atot2
       REAL*8 tau,mp,LAMBDASQ,alpha1,r,r0
-      REAL*8 mun,mup,hbarc2,alpha,hbar
+      REAL*8 mun,mup,hbarc,alpha,hbar
       REAL*8 XSP,XSN,XSmott
 
       mp       = 0.938272        ! GeV/c
@@ -27,9 +28,11 @@ c ***************************************************************************
       LAMBDASQ = 0.71            ! (GeV/c)^2
       mun      = -1.9130
       mup      = 2.7928
-      hbarc2   = 3.89379E-4     ! barn.GeV^2
+      hbarc    = 0.197327    ! fm*GeV
       alpha    = 1.0/137.0
-      EPRIME = E/(1+((E/mp)*(1-cos(TH))))
+c      EPRIME   = E/(1+((E/mp)*(1-cos(TH))))
+      EPRIME   = QSQ/(4*E*sin(TH/2)**2)
+      THETA    = TH*180/3.14159
 
 ! Define deuteron elastic scattering
       if (A.eq.2.and.Z.eq.1) then
@@ -38,8 +41,13 @@ c ***************************************************************************
          a1 = -1.37215e+01
          a2 = 3.23622e+01
          a3 = -4.29740e+01
-         Ae = 10**(a0+a1*QSQ+a2*QSQ**2+a3*QSQ**3) + 
-     &         10**(-2.68235-1.47849*QSQ+0.00782541*QSQ**2)
+         atot1 = a0+a1*QSQ+a2*QSQ**2+a3*QSQ**3
+
+         a4 = -2.68235
+         a5 = -1.47849
+         a6 = 0.0782541
+         atot2 = a4+a5*QSQ+a6*QSQ**2
+         Ae = 10**(atot1)+10**(atot2)
 
          b0 = -2.26938
          b1 = -3.18194
@@ -47,7 +55,8 @@ c ***************************************************************************
          Be = 10**(b0+b1*QSQ+b2*QSQ**2)
 
          ! Define cross section
-         XSmott = hbarc2*((1.*alpha*cos(TH/2.)/(2.*E*sin(TH/2.)**2.))**2.) ! barn/GeV*str 
+         XSmott = (1**2*alpha**2*hbarc**2*cos(TH/2)**2)/
+     &               (4*E**2*sin(TH/2)**4)*EPRIME/E ! barn
 c         XSmott = ((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2.)**2))**2.) ! barn/GeV*str 
                                                                         ! (1E-24 cm^2/(GeV/str))
 c         XSmott = XSmott/(1+(2.*E/1.876)*sin(TH/2)**2)
@@ -56,9 +65,15 @@ c         XS = XSmott
          XS = XSmott*(Ae+Be*tan(TH/2)**2)
 
          write (6,*) "QSQ = ",QSQ
-         write (6,*) "A = ",Ae
-         write (6,*) "B = ",Be
-         write (6,*) "XS = ",XS
+         write (6,*) "E   = ",E
+         write (6,*) "E'  = ",EPRIME
+         write (6,*) "TH  = ",THETA
+         write (6,*) "atot1= ",atot1
+         write (6,*) "atot2= ",atot2
+         write (6,*) "A   = ",Ae
+         write (6,*) "B   = ",Be
+         write (6,*) "XSM = ",XSmott
+         write (6,*) "XS  = ",XS
 c      endif
 
 ! Define large nuclei elastic scattering
@@ -66,7 +81,9 @@ c      endif
          hbar = 0.197327 ! fm*GeV/c
          r0=1.2 ! fm
          r=r0*A**(1/3)   ! fm
-         XSmott = hbarc2*((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2)**2))**2.) ! barn/GeV*str 
+         XSmott = (1**2*alpha**2*hbarc**2*cos(TH/2)**2)/
+     &               (4*E**2*sin(TH/2)**4)*EPRIME/E ! barn
+c         XSmott = hbarc*((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2)**2))**2.) ! barn/GeV*str 
                                                                         ! (1E-24 cm^2/(GeV/str))
          alpha1=sqrt(QSQ)*r/hbar
          F=(3/alpha1**3)*(sin(alpha1)-alpha1*cos(alpha1))
@@ -107,7 +124,9 @@ c        Define GMp using Kelly fit
 
 c        Define cross section
 
-         XSmott = hbarc2*((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2)**2))**2.) ! barn/GeV*str 
+         XSmott = (1**2*alpha**2*hbarc**2*cos(TH/2)**2)/
+     &               (4*E**2*sin(TH/2)**4)*EPRIME/E ! barn
+c         XSmott = hbarc*((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2)**2))**2.) ! barn/GeV*str 
                                                                         ! (1E-24 cm^2/(GeV/str))
 
 

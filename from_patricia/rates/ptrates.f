@@ -21,9 +21,10 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       integer :: clck_counts_beg, clck_counts_end, clck_rate
       integer :: clck_counts_beg2, clck_counts_end2, clck_rate2
-      REAL*8 pi,alpha,mp,e_ch,picobarn,nanobarn,Navo
-      REAL*8 mass_D,mass_N,mass_He,md
-      PARAMETER( hbarc2   = 0.389379E-3) ! barn.GeV^2
+      REAL*8 pi,alpha,mp,e_ch,picobarn,nanobarn,Navo,hbarc
+      REAL*8 mass_D,mass_N,mass_He,md,hbarc2
+      PARAMETER( hbarc2   = 0.389379E-3) ! barn*GeV^2
+      PARAMETER( hbarc    = 0.197327   ) ! fm*GeV
       PARAMETER( pi       = 3.14159265 )
       PARAMETER( mp       = 0.938272   ) ! GeV/c^2
       PARAMETER( md       = 1.876      ) ! GeV/c^2
@@ -118,6 +119,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8  sigpara,sigperp,e_fact,scale,b1d_scaled,scale_time
       REAL*8  Azz,dAzz,time,pac_time,dAzz_rel
       REAL*8  b1d,db1d
+      REAL*8  t20,dt20_stat,dt20_sys,dt20
       REAL*8  e_b1_abs
 
       REAL*8  xcent,prec_bin
@@ -200,15 +202,17 @@ c      test = 1   ! Test Mode ON
 
 c vvvv binMax = 11 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c For Azz, our target range is 0.8 < x < 2.2
-c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  3.0,  4.0,  4.1/ 
-c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 2.85, 3.95, 4.05/ 
-c      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 3.15, 4.05, 4.15/ 
+      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  2.0,  4.0,  4.1/ 
+      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 3.95, 4.05/ 
+      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 2.15, 4.05, 4.15/ 
+
 c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3, 1.45, 1.65, 1.8,  2.0,  3.8,  3.0,  4.0,  4.1/ 
 c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 3.75, 2.85, 3.95, 4.05/ 
 c      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 2.15, 3.85, 3.15, 4.05, 4.15/ 
-      DATA cent_x/     0.8, 0.9,  1.01,  1.1,   1.2,   1.35,  1.55, 1.75, 2.0,  3.0,   3.8, 3.0, 4.0, 4.0/
-      DATA cent_x_min/ 0.75, 0.85, 0.955,1.055, 1.15,  1.275, 1.45, 1.65, 1.85, 1.925, 2.9, 3.4, 3.5, 4.0/
-      DATA cent_x_max/ 0.85, 0.955,1.055,1.15,  1.275, 1.45,  1.65, 1.85, 2.15, 2.825, 3.4, 3.5, 4.0, 4.0/
+
+c      DATA cent_x/     0.8, 0.9,  1.01,  1.1,   1.2,   1.35,  1.55, 1.75, 2.0,  3.0,   3.8, 3.0, 4.0, 4.0/
+c      DATA cent_x_min/ 0.75, 0.85, 0.955,1.055, 1.15,  1.275, 1.45, 1.65, 1.85, 1.925, 2.9, 3.4, 3.5, 4.0/
+c      DATA cent_x_max/ 0.85, 0.955,1.055,1.15,  1.275, 1.45,  1.65, 1.85, 2.15, 2.825, 3.4, 3.5, 4.0, 4.0/
 
 c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -257,10 +261,10 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -526,17 +530,18 @@ c---- INPUT/OUTPUT -----------------------------------------
       OPEN(UNIT=18, FILE='output/cs-check-hms.out',  STATUS='UNKNOWN')
 
 c----- MAIN ------------------------------------------------
-      thrad=8.0*d_r
-      ep_in=6.249
+      e_in=9.744
+      thrad=10*d_r
+      ep_in=8.397
       qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
       x  = qq/(2*mp*(e_in-ep_in))
       write (6,*) "e_in:",e_in
       write (6,*) "ep_in:",ep_in
       write (6,*) "qq:",qq
       write (6,*) "x:",x
-c      qqval2(1) = qq
-c      xval2(1)  = x
-c      prec2(1)  = 100
+      qqval2(1) = qq
+      xval2(1)  = x
+      prec2(1)  = 100
 c      qqval1(1) = qq
 c      xval1(1)  = x
 
@@ -945,7 +950,9 @@ c                 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c                 vvv The Mott cross sections below are in barns/GeV*str (1E-24 cm^2/(GeV*str))
-                  mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c                  mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+                  mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*pit/e_in*0.01 ! barn
 c                  mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c                  mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c                  mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1070,12 +1077,12 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
                      endif
                   endif
 c                  if (x.gt.1.75) then
-                  if (x.gt.0) then
+                  if (x.gt.1.85.or.x.eq.1.85) then
                         call elastic(z_d,a_d,q2,thit,e_in,sigma_unpol)
-                        call elastic(z_li,a_li,q2,thit,e_in,sigma_unpol_li)
-                        call elastic(z_he,a_he,q2,thit,e_in,sigma_unpol_he)
-                        call elastic(z_n,a_n,q2,thit,e_in,sigma_unpol_n)
-                        call elastic(z_c,a_c,q2,thit,e_in,sigma_unpol_c)
+c                        call elastic(z_li,a_li,q2,thit,e_in,sigma_unpol_li)
+c                        call elastic(z_he,a_he,q2,thit,e_in,sigma_unpol_he)
+c                        call elastic(z_n,a_n,q2,thit,e_in,sigma_unpol_n)
+c                        call elastic(z_c,a_c,q2,thit,e_in,sigma_unpol_c)
                   endif
                   sigma_unpol_d  = sigma_unpol
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
@@ -1567,7 +1574,9 @@ c            x     = q2/(2.*mp*nu)
             x     = cent_x(ib)
             w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
-            mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c            mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+            mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &                  (4*e_in**2*sin(thrad/2)**4)*ep_in1/e_in*0.01 ! barn
 c            mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c            mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c            mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1746,6 +1755,16 @@ c               syst_Azz = Aout*0.1 ! To be fixed later
                syst_Azz = abs(Aout*0.14) ! To be fixed later
             endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
+            t20       = 0.0
+            dt20_stat = 0.0
+            dt20_sys  = 0.0
+            dt20      = 0.0
+            if (cent_x(ib).gt.1.85.and.cent_x(ib).lt.2.15) then
+c               t20 = -sqrt(8)/2*Aout
+               dt20_stat = sqrt(2.0)*dAzz
+               dt20_sys  = sqrt(2.0)*syst_Azz
+               dt20      = sqrt(dt20_stat**2+dt20_sys**2)
+            endif
             write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
@@ -1754,7 +1773,8 @@ c     &                     Aout,b1out,
      &                     0.0,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
-     &                     f_dil,sigma_unpol_li
+     &                     f_dil,sigma_unpol_li,
+     &                     t20,dt20_stat,dt20_sys,dt20
 c            write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
 c     &                     syst_Azz,syst_b1d,
@@ -1780,7 +1800,7 @@ c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel
 
 c !$OMP DO
 
-42    do ib=10,400
+42    do ib=10,215
 c      write(6,*)"ib",ib
 
 c         e_in    = 11.0 ! GeV
@@ -1799,7 +1819,8 @@ c         write(6,*) "th_in1 = ", th_in1
          snsq    = sin(thrad/2.)**2.
          cssq    = cos(thrad/2.)**2.
          tnsq    = tan(thrad/2.)**2.
-         ep_in1 = e_in/(1+(4*e_in*snsq)/(2*mp*x))
+c         ep_in1 = e_in/(1+(4*e_in*snsq)/(2*mp*x))
+         ep_in1 = 1/((4*snsq/2*mp*x)+1/e_in)
          nu      = e_in - ep_in1
          q2      = 4.*e_in*ep_in1*snsq
 c         x       = q2/(2.*mp*nu)
@@ -1807,7 +1828,9 @@ c         x       = cent_x(ib)
          w2      = mp*mp + q2/x - q2
          xplat=1.64203-0.177032*log(q2)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
-         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+         mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &                  (4*e_in**2*sin(thrad/2)**4)*ep_in1/e_in*0.01 ! barn
 c         mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c         mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1871,6 +1894,11 @@ c !$OMP END CRITICAL
 
          write(6,1010) "Third cross-section measurement...",
      &         ispectro,ib,0,"(",200,0,")"
+         write(6,*) "q2 = ",q2
+         write(6,*) "E  = ",e_in
+         write(6,*) "E' = ",ep_in1
+         write(6,*) "th = ",th_in1
+
          sigma_unpol=0; sigma_unpol_d=0; sigma_unpol_n=0;
          sigma_unpol_li=0; sigma_unpol_he=0; sigma_unpol_c=0;
          if (csmodel.eq.'Bosted_full') then
@@ -1969,12 +1997,14 @@ c !$OMP CRITICAL
 c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
          endif
-         if (x.gt.0) then
+c         if (x.gt.0) then
+         if (x.gt.1.85.or.x.eq.1.85) then
                call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
-               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
-               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
-               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
-               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
+c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
+c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
+c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+               Aout = 0
          endif
 
 c         sigma_unpol_d  = 2*mott_p
@@ -2034,8 +2064,8 @@ c         endif
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 
 c     vvvvvvvvvvvv HMS vvvvvvvvvvvvvvvvvvv
+       do ib=10,11
 c       do ib=10,300
-       do ib=10,300
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -2057,12 +2087,24 @@ c         x       = cent_x(ib)
          w2      = mp*mp + q2/x - q2
          xplat=1.64203-0.177032*log(q2)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
-         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
-         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
+         mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+         mott_d  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+         mott_he = (2**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+         mott_li = (3**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+         mott_n  = (7**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+         mott_c  = (6**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
+     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
          b1out   = 0; Aout    = 0; F1out = 0;
          F1      = 0; F2      = 0; F1n    = 0; F2n    = 0;
          F1n_qe  = 0; F2n_qe  = 0; F1c_qe = 0; F2c_qe = 0;
@@ -2327,7 +2369,7 @@ c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f1
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
  1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
- 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),10(E10.3,1x))
+ 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),14(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
  1008 format(24(E10.3,1x))
  1009 format(A1,6(f10.3))

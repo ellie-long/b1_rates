@@ -59,7 +59,8 @@ void plot_t20_fit() {
 	frm->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
 //	frm->GetYaxis()->SetTitle("t_{20}(70^{\\circ})");
 	frm->GetYaxis()->SetTitle("t_{20}");
-	frm->SetMinimum(-1.75);
+//	frm->SetMinimum(-1.75);
+	frm->SetMinimum(-2);
 	frm->SetMaximum(1.0);
 	frm->UseCurrentStyle();
 	frm->SetStats(false);

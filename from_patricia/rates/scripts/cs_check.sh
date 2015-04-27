@@ -207,14 +207,14 @@ xmgrace\
 	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check.par -noask
 #	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/he_cs_check.par -noask
 
-#xmgrace\
-#	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 0 -bxy 1:2\
-#	-settype xy		-block temp_misak_d_nu			-log y 	-graph 0 -bxy 1:2\
-#	-settype xydy	-block temp_sigma_d_exp_nu		-log y	-graph 0 -bxy 1:2:3\
-#	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 1 -bxy 1:2\
-#	-settype xy		-block temp_misak_d_nu			-log y 	-graph 1 -bxy 1:2\
-#	-settype xydy	-block temp_sigma_d_exp_nu		-log y	-graph 1 -bxy 1:2:3\
-#	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check_nu.par -noask
+xmgrace\
+	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 0 -bxy 1:2\
+	-settype xy		-block temp_misak_d_nu			-log y 	-graph 0 -bxy 1:2\
+	-settype xydy	-block temp_sigma_d_exp_nu		-log y	-graph 0 -bxy 1:2:3\
+	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 1 -bxy 1:2\
+	-settype xy		-block temp_misak_d_nu			-log y 	-graph 1 -bxy 1:2\
+	-settype xydy	-block temp_sigma_d_exp_nu		-log y	-graph 1 -bxy 1:2:3\
+	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check_nu.par -noask
 
 #display cs_check.png
 
