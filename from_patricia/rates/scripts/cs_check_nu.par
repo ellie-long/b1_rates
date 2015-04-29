@@ -75,7 +75,7 @@ timestamp def "Sun Aug 21 22:19:23 2011"
 with g0
 #    world 0.19, 1E-10,0.34,1E-5
 #    world 0.60, 1E-12,0.90,1E-8
-    world 0.00, 1E-13,2.5,1E-6
+    world 0.00, 1E-13,2.5,1E-3
     stack world 0, 0, 0, 0
     znorm 1
     view 0.10000, 0.65, 0.50000, 0.98
@@ -318,7 +318,7 @@ with g0
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2:3"
     s0 legend  "D\sunpol\N Bosted"
-    s1 hidden false
+    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000

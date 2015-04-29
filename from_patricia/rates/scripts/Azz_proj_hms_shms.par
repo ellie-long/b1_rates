@@ -4981,7 +4981,7 @@ with g6
     s16 legend  "SHMS Central Value"
 with g7
 #    world 0, 0, 2.300, 1.5
-    world 0, 1.5, 2.300, 3.0
+    world 0, 1, 2.300, 3.0
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.08000, 1.4900, 0.30

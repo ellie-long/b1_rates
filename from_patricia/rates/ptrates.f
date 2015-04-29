@@ -261,10 +261,10 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -385,9 +385,9 @@ c         qqval1(1) = 4.51
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-        prec1(1)  = 12
-        xval1(1)  = 1.8
-        qqval1(1) = 0.31 
+c        prec1(1)  = 12
+c        xval1(1)  = 1.8
+c        qqval1(1) = 0.31 
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -530,25 +530,25 @@ c---- INPUT/OUTPUT -----------------------------------------
       OPEN(UNIT=18, FILE='output/cs-check-hms.out',  STATUS='UNKNOWN')
 
 c----- MAIN ------------------------------------------------
-      e_in=9.744
-      thrad=10*d_r
-      ep_in=8.397
-      qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
-      x  = qq/(2*mp*(e_in-ep_in))
-      write (6,*) "e_in:",e_in
-      write (6,*) "ep_in:",ep_in
-      write (6,*) "qq:",qq
-      write (6,*) "x:",x
-      qqval2(1) = qq
-      xval2(1)  = x
-      prec2(1)  = 100
-c      qqval1(1) = qq
-c      xval1(1)  = x
 
       if (test.eq.1) then
          write(6,*) "*******************************************"
          write(6,*) "************* TEST MODE ON ****************"
          write(6,*) "*******************************************"
+         e_in=2.407
+         thrad=41.11*d_r
+         ep_in=1.455
+         qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
+         x  = qq/(2*mp*(e_in-ep_in))
+         write (6,*) "e_in:",e_in
+         write (6,*) "ep_in:",ep_in
+         write (6,*) "qq:",qq
+         write (6,*) "x:",x
+         qqval2(1) = qq
+         xval2(1)  = x
+         prec2(1)  = 100
+c         qqval1(1) = qq
+c         xval1(1)  = x
       endif
       write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
@@ -593,7 +593,7 @@ c "
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
-            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
@@ -952,7 +952,7 @@ c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 c                 vvv The Mott cross sections below are in barns/GeV*str (1E-24 cm^2/(GeV*str))
 c                  mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
                   mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*pit/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
 c                  mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c                  mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c                  mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1576,7 +1576,7 @@ c            x     = q2/(2.*mp*nu)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
 c            mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &                  (4*e_in**2*sin(thrad/2)**4)*ep_in1/e_in*0.01 ! barn
+     &                  (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
 c            mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c            mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c            mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1819,8 +1819,8 @@ c         write(6,*) "th_in1 = ", th_in1
          snsq    = sin(thrad/2.)**2.
          cssq    = cos(thrad/2.)**2.
          tnsq    = tan(thrad/2.)**2.
-c         ep_in1 = e_in/(1+(4*e_in*snsq)/(2*mp*x))
-         ep_in1 = 1/((4*snsq/2*mp*x)+1/e_in)
+         ep_in1 = e_in/(1+(4*e_in*snsq)/(2*mp*x))
+c         ep_in1 = 1/((4*snsq/2*mp*x)+1/e_in)
          nu      = e_in - ep_in1
          q2      = 4.*e_in*ep_in1*snsq
 c         x       = q2/(2.*mp*nu)
@@ -1830,7 +1830,7 @@ c         x       = cent_x(ib)
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
 c         mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &                  (4*e_in**2*sin(thrad/2)**4)*ep_in1/e_in*0.01 ! barn
+     &                  (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
 c         mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c         mott_he = hbarc2*((2*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1897,6 +1897,7 @@ c !$OMP END CRITICAL
          write(6,*) "q2 = ",q2
          write(6,*) "E  = ",e_in
          write(6,*) "E' = ",ep_in1
+         write(6,*) "nu = ",nu
          write(6,*) "th = ",th_in1
 
          sigma_unpol=0; sigma_unpol_d=0; sigma_unpol_n=0;
@@ -2094,17 +2095,17 @@ c         mott_li = hbarc2*((3*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c         mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
 c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
          mott_p  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
          mott_d  = (1**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
          mott_he = (2**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
          mott_li = (3**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
          mott_n  = (7**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
          mott_c  = (6**2*alpha**2*hbarc**2*cos(thrad/2)**2)/
-     &               (4*e_in**2*sin(thrad/2)**4)*ep_in2/e_in*0.01 ! barn
+     &               (4*e_in**2*sin(thrad/2)**4)*0.01 ! barn
          b1out   = 0; Aout    = 0; F1out = 0;
          F1      = 0; F2      = 0; F1n    = 0; F2n    = 0;
          F1n_qe  = 0; F2n_qe  = 0; F1c_qe = 0; F2c_qe = 0;

@@ -15,13 +15,13 @@ c ***************************************************************************
 
       SUBROUTINE elastic(Z, A, QSQ, TH, E, XS)
       implicit none
-      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME,THETA
+      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME,THETA,EP_EL
       REAL*8 GEN,GEP,GMN,GMP,GD
       REAL*8 a0,a1,a2,a3,b0,b1,b2,b3,Ae,Be,F
       REAL*8 a4,a5,a6,atot1,atot2
       REAL*8 tau,mp,LAMBDASQ,alpha1,r,r0
       REAL*8 mun,mup,hbarc,alpha,hbar
-      REAL*8 XSP,XSN,XSmott
+      REAL*8 XSP,XSN,XSmott,delta,XS_IN
 
       mp       = 0.938272        ! GeV/c
       tau      = QSQ/(4.*mp**2) 
@@ -33,6 +33,8 @@ c ***************************************************************************
 c      EPRIME   = E/(1+((E/mp)*(1-cos(TH))))
       EPRIME   = QSQ/(4*E*sin(TH/2)**2)
       THETA    = TH*180/3.14159
+      XS_IN    = XS
+c      XS_IN    = 1E-40
 
 ! Define deuteron elastic scattering
       if (A.eq.2.and.Z.eq.1) then
@@ -54,24 +56,29 @@ c      EPRIME   = E/(1+((E/mp)*(1-cos(TH))))
          b2 = 0.147926
          Be = 10**(b0+b1*QSQ+b2*QSQ**2)
 
+         EP_EL = E-QSQ/(2*1.876)
          ! Define cross section
          XSmott = (1**2*alpha**2*hbarc**2*cos(TH/2)**2)/
-     &               (4*E**2*sin(TH/2)**4)*EPRIME/E ! barn
+     &               (4*E**2*sin(TH/2)**4)*0.01 ! barn
 c         XSmott = ((1*alpha*cos(TH/2.)/(2.*E*sin(TH/2.)**2))**2.) ! barn/GeV*str 
                                                                         ! (1E-24 cm^2/(GeV/str))
 c         XSmott = XSmott/(1+(2.*E/1.876)*sin(TH/2)**2)
 c         XSmott = XSmott/(1-(QSQ/(2.*1.876**2))*sin(TH/2.)**2/cos(TH/2.)**2)
 c         XS = XSmott
-         XS = XSmott*(Ae+Be*tan(TH/2)**2)
+
+         delta = 5000/sqrt(3.14159)*exp(-5000**2*(EPRIME-EP_EL)**2)
+         XS = XSmott*EPRIME/E*(Ae+Be*tan(TH/2)**2)*delta+XS_IN
 
          write (6,*) "QSQ = ",QSQ
          write (6,*) "E   = ",E
          write (6,*) "E'  = ",EPRIME
          write (6,*) "TH  = ",THETA
-         write (6,*) "atot1= ",atot1
-         write (6,*) "atot2= ",atot2
-         write (6,*) "A   = ",Ae
-         write (6,*) "B   = ",Be
+         write (6,*) "E'el= ",EP_EL
+         write (6,*) "delt= ",delta
+c         write (6,*) "atot1= ",atot1
+c         write (6,*) "atot2= ",atot2
+c         write (6,*) "A   = ",Ae
+c         write (6,*) "B   = ",Be
          write (6,*) "XSM = ",XSmott
          write (6,*) "XS  = ",XS
 c      endif
