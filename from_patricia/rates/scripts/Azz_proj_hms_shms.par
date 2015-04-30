@@ -158,7 +158,7 @@ timestamp char size 1.000000
 timestamp def "Sun Aug 21 22:19:23 2011"
 
 with g0
-    world 0.6, 0, 2.3, 0.6
+    world 0.6, 0, 2.3, 1.0
 #    world 0.6, 0, 3.0, 0.6
     stack world 0, 0, 0, 0
     znorm 1

@@ -15,7 +15,7 @@ c ***************************************************************************
 
       SUBROUTINE elastic(Z, A, QSQ, TH, E, XS)
       implicit none
-      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME,THETA,EP_EL
+      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME,THETA,EP_EL,NU,x
       REAL*8 GEN,GEP,GMN,GMP,GD
       REAL*8 a0,a1,a2,a3,b0,b1,b2,b3,Ae,Be,F
       REAL*8 a4,a5,a6,atot1,atot2
@@ -32,9 +32,16 @@ c ***************************************************************************
       alpha    = 1.0/137.0
 c      EPRIME   = E/(1+((E/mp)*(1-cos(TH))))
       EPRIME   = QSQ/(4*E*sin(TH/2)**2)
+      NU       = E-EPRIME
       THETA    = TH*180/3.14159
-      XS_IN    = XS
-c      XS_IN    = 1E-40
+      x        = QSQ/(2*0.938*NU)
+      if (x.lt.2.02) then
+         XS_IN    = XS
+      else
+         XS_IN    = 1E-200
+c         XS_IN    = XS
+      endif
+      write(6,*) "XS_IN: ",XS_IN
 
 ! Define deuteron elastic scattering
       if (A.eq.2.and.Z.eq.1) then
@@ -67,7 +74,10 @@ c         XSmott = XSmott/(1-(QSQ/(2.*1.876**2))*sin(TH/2.)**2/cos(TH/2.)**2)
 c         XS = XSmott
 
          delta = 5000/sqrt(3.14159)*exp(-5000**2*(EPRIME-EP_EL)**2)
-         XS = XSmott*EPRIME/E*(Ae+Be*tan(TH/2)**2)*delta+XS_IN
+         XS = XS_IN + (XSmott*EPRIME/E*(Ae+Be*tan(TH/2)**2)*delta)
+         if (x.gt.2.02) then
+           XS = 0
+         endif
 
          write (6,*) "QSQ = ",QSQ
          write (6,*) "E   = ",E

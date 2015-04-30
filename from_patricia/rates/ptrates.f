@@ -195,16 +195,16 @@ c !$OMP THREADPRIVATE(/tst2/)
 
       call system_clock ( clck_counts_beg, clck_rate ) 
 
-      test = 0   ! Test Mode OFF
-c      test = 1   ! Test Mode ON
+c      test = 0   ! Test Mode OFF
+      test = 1   ! Test Mode ON
 
 
 
 c vvvv binMax = 11 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c For Azz, our target range is 0.8 < x < 2.2
-      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  2.0,  4.0,  4.1/ 
-      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 3.95, 4.05/ 
-      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 2.15, 4.05, 4.15/ 
+      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  1.9,  2.0,  4.1/ 
+      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.98, 4.05/ 
+      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.95, 2.02, 4.15/ 
 
 c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3, 1.45, 1.65, 1.8,  2.0,  3.8,  3.0,  4.0,  4.1/ 
 c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 3.75, 2.85, 3.95, 4.05/ 
@@ -385,9 +385,9 @@ c         qqval1(1) = 4.51
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-c        prec1(1)  = 12
-c        xval1(1)  = 1.8
-c        qqval1(1) = 0.31 
+        prec1(1)  = 12
+        xval1(1)  = 1.8
+        qqval1(1) = 0.31 
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -433,16 +433,15 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
       if (e_in.eq.8.8) then
          prec2(1) = 300
          xval2(1) = 1.8
-c         xval2(1) = 0.5
          qqval2(1) = 1.5
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-c         prec2(1) = 96
-c         xval2(1) = 3.7
-c         qqval2(1) = 0.71
+         prec2(1) = 96
+         xval2(1) = 1.5
+         qqval2(1) = 0.71
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1709,6 +1708,20 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                + lumi_n*sigma_unpol_n
      +                + lumi_d*sigma_unpol_d
      +                + lumi_li*sigma_unpol_li)
+
+            if (e_in.eq.2.2.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
+               f_dil = 0.9
+            elseif (e_in.eq.2.2.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+               f_dil = 0.75
+            elseif (e_in.eq.6.6.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
+               f_dil = 0.55
+            elseif (e_in.eq.6.6.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+               f_dil = 0.70
+            elseif (e_in.eq.8.8.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
+               f_dil = 0.55
+            elseif (e_in.eq.8.8.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+c               f_dil = 0.55
+            endif
             write(6,*)"x = ",x
             write(6,*)"sigma_unpol_d = ",sigma_unpol_d
             write(6,*)"lumi_d*sigma_unpol_d = ",lumi_d*sigma_unpol_d
@@ -1800,7 +1813,7 @@ c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel
 
 c !$OMP DO
 
-42    do ib=10,215
+42    do ib=10,210
 c      write(6,*)"ib",ib
 
 c         e_in    = 11.0 ! GeV
@@ -1946,7 +1959,7 @@ c !$OMP END CRITICAL
          endif
          if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
 c !$OMP CRITICAL
-            if(x.lt.1.1.or.x.gt.3.0.or.x.eq.3.0.or.e_in.lt.3.0) then
+            if(x.lt.1.1.or.x.gt.1.98.or.x.eq.1.98.or.e_in.lt.3.0) then
                if (lumi_d.gt.0) call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
                if (lumi_he.gt.0) call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
                if (lumi_li.gt.0) call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Lithium-6
@@ -1980,6 +1993,9 @@ c !$OMP CRITICAL
 
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               if (x.gt.1.98) then
+                  sigma_unpol = 0
+               endif
                sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
      +                            + ((F2li_ie+F2li_qe)/6.)/nu)
                sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
@@ -1988,7 +2004,7 @@ c !$OMP CRITICAL
      +                            + ((F2n_ie+F2n_qe)/14.)/nu)
                sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                            + ((F2c_ie+F2c_qe)/12.)/nu)
-            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
+            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.1.98.and.e_in.gt.3.0) then
                if (lumi_d.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
                if (lumi_li.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
                if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
@@ -2065,8 +2081,8 @@ c         endif
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 
 c     vvvvvvvvvvvv HMS vvvvvvvvvvvvvvvvvvv
-       do ib=10,11
-c       do ib=10,300
+c       do ib=10,11
+       do ib=10,210
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -2218,6 +2234,14 @@ c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
                if (lumi_c.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
             endif
             sigma_unpol_d  = sigma_unpol
+         endif
+         if (x.gt.1.85.or.x.eq.1.85) then
+               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
+c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
+c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
+c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
+c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+               Aout = 0
          endif
 
          sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
