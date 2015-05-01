@@ -132,7 +132,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       REAL*8 m_nuc,m_amu,m_e
       INTEGER apass,zpass
-      INTEGER ix,ispectro,isum,type
+      INTEGER ix,ispectro,isum,type,spec
       INTEGER allisum
       CHARACTER targ*8
       CHARACTER csmodel*11
@@ -195,8 +195,9 @@ c !$OMP THREADPRIVATE(/tst2/)
 
       call system_clock ( clck_counts_beg, clck_rate ) 
 
-c      test = 0   ! Test Mode OFF
-      test = 1   ! Test Mode ON
+      test = 0   ! Test Mode OFF
+c      test = 1   ! Test Mode ON
+
 
 
 
@@ -353,9 +354,9 @@ c      endif
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-c         prec1(1)  = 96
-c         xval1(1)  = 1.5
-c         qqval1(1) = 1.8
+         prec1(1)  = 96
+         xval1(1)  = 1.5
+         qqval1(1) = 1.8
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -385,9 +386,9 @@ c         qqval1(1) = 4.51
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-        prec1(1)  = 12
-        xval1(1)  = 1.8
-        qqval1(1) = 0.31 
+c        prec1(1)  = 12
+c        xval1(1)  = 1.8
+c        qqval1(1) = 0.31 
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -437,11 +438,27 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+      ! vvvvv Trying for 6 quark-hidden color in b1 vvvvvvvvvvvvvv
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.8.8) then
+c         prec2(1) = 300
+c         xval2(1) = 0.5
+c         qqval2(1) = 1.2
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
          prec2(1) = 96
          xval2(1) = 1.5
          qqval2(1) = 0.71
+
+       ! vvv HMS kinematics for quick dilution/cs calculation vvv
+c         prec2(1)  = 96
+c         xval2(1)  = 1.5
+c         qqval2(1) = 1.8
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -450,6 +467,12 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
          prec2(1) = 12
          xval2(1) = 1.8
          qqval2(1) = 0.18
+
+       ! vvv HMS kinematics for quick dilution/cs calculation vvv
+c         prec2(1)  = 12
+c         xval2(1)  = 1.8
+c         qqval2(1) = 0.31 
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -534,18 +557,18 @@ c----- MAIN ------------------------------------------------
          write(6,*) "*******************************************"
          write(6,*) "************* TEST MODE ON ****************"
          write(6,*) "*******************************************"
-         e_in=2.407
-         thrad=41.11*d_r
-         ep_in=1.455
-         qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
-         x  = qq/(2*mp*(e_in-ep_in))
-         write (6,*) "e_in:",e_in
-         write (6,*) "ep_in:",ep_in
-         write (6,*) "qq:",qq
-         write (6,*) "x:",x
-         qqval2(1) = qq
-         xval2(1)  = x
-         prec2(1)  = 100
+c         e_in=2.407
+c         thrad=41.11*d_r
+c         ep_in=1.455
+c         qq = 4*e_in*ep_in*sin(thrad/2)*sin(thrad/2)
+c         x  = qq/(2*mp*(e_in-ep_in))
+c         write (6,*) "e_in:",e_in
+c         write (6,*) "ep_in:",ep_in
+c         write (6,*) "qq:",qq
+c         write (6,*) "x:",x
+c         qqval2(1) = qq
+c         xval2(1)  = x
+c         prec2(1)  = 100
 c         qqval1(1) = qq
 c         xval1(1)  = x
       endif
@@ -711,6 +734,7 @@ c      do ispectro = 2,2
          tot_time(ispectro)    = 0.0
          ! for physics extraction
         if (ispectro.eq.1.and.type.eq.1) then ! HMS
+                              ! Momentum resolution dp/p < 0.1%
             dp_p    =  0.08   ! 8% momentum bite for the HMS
             dp_m    =  0.08   ! 8% momentum bite for the HMS
             dtheta  =  0.028  ! theta acceptance of the HMS
@@ -720,6 +744,8 @@ c      do ispectro = 2,2
             dep     =  0.0015*ep_in 
             nx      =  nx1 
          elseif (ispectro.eq.2.and.type.eq.1) then ! SHMS
+                              ! Momentum resolution dp/p < 0.03% - 0.08%
+                              !   (<0.08% the conservative choice)
             dp_p    =  0.20   ! 20% momentum bite for the SHMS
             dp_m    =  0.08   ! 8% momentum bite for the SHMS
             dtheta  =  0.022  ! theta acceptance of the SHMS
@@ -1075,13 +1101,12 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
                         if (lumi_c.gt.0) call init_incl(e_in,pit,thit,x,a_c,z_c,sigma_unpol_c)
                      endif
                   endif
-c                  if (x.gt.1.75) then
-                  if (x.gt.1.85.or.x.eq.1.85) then
-                        call elastic(z_d,a_d,q2,thit,e_in,sigma_unpol)
-c                        call elastic(z_li,a_li,q2,thit,e_in,sigma_unpol_li)
-c                        call elastic(z_he,a_he,q2,thit,e_in,sigma_unpol_he)
-c                        call elastic(z_n,a_n,q2,thit,e_in,sigma_unpol_n)
-c                        call elastic(z_c,a_c,q2,thit,e_in,sigma_unpol_c)
+                  if (x.gt.1.5.or.x.eq.1.5) then
+                        call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol,ispectro,csmodel)
+c                        call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li,ispectro,csmodel)
+c                        call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he,ispectro,csmodel)
+c                        call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n,ispectro,csmodel)
+c                        call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c,ispectro,csmodel)
                   endif
                   sigma_unpol_d  = sigma_unpol
                   sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
@@ -1556,21 +1581,25 @@ c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             w2 = total_w_ave(ib)**2
             qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
             xdx = cent_x_max(ib) - cent_x(ib)
+            x     = cent_x(ib)
 
 c           The section below calculates the dilution factor based on the cross-sections
 c           at the central angle/energy of the detectors and x
 c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
             thrad = th_in1*d_r
             if (qqval2(1).eq.99.and.xval2(1).eq.100) thrad = th_in2*d_r
+c            q2    = 4.*e_in*ep_in1*snsq
+            q2    = qq
+c            nu    = e_in - ep_in1
+            nu = q2/(2*mp*x)
+            ep_in1 = e_in - nu
+            thrad = 2*asin(sqrt(q2/(4*e_in*ep_in1)))
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
             tnsq  = tan(thrad/2.)**2.
-            nu    = e_in - ep_in1
-            if (qqval2(1).eq.99.and.xval2(1).eq.100) nu = e_in - ep_in2
-            q2    = 4.*e_in*ep_in1*snsq
-            if (qqval2(1).eq.99.and.xval2(1).eq.100) q2 = 4.*e_in*ep_in2*snsq
+c            if (qqval2(1).eq.99.and.xval2(1).eq.100) nu = e_in - ep_in2
+c            if (qqval2(1).eq.99.and.xval2(1).eq.100) q2 = 4.*e_in*ep_in2*snsq
 c            x     = q2/(2.*mp*nu)
-            x     = cent_x(ib)
             w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
 c            mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1700,6 +1729,26 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                     endif
                sigma_unpol_d  = sigma_unpol
             endif
+            if (x.gt.1.5.or.x.eq.1.5) then
+                  if (qqval1(1).lt.95) then
+                     spec = 1
+                  elseif (qqval2(1).lt.95) then
+                     spec = 2
+                  endif
+                  call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d,spec,csmodel)
+                  write(6,*) "qq = ",qq
+                  write(6,*) "q2 = ",q2
+                  write(6,*) "thrad = ",thrad
+                  write(6,*) "e' = ",ep_in1
+                  write(6,*) "x = ",x
+c                  if (x.gt.1.99.and.x.lt.2.01) then 
+c                     RETURN
+c                  endif
+c                  call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li,ispectro,csmodel)
+c                  call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he,ispectro,csmodel)
+c                  call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n,ispectro,csmodel)
+c                  call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c,ispectro,csmodel)
+            endif
 
             sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
@@ -1709,19 +1758,19 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                + lumi_d*sigma_unpol_d
      +                + lumi_li*sigma_unpol_li)
 
-            if (e_in.eq.2.2.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
-               f_dil = 0.9
-            elseif (e_in.eq.2.2.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
-               f_dil = 0.75
-            elseif (e_in.eq.6.6.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
-               f_dil = 0.55
-            elseif (e_in.eq.6.6.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
-               f_dil = 0.70
-            elseif (e_in.eq.8.8.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
-               f_dil = 0.55
-            elseif (e_in.eq.8.8.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+c            if (e_in.eq.2.2.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
+c               f_dil = 0.9
+c            elseif (e_in.eq.2.2.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+c               f_dil = 0.75
+c            elseif (e_in.eq.6.6.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
 c               f_dil = 0.55
-            endif
+c            elseif (e_in.eq.6.6.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+c               f_dil = 0.70
+c            elseif (e_in.eq.8.8.and.cent_x(ib).eq.2.0.and.qqval2(1).lt.95) then
+c               f_dil = 0.55
+c            elseif (e_in.eq.8.8.and.cent_x(ib).eq.2.0.and.qqval1(1).lt.95) then
+c               f_dil = 0.55
+c            endif
             write(6,*)"x = ",x
             write(6,*)"sigma_unpol_d = ",sigma_unpol_d
             write(6,*)"lumi_d*sigma_unpol_d = ",lumi_d*sigma_unpol_d
@@ -1813,7 +1862,8 @@ c !$OMP PARALLEL DEFAULT(PRIVATE) FIRSTPRIVATE(e_in,th_in1,d_r,alpha,Pzz,csmodel
 
 c !$OMP DO
 
-42    do ib=10,210
+42    do ib=10,300
+      ispectro = 2
 c      write(6,*)"ib",ib
 
 c         e_in    = 11.0 ! GeV
@@ -1993,9 +2043,9 @@ c !$OMP CRITICAL
 
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
-               if (x.gt.1.98) then
-                  sigma_unpol = 0
-               endif
+c               if (x.gt.1.98) then
+c                  sigma_unpol = 0
+c               endif
                sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
      +                            + ((F2li_ie+F2li_qe)/6.)/nu)
                sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
@@ -2015,12 +2065,12 @@ c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
          endif
 c         if (x.gt.0) then
-         if (x.gt.1.85.or.x.eq.1.85) then
-               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
-c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
-c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
-c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
-c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+         if (x.gt.1.5.or.x.eq.1.5) then
+               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d,ispectro,csmodel)
+c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li,ispectro,csmodel)
+c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he,ispectro,csmodel)
+c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n,ispectro,csmodel)
+c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c,ispectro,csmodel)
                Aout = 0
          endif
 
@@ -2051,6 +2101,7 @@ c         else
 c              f_dil = fplat
 c         endif
 
+      write(6,*) "ispectro = ",ispectro
 
          src_ratio_n  = (sigma_unpol_n /sigma_unpol_d)*(a_d/a_n)
          src_ratio_he = (sigma_unpol_he/sigma_unpol_d)*(a_d/a_he)
@@ -2075,7 +2126,7 @@ c         endif
  
       enddo     
 
-      if (test.eq.1.) GOTO 43
+c      if (test.eq.1.) GOTO 43
 
       write(6,*) "ispectro = ",ispectro
 c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
@@ -2083,6 +2134,8 @@ c     ^^^^^^^^^^^ SHMS ^^^^^^^^^^^^^^^^^^^
 c     vvvvvvvvvvvv HMS vvvvvvvvvvvvvvvvvvv
 c       do ib=10,11
        do ib=10,210
+       ispectro = 1
+
 c         e_in    = 11.0 ! GeV
 c         e_in    = 6.6 ! GeV
 c         e_in    = 6.519 ! GeV
@@ -2235,12 +2288,12 @@ c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             endif
             sigma_unpol_d  = sigma_unpol
          endif
-         if (x.gt.1.85.or.x.eq.1.85) then
-               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d)
-c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li)
-c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he)
-c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n)
-c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c)
+         if (x.gt.1.5.or.x.eq.1.5) then
+               call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d,ispectro,csmodel)
+c               call elastic(z_li,a_li,q2,thrad,e_in,sigma_unpol_li,ispectro,csmodel)
+c               call elastic(z_he,a_he,q2,thrad,e_in,sigma_unpol_he,ispectro,csmodel)
+c               call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n,ispectro,csmodel)
+c               call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c,ispectro,csmodel)
                Aout = 0
          endif
 

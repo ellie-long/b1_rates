@@ -13,15 +13,19 @@ c ** 2015-02-24
 c **
 c ***************************************************************************
 
-      SUBROUTINE elastic(Z, A, QSQ, TH, E, XS)
+      SUBROUTINE elastic(Z, A, QSQ, TH, E, XS, SPEC, MODEL)
       implicit none
-      REAL*8 Z,A,QSQ,TH,E,XS,EPRIME,THETA,EP_EL,NU,x
+      REAL*8 Z,A,QSQ,TH,E,XS
+      INTEGER SPEC
+      CHARACTER MODEL*11
+      REAL*8 EPRIME,THETA,EP_EL,NU,x
       REAL*8 GEN,GEP,GMN,GMP,GD
       REAL*8 a0,a1,a2,a3,b0,b1,b2,b3,Ae,Be,F
       REAL*8 a4,a5,a6,atot1,atot2
       REAL*8 tau,mp,LAMBDASQ,alpha1,r,r0
       REAL*8 mun,mup,hbarc,alpha,hbar
       REAL*8 XSP,XSN,XSmott,delta,XS_IN
+      REAL*8 amp,stdev
 
       mp       = 0.938272        ! GeV/c
       tau      = QSQ/(4.*mp**2) 
@@ -35,13 +39,6 @@ c      EPRIME   = E/(1+((E/mp)*(1-cos(TH))))
       NU       = E-EPRIME
       THETA    = TH*180/3.14159
       x        = QSQ/(2*0.938*NU)
-      if (x.lt.2.02) then
-         XS_IN    = XS
-      else
-         XS_IN    = 1E-200
-c         XS_IN    = XS
-      endif
-      write(6,*) "XS_IN: ",XS_IN
 
 ! Define deuteron elastic scattering
       if (A.eq.2.and.Z.eq.1) then
@@ -73,22 +70,50 @@ c         XSmott = XSmott/(1+(2.*E/1.876)*sin(TH/2)**2)
 c         XSmott = XSmott/(1-(QSQ/(2.*1.876**2))*sin(TH/2.)**2/cos(TH/2.)**2)
 c         XS = XSmott
 
-         delta = 5000/sqrt(3.14159)*exp(-5000**2*(EPRIME-EP_EL)**2)
-         XS = XS_IN + (XSmott*EPRIME/E*(Ae+Be*tan(TH/2)**2)*delta)
-         if (x.gt.2.02) then
-           XS = 0
+         if (SPEC.eq.1) then
+            ! HMS Resolution
+            stdev = 0.001*EP_EL
+         elseif (SPEC.eq.2) then
+            ! SHMS Resolution
+            stdev = 0.0003*EP_EL
+         else 
+            stdev = 0.001*EP_EL
          endif
 
+         amp   = 1/(2*sqrt(3.14159)*stdev)
+c         if (x.gt.2.02) then
+c           XS = 0
+c         endif
+         if (x.lt.2.0) then
+            XS_IN    = XS
+         else
+c            XS_IN    = 1E-200
+            XS_IN    = XS*exp(-(QSQ/(2*mp*stdev))*(x-2))
+         endif
+         if (MODEL.eq.'Sargsian'.and.x.gt.1.95) then
+            XS_IN    = 0
+         endif
+ 
+c         delta = 5000/sqrt(3.14159)*exp(-5000**2*(EPRIME-EP_EL)**2)
+         delta = amp*exp(-(EPRIME-EP_EL)**2/(2*stdev**2))
+         XS = XS_IN + (XSmott*EPRIME/E*(Ae+Be*tan(TH/2)**2)*delta)
+c         XS = XS_IN
+
+         write(6,*) "SPEC:  ",SPEC
+         write(6,*) "amp:   ",amp
+         write(6,*) "stdev  ",stdev
+         write(6,*) "XS_IN: ",XS_IN
+         write (6,*) "x   = ",x
          write (6,*) "QSQ = ",QSQ
          write (6,*) "E   = ",E
          write (6,*) "E'  = ",EPRIME
          write (6,*) "TH  = ",THETA
          write (6,*) "E'el= ",EP_EL
          write (6,*) "delt= ",delta
-c         write (6,*) "atot1= ",atot1
-c         write (6,*) "atot2= ",atot2
-c         write (6,*) "A   = ",Ae
-c         write (6,*) "B   = ",Be
+         write (6,*) "atot1= ",atot1
+         write (6,*) "atot2= ",atot2
+         write (6,*) "A   = ",Ae
+         write (6,*) "B   = ",Be
          write (6,*) "XSM = ",XSmott
          write (6,*) "XS  = ",XS
 c      endif

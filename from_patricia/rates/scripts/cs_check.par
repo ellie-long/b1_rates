@@ -974,10 +974,10 @@ with g1
     s0 errorbar riser clip off
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2:3"
-    s0 legend  ""
+    s0 legend  "SHMS"
 
-#    s1 hidden false
-    s1 hidden true
+    s1 hidden false
+#    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -1025,7 +1025,7 @@ with g1
     s1 errorbar riser clip off
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2:3"
-    s1 legend  "Misak"
+    s1 legend  "HMS"
 with g2
     world 0.0, 1E27,2.3,1E30
 #    world 0.0, 1E24,2.0,1.3E29

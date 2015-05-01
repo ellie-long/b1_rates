@@ -317,8 +317,9 @@ with g0
     s0 errorbar riser clip off
     s0 errorbar riser clip length 0.100000
     s0 comment "Cols 1:2:3"
-    s0 legend  "D\sunpol\N Bosted"
-    s1 hidden true
+    s0 legend  "D\sunpol\N SHMS"
+    s1 hidden false
+#    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -366,7 +367,7 @@ with g0
     s1 errorbar riser clip off
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2:3"
-    s1 legend  "D\sunpol\N Misak"
+    s1 legend  "D\sunpol\N HMS"
     s2 hidden false
     s2 type xydy
     s2 symbol 3

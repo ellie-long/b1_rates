@@ -37,7 +37,10 @@ file0="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out
 #awk '$12!="NaN" {print $2,$16}' $file0 > temp_fdil
 
 
-file1="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check.out"
+# file1="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check.out"
+file1="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-shms.out"
+file01="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-hms.out"
+file02="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-shms.out"
 # 1  = x
 # 2  = Q^2
 # 3  = Theta_e'
@@ -76,6 +79,8 @@ awk '$12!="NaN" {print $1,$9}'  $file1 >> temp_sigma_d_unpol
 awk '$12!="NaN" {print $1,$10}' $file1 >> temp_sigma_n
 awk '$12!="NaN" {print $1,$11}' $file1 >> temp_sigma_he
 awk '$12!="NaN" {print $1,$12}' $file1 >> temp_fdil
+awk '$12!="NaN" {print $1,$12}' $file01 >> temp_fdil_hms
+awk '$12!="NaN" {print $1,$12}' $file02 >> temp_fdil_shms
 awk '$12!="NaN" {print $1,$13}' $file1 >> temp_sigma_c
 awk '$12!="NaN" {print $1,$17}' $file1 >> temp_sigma_li
 awk '$12!="NaN" {print $1,$11+$9}' $file1 >> temp_sigma_li_hed
@@ -104,6 +109,8 @@ awk '$12!="NaN" {print $1,$16}' $file1 >> temp_src_c
 
 awk '$12!="NaN" {print $6,$8}'  $file1 >> temp_sigma_d_pol_nu
 awk '$12!="NaN" {print $6,$9}'  $file1 >> temp_sigma_d_unpol_nu
+awk '$12!="NaN" {print $6,$9}'  $file01 >> temp_sigma_d_unpol_nu_hms
+awk '$12!="NaN" {print $6,$9}'  $file02 >> temp_sigma_d_unpol_nu_shms
 #awk '$12!="NaN" {print $6,$13}'  $file1 >> temp_sigma_d_unpol_nu
 awk '$12!="NaN" {print $6,$10}' $file1 >> temp_sigma_n_nu
 awk '$12!="NaN" {print $6,$11}' $file1 >> temp_sigma_he_nu
@@ -200,8 +207,8 @@ xmgrace\
 	-settype xy		-block temp_misak_d_x		-log y		-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_n_x		-log y		-graph 0 -bxy 1:2\
 	-settype xydy	-block temp_sigma_d_exp_x	-log y		-graph 0 -bxy 1:2:3\
-	-settype xy		-block temp_fdil						-graph 1 -bxy 1:2\
-	-settype xy		-block temp_misak_fdil					-graph 1 -bxy 1:2\
+	-settype xy		-block temp_fdil_shms					-graph 1 -bxy 1:2\
+	-settype xy		-block temp_fdil_hms					-graph 1 -bxy 1:2\
 	-settype xy		-block temp_lumsig_d_pol	-log y		-graph 2 -bxy 1:2\
 	-settype xy		-block temp_lumsig_d_unpol	-log y		-graph 2 -bxy 1:2\
 	-settype xy		-block temp_lumsig_n		-log y		-graph 2 -bxy 1:2\
@@ -212,12 +219,12 @@ xmgrace\
 #	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/he_cs_check.par -noask
 
 xmgrace\
-	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 0 -bxy 1:2\
-	-settype xy		-block temp_misak_d_nu			-log y 	-graph 0 -bxy 1:2\
-	-settype xydy	-block temp_sigma_d_exp_nu		-log y	-graph 0 -bxy 1:2:3\
-	-settype xy		-block temp_sigma_d_unpol_nu	-log y 	-graph 1 -bxy 1:2\
-	-settype xy		-block temp_misak_d_nu			-log y 	-graph 1 -bxy 1:2\
-	-settype xydy	-block temp_sigma_d_exp_nu		-log y	-graph 1 -bxy 1:2:3\
+	-settype xy		-block temp_sigma_d_unpol_nu_shms	-log y 	-graph 0 -bxy 1:2\
+	-settype xy		-block temp_sigma_d_unpol_nu_hms	-log y 	-graph 0 -bxy 1:2\
+	-settype xydy	-block temp_sigma_d_exp_nu			-log y	-graph 0 -bxy 1:2:3\
+	-settype xy		-block temp_sigma_d_unpol_nu		-log y 	-graph 1 -bxy 1:2\
+	-settype xy		-block temp_misak_d_nu				-log y 	-graph 1 -bxy 1:2\
+	-settype xydy	-block temp_sigma_d_exp_nu			-log y	-graph 1 -bxy 1:2:3\
 	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check_nu.par -noask
 
 #display cs_check.png
