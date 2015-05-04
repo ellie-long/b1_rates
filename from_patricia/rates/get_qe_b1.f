@@ -15,9 +15,11 @@
       do ix=1,500
            x = dble(ix)/100
            xplat=1.64203-0.177032*log(QQ)
-           if (x.le.0.75) then
-                Aout = 0      
-           elseif (x.gt.0.75.and.x.lt.1) then
+           if (x.lt.0.24) then
+                Aout = 0
+           elseif (x.ge.0.24.and.x.le.0.6) then
+                Aout = -0.2
+           elseif (x.gt.0.6.and.x.lt.1) then
                 Aout = -56.8296 + 246.102*x - 351.484*x*x 
      &                 + 111.641*x*x*x + 163.698*x*x*x*x 
      &                 - 148.174*x*x*x*x*x + 35.0491*x*x*x*x*x*x

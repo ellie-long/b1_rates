@@ -76,6 +76,8 @@ c         XS = XSmott
          elseif (SPEC.eq.2) then
             ! SHMS Resolution
             stdev = 0.0003*EP_EL
+c            stdev = 0.0008*EP_EL
+c            stdev = 0.001*EP_EL
          else 
             stdev = 0.001*EP_EL
          endif
@@ -90,9 +92,9 @@ c         endif
 c            XS_IN    = 1E-200
             XS_IN    = XS*exp(-(QSQ/(2*mp*stdev))*(x-2))
          endif
-         if (MODEL.eq.'Sargsian'.and.x.gt.1.95) then
-            XS_IN    = 0
-         endif
+c         if (MODEL.eq.'Sargsian'.and.x.gt.1.95) then
+c            XS_IN    = 0
+c         endif
  
 c         delta = 5000/sqrt(3.14159)*exp(-5000**2*(EPRIME-EP_EL)**2)
          delta = amp*exp(-(EPRIME-EP_EL)**2/(2*stdev**2))

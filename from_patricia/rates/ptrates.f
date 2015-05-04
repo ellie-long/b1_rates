@@ -113,7 +113,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8  lumiSig, goodRateTotal, physRateTotal
       REAL*8  goodRate_d, goodRate_n, goodRate_he, goodRate_li
 
-      INTEGER, PARAMETER :: binMax = 14
+      INTEGER, PARAMETER :: binMax = 17
       INTEGER ixsum(binMax),ib
       INTEGER allixsum(binMax)
       REAL*8  sigpara,sigperp,e_fact,scale,b1d_scaled,scale_time
@@ -168,8 +168,9 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 Nunpol_for_x(binMax),Nunpolgood_for_x(binMax),Nunpoltotal_for_x(binMax)
       REAL*8 thisNforx(binMax),xsum(binMax)
       REAL*8 thisNunpolforx(binMax)
-      REAL*8 w_ave(binMax),sigma_sum(binMax)
-      REAL*8 total_w_ave(binMax),N_sum(binMax)
+      REAL*8 w_ave(binMax),sigma_sum(binMax),wnn_ave(binMax)
+      REAL*8 q_ave(binMax),total_q_ave(binMax)
+      REAL*8 total_w_ave(binMax),N_sum(binMax),total_wnn_ave(binMax)
       REAL*8 dAzz_drift(binMax)
       REAL*8 drift_scale
       REAL*8 ave_x,spec_x
@@ -201,11 +202,11 @@ c      test = 1   ! Test Mode ON
 
 
 
-c vvvv binMax = 11 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c vvvv binMax = 17 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c For Azz, our target range is 0.8 < x < 2.2
-      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  1.9,  2.0,  4.1/ 
-      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.98, 4.05/ 
-      DATA cent_x_max/ 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 1.95, 2.02, 4.15/ 
+      DATA cent_x/     0.3,   0.4,  0.5,  0.6,  0.7,  0.8,  0.9,0.999, 1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  2.0/
+      DATA cent_x_min/ 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.90/ 
+      DATA cent_x_max/ 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 2.10/ 
 
 c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3, 1.45, 1.65, 1.8,  2.0,  3.8,  3.0,  4.0,  4.1/ 
 c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 3.75, 2.85, 3.95, 4.05/ 
@@ -256,10 +257,10 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -276,7 +277,7 @@ c      w2max     =  1.85**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
 c      bcurrent  =  0.100    ! 0.085    ! microAmps
-      bcurrent  =  0.090    ! 0.085    ! microAmps
+      bcurrent  =  0.080    ! 0.085    ! microAmps
       tgt_len   =  3.0*1.0  ! cm
 c      tgt_len   =  6.0*1.0  ! cm
       ! ND3 specs
@@ -354,9 +355,9 @@ c      endif
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-         prec1(1)  = 96
-         xval1(1)  = 1.5
-         qqval1(1) = 1.8
+c         prec1(1)  = 96
+c         xval1(1)  = 1.5
+c         qqval1(1) = 1.8
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -378,8 +379,8 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
 c         prec1(1) = 300
-c         xval1(1) = 1.6
-c         qqval1(1) = 4.51
+c         xval1(1) = 0.8
+c         qqval1(1) = 2.8
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -466,7 +467,7 @@ c         qqval2(1) = 1.8
       if (e_in.eq.2.2) then
          prec2(1) = 12
          xval2(1) = 1.8
-         qqval2(1) = 0.18
+         qqval2(1) = 0.17
 
        ! vvv HMS kinematics for quick dilution/cs calculation vvv
 c         prec2(1)  = 12
@@ -741,7 +742,7 @@ c      do ispectro = 2,2
             dphi    =  0.058  ! phi acceptance of the HMS
             acc     =  2.*dtheta*2.*dphi
             hms_min =  10.5   ! minimum angle of the HMS
-            dep     =  0.0015*ep_in 
+c            dep     =  0.0015*ep_in 
             nx      =  nx1 
          elseif (ispectro.eq.2.and.type.eq.1) then ! SHMS
                               ! Momentum resolution dp/p < 0.03% - 0.08%
@@ -816,6 +817,8 @@ c         do ib=1,nx
             Ngood_for_x(ib) = 0.0
             Nunpolgood_for_x(ib) = 0.0
             w_ave(ib) = 0.0
+            q_ave(ib) = 0.0
+            wnn_ave(ib) = 0.0
             sigma_sum(ib) = 0.0
             xsum(ib)     = 0.0
          enddo
@@ -889,7 +892,8 @@ c            do ib=1,nx
             ! Binning over the momentum bite
 c            dep    = 0.02*ep_in
 c            dep    = 0.005*ep_in
-            dep    = 0.001*ep_in
+            dep    = 0.0005*ep_in
+c            dep    = 0.001*ep_in
 c            dep    = ep_in
             epmin  = ep_in*(1.-dp_m)
             epmax  = ep_in*(1.+dp_p)
@@ -1003,9 +1007,9 @@ c                 vvvvvvvvv This part gives us the total, non-physics info vvvvv
                   if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 6Li
                   if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
                   if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
-                  if (x.ge.0.8.and.x.le.5.0) then   ! If QE:
+                  if (x.ge.0.24.and.x.le.5.0) then   ! If QE:
                       call get_qe_b1d(x,q2,Aout,F1out,b1out)
-                  elseif (x.lt.0.8.and.x.gt.0) then ! If DIS:
+                  elseif (x.lt.0.24.and.x.gt.0) then ! If DIS:
                       call get_b1d(x,q2,Aout,F1out,b1out)
                   endif
 
@@ -1100,6 +1104,23 @@ c     +                                  + ((0+F2d_qe)/2.)/nu)
                         if (lumi_n.gt.0) call init_incl(e_in,pit,thit,x,a_n,z_n,sigma_unpol_n)
                         if (lumi_c.gt.0) call init_incl(e_in,pit,thit,x,a_c,z_c,sigma_unpol_c)
                      endif
+
+c                  if((x.gt.1.1.or.x.eq.1.1).and.x.lt.2.0.and.e_in.gt.3.0) then
+c                     if (lumi_d.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
+c                     if (lumi_li.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
+c                     if (lumi_he.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
+c                     if (lumi_n.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_n,z_n,sigma_unpol_n)
+c                     if (lumi_c.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
+c                  endif
+                     if (x.ge.1.98.and.e_in.eq.6.6.and.ispectro.eq.1) then
+                        sigma_unpol_n = sigma_unpol_n*0.9
+                        sigma_unpol_he = sigma_unpol_he*0.9
+                     endif
+
+                     if (x.ge.1.98.and.e_in.eq.8.8.and.ispectro.eq.2) then
+                        sigma_unpol_n = sigma_unpol_n*0.1
+                        sigma_unpol_he = sigma_unpol_he*0.1
+                     endif
                   endif
                   if (x.gt.1.5.or.x.eq.1.5) then
                         call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol,ispectro,csmodel)
@@ -1153,7 +1174,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
 c                 if (w2.le.w2min) then
-                 if (x.lt.0.75) then
+                 if (x.le.0.24) then
                     sigma_unpol    = 0.0
                     sigma_unpol_d  = 0.0
                     sigma_unpol_he = 0.0
@@ -1217,6 +1238,8 @@ c
 c                        write(6,*)"Nunpol_for_x(",ib,") = ",Nunpol_for_x(ib)
                           xsum(ib) = xsum(ib) + 1
                           w_ave(ib) = w_ave(ib) + tot_allsigma*sqrt(w2)
+                          q_ave(ib) = q_ave(ib) + tot_allsigma*sqrt(q2)
+                          wnn_ave(ib) = wnn_ave(ib) + tot_allsigma*sqrt(w2nn)
                           sigma_sum(ib) = sigma_sum(ib) + tot_allsigma
                           Ngood_for_x(ib) = Ngood_for_x(ib) + 
      +                        N_for_x(ib)*dep*thincr*d_r*2*dphi*1E-24*prec*3600
@@ -1341,9 +1364,9 @@ c      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             ! calculate the time assuming the settings spread
             Aout = 0
             b1d = 0
-            if (spec_x.lt.0.75) then
+            if (spec_x.lt.0.24) then
                call get_b1d(spec_x,qq,Aout,F1out,b1out)
-            elseif (spec_x.ge.0.75) then
+            elseif (spec_x.ge.0.24) then
                call get_qe_b1d(spec_x,qq,Aout,F1out,b1out)
             endif
             Azz  = Aout
@@ -1374,9 +1397,9 @@ c           vvvvv Error on Azz using A_meas^(2)
 c            F1d = F1out*2
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
-            if (spec_x.ge.0.6) then
+            if (spec_x.ge.0.24) then
 c               syst_Azz  = Aout*0.1   ! to be adjusted
-               syst_Azz  = Aout*0.14
+               syst_Azz  = Aout*0.092
             endif
             if (spec_x.eq.0.15) then
                syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
@@ -1447,7 +1470,10 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                rc  = 0
 
                w2 = (w_ave(ib)/sigma_sum(ib))**2
-               qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+               qq = (q_ave(ib)/sigma_sum(ib))**2
+               w2nn = (wnn_ave(ib)/sigma_sum(ib))**2
+c               qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+c               qq = (w2nn - md**2)/(1/(cent_x(ib)*mp/md) - 1)
 
                call F1F2QE09(z_d,a_d,qq,w2,F1d_qe,F2d_qe)
                call F1F2IN09(z_d,a_d,qq,w2,F1d_ie,F2d_ie,rc)
@@ -1538,6 +1564,8 @@ c         do ib=1,nx
             rc  = 0
 
             w_ave(ib) = w_ave(ib)/sigma_sum(ib)
+            q_ave(ib) = q_ave(ib)/sigma_sum(ib)
+            wnn_ave(ib) = wnn_ave(ib)/sigma_sum(ib)
 
             if(Ngood_for_x(ib).gt.0.0) then
                if(ispectro.eq.1.or.ispectro.eq.2) then
@@ -1546,12 +1574,19 @@ c                  write(6,*) "*(&)&*(^$#*(^*&%$*&#$ HEY LOOK AT ME WHOO--------
                   Nunpoltotal_for_x(ib) = Nunpoltotal_for_x(ib) + Nunpolgood_for_x(ib)
                   total_w_ave(ib)  = total_w_ave(ib)  
      +                                      + w_ave(ib)*Ngood_for_x(ib)
+                  total_wnn_ave(ib)  = total_wnn_ave(ib)  
+     +                                      + wnn_ave(ib)*Ngood_for_x(ib)
+                  total_q_ave(ib)  = total_q_ave(ib)  
+     +                                      + q_ave(ib)*Ngood_for_x(ib)
                endif
             endif
             write(6,*) "Ntotal_for_x(",ib,") = ",Ntotal_for_x(ib)
             write(6,*) "Nunpoltotal_for_x(",ib,") = ",Nunpoltotal_for_x(ib)
             w2 = w_ave(ib)**2
-            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+            w2nn = wnn_ave(ib)**2
+            qq = q_ave(ib)**2
+c            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+c            qq = (w2nn - md**2)/(1/(cent_x(ib)*mp/md) - 1)
 
             xdx = cent_x_max(ib) - cent_x(ib)
 
@@ -1577,9 +1612,14 @@ c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             rc  = 0
 
             total_w_ave(ib) = total_w_ave(ib)/Ntotal_for_x(ib)
+            total_wnn_ave(ib) = total_wnn_ave(ib)/Ntotal_for_x(ib)
+            total_q_ave(ib) = total_q_ave(ib)/Ntotal_for_x(ib)
 
             w2 = total_w_ave(ib)**2
-            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+            qq = total_q_ave(ib)**2
+c            w2 = total_wnn_ave(ib)**2
+c            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+c            qq = (w2nn - md**2)/(1 - md/(cent_x(ib)*mp))
             xdx = cent_x_max(ib) - cent_x(ib)
             x     = cent_x(ib)
 
@@ -1629,17 +1669,15 @@ c            mott_n  = hbarc2*((7*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             if (lumi_li.gt.0) call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 4He
             if (lumi_n.gt.0) call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
             if (lumi_c.gt.0) call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
-            if (x.ge.0.75.and.x.le.5.0) then   ! If QE:
+            if (x.ge.0.24.and.x.le.5.0) then   ! If QE:
                 call get_qe_b1d(x,q2,Aout,F1out,b1out)
-            elseif (x.lt.0.75.and.x.gt.0) then ! If DIS:
+            elseif (x.lt.0.24.and.x.gt.0) then ! If DIS:
                 call get_b1d(x,q2,Aout,F1out,b1out)
             endif
+            if (x.lt.0.6) then
+                Aout = -0.2
+            endif
 
-c vvvv VERY PRELIMINARY PLATEAU CHANGES WIth Q^2 vvvvvvvvv
-
-
-
-c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (.not.(F1d_ie.gt.0)) F1d_ie = 0
             if (.not.(F1d_qe.gt.0)) F1d_qe = 0
             if (.not.(F1n_ie.gt.0)) F1n_ie = 0
@@ -1707,7 +1745,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                            + ((0+F2c_qe)/12.)/nu)
             endif
             if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-                     if(x.lt.1.1.or.x.gt.3.00.or.x.eq.3.0.or.e_in.lt.3.0) then
+                     if(x.le.1.1.or.x.ge.3.00.or.x.eq.3.0.or.e_in.lt.3.0) then
                         sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                                     + ((F2d_ie+F2d_qe)/2.)/nu)
                         sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
@@ -1725,7 +1763,25 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
                         if (lumi_n.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
                         if (lumi_c.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
+                    endif
 
+
+c                  if((x.gt.1.1.or.x.eq.1.1).and.x.lt.2.0.and.e_in.gt.3.0) then
+c                     if (lumi_d.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
+c                     if (lumi_li.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
+c                     if (lumi_he.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
+c                     if (lumi_n.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_n,z_n,sigma_unpol_n)
+c                     if (lumi_c.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
+c                  endif
+                  if (x.ge.1.98.and.e_in.eq.6.6.and.ispectro.eq.1) then
+                     sigma_unpol_n = sigma_unpol_n*0.9
+                     sigma_unpol_he = sigma_unpol_he*0.9
+                  endif
+
+
+                    if (x.ge.1.98.and.e_in.eq.8.8.and.ispectro.eq.2) then
+                       sigma_unpol_n = sigma_unpol_n*0.1
+                       sigma_unpol_he = sigma_unpol_he*0.1
                     endif
                sigma_unpol_d  = sigma_unpol
             endif
@@ -1812,9 +1868,9 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
                if (cent_x(ib).eq.1.7)  Aout = -2.7280214/3.5652487
                if (cent_x(ib).eq.1.8)  Aout = -1.2216212/2.3818970
             endif
-            if (cent_x(ib).ge.0.6) then
+            if (cent_x(ib).ge.0.25) then
 c               syst_Azz = Aout*0.1 ! To be fixed later
-               syst_Azz = abs(Aout*0.14) ! To be fixed later
+               syst_Azz = abs(Aout*0.092) ! To be fixed later
             endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
             t20       = 0.0
@@ -1829,7 +1885,7 @@ c               t20 = -sqrt(8)/2*Aout
             endif
             write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
-     &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
+     &                     total_wnn_ave(ib),q2,Ntotal_for_x(ib),
      &                     syst_Azz,syst_b1d,
 c     &                     Aout,b1out,
      &                     0.0,b1out,
@@ -2043,8 +2099,10 @@ c !$OMP CRITICAL
 
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                            + ((F2d_ie+F2d_qe)/2.)/nu)
 c               if (x.gt.1.98) then
-c                  sigma_unpol = 0
+c                  sigma_unpol_d = 0
 c               endif
                sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
      +                            + ((F2li_ie+F2li_qe)/6.)/nu)
@@ -2054,16 +2112,22 @@ c               endif
      +                            + ((F2n_ie+F2n_qe)/14.)/nu)
                sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                            + ((F2c_ie+F2c_qe)/12.)/nu)
-            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.1.98.and.e_in.gt.3.0) then
+            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
                if (lumi_d.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_d,z_d,sigma_unpol)
                if (lumi_li.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_li,z_li,sigma_unpol_li)
                if (lumi_he.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_he,z_he,sigma_unpol_he)
                if (lumi_n.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_n,z_n,sigma_unpol_n)
                if (lumi_c.gt.0) call init_incl(e_in,ep_in1,th_in1,x,a_c,z_c,sigma_unpol_c)
             endif
+            if (x.ge.1.98.and.e_in.eq.8.8.and.ispectro.eq.2) then
+c            if (x.ge.1.98.and.e_in.eq.6.6.and.ispectro.eq.2) then
+               sigma_unpol_n = sigma_unpol_n*0.1
+               sigma_unpol_he = sigma_unpol_he*0.1
+            endif
 c !$OMP END CRITICAL
             sigma_unpol_d  = sigma_unpol
          endif
+c         sigma_unpol_d = 0
 c         if (x.gt.0) then
          if (x.gt.1.5.or.x.eq.1.5) then
                call elastic(z_d,a_d,q2,thrad,e_in,sigma_unpol_d,ispectro,csmodel)
@@ -2268,8 +2332,10 @@ c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
      +                         + ((0+F2c_qe)/12.)/nu)
          endif
          if (csmodel.eq.'Sargsian'.and.q2.lt.10) then
-            if(x.lt.1.1.or.x.gt.3.0.or.x.eq.3.0.or.e_in.lt.3.0) then
+c            if(x.lt.1.1.or.x.ge.1.98.or.e_in.lt.3.0) then
                sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+     +                            + ((F2d_ie+F2d_qe)/2.)/nu)
+               sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
      +                            + ((F2d_ie+F2d_qe)/2.)/nu)
                sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
      +                            + ((F2li_ie+F2li_qe)/6.)/nu)
@@ -2279,12 +2345,17 @@ c         mott_c  = hbarc2*((6*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
      +                            + ((F2n_ie+F2n_qe)/14.)/nu)
                sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
      +                            + ((F2c_ie+F2c_qe)/12.)/nu)
-            elseif((x.gt.1.1.or.x.eq.1.1).and.x.lt.3.0.and.e_in.gt.3.0) then
+c            else
+            if((x.gt.1.1.or.x.eq.1.1).and.x.lt.2.0.and.e_in.gt.3.0) then
                if (lumi_d.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_d,z_d,sigma_unpol)
                if (lumi_li.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_li,z_li,sigma_unpol_li)
                if (lumi_he.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_he,z_he,sigma_unpol_he)
                if (lumi_n.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_n,z_n,sigma_unpol_n)
                if (lumi_c.gt.0) call init_incl(e_in,ep_in2,th_in2,x,a_c,z_c,sigma_unpol_c)
+            endif
+            if (x.ge.1.98.and.e_in.eq.6.6.and.ispectro.eq.1) then
+               sigma_unpol_n = sigma_unpol_n*0.9
+               sigma_unpol_he = sigma_unpol_he*0.9
             endif
             sigma_unpol_d  = sigma_unpol
          endif

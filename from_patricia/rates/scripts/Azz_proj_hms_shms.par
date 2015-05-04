@@ -158,7 +158,7 @@ timestamp char size 1.000000
 timestamp def "Sun Aug 21 22:19:23 2011"
 
 with g0
-    world 0.6, 0, 2.3, 1.0
+    world 0, 0, 2.2, 0.7
 #    world 0.6, 0, 3.0, 0.6
     stack world 0, 0, 0, 0
     znorm 1
@@ -190,7 +190,7 @@ with g0
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-    xaxis  tick major 0.1
+    xaxis  tick major 0.2
     xaxis  tick minor ticks 1
     xaxis  tick default 6
     xaxis  tick place rounded true
@@ -552,7 +552,7 @@ with g1
 #    yaxis  tick major 10
 #    yaxis  tick minor ticks 9
     yaxis  tick major 1000
-    yaxis  tick minor ticks 9
+    yaxis  tick minor ticks 1
     yaxis  tick default 6
     yaxis  tick place rounded true
     yaxis  tick in
@@ -1621,7 +1621,7 @@ with g3
 #    world 0.6, -0.5, 2.0, 1.5
 ##    world 0, -0.03, 0.70, 0.03
 #    world 0.6, -0.3, 2.0, 1.3
-    world 0.6, -1.4, 2.3, 0.3
+    world 0.0, -1.4, 2.2, 0.3
     stack world 0, 0, 0, 0
     znorm 1
     view 0.60000, 0.70, 1.0000, 0.98
@@ -1652,7 +1652,7 @@ with g3
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-    xaxis  tick major 0.1
+    xaxis  tick major 0.2
     xaxis  tick minor ticks 1
     xaxis  tick default 6
     xaxis  tick place rounded true
@@ -1975,8 +1975,8 @@ with g3
     s2 legend "Miller"
 
 
-#    s3 hidden false
-    s3 hidden true
+    s3 hidden false
+#    s3 hidden true
     s3 type xy
     s3 symbol 0
     s3 symbol size 0.50000
@@ -2497,7 +2497,7 @@ with g4
 #    world 0, 0, 1.2, 90
 #    world 0, 5, 0.7, 15
 ##    world 0, 5, 1.15, 15
-    world 0, 5, 2.3, 25
+    world 0, 5, 2.2, 25
 #    world 0, 5, 2.000, 15
     stack world 0, 0, 0, 0
     znorm 1
@@ -2531,8 +2531,8 @@ with g4
     xaxis  tick on
 #    xaxis  tick major 0.1
 #    xaxis  tick minor ticks 1
-    xaxis  tick major 1
-    xaxis  tick minor ticks 3
+    xaxis  tick major 0.2
+    xaxis  tick minor ticks 1
     xaxis  tick default 6
     xaxis  tick place rounded true
     xaxis  tick in
@@ -3345,7 +3345,7 @@ with g5
 #    world 0.001, 0.09, 1.0, 20
 ##    world 0, 0, 1.15, 5.5
 #    world 0, 0, 2.0, 5.5
-    world 0, 0, 2.300, 3.0
+    world 0, 0, 2.200, 4.0
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.7000, 1.49000, 0.98
@@ -3376,10 +3376,10 @@ with g5
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-#    xaxis  tick major 0.1
-#    xaxis  tick minor ticks 1
-    xaxis  tick major 1
-    xaxis  tick minor ticks 3
+    xaxis  tick major 0.2
+    xaxis  tick minor ticks 1
+#    xaxis  tick major 1
+#    xaxis  tick minor ticks 3
     xaxis  tick default 6
     xaxis  tick place rounded true
     xaxis  tick in
@@ -4098,7 +4098,7 @@ with g6
 ##    world 0, 5.5, 1.15, 10.5
 #    world 0, 0, 2.0, 11.5
 #    world 0, 5, 2.000, 7
-    world 0, 0, 2.300, 12
+    world 0, 0, 2.200, 12
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.38000, 1.49000, 0.61
@@ -4129,10 +4129,10 @@ with g6
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-#    xaxis  tick major 0.1
-#    xaxis  tick minor ticks 1
-    xaxis  tick major 1
-    xaxis  tick minor ticks 3
+    xaxis  tick major 0.2
+    xaxis  tick minor ticks 1
+#    xaxis  tick major 1
+#    xaxis  tick minor ticks 3
     xaxis  tick default 6
     xaxis  tick place rounded true
     xaxis  tick in
@@ -4981,7 +4981,7 @@ with g6
     s16 legend  "SHMS Central Value"
 with g7
 #    world 0, 0, 2.300, 1.5
-    world 0, 1, 2.300, 3.0
+    world 0, 1.5, 2.200, 3.5
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.08000, 1.4900, 0.30
@@ -5012,10 +5012,10 @@ with g7
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-#    xaxis  tick major 0.1
-#    xaxis  tick minor ticks 1
-    xaxis  tick major 1
-    xaxis  tick minor ticks 3
+    xaxis  tick major 0.2
+    xaxis  tick minor ticks 1
+#    xaxis  tick major 1
+#    xaxis  tick minor ticks 3
     xaxis  tick default 6
     xaxis  tick place rounded true
     xaxis  tick in
@@ -5067,7 +5067,7 @@ with g7
     yaxis  label place normal
     yaxis  tick on
     yaxis  tick major 0.2
-    yaxis  tick minor ticks 3
+    yaxis  tick minor ticks 1
     yaxis  tick default 6
     yaxis  tick place rounded true
     yaxis  tick in
@@ -5829,7 +5829,7 @@ with g8
 #    world 0, 0, 1.2, 90
 #    world 0, 0, 0.7, 50
 ##    world 0, 0, 1.15, 50
-    world 0, 0, 2.3, 90
+    world 0, 0, 2.2, 90
 #    world 0, 30, 2.000, 90
     stack world 0, 0, 0, 0
     znorm 1
@@ -5861,10 +5861,10 @@ with g8
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-#    xaxis  tick major 0.1
-#    xaxis  tick minor ticks 1
-    xaxis  tick major 1
-    xaxis  tick minor ticks 3
+    xaxis  tick major 0.2
+    xaxis  tick minor ticks 1
+#    xaxis  tick major 1
+#    xaxis  tick minor ticks 3
     xaxis  tick default 6
     xaxis  tick place rounded true
     xaxis  tick in
@@ -6576,7 +6576,7 @@ with g8
     s13 legend  "SHMS Central Value"
 with g9
 #    world 0, 0, 2.3, 3
-    world 0, 0, 2.3, 2
+    world 0, 0, 2.2, 2.5
     stack world 0, 0, 0, 0
     znorm 1
     view 0.10000, 0.38000, 0.50000, 0.61
@@ -6607,10 +6607,10 @@ with g9
     xaxis  label color 1
     xaxis  label place normal
     xaxis  tick on
-#    xaxis  tick major 0.1
-#    xaxis  tick minor ticks 1
-    xaxis  tick major 1
-    xaxis  tick minor ticks 3
+    xaxis  tick major 0.2
+    xaxis  tick minor ticks 1
+#    xaxis  tick major 1
+#    xaxis  tick minor ticks 3
     xaxis  tick default 6
     xaxis  tick place rounded true
     xaxis  tick in
