@@ -257,15 +257,15 @@ c---- PARAMETER -------------------------------------------
       targ      = 'ND3'          ! ND3 target
 c      targ      = 'LiD'          ! LiD
 c      targ      = 'LiD_He2D'     ! LiD target as 4He + 2D
-c      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
+      csmodel   = 'Bosted_full'  ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sections
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
-      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
+c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
@@ -358,18 +358,19 @@ c      endif
 c         prec1(1)  = 96
 c         xval1(1)  = 1.5
 c         qqval1(1) = 1.8
+       ! vvv 10 deg constraint vvv
          prec1(1) = 300
          xval1(1) = 1.5
          qqval1(1) = 1.8
-
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.4.4) then
-c         prec1(1)  = 96
-c         xval1(1)  = 1.5
-c         qqval1(1) = 1.8
+         prec1(1)  = 96
+         xval1(1)  = 1.5
+         qqval1(1) = 0.82
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -464,9 +465,9 @@ c         prec2(1) = 96
 c         xval2(1) = 1.5
 c         qqval2(1) = 0.71
        ! vvv 10 deg constraint vvv
-         prec2(1) = 300
-         xval2(1) = 1.5
-         qqval2(1) = 1.5
+c         prec2(1) = 300
+c         xval2(1) = 1.5
+c         qqval2(1) = 1.5
        ! ^^^^^^^^^^^^^^^^^^^^^^^^^
        ! vvv HMS kinematics for quick dilution/cs calculation vvv
 c         prec2(1)  = 96
@@ -500,9 +501,12 @@ c      endif
 
       ! vvvvv Potential Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.4.4) then
-         prec2(1) = 24
+       ! vvv 10 deg constraint vvv
+         prec2(1) = 96
          xval2(1) = 1.5
-         qqval2(1) = 0.5
+c         qqval2(1) = 0.57
+         qqval2(1) = 0.71
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
