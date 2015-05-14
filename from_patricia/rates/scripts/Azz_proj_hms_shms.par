@@ -1615,13 +1615,8 @@ with g2
     s7 comment "Cols 1:2"
     s7 legend  "SHMS Time"
 with g3
-#    world 0, -0.05, 1.2, 0.05
-#    world 0, -0.03, 1.15, 0.03
-#    world 0, -0.03, 2.0, 0.03
-#    world 0.6, -0.5, 2.0, 1.5
-##    world 0, -0.03, 0.70, 0.03
-#    world 0.6, -0.3, 2.0, 1.3
     world 0.0, -1.4, 2.2, 0.3
+#    world 0.2, -0.1, 1.75, 0.1
     stack world 0, 0, 0, 0
     znorm 1
     view 0.60000, 0.70, 1.0000, 0.98
@@ -1704,7 +1699,7 @@ with g3
     yaxis  label color 1
     yaxis  label place normal
     yaxis  tick on
-#    yaxis  tick major 0.01
+#    yaxis  tick major 0.02
 #    yaxis  tick minor ticks 1
     yaxis  tick major 0.2
     yaxis  tick minor ticks 3
@@ -5228,8 +5223,8 @@ with g7
 
 
 
-#    s1 hidden false
-    s1 hidden true
+    s1 hidden false
+#    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000

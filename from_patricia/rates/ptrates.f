@@ -264,9 +264,9 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -358,6 +358,10 @@ c      endif
 c         prec1(1)  = 96
 c         xval1(1)  = 1.5
 c         qqval1(1) = 1.8
+         prec1(1) = 300
+         xval1(1) = 1.5
+         qqval1(1) = 1.8
+
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -379,8 +383,8 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
 c         prec1(1) = 300
-c         xval1(1) = 0.8
-c         qqval1(1) = 2.8
+c         xval1(1) = 1.0
+c         qqval1(1) = 2.89
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -433,9 +437,14 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
+c         prec2(1) = 300
+c         xval2(1) = 1.8
+c         qqval2(1) = 1.5
+       ! vvv 10 deg constraint vvv
          prec2(1) = 300
          xval2(1) = 1.8
-         qqval2(1) = 1.5
+         qqval2(1) = 2.181
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -451,10 +460,14 @@ c         qqval2(1) = 1.2
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-         prec2(1) = 96
+c         prec2(1) = 96
+c         xval2(1) = 1.5
+c         qqval2(1) = 0.71
+       ! vvv 10 deg constraint vvv
+         prec2(1) = 300
          xval2(1) = 1.5
-         qqval2(1) = 0.71
-
+         qqval2(1) = 1.5
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
        ! vvv HMS kinematics for quick dilution/cs calculation vvv
 c         prec2(1)  = 96
 c         xval2(1)  = 1.5
@@ -465,9 +478,9 @@ c         qqval2(1) = 1.8
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-         prec2(1) = 12
-         xval2(1) = 1.8
-         qqval2(1) = 0.17
+c         prec2(1) = 12
+c         xval2(1) = 1.8
+c         qqval2(1) = 0.17
 
        ! vvv HMS kinematics for quick dilution/cs calculation vvv
 c         prec2(1)  = 12
@@ -489,7 +502,7 @@ c      endif
       if (e_in.eq.4.4) then
          prec2(1) = 24
          xval2(1) = 1.5
-         qqval2(1) = 0.48
+         qqval2(1) = 0.5
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -616,6 +629,7 @@ c "
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
+            if ((ep_in.gt.10.4).or.(th_in.lt.10)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
@@ -892,8 +906,8 @@ c            do ib=1,nx
             ! Binning over the momentum bite
 c            dep    = 0.02*ep_in
 c            dep    = 0.005*ep_in
-            dep    = 0.0005*ep_in
-c            dep    = 0.001*ep_in
+c            dep    = 0.0005*ep_in
+            dep    = 0.001*ep_in
 c            dep    = ep_in
             epmin  = ep_in*(1.-dp_m)
             epmax  = ep_in*(1.+dp_p)

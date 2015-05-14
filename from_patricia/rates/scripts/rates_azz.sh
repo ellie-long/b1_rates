@@ -187,11 +187,14 @@ echo "0 1.85" > temp_wmin
 echo "10 1.85" >> temp_wmin
 echo "0 0.938" > temp_wqe
 echo "10 0.938" >> temp_wqe
-echo "0 1.85" > temp_wnnmin
-echo "10 1.85" >> temp_wnnmin
-echo "0 1.926" > temp_wnnqe
-echo "10 1.926" >> temp_wnnqe
-
+#echo "0 1.85" > temp_wnnmin
+#echo "10 1.85" >> temp_wnnmin
+echo "0 1.876" > temp_wnnmin
+echo "10 1.876" >> temp_wnnmin
+#echo "0 1.926" > temp_wnnqe
+#echo "10 1.926" >> temp_wnnqe
+echo "0 1.976" > temp_wnnqe
+echo "10 1.976" >> temp_wnnqe
 
 echo "0 7.3" > temp_thmin_shms
 echo "10 7.3" >> temp_thmin_shms
@@ -294,7 +297,7 @@ shms_csmax="0.350E-03"
 shms_csmin="1E-30"
 shms_scale=`awk 'BEGIN{scale = 19/('$shms_csmax'-'$shms_csmin')} END {print scale}' $file6`
 #echo "shms_csmin=" $shms_csmin
-echo "shms_csmax=" $shms_csmax
+#echo "shms_csmax=" $shms_csmax
 
 
 hmsa_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==1 && $26>0 && $10>0 && $10<1000 && $26<min) min=$26} END {print min}' $file6`
@@ -315,7 +318,7 @@ shmsa_csmax="0.115E-02"
 shmsa_csmin="1E-30"
 shmsa_scale=`awk 'BEGIN{scale = 19/('$shmsa_csmax'-'$shmsa_csmin')} END {print scale}' $file6`
 #echo "shmsa_csmin=" $shmsa_csmin
-echo "shmsa_csmax=" $shmsa_csmax
+#echo "shmsa_csmax=" $shmsa_csmax
 
 
 
@@ -823,7 +826,7 @@ xmgrace \
 		-settype xy			-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 
-
+#
 #display Azz_rates_hms_shms.png
 
 #xmgrace \
@@ -853,21 +856,21 @@ xmgrace \
 #		-settype bar		-block temp_shms_time 		-log y	-graph 2 -bxy 1:2 \
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
-#xmgrace \
-#		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
-#		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
-#		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
-#		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
-#		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-#		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
-#		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-#       -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
-#		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+xmgrace \
+		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
+		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
+		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
+		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \

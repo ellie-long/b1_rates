@@ -22,19 +22,45 @@ using namespace std;
 
 datafile_t datafiles[] = {
 //{ "data file.dat", "Data Name", "Q", "t20", "Error Up", "Error Down", ?, ?, Shape, Color}
-	{ "data_t20/all_data.dat", 		"", 				"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,1,10 },
-	{ "data_t20/Schulze.dat", 		"Schulze, PRL 8, 597 (1984)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,1 },
-	{ "data_t20/Dmitriev.dat", 		"Dmitriev, PLB 157, 143 (1985)", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,1 },
-	{ "data_t20/Voitsekhovskii.dat","Voitsekhovskii", 	"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,21,1 },
-	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,22,1 },
-	{ "data_t20/Bowhuis.dat", 		"Bowhuis", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,24,1 },
-	{ "data_t20/Gilman.dat", 		"Gilman", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,25,1 },
-	{ "data_t20/Boden.dat", 		"Boden", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,26,1 },
-	{ "data_t20/Garcon.dat", 		"Garcon", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,27,1 },
-	{ "data_t20/Abbott.dat", 		"Abbott", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,28,1 },
-	{ "data_t20/Nikolenko.dat", 	"Nikolenko", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,29,1 },
-	{ "data_t20/Zhang.dat", 		"Zhang", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,30,1 },
-	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]*sqrt(2)", "[2]*sqrt(2)", 0,0,20,6 },
+//	{ "data_t20/all_data.dat", 		"", 				"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,1,10 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]*sqrt(2)", "[2]*sqrt(2)", 0,0,20,6 },
+//	{ "data_t20/Schulze.dat", 		"Schulze, PRL 8, 597 (1984)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,23,1 },
+//	{ "data_t20/Dmitriev.dat", 		"Dmitriev, PLB 157, 143 (1985)", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,20,1 },
+//	{ "data_t20/Voitsekhovskii.dat","Voitsekhovsky, JETP Lett. 43, 733 (1986)", 	"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,21,1 },
+//	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi, PRL 77, 2630 (1996)", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,22,1 },
+//	{ "data_t20/Bowhuis.dat", 		"Bouwhuis, PRL 82, 3755 (1999)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,24,1 },
+//	{ "data_t20/Gilman.dat", 		"Gilmani, PRL 65, 1733 (1990)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,25,1 },
+//	{ "data_t20/Boden.dat", 		"Boden, Z Phys C, 49, 175 (1991)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,26,1 },
+//	{ "data_t20/Garcon.dat", 		"Garcon, PRC 49, 2516 (1994)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,27,1 },
+//	{ "data_t20/Abbott.dat", 		"Abbott, PRL 84, 5053 (2000)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,28,1 },
+//	{ "data_t20/Nikolenko.dat", 	"Nikolenko, PRL 90, 07501 (2003)", 		"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,29,1 },
+//	{ "data_t20/Zhang.dat", 		"Zhang, PRL 107, 252501 (2011)", 			"([0]*0.197)^2", "[1]", "[2]", "[2]", 0,0,30,1 },
+
+	{ "data_t20/all_data.dat", 		"", 				"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,1,10 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]*sqrt(2)", "[2]*sqrt(2)", 0,0,20,6 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]/0.458", "[2]/0.458", 0,0,20,6 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed All", 	"[0]", "[1]", "sqrt(([2]/0.458)^2+([3]/0.458)^2+[4]^2+[5]^2)","sqrt(([2]/0.458)^2+([3]/0.458)^2+[4]^2+[5]^2)", 0,0,20,6 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed All", 	"[0]", "[1]", "sqrt(([3]/0.458)^2+[4]^2+[5]^2)","sqrt(([3]/0.458)^2+[4]^2+[5]^2)", 0,0,20,6 },
+//	{ "data_t20/Long-Prelim-Optimistic.dat",	"Proposed All", 	"[0]", "[1]", "sqrt(([3]/0.458)^2+[4]^2+[5]^2)","sqrt(([3]/0.458)^2+[4]^2+[5]^2)", 0,0,20,6 },
+	{ "data_t20/Long-Prelim-Optimistic.dat",	"Proposed All", 	"[0]", "[1]", "sqrt(([2]/0.458)^2+([3]/0.458)^2+[4]^2+[5]^2)","sqrt(([2]/0.458)^2+([3]/0.458)^2+[4]^2+[5]^2)", 0,0,20,6 },
+	{ "data_t20/Long-Prelim-Optimistic.dat",	"Proposed Stat", 	"[0]", "[1]", "[2]/0.458","[2]/0.458", 0,0,20,6 },
+//	{ "data_t20/Long-Prelim.dat",	"Proposed All", 	"[0]", "[1]", "sqrt([4]^2+[5]^2)","sqrt(([3]/0.458)^2)", 0,0,20,6 },
+	{ "data_t20/Schulze.dat", 		"Schulze (Bates, 1984)", 		"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,20,1 },
+	{ "data_t20/Dmitriev.dat", 		"Dmitriev (VEPP-2, 1985)", 		"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,21,1 },
+	{ "data_t20/Voitsekhovskii.dat","Voitsekhovsky (VEPP-2, 1986)", "([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,22,1 },
+	{ "data_t20/Gilman.dat", 		"Gilman (VEPP-3, 1990)", 		"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,23,1 },
+	{ "data_t20/Boden.dat", 		"Boden (Bonn, 1991)", 			"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,24,1 },
+	{ "data_t20/Garcon.dat", 		"Garcon (Bates, 1994)", 		"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,25,1 },
+	{ "data_t20/Ferro-Luzzi.dat", 	"Ferro-Luzzi (NIKHEF, 1996)", 	"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,26,1 },
+	{ "data_t20/Bouwhuis.dat", 		"Bouwhuis (NIKHEF, 1999)", 	"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,27,1 },
+	{ "data_t20/Abbott.dat", 		"Abbott (Hall C, 2000)", 		"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,28,1 },
+	{ "data_t20/Nikolenko.dat", 	"Nikolenko (VEPP-3, 2003)", 	"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,29,1 },
+	{ "data_t20/Zhang.dat", 		"Zhang (Bates, 2011)", 			"([0]*0.197327)^2", "[1]", "[2]", "[2]", 0,0,30,1 },
+//	{ "data_t21/abbott.dat", 		"T21 - Abbott (Hall C, 2000)", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,28,2 },
+//	{ "data_t21/garcon.dat", 		"T21 - Garcon (Bates, 1994)", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,25,2 },
+//	{ "data_t22/abbott.dat", 		"T22 - Abbott (Hall C, 2000)", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,28,3 },
+//	{ "data_t22/ferroluzzi.dat", 	"T22 - Ferro-Luzzi (NIKHEF, 1996)", 	"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,26,3 },
+//	{ "data_t22/garcon.dat", 		"T22 - Garcon (Bates, 1994)", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,25,3 },
 //	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "sqrt([2]^2+[3]^2)", "sqrt([2]^2+[3]^2)", 0,0,20,6 },
 //	{ "data_t20/Long-Prelim.dat",	"Proposed", 		"[0]", "[1]", "[2]", "[2]", 0,0,20,6 },
 	{ "theory_t20/imii.dat", "IMII", "[0]", "[1]", "0", "0", 0, 0, 2, 3 },
@@ -58,7 +84,7 @@ void plot_t20_fit() {
 //	gPad->SetLogy();
 	frm->GetXaxis()->SetTitle("Q^{2} (GeV^{2})");
 //	frm->GetYaxis()->SetTitle("t_{20}(70^{\\circ})");
-	frm->GetYaxis()->SetTitle("t_{20}");
+	frm->GetYaxis()->SetTitle("T_{20}");
 //	frm->SetMinimum(-1.75);
 	frm->SetMinimum(-2);
 	frm->SetMaximum(1.0);
@@ -69,7 +95,7 @@ void plot_t20_fit() {
 
 	
 	TMultiGraph* mgrDta = new TMultiGraph("Data","t_{20} Data");
-	TLegend *legDta = new TLegend(.5,.12,.95,.57,"","brNDC");
+	TLegend *legDta = new TLegend(.56,.13,.95,.55,"","brNDC");
 
 	TMultiGraph* wgr = mgrDta;
 	TLegend *wlg = legDta;
