@@ -178,7 +178,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
       REAL*8 E0_PASS,TH_PASS,EP_PASS
       REAL*8 rr1,rr2,phistar,thstar
-      REAL*8 thq,thq_r,cosqvec
+      REAL*8 thq,thq_r,cosqvec,thq_in
       REAL*8 xdx
       REAL*8 P(0:23)
       REAL*8 sigrsv(7),sig_nr,sigmec
@@ -265,8 +265,8 @@ c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -276,10 +276,10 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-c      bcurrent  =  0.100    ! 0.085    ! microAmps
-      bcurrent  =  0.080    ! 0.085    ! microAmps
+      bcurrent  =  0.100    ! 0.085    ! microAmps
+c      bcurrent  =  0.080    ! 0.085    ! microAmps
+c      tgt_len   =  3.0*1.0  ! cm
       tgt_len   =  3.0*1.0  ! cm
-c      tgt_len   =  6.0*1.0  ! cm
       ! ND3 specs
       rho_nd3   =  1.007 ! g/cm3
 
@@ -296,9 +296,9 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-c      Pzz_in    =  0.20    ! expected improvement on the target
+      Pzz_in    =  0.40    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
@@ -347,30 +347,30 @@ c      DATA qqval1/   99,   99,  99,  99,  99/
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
 c      if (e_in.eq.8.8) then
-c         DATA prec1/    300, 216, 360, 168, 168/
-c         DATA xval1/    1.4, 100, 100, 100, 100/
-c         DATA qqval1/   1.5, 99,  99,  99,  99/   
+         DATA prec1/    300, 216, 360, 168, 168/
+         DATA xval1/    1.4, 100, 100, 100, 100/
+         DATA qqval1/   1.5, 99,  99,  99,  99/   
 c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-c         prec1(1)  = 96
-c         xval1(1)  = 1.5
-c         qqval1(1) = 1.8
-       ! vvv 10 deg constraint vvv
-         prec1(1) = 300
-         xval1(1) = 1.5
+         prec1(1)  = 96
+         xval1(1)  = 1.5
          qqval1(1) = 1.8
+       ! vvv 10 deg constraint vvv
+c         prec1(1) = 300
+c         xval1(1) = 1.5
+c         qqval1(1) = 1.8
        ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.4.4) then
-         prec1(1)  = 96
-         xval1(1)  = 1.5
-         qqval1(1) = 0.82
+c         prec1(1)  = 96
+c         xval1(1)  = 1.5
+c         qqval1(1) = 0.82
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -383,18 +383,24 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
  
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
+         prec1(1) = 300
+         xval1(1) = 1.0
+         qqval1(1) = 2.89
+      ! vvv Using HMS as proton spectrometer vvv
 c         prec1(1) = 300
-c         xval1(1) = 1.0
-c         qqval1(1) = 2.89
+c         xval1(1) = 1.8
+c         qqval1(1) = 22
+      ! ^^^ Using HMS as proton spectrometer ^^^
+
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-c        prec1(1)  = 12
-c        xval1(1)  = 1.8
-c        qqval1(1) = 0.31 
+        prec1(1)  = 12
+        xval1(1)  = 1.8
+        qqval1(1) = 0.31 
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -430,9 +436,13 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
 
       ! vvvvv Proposal Azz at E0= 11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.11.0) then
-         prec2(1) = 300
-         xval2(1) = 0.953
-         qqval2(1) = 1.788
+c         prec2(1) = 300
+c         xval2(1) = 0.953
+c         qqval2(1) = 1.788
+
+c         prec2(1) = 120
+c         xval2(1) = 0.2
+c         qqval2(1) = 2
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -441,30 +451,31 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
 c         prec2(1) = 300
 c         xval2(1) = 1.8
 c         qqval2(1) = 1.5
+       ! vvv 8.5 deg constraint vvv
+c         prec2(1) = 300
+c         xval2(1) = 1.8
+c         qqval2(1) = 1.61
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^
        ! vvv 10 deg constraint vvv
-         prec2(1) = 300
-         xval2(1) = 1.8
-         qqval2(1) = 2.181
+c         prec2(1) = 300
+c         xval2(1) = 1.8
+c         qqval2(1) = 2.181
        ! ^^^^^^^^^^^^^^^^^^^^^^^^^
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-      ! vvvvv Trying for 6 quark-hidden color in b1 vvvvvvvvvvvvvv
-      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.8.8) then
-c         prec2(1) = 300
-c         xval2(1) = 0.5
-c         qqval2(1) = 1.2
-      endif
-      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
 c         prec2(1) = 96
 c         xval2(1) = 1.5
 c         qqval2(1) = 0.71
-       ! vvv 10 deg constraint vvv
+        ! vvv 8.5 deg constraint vvv
+c         prec2(1) = 300
+c         xval2(1) = 1.5
+c         qqval2(1) = 1.5
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvv 10 deg constraint vvv
 c         prec2(1) = 300
 c         xval2(1) = 1.5
 c         qqval2(1) = 1.5
@@ -507,6 +518,17 @@ c      endif
 c         qqval2(1) = 0.57
          qqval2(1) = 0.71
        ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Trying for 6 quark-hidden color in b1 vvvvvvvvvvvvvv
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.8.8) then
+c         prec2(1) = 300
+c         xval2(1) = 0.5
+c         qqval2(1) = 1.2
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -610,6 +632,7 @@ c         xval1(1)  = x
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
             if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
+c            if ((ep_in.le.0.0).or.(th_in.lt.55.0)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) qqval1(ib)=99
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99 
@@ -633,8 +656,9 @@ c "
          th_in = thrad/d_r
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
-            if ((ep_in.gt.10.4).or.(th_in.lt.10)) STOP "BAD INPUT"
-c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.10)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.8.5)) STOP "BAD INPUT"
+            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
@@ -1192,15 +1216,15 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 c vvvvvvvvvvvvvv This sets the physics cuts to get the physRateTotal vvvvvvvvvv
 c                 if (w2.le.w2min) then
-                 if (x.le.0.24) then
-                    sigma_unpol    = 0.0
-                    sigma_unpol_d  = 0.0
-                    sigma_unpol_he = 0.0
-                    sigma_unpol_li = 0.0
-                    sigma_unpol_n  = 0.0
-                    sigma_unpol_c  = 0.0
-                    sigma_pol_d    = 0.0
-                 endif
+c                 if (x.le.0.24) then
+c                    sigma_unpol    = 0.0
+c                    sigma_unpol_d  = 0.0
+c                    sigma_unpol_he = 0.0
+c                    sigma_unpol_li = 0.0
+c                    sigma_unpol_n  = 0.0
+c                    sigma_unpol_c  = 0.0
+c                    sigma_pol_d    = 0.0
+c                 endif
 c                 if (w2.ge.w2max) then
                  if (x.gt.2.15) then
 c                 if (x.gt.1.85) then
@@ -1462,6 +1486,7 @@ c            vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                  thq = 180. - thstar
                  thq_r = thq*pi/180.
                  cosqvec = cos(thq_r)
+                 thq_in = thq
              endif
 c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
@@ -2497,6 +2522,7 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
       write (6,*) "Theta used for f_dil:",th_in1
       write (6,*) "Pzz used:",Pzz_in
       write (6,*) "Target material used:",targ
+      write (6,*) "thq_in:",thq_in
       if (test.eq.1) then
          write(6,*) "*******************************************"
          write(6,*) "************* TEST MODE ON ****************"

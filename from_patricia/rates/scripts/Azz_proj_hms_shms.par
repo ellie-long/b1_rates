@@ -2489,11 +2489,8 @@ with g3
 
 
 with g4
-#    world 0, 0, 1.2, 90
-#    world 0, 5, 0.7, 15
-##    world 0, 5, 1.15, 15
-    world 0, 5, 2.2, 25
-#    world 0, 5, 2.000, 15
+#    world 0, 5, 2.2, 25
+    world 0, 0, 2.2, 90
     stack world 0, 0, 0, 0
     znorm 1
     view 0.60000, 0.08000, 1.0000, 0.30
@@ -2578,8 +2575,10 @@ with g4
     yaxis  label color 1
     yaxis  label place normal
     yaxis  tick on
-    yaxis  tick major 5
-    yaxis  tick minor ticks 4
+#	yaxis  tick major 5
+#    yaxis  tick minor ticks 4
+    yaxis  tick major 10
+    yaxis  tick minor ticks 3
     yaxis  tick default 6
     yaxis  tick place rounded true
     yaxis  tick in
@@ -4975,8 +4974,8 @@ with g6
     s16 comment "Cols 1:2:3"
     s16 legend  "SHMS Central Value"
 with g7
-#    world 0, 0, 2.300, 1.5
-    world 0, 1.5, 2.200, 3.5
+    world 0, 0, 2.300, 3.0
+#    world 0, 1.5, 2.200, 3.5
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.08000, 1.4900, 0.30
@@ -5052,7 +5051,8 @@ with g7
     yaxis  bar color 1
     yaxis  bar linestyle 1
     yaxis  bar linewidth 1.0
-    yaxis  label "W\sNN\N (GeV)"
+#    yaxis  label "W\sNN\N (GeV)"
+    yaxis  label "W (GeV)"
     yaxis  label layout para
     yaxis  label place spec
     yaxis  label place 0.000000, 0.0650000

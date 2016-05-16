@@ -60,6 +60,55 @@ file5="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_bacch
 awk '$1==1 && $2!=0.0{print $2,$4/$2}' $file5 > temp_model_bacchetta_low
 awk '$1==1 && $2!=0.0{print $2,$5/$2}' $file5 > temp_model_bacchetta_up
 
+file_ah="/home/ellie/physics/b1/b1_rates/from_patricia/models/arenhovel/arenhovel_azz.dat"
+awk '$1==0.3{print $12,$13}' $file_ah > temp_aren_03_av18
+awk '$1==0.3{print $12,$14}' $file_ah > temp_aren_03_pwbanr
+awk '$1==0.3{print $12,$15}' $file_ah > temp_aren_03_pwbarc
+awk '$1==0.3{print $12,$16}' $file_ah > temp_aren_03_normMEC
+awk '$1==0.3{print $12,$17}' $file_ah > temp_aren_03_normMECIC
+awk '$1==0.3{print $12,$18}' $file_ah > temp_aren_03_normRel
+awk '$1==0.3{print $12,$19}' $file_ah > temp_aren_03_normMECICRel
+
+awk '$1==0.2{print $12,$13}' $file_ah > temp_aren_02_av18
+awk '$1==0.2{print $12,$14}' $file_ah > temp_aren_02_pwbanr
+awk '$1==0.2{print $12,$15}' $file_ah > temp_aren_02_pwbarc
+awk '$1==0.2{print $12,$16}' $file_ah > temp_aren_02_normMEC
+awk '$1==0.2{print $12,$17}' $file_ah > temp_aren_02_normMECIC
+awk '$1==0.2{print $12,$18}' $file_ah > temp_aren_02_normRel
+awk '$1==0.2{print $12,$19}' $file_ah > temp_aren_02_normMECICRel
+
+awk '$1==1.8{print $12,$13}' $file_ah > temp_aren_18_av18
+awk '$1==1.8{print $12,$14}' $file_ah > temp_aren_18_pwbanr
+awk '$1==1.8{print $12,$15}' $file_ah > temp_aren_18_pwbarc
+awk '$1==1.8{print $12,$16}' $file_ah > temp_aren_18_normMEC
+awk '$1==1.8{print $12,$17}' $file_ah > temp_aren_18_normMECIC
+awk '$1==1.8{print $12,$18}' $file_ah > temp_aren_18_normRel
+awk '$1==1.8{print $12,$19}' $file_ah > temp_aren_18_normMECICRel
+
+awk '$1==0.7{print $12,$13}' $file_ah > temp_aren_07_av18
+awk '$1==0.7{print $12,$14}' $file_ah > temp_aren_07_pwbanr
+awk '$1==0.7{print $12,$15}' $file_ah > temp_aren_07_pwbarc
+awk '$1==0.7{print $12,$16}' $file_ah > temp_aren_07_normMEC
+awk '$1==0.7{print $12,$17}' $file_ah > temp_aren_07_normMECIC
+awk '$1==0.7{print $12,$18}' $file_ah > temp_aren_07_normRel
+awk '$1==0.7{print $12,$19}' $file_ah > temp_aren_07_normMECICRel
+
+awk '$1==2.9{print $12,$13}' $file_ah > temp_aren_29_av18
+awk '$1==2.9{print $12,$14}' $file_ah > temp_aren_29_pwbanr
+awk '$1==2.9{print $12,$15}' $file_ah > temp_aren_29_pwbarc
+awk '$1==2.9{print $12,$16}' $file_ah > temp_aren_29_normMEC
+awk '$1==2.9{print $12,$17}' $file_ah > temp_aren_29_normMECIC
+awk '$1==2.9{print $12,$18}' $file_ah > temp_aren_29_normRel
+awk '$1==2.9{print $12,$19}' $file_ah > temp_aren_29_normMECICRel
+
+awk '$1==1.5{print $12,$13}' $file_ah > temp_aren_15_av18
+awk '$1==1.5{print $12,$14}' $file_ah > temp_aren_15_pwbanr
+awk '$1==1.5{print $12,$15}' $file_ah > temp_aren_15_pwbarc
+awk '$1==1.5{print $12,$16}' $file_ah > temp_aren_15_normMEC
+awk '$1==1.5{print $12,$17}' $file_ah > temp_aren_15_normMECIC
+awk '$1==1.5{print $12,$18}' $file_ah > temp_aren_15_normRel
+awk '$1==1.5{print $12,$19}' $file_ah > temp_aren_15_normMECICRel
+
 file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
 awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 
@@ -780,22 +829,22 @@ xmgrace \
 		-settype xycolor	-block temp_shms_ep5				-graph 6 -bxy 1:2:3 \
 		-settype xy			-block temp_hms_cep					-graph 6 -bxy 1:2 \
 		-settype xy			-block temp_shms_cep				-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_wnnqe					-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_wnnmin					-graph 7 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_awnn				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_awnn				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn1				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn2				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn3				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn4				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_wnn5				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn1				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn2				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn3				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn4				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_wnn5				-graph 7 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_cwnn				-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_shms_cwnn				-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_wqe					-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_wmin					-graph 7 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_aw				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_aw				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w1				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w2				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w3				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w4				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w5				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w1				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w2				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w3				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w4				-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w5				-graph 7 -bxy 1:2:3 \
+		-settype xy			-block temp_hms_cw				-graph 7 -bxy 1:2 \
+		-settype xy			-block temp_shms_cw				-graph 7 -bxy 1:2 \
 		-settype xycolor	-block temp_hms_theta_aq			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_shms_theta_aq			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_theta_q1			-graph 8 -bxy 1:2:3 \

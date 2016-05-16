@@ -52,54 +52,54 @@ awk '$1>0 && $1<2000 {print $1,$4}'  $file2 >> temp_paris_tot_sq
 #awk '$1>0 && $1<2000 {print $1,$3}'  $file3 >> temp_av18_d_sq
 #awk '$1>0 && $1<2000 {print $1,$4}'  $file3 >> temp_av18_tot_sq
 file3="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_av18_term.data"
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2}'  $file3 >> temp_av18_s_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$3*$3}'  $file3 >> temp_av18_d_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2+$3*$3}'  $file3 >> temp_av18_tot_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10}'  $file3 >> temp_av18_s_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$3*$3*10}'  $file3 >> temp_av18_d_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10+$3*$3*10}'  $file3 >> temp_av18_tot_sq
 
 # N3LO500 Potential (Chiral Perturbation)
 file4="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_n3lo500_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2}'  $file4 >> temp_nlo500_s_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$3*$3}'  $file4 >> temp_nlo500_d_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2+$3*$3}'  $file4 >> temp_nlo500_tot_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10}'  $file4 >> temp_nlo500_s_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$3*$3*10}'  $file4 >> temp_nlo500_d_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10+$3*$3*10}'  $file4 >> temp_nlo500_tot_sq
 
 # N3LO600 Potential (Chiral Perturbation)
 file5="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_n3lo600_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2}'  $file5 >> temp_nlo600_s_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$3*$3}'  $file5 >> temp_nlo600_d_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2+$3*$3}'  $file5 >> temp_nlo600_tot_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10}'  $file5 >> temp_nlo600_s_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$3*$3*10}'  $file5 >> temp_nlo600_d_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10+$3*$3*10}'  $file5 >> temp_nlo600_tot_sq
 
 # Nijmegen1 Potential 
 file6="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_nimj1_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2}'  $file6 >> temp_nimj1_s_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$3*$3}'  $file6 >> temp_nimj1_d_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2+$3*$3}'  $file6 >> temp_nimj1_tot_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10}'  $file6 >> temp_nimj1_s_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$3*$3*10}'  $file6 >> temp_nimj1_d_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10+$3*$3*10}'  $file6 >> temp_nimj1_tot_sq
 
 # Nijmegen2 Potential 
 file7="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_nimj2_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2}'  $file7 >> temp_nimj2_s_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$3*$3}'  $file7 >> temp_nimj2_d_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2+$3*$3}'  $file7 >> temp_nimj2_tot_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10}'  $file7 >> temp_nimj2_s_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$3*$3*10}'  $file7 >> temp_nimj2_d_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10+$3*$3*10}'  $file7 >> temp_nimj2_tot_sq
 
 # Nijmegen3 Potential 
 file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_nimj3_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2}'  $file8 >> temp_nimj3_s_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$3*$3}'  $file8 >> temp_nimj3_d_sq
-awk '$1>0 && $1<2000 {print $1*197.327,$2*$2+$3*$3}'  $file8 >> temp_nimj3_tot_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10}'  $file8 >> temp_nimj3_s_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$3*$3*10}'  $file8 >> temp_nimj3_d_sq
+awk '$1>0 && $1<2000 {print $1*197.327,$2*$2*10+$3*$3*10}'  $file8 >> temp_nimj3_tot_sq
 
 
 
@@ -148,54 +148,54 @@ awk '$1>0 && $1<2000 {print $1,$2+$3}'  $file12 >> temp_paris_tot
 #awk '$1>0 && $1<2000 {print $1,$3}'  $file13 >> temp_av18_d
 #awk '$1>0 && $1<2000 {print $1,$2+$3}'  $file13 >> temp_av18_tot
 file13="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_av18_term.data"
-awk '$1>0 && $1<2000 {print $1*197.327,$2*0.00036}'  $file13 >> temp_av18_s
-awk '$1>0 && $1<2000 {print $1*197.327,$3*0.00036}'  $file13 >> temp_av18_d
-awk '$1>0 && $1<2000 {print $1*197.237,$2*0.00036+$3*0.00036}'  $file13 >> temp_av18_tot
+awk '$1>0 && $1<2000 {print $1*197.327,$2*0.00036*10}'  $file13 >> temp_av18_s
+awk '$1>0 && $1<2000 {print $1*197.327,$3*0.00036*10}'  $file13 >> temp_av18_d
+awk '$1>0 && $1<2000 {print $1*197.237,$2*0.00036*10+$3*0.00036*10}'  $file13 >> temp_av18_tot
 
 # N3LO500 Potential (Chiral Perturbation)
 file14="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_n3lo500_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2}'  $file14 >> temp_nlo500_s
-awk '$1>0 && $1<2000 {print $1*197.327,$3}'  $file14 >> temp_nlo500_d
-awk '$1>0 && $1<2000 {print $1*197.327,$2+$3}'  $file14 >> temp_nlo500_tot
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10}'  $file14 >> temp_nlo500_s
+awk '$1>0 && $1<2000 {print $1*197.327,$3*10}'  $file14 >> temp_nlo500_d
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10+$3*10}'  $file14 >> temp_nlo500_tot
 
 # N3LO600 Potential (Chiral Perturbation)
 file15="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_n3lo600_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2}'  $file15 >> temp_nlo600_s
-awk '$1>0 && $1<2000 {print $1*197.327,$3}'  $file15 >> temp_nlo600_d
-awk '$1>0 && $1<2000 {print $1*197.327,$2+$3}'  $file15 >> temp_nlo600_tot
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10}'  $file15 >> temp_nlo600_s
+awk '$1>0 && $1<2000 {print $1*197.327,$3*10}'  $file15 >> temp_nlo600_d
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10+$3*10}'  $file15 >> temp_nlo600_tot
 
 # Nijmegen1 Potential 
 file16="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_nimj1_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2}'  $file16 >> temp_nimj1_s
-awk '$1>0 && $1<2000 {print $1*197.327,$3}'  $file16 >> temp_nimj1_d
-awk '$1>0 && $1<2000 {print $1*197.327,$2+$3}'  $file16 >> temp_nimj1_tot
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10}'  $file16 >> temp_nimj1_s
+awk '$1>0 && $1<2000 {print $1*197.327,$3*10}'  $file16 >> temp_nimj1_d
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10+$3*10}'  $file16 >> temp_nimj1_tot
 
 # Nijmegen2 Potential 
 file17="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_nimj2_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2}'  $file17 >> temp_nimj2_s
-awk '$1>0 && $1<2000 {print $1*197.327,$3}'  $file17 >> temp_nimj2_d
-awk '$1>0 && $1<2000 {print $1*197.327,$2+$3}'  $file17 >> temp_nimj2_tot
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10}'  $file17 >> temp_nimj2_s
+awk '$1>0 && $1<2000 {print $1*197.327,$3*10}'  $file17 >> temp_nimj2_d
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10+$3*10}'  $file17 >> temp_nimj2_tot
 
 # Nijmegen3 Potential 
 file18="/home/ellie/physics/b1/b1_rates/from_patricia/models/s_d_state_calculations/dwav_nimj3_term.data"
 #  1 = momentum (fm-1)
 #  2 = 3s1 (fm**3/2)
 #  3 = 2d1 (fm**3/2)
-awk '$1>0 && $1<2000 {print $1*197.327,$2}'  $file18 >> temp_nimj3_s
-awk '$1>0 && $1<2000 {print $1*197.327,$3}'  $file18 >> temp_nimj3_d
-awk '$1>0 && $1<2000 {print $1*197.327,$2+$3}'  $file18 >> temp_nimj3_tot
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10}'  $file18 >> temp_nimj3_s
+awk '$1>0 && $1<2000 {print $1*197.327,$3*10}'  $file18 >> temp_nimj3_d
+awk '$1>0 && $1<2000 {print $1*197.327,$2*10+$3*10}'  $file18 >> temp_nimj3_tot
 
 
 

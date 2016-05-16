@@ -1,0 +1,230 @@
+                 **********************************
+                 * DEUTERON ELECTRODISINTEGRATION *
+                 **********************************
+
+  POTENTIAL = ARGONNE V18         
+
+  E(NP)=       6.5378E+02 [MEV],   Q(CM)**2= 7.4109E+01 [1/FM**2]
+  OMEGA(LAB)=  7.8042E+00 [1/FM],  Q(LAB)=    1.1620E+01 [1/FM]
+  QMUE**2=     7.4109E+01 [1/FM**2]
+
+  ELECTRON ENERGIES  E= 8.8000E+03 [MEV/C],  E'= 7.2600E+03 [MEV/C]
+  SCATTERING ANGLE  THETA= 1.220E+01 [DEG]
+  VIRTUAL PHOTON DENSITY MATRIX IN LAB SYSTEM
+       00          11          01         1-1         01S         11S
+     1.781E+03   9.275E+02   1.272E+03  -8.904E+02   1.816E+02   2.595E+02
+
+  NUCLEON FORM FACTOR: FRIEDRICH-WALCHER FIT
+  GEp*1.00      GMp*1.00      GEn*1.00      GMn*1.00
+  NUCLEON FORM FACTOR: SACHS - FORMULATION          
+  MEC FORM FACTOR: GEV
+
+
+            ***** NORMAL        (KNP= 1) *********
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  2.1488E-08
+  1  7.9016E-07  5.3579E-07  2.9460E-11
+  2  2.5372E-06  2.4532E-06  4.3297E-07
+  3  2.7472E-06  2.3362E-06  9.7286E-11
+  4  4.2432E-06  5.5928E-06  7.2403E-07
+  5  4.8643E-06  2.7785E-06  1.6029E-10
+  6  4.4500E-06  7.1611E-06  8.1084E-07
+
+  FORMFACTORS:  FL     = 3.3446E-04 [FM], FT     = 7.8408E-03 [FM]
+                FL20   = 1.1265E-05 [FM], FT20   = 3.7518E-04 [FM]
+                FLT1-1 =-9.5909E-07 [FM], FLT2-1 = 5.8488E-06 [FM], FTT2-2 =-1.8944E-04 [FM]
+                F'LT1-1=-8.1895E-04 [FM], F'LT2-1= 1.1470E-06 [FM], F'T10  =-6.4431E-03 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 4.4283E-05 [MUB/(SR*MEV)]
+                        DSDOL= 3.3524E-06 [MUB/(SR*MEV)]
+                        DSDOT= 4.0931E-05 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0       -0.0000E+00   4.6778E-02  -2.1255E-01   0.0000E+00
+
+
+            *********     PWBA (NR)          *********
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  8.0274E-08
+  1  1.7355E-06  1.2398E-06  5.4298E-11
+  2  2.6189E-06  3.4255E-06  4.7345E-07
+  3  4.1430E-06  2.3647E-06  1.3485E-10
+  4  4.2236E-06  6.3540E-06  7.6601E-07
+  5  5.2302E-06  2.7573E-06  1.6830E-10
+  6  4.4062E-06  7.1757E-06  8.2010E-07
+
+  FORMFACTORS:  FL     = 3.4243E-04 [FM], FT     = 8.1155E-03 [FM]
+                FL20   = 1.7045E-05 [FM], FT20   = 4.0384E-04 [FM]
+                FLT1-1 = 0.0000E+00 [FM], FLT2-1 =-1.4223E-06 [FM], FTT2-2 =-6.3053E-07 [FM]
+                F'LT1-1=-8.3351E-04 [FM], F'LT2-1= 0.0000E+00 [FM], F'T10  =-6.6805E-03 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 4.5797E-05 [MUB/(SR*MEV)]
+                        DSDOL= 3.4323E-06 [MUB/(SR*MEV)]
+                        DSDOT= 4.2365E-05 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0        0.0000E+00   4.9763E-02  -2.1309E-01   0.0000E+00
+
+
+            ***** NORMAL+MEC    (KNP= 3) *********
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  2.1488E-08
+  1  7.8960E-07  5.3503E-07  2.9460E-11
+  2  2.5384E-06  2.4553E-06  4.3297E-07
+  3  2.7474E-06  2.3375E-06  9.7286E-11
+  4  4.2436E-06  5.5943E-06  7.2403E-07
+  5  4.8644E-06  2.7794E-06  1.6029E-10
+  6  4.4500E-06  7.1619E-06  8.1084E-07
+
+  FORMFACTORS:  FL     = 3.3446E-04 [FM], FT     = 7.8412E-03 [FM]
+                FL20   = 1.1265E-05 [FM], FT20   = 3.7554E-04 [FM]
+                FLT1-1 =-9.5911E-07 [FM], FLT2-1 = 5.8497E-06 [FM], FTT2-2 =-1.8931E-04 [FM]
+                F'LT1-1=-8.1895E-04 [FM], F'LT2-1= 1.1470E-06 [FM], F'T10  =-6.4434E-03 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 4.4285E-05 [MUB/(SR*MEV)]
+                        DSDOL= 3.3524E-06 [MUB/(SR*MEV)]
+                        DSDOT= 4.0933E-05 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0       -0.0000E+00   4.6817E-02  -2.1255E-01   0.0000E+00
+
+
+            ***** NORMAL+MEC+IC (KNP= 4) *********
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  2.4746E-08
+  1  8.0296E-07  5.7426E-07  7.4828E-10
+  2  2.6621E-06  2.5800E-06  4.4422E-07
+  3  2.7600E-06  2.3750E-06  2.1850E-10
+  4  4.2779E-06  5.7147E-06  7.2560E-07
+  5  4.8706E-06  2.7758E-06  1.6022E-10
+  6  4.4687E-06  7.2315E-06  8.1084E-07
+
+  FORMFACTORS:  FL     = 3.3155E-04 [FM], FT     = 7.7834E-03 [FM]
+                FL20   = 1.1199E-05 [FM], FT20   = 3.7939E-04 [FM]
+                FLT1-1 =-9.3988E-07 [FM], FLT2-1 = 6.8338E-06 [FM], FTT2-2 =-1.8835E-04 [FM]
+                F'LT1-1=-8.1925E-04 [FM], F'LT2-1= 1.1344E-06 [FM], F'T10  =-6.3971E-03 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 4.3955E-05 [MUB/(SR*MEV)]
+                        DSDOL= 3.3232E-06 [MUB/(SR*MEV)]
+                        DSDOT= 4.0631E-05 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0       -0.0000E+00   4.7612E-02  -2.1260E-01   0.0000E+00
+
+
+            ***** NORMAL+REL    (KNP= 5) *********
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  3.5746E-09
+  1  2.1672E-07  6.7742E-08  1.1530E-08
+  2  4.1629E-07  3.0698E-06  7.8736E-08
+  3  4.7641E-07  3.3422E-07  3.7500E-08
+  4  6.3204E-07  1.7004E-06  1.1059E-07
+  5  6.7295E-07  4.2344E-07  4.6061E-08
+  6  6.4604E-07  1.6640E-06  1.2641E-07
+
+  FORMFACTORS:  FL     = 7.1806E-05 [FM], FT     = 1.3072E-03 [FM]
+                FL20   = 4.5958E-06 [FM], FT20   =-1.5614E-05 [FM]
+                FLT1-1 =-1.1657E-05 [FM], FLT2-1 =-1.3877E-05 [FM], FTT2-2 =-1.0401E-04 [FM]
+                F'LT1-1=-1.3130E-04 [FM], F'LT2-1= 4.5753E-07 [FM], F'T10  =-9.7178E-04 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 7.5434E-06 [MUB/(SR*MEV)]
+                        DSDOL= 7.1974E-07 [MUB/(SR*MEV)]
+                        DSDOT= 6.8237E-06 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0       -0.0000E+00  -4.6989E-03  -1.8819E-01   0.0000E+00
+
+
+            *********     PWBA (RC)          *********
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  9.1241E-09
+  1  3.3417E-07  1.5180E-07  1.6835E-08
+  2  4.4274E-07  3.1107E-06  9.1465E-08
+  3  6.9346E-07  3.5162E-07  3.7678E-08
+  4  6.2996E-07  2.2691E-06  1.1969E-07
+  5  7.6756E-07  4.2370E-07  5.1042E-08
+  6  6.4179E-07  1.7343E-06  1.2977E-07
+
+  FORMFACTORS:  FL     = 7.4000E-05 [FM], FT     = 1.2189E-03 [FM]
+                FL20   = 6.7639E-06 [FM], FT20   = 6.4861E-05 [FM]
+                FLT1-1 = 0.0000E+00 [FM], FLT2-1 =-2.0675E-06 [FM], FTT2-2 = 1.9700E-06 [FM]
+                F'LT1-1=-1.3435E-04 [FM], F'LT2-1= 0.0000E+00 [FM], F'T10  =-1.0005E-03 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 7.1044E-06 [MUB/(SR*MEV)]
+                        DSDOL= 7.4173E-07 [MUB/(SR*MEV)]
+                        DSDOT= 6.3627E-06 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0        0.0000E+00   5.7202E-02  -2.0573E-01   0.0000E+00
+
+
+            ***** NORMAL+MEC+IC+REL (KNP= 6) *****
+
+
+  MULTIPOLE STRENGTHS [FM]
+
+  L  ELECTRIC    MAGNETIC    COULOMB
+  0  0.0000E+00  0.0000E+00  4.9440E-09
+  1  2.2815E-07  8.2832E-08  1.1608E-08
+  2  4.6794E-07  3.0186E-06  8.3057E-08
+  3  4.8188E-07  3.5041E-07  3.7569E-08
+  4  6.4552E-07  1.7600E-06  1.1115E-07
+  5  6.7503E-07  4.2252E-07  4.6076E-08
+  6  6.5314E-07  1.6826E-06  1.2640E-07
+
+  FORMFACTORS:  FL     = 7.1324E-05 [FM], FT     = 1.3031E-03 [FM]
+                FL20   = 4.9612E-06 [FM], FT20   =-1.3171E-05 [FM]
+                FLT1-1 =-1.1994E-05 [FM], FLT2-1 =-1.4866E-05 [FM], FTT2-2 =-1.0531E-04 [FM]
+                F'LT1-1=-1.3337E-04 [FM], F'LT2-1=-6.0952E-07 [FM], F'T10  =-9.7084E-04 [FM]
+
+  (E,E') CROSS SECTION: DSDO = 7.5175E-06 [MUB/(SR*MEV)]
+                        DSDOL= 7.1490E-07 [MUB/(SR*MEV)]
+                        DSDOT= 6.8026E-06 [MUB/(SR*MEV)]
+
+
+  ORIENTATION ANGLES                 INCLUSIVE ASYMMETRIES
+
+   THETAD   PHID          ALPHADV      ALPHADT      ALPHAEDV     ALPHAEDT
+      0.0    0.0       -0.0000E+00  -2.5312E-03  -1.8865E-01  -0.0000E+00

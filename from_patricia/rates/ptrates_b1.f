@@ -195,7 +195,8 @@ c      DATA xval1/    1.3, 100, 100, 100, 100/
 
 c      DATA xval1/    0.9, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
+c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
+      DATA prec1/    720.0,  168.0,  336.0,  720.0,  720.0/
 c      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       DATA qqval1/   99, 99, 99, 99, 3.82/   
@@ -212,13 +213,13 @@ c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
-c      DATA prec2/    168.0,  168.0,  168.0,  168.0,  168.0/
+c      DATA prec2/    576.0,  144.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
        DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
-c       DATA xval2/    1.3, 100, 100, 100, 100/
+c       DATA xval2/    0.32, 0.17, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
-c      DATA qqval2/    0.85, 99, 99, 99, 99/   
+c      DATA qqval2/    2.38, 1.80, 99, 99, 99/   
 
 c      DATA qqval2/    1.3, 99, 99, 99, 99/   
 
@@ -333,8 +334,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
 c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-c      Pzz_in    =  0.30    ! expected improvement on the target
-      Pzz_in    =  0.35    ! expected improvement on the target
+      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.35    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
       fsyst_xs  =  0.05     ! add a 5% from F1
@@ -388,6 +389,7 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in
             if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.10.0)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
@@ -1369,7 +1371,8 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
      &                     syst_Azz,syst_b1d,
-     &                     Aout,b1out,
+     &                     0.0,0.0,
+c     &                     Aout,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                     f_dil,sigma_unpol_li
