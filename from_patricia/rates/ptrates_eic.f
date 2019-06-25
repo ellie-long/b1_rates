@@ -262,11 +262,11 @@ c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sec
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
-c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -439,6 +439,11 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
 c         prec2(1) = 300
 c         xval2(1) = 0.953
 c         qqval2(1) = 1.788
+
+
+         prec2(1) = 300
+         xval2(1) = 0.4
+         qqval2(1) = 1.788
 
 c         prec2(1) = 120
 c         xval2(1) = 0.2
