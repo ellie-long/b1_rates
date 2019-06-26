@@ -1512,6 +1512,7 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      &                    good_x_min,good_x_max,
      &                    goodRate_li,cent_nu,cent_w2nn,cent_wnn
 
+Spec	xx	qq	   w	ep_in	th_in	  d_rate	  Azz		dAzz		b1d		   db1d			time	syst_Azz   syst_b1d		thq		costhq	sigma_unpol	w2		q2		x		nu		pac_time	e_in	xdx	 allrate	he_rate		n_rate	   fdil		x_spec		x_min	x_max	li_rate		central_nu	central_W2nn	central_Wnn
             do ib=1,binMax
                F1d = 0
                F2d = 0

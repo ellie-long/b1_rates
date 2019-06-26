@@ -21,6 +21,22 @@
 # 4/2/2013
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+# JLEIC Kinematics Below
+# vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+eicFile="/home/ellie/b1_rates/from_patricia/rates/output/eic/Azz_10x60new.out"
+eic_csmin=`awk 'BEGIN {min = 100000000} {if ($1>0 && $4<min) min=$4} END {print min}' $eicFile`
+eic_csmax=`awk 'BEGIN {max = 0} {if ($1>0 && $4>max) max=$4} END {print max}' $eicFile`
+#eic_csmax="0.436E-04"
+#eic_csmax="0.537E-04"
+#eic_csmax="0.350E-03"
+#eic_csmin="1E-30"
+eic_scale=`awk 'BEGIN{scale = 19/('$eic_csmax'-'$eic_csmin')} END {print scale}' $eicFile`
+
+awk '$1>0 {print $1,$2,$4*'$eic_scale'+80}' $eicFile > temp_eic_q21
+#awk '$1==2 {print $1,0,0,$7}' $eicFile > temp_eic_azz_stat
+awk '$1>0 {print $1,0,0,$7}' $eicFile > temp_eic_azz_stat
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
 awk '$1!="#" {print $1,$3,$4}' $file0 > temp_Azz_stat
 awk '$1!="#" {print $1,$3,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
@@ -752,128 +768,130 @@ awk '$12!="NaN" {print $1,$12}' $file10 > temp_hms_fdil
 
 #gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 xmgrace \
-		-settype xy			-block temp_shms_fdil				-graph 0 -bxy 1:2 \
-		-settype xy			-block temp_hms_fdil				-graph 0 -bxy 1:2 \
-		-settype bar		-block temp_1kHz					-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_10kHz					-graph 1 -bxy 1:2 \
-		-settype xy			-block temp_3kHz					-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_shms_totrates			-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_shms_rates				-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_hms_totrates			-graph 1 -bxy 1:2 \
-		-settype bar		-block temp_hms_rates				-graph 1 -bxy 1:2 \
-		-settype xy			-block temp_1day	 				-graph 2 -bxy 1:2 \
-		-settype xy			-block temp_1week	 				-graph 2 -bxy 1:2 \
-		-settype xy			-block temp_1month	 				-graph 2 -bxy 1:2 \
-		-settype xy			-block temp_1year					-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_hms_pactm				-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_hms_time				-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_shms_pactm 				-graph 2 -bxy 1:2 \
-		-settype bar		-block temp_shms_time 				-graph 2 -bxy 1:2 \
-		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
+		-settype xy		-block temp_shms_fdil			-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_hms_fdil			-graph 0 -bxy 1:2 \
+		-settype bar		-block temp_1kHz			-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_10kHz			-graph 1 -bxy 1:2 \
+		-settype xy		-block temp_3kHz			-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_shms_totrates		-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_shms_rates			-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_hms_totrates		-graph 1 -bxy 1:2 \
+		-settype bar		-block temp_hms_rates			-graph 1 -bxy 1:2 \
+		-settype xy		-block temp_1day	 		-graph 2 -bxy 1:2 \
+		-settype xy		-block temp_1week	 		-graph 2 -bxy 1:2 \
+		-settype xy		-block temp_1month	 		-graph 2 -bxy 1:2 \
+		-settype xy		-block temp_1year			-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_hms_pactm			-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_hms_time			-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_shms_pactm 			-graph 2 -bxy 1:2 \
+		-settype bar		-block temp_shms_time 			-graph 2 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_av18	 	-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_av18		-graph 3 -bxy 1:2 \
 		-settype xy   		-block temp_model_miller_Azz		-graph 3 -bxy 1:2 \
 		-settype xy   		-block temp_model_frankfurt_Azz		-graph 3 -bxy 1:2 \
 		-settype xydy 		-block temp_Azz_stat         		-graph 3 -bxy 1:2:3 \
 		-settype xydy 		-block temp_Azz_tot          		-graph 3 -bxy 1:2:3 \
-		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
-		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
-        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
-		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
-		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \
-		-settype xy			-block temp_thmin_shms				-graph 4 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_atheta				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_atheta				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta1				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta2				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta3				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta4				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta5				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta1				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta2				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta3				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta4				-graph 4 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta5				-graph 4 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_ctheta				-graph 4 -bxy 1:2 \
-		-settype xy			-block temp_shms_ctheta				-graph 4 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_aq2					-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_aq2				-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_q21					-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_q22					-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_q23					-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_q24					-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_q25					-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_q21				-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_q22				-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_q23				-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_q24				-graph 5 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_q25				-graph 5 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_cq2					-graph 5 -bxy 1:2 \
-		-settype xy			-block temp_shms_cq2				-graph 5 -bxy 1:2 \
-		-settype xy			-block temp_hms_e0					-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_epmax_hms				-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_epmax_shms				-graph 6 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_aep					-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_aep				-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_ep1					-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_ep2					-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_ep3					-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_ep4					-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_ep5					-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_ep1				-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_ep2				-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_ep3				-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_ep4				-graph 6 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_ep5				-graph 6 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_cep					-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_shms_cep				-graph 6 -bxy 1:2 \
-		-settype xy			-block temp_wqe					-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_wmin					-graph 7 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_aw				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_aw				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w1				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w2				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w3				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w4				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_w5				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w1				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w2				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w3				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w4				-graph 7 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_w5				-graph 7 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_cw				-graph 7 -bxy 1:2 \
-		-settype xy			-block temp_shms_cw				-graph 7 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_theta_aq			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta_aq			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta_q1			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta_q2			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta_q3			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta_q4			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_theta_q5			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta_q1			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta_q2			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta_q3			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta_q4			-graph 8 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_theta_q5			-graph 8 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_theta_cq			-graph 8 -bxy 1:2 \
-		-settype xy			-block temp_shms_theta_cq			-graph 8 -bxy 1:2 \
-		-settype xycolor	-block temp_hms_nu_a				-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_nu_a				-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_nu1					-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_nu2					-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_nu3					-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_nu4					-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_hms_nu5					-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_nu1				-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_nu2				-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_nu3				-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_nu4				-graph 9 -bxy 1:2:3 \
-		-settype xycolor	-block temp_shms_nu5				-graph 9 -bxy 1:2:3 \
-		-settype xy			-block temp_hms_nu_c				-graph 9 -bxy 1:2 \
-		-settype xy			-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+		-settype xydxdy		-block temp_hms_azz_tot			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_hms_azz_stat		-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_tot		-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_stat		-graph 3 -bxy 1:2:3:4 \
+	        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_cdbonn	 	-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_cdbonn		-graph 3 -bxy 1:2 \
+		-settype xydxdy		-block temp_eic_azz_stat		-graph 3 -bxy 1:2:3:4 \
+		-settype xy		-block temp_thmin_hms			-graph 4 -bxy 1:2 \
+		-settype xy		-block temp_thmin_shms			-graph 4 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_atheta			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_atheta			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta1			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta2			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta3			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta4			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta5			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta1			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta2			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta3			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta4			-graph 4 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta5			-graph 4 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_ctheta			-graph 4 -bxy 1:2 \
+		-settype xy		-block temp_shms_ctheta			-graph 4 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_aq2			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_aq2			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_q21			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_q22			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_q23			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_q24			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_q25			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_q21			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_q22			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_q23			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_q24			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_q25			-graph 5 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_cq2			-graph 5 -bxy 1:2 \
+		-settype xy		-block temp_shms_cq2			-graph 5 -bxy 1:2 \
+		-settype xycolor	-block temp_eic_q21			-graph 5 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_e0			-graph 6 -bxy 1:2 \
+		-settype xy		-block temp_epmax_hms			-graph 6 -bxy 1:2 \
+		-settype xy		-block temp_epmax_shms			-graph 6 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_aep			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_aep			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_ep1			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_ep2			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_ep3			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_ep4			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_ep5			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_ep1			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_ep2			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_ep3			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_ep4			-graph 6 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_ep5			-graph 6 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_cep			-graph 6 -bxy 1:2 \
+		-settype xy		-block temp_shms_cep			-graph 6 -bxy 1:2 \
+		-settype xy		-block temp_wqe				-graph 7 -bxy 1:2 \
+		-settype xy		-block temp_wmin			-graph 7 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_aw			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_aw			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w1			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w2			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w3			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w4			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_w5			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w1			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w2			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w3			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w4			-graph 7 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_w5			-graph 7 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_cw			-graph 7 -bxy 1:2 \
+		-settype xy		-block temp_shms_cw			-graph 7 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_theta_aq		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta_aq		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta_q1		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta_q2		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta_q3		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta_q4		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_theta_q5		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta_q1		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta_q2		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta_q3		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta_q4		-graph 8 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_theta_q5		-graph 8 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_theta_cq		-graph 8 -bxy 1:2 \
+		-settype xy		-block temp_shms_theta_cq		-graph 8 -bxy 1:2 \
+		-settype xycolor	-block temp_hms_nu_a			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu_a			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu1			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu2			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu3			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu4			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_hms_nu5			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu1			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu2			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu3			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu4			-graph 9 -bxy 1:2:3 \
+		-settype xycolor	-block temp_shms_nu5			-graph 9 -bxy 1:2:3 \
+		-settype xy		-block temp_hms_nu_c			-graph 9 -bxy 1:2 \
+		-settype xy		-block temp_shms_nu_c			-graph 9 -bxy 1:2 \
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_eic.par -noask 
 
 #
 #display Azz_rates_hms_shms.png

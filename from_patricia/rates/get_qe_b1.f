@@ -12,7 +12,22 @@
      &              STATUS='UNKNOWN')
 
 
-      do ix=1,500
+c     Note: The block below roughly 
+c     estimates Azz from HERMES, which
+c     is the only estimate we have for
+c     the DIS b1 region
+c     vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c                  x, Aout
+      write(8,1001)0.0,-0.01
+      write(8,1001)0.05,-0.01
+      write(8,1001)0.06,-0.013
+      write(8,1001)0.21,0.0
+      write(8,1001)0.455,0.015
+      write(8,1001)0.6,0.02
+c     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+c      do ix=1,500
+      do ix=61,500
            x = dble(ix)/100
            xplat=1.64203-0.177032*log(QQ)
            if (x.lt.0.24) then

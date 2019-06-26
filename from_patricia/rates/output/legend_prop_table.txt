@@ -1,6 +1,6 @@
 
-1		2	3	   4	5		6		  7			  8			9			10		   11			12		13		   14			15		16		17			18		19		20		21		22			23		24	 25			26			27		   28		29			30		31		32
-Spec	xx	qq	   w	ep_in	th_in	  d_rate	  Azz		dAzz		b1d		   db1d			time	syst_Azz   syst_b1d		thq		costhq	sigma_unpol	w2		q2		x		nu		pac_time	e_in	xdx	 allrate	he_rate		n_rate	   fdil		x_spec		x_min	x_max	li_rate
+1	2	3	   4	5	6	 7		  8		9		10		   11			12	13	   14			15		16	17		18	19	20	21	22		23	24	 25		26		27	   28		29		30	31	32		33		34		35
+Spec	xx	qq	   w	ep_in	th_in	  d_rate	  Azz		dAzz		b1d		   db1d			time	syst_Azz   syst_b1d		thq		costhq	sigma_unpol	w2	q2	x	nu	pac_time	e_in	xdx	 allrate	he_rate		n_rate	   fdil		x_spec		x_min	x_max	li_rate		central_nu	central_W2nn	central_Wnn
 
 
 
