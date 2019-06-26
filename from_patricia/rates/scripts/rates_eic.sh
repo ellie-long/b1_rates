@@ -149,7 +149,8 @@ awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 # $12 = Time (Hours)
 # $13 = Azz Systematic Uncertainty
 # $14 = b1d Systematic Uncertainty
-file4="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/prop_table.out"
+#file4="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/prop_table.out"
+file4="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/azz_b1_outputs/prop_table.out"
 #awk '$1==1 && $2!="NaN" {print $2,0,0,$11}' $file4 > temp_hms_stat
 #echo "1	100	1	1" > temp_hms_stat
 #awk '$1==2 {print $2,0,$24,$11}' $file4 > temp_shms_stat
@@ -342,7 +343,8 @@ awk '$1==4 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_solid_azz_tot
 awk '$1==5 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_bb_azz_tot
 awk '$1==6 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_sbs_azz_tot
 
-file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/xs-take1.out"
+#file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/xs-take1.out"
+file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/azz_b1_outputs/xs-take1.out"
 
 hms_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14<min) min=$14} END {print min}' $file6`
 hms_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14>max) max=$14} END {print max}' $file6`
@@ -501,12 +503,12 @@ awk '$1==4 && $2!="NaN" {print $29,$33}' $file4 > temp_solid_nu_c
 awk '$1==5 && $2!="NaN" {print $29,$33}' $file4 > temp_bb_nu_c
 awk '$1==6 && $2!="NaN" {print $29,$33}' $file4 > temp_sbs_nu_c
 #   vvv Full Spread vvv
-awk '$1==1 && $14>0 {print $10,$28}' $file6 > temp_hms_nu
-awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu1
-awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu2
-awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu3
-awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu4
-awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu5
+awk '$1==1 && $14>0 && $28>0  {print $10,$28}' $file6 > temp_hms_nu
+awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $28>0 {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu1
+awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu2
+awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu3
+awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu4
+awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$hms_scale'+20}' $file6 > temp_hms_nu5
 echo "0.0	0.0	0.0" >> temp_hms_nu_c
 echo "0.0	0.0	0.0" >> temp_hms_nu1
 echo "0.0	0.0	0.0" >> temp_hms_nu2
@@ -514,12 +516,12 @@ echo "0.0	0.0	0.0" >> temp_hms_nu3
 echo "0.0	0.0	0.0" >> temp_hms_nu4
 echo "0.0	0.0	0.0" >> temp_hms_nu5
 #awk '$1==1 {print 1000,1000}' $file6 > temp_hms_nu
-awk '$1==2 && $14>0 {print $10,$28}' $file6 > temp_shms_nu
-awk '$1==2 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu1
-awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu2
-awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu3
-awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu4
-awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu5
+awk '$1==2 && $14>0 && $28>0  {print $10,$28}' $file6 > temp_shms_nu
+awk '$1==2 && $2==1 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu1
+awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu2
+awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu3
+awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu4
+awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<1000 && $28>0  {print $10,$28,$14*'$shms_scale'+40}' $file6 > temp_shms_nu5
 echo "0.0	0.0	0.0" >> temp_shms_nu_c
 echo "0.0	0.0	0.0" >> temp_shms_nu1
 echo "0.0	0.0	0.0" >> temp_shms_nu2

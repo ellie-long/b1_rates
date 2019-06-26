@@ -2870,7 +2870,7 @@ with g4
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2:3"
 	
-	s2 hidden false
+    s2 hidden false
     s2 type xycolor
     s2 symbol 1
     s2 symbol size 0.250000
@@ -2984,7 +2984,7 @@ with g4
     s4 avalue append ""
     s4 avalue offset 0.000000 , 0.000000
     s4 comment "Cols 1:2:3"
-#    s4 legend  "Input for HMS"
+    s4 legend  "HMS"
 
     s5 hidden false
     s5 type xycolor
@@ -3183,7 +3183,7 @@ with g4
     s9 avalue append ""
     s9 avalue offset 0.000000 , 0.000000
     s9 comment "Cols 1:2:3"
-#    s9 legend  "Input for SHMS"
+    s9 legend  "SHMS"
 
 
     s10 hidden false
@@ -3342,7 +3342,8 @@ with g4
     s13 comment "Cols 1:2:3"
 #    s13 legend  "Input for SHMS"
 
-    s14 hidden false
+#    s14 hidden false
+    s14 hidden true
     s14 type xy
     s14 symbol 2
     s14 symbol size 0.50000
@@ -3380,7 +3381,8 @@ with g4
     s14 avalue offset 0.000000 , 0.000000
     s14 comment "Cols 1:2:3"
     s14 legend  "HMS Central Value"
-    s15 hidden false
+#    s15 hidden false
+    s15 hidden true
     s15 type xy
     s15 symbol 4
     s15 symbol size 0.50000
@@ -3426,7 +3428,7 @@ with g5
 #    world 0, 0, 2.0, 5.5
 #    world 0, 0, 2.200, 4.0
 #         x1,y1,x2,y2
-    world 0.0005, 0.5, 3, 4000
+    world 0.0005, 0.1, 3, 4000
     stack world 0, 0, 0, 0
     znorm 1
     view 1.10000, 0.7000, 1.49000, 0.98
@@ -3741,7 +3743,7 @@ with g5
     s2 avalue append ""
     s2 avalue offset 0.000000 , 0.000000
     s2 comment "Cols 1:2:3"
-#    s2 legend  "Input for HMS"
+    s2 legend  "HMS"
 
     s3 hidden false
     s3 type xycolor
@@ -3935,7 +3937,7 @@ with g5
     s7 avalue append ""
     s7 avalue offset 0.000000 , 0.000000
     s7 comment "Cols 1:2:3"
-#    s7 legend  "Input for SHMS"
+    s7 legend  "SHMS"
 
 
     s8 hidden false
@@ -4097,7 +4099,8 @@ with g5
 
 
 
-    s12 hidden false
+#    s12 hidden false
+    s12 hidden true
     s12 type xy
     s12 symbol 2
     s12 symbol size 0.50000
@@ -4135,7 +4138,9 @@ with g5
     s12 avalue offset 0.000000 , 0.000000
     s12 comment "Cols 1:2:3"
     s12 legend  "HMS Central Value"
-    s13 hidden false
+ 
+#    s13 hidden false
+    s13 hidden true
     s13 type xy
     s13 symbol 4
     s13 symbol size 0.50000
@@ -4671,7 +4676,7 @@ with g6
     s5 avalue append ""
     s5 avalue offset 0.000000 , 0.000000
     s5 comment "Cols 1:2:3"
-#    s5 legend  "Input for HMS"
+    s5 legend  "HMS"
     s6 hidden false
     s6 type xycolor
     s6 symbol 1
@@ -4862,7 +4867,7 @@ with g6
     s10 avalue append ""
     s10 avalue offset 0.000000 , 0.000000
     s10 comment "Cols 1:2:3"
-#    s10 legend  "Input for SHMS"
+    s10 legend  "SHMS"
 
 
 
@@ -5025,7 +5030,8 @@ with g6
 
 
 
-    s15 hidden false
+#    s15 hidden false
+    s15 hidden true
     s15 type xy
     s15 symbol 2
     s15 symbol size 0.50000
@@ -5065,7 +5071,8 @@ with g6
     s15 legend  "HMS Central Value"
 
 
-    s16 hidden false
+#    s16 hidden false
+    s16 hidden true
     s16 type xy
     s16 symbol 4
     s16 symbol size 0.50000
@@ -5518,7 +5525,7 @@ with g7
     s4 avalue append ""
     s4 avalue offset 0.000000 , 0.000000
     s4 comment "Cols 1:2:3"
-#    s4 legend  "Input for HMS"
+    s4 legend  "HMS"
     s5 hidden false
     s5 type xycolor
     s5 symbol 1
@@ -5712,7 +5719,7 @@ with g7
     s9 avalue append ""
     s9 avalue offset 0.000000 , 0.000000
     s9 comment "Cols 1:2:3"
-#    s9 legend  "Input for SHMS"
+    s9 legend  "SHMS"
 
 
 
@@ -5874,7 +5881,8 @@ with g7
 
 
 
-    s14 hidden false
+#    s14 hidden false
+    s14 hidden true
     s14 type xy
     s14 symbol 2
     s14 symbol size 0.50000
@@ -5912,7 +5920,8 @@ with g7
     s14 avalue offset 0.000000 , 0.000000
     s14 comment "Cols 1:2:3"
     s14 legend  "HMS Central Value"
-    s15 hidden false
+#    s15 hidden false
+    s15 hidden true
     s15 type xy
     s15 symbol 4
     s15 symbol size 0.50000
@@ -6267,7 +6276,7 @@ with g8
     s2 avalue append ""
     s2 avalue offset 0.000000 , 0.000000
     s2 comment "Cols 1:2:3"
-#    s2 legend  "Input for HMS"
+    s2 legend  "HMS"
     s3 hidden false
     s3 type xycolor
     s3 symbol 1
@@ -6462,7 +6471,7 @@ with g8
     s7 avalue append ""
     s7 avalue offset 0.000000 , 0.000000
     s7 comment "Cols 1:2:3"
-#    s7 legend  "Input for SHMS"
+    s7 legend  "SHMS"
 
 
 
@@ -6623,7 +6632,8 @@ with g8
 
 
 
-    s12 hidden false
+#    s12 hidden false
+    s12 hidden true
     s12 type xy
     s12 symbol 2
     s12 symbol size 0.50000
@@ -6661,7 +6671,8 @@ with g8
     s12 avalue offset 0.000000 , 0.000000
     s12 comment "Cols 1:2:3"
     s12 legend  "HMS Central Value"
-    s13 hidden false
+#    s13 hidden false
+    s13 hidden true
     s13 type xy
     s13 symbol 4
     s13 symbol size 0.50000
@@ -7013,7 +7024,7 @@ with g9
     s2 avalue append ""
     s2 avalue offset 0.000000 , 0.000000
     s2 comment "Cols 1:2:3"
-#    s2 legend  "Input for HMS"
+    s2 legend  "HMS"
     s3 hidden false
     s3 type xycolor
     s3 symbol 1
@@ -7208,7 +7219,7 @@ with g9
     s7 avalue append ""
     s7 avalue offset 0.000000 , 0.000000
     s7 comment "Cols 1:2:3"
-#    s7 legend  "Input for SHMS"
+    s7 legend  "SHMS"
 
 
 
@@ -7369,7 +7380,8 @@ with g9
 
 
 
-    s12 hidden false
+#    s12 hidden false
+    s12 hidden true
     s12 type xy
     s12 symbol 2
     s12 symbol size 0.50000
@@ -7407,7 +7419,8 @@ with g9
     s12 avalue offset 0.000000 , 0.000000
     s12 comment "Cols 1:2:3"
     s12 legend  "HMS Central Value"
-    s13 hidden false
+#    s13 hidden false
+    s13 hidden true
     s13 type xy
     s13 symbol 4
     s13 symbol size 0.50000

@@ -263,10 +263,10 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -448,9 +448,9 @@ c         qqval2(1) = 2
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
-c         prec2(1) = 300
-c         xval2(1) = 1.8
-c         qqval2(1) = 1.5
+         prec2(1) = 300
+         xval2(1) = 1.8
+         qqval2(1) = 1.5
        ! vvv 8.5 deg constraint vvv
 c         prec2(1) = 300
 c         xval2(1) = 1.8
@@ -467,9 +467,9 @@ c         qqval2(1) = 2.181
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-c         prec2(1) = 96
-c         xval2(1) = 1.5
-c         qqval2(1) = 0.71
+         prec2(1) = 96
+         xval2(1) = 1.5
+         qqval2(1) = 0.71
         ! vvv 8.5 deg constraint vvv
 c         prec2(1) = 300
 c         xval2(1) = 1.5
@@ -490,9 +490,9 @@ c         qqval2(1) = 1.8
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-c         prec2(1) = 12
-c         xval2(1) = 1.8
-c         qqval2(1) = 0.17
+         prec2(1) = 12
+         xval2(1) = 1.8
+         qqval2(1) = 0.17
 
        ! vvv HMS kinematics for quick dilution/cs calculation vvv
 c         prec2(1)  = 12
