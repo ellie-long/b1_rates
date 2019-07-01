@@ -1819,7 +1819,7 @@ with g3
     altyaxis  off
     legend on
     legend loctype view
-    legend 0.63, 0.85
+    legend 0.63, 0.985
     legend box color 1
     legend box pattern 1
     legend box linewidth 1.0
@@ -1845,8 +1845,8 @@ with g3
 
 
 
-    s0 hidden false
-#    s0 hidden true
+#    s0 hidden false
+    s0 hidden true
     s0 type xy
     s0 symbol 0
     s0 symbol size 0.50000
@@ -1896,8 +1896,8 @@ with g3
     s0 comment "Cols 1:2:3"
     s0 legend "Virtual Nucleon (AV18)"
 
-    s1 hidden false
-#    s1 hidden true
+#    s1 hidden false
+    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -2171,7 +2171,7 @@ with g3
     s6 line type 0
     s6 line linestyle 1
     s6 line linewidth 1.0
-    s6 line color 11
+    s6 line color 2
     s6 line pattern 1
     s6 baseline type 0
     s6 baseline off
@@ -2203,7 +2203,7 @@ with g3
     s6 errorbar riser clip off
     s6 errorbar riser clip length 0.100000
     s6 comment "Cols 1:2:3"
-#    s6 legend  "Projected HMS"
+#    s6 legend  "Projected JLab12 Azz"
     s7 hidden false
     s7 type xydxdy
     s7 symbol 2
@@ -2220,7 +2220,7 @@ with g3
     s7 line type 0
     s7 line linestyle 1
     s7 line linewidth 1.0
-    s7 line color 11
+    s7 line color 2
     s7 line pattern 1
     s7 baseline type 0
     s7 baseline off
@@ -2252,10 +2252,10 @@ with g3
     s7 errorbar riser clip off
     s7 errorbar riser clip length 0.100000
     s7 comment "Cols 1:2:3"
-    s7 legend  ""
+    s7 legend  "Projected JLab12 Azz"
     s8 hidden false
-    s8 hidden true
-#    s8 type xydxdy
+#    s8 hidden true
+    s8 type xydxdy
 #    s8 symbol 4
     s8 symbol 3
     s8 symbol size 0.50000
@@ -2280,7 +2280,7 @@ with g3
     s8 dropline off
     s8 fill type 0
     s8 fill rule 0
-    s8 fill color 1
+    s8 fill color 3
     s8 fill pattern 1
     s8 avalue off
     s8 avalue type 2
@@ -2296,7 +2296,7 @@ with g3
     s8 errorbar on
     s8 errorbar place both
 #    s8 errorbar color 3
-    s8 errorbar color 4
+    s8 errorbar color 3
     s8 errorbar pattern 1
     s8 errorbar size 0.0000
 #    s8 errorbar size 0.46000
@@ -2307,7 +2307,7 @@ with g3
     s8 errorbar riser clip off
     s8 errorbar riser clip length 0.100000
     s8 comment "Cols 1:2:3"
-#    s8 legend  "Projected"
+#    s8 legend  "Projected JLab12 b1"
     s9 hidden false
     s9 type xydxdy
 #    s9 symbol 4
@@ -2360,7 +2360,7 @@ with g3
     s9 errorbar riser clip off
     s9 errorbar riser clip length 0.100000
     s9 comment "Cols 1:2:3"
-    s9 legend  "Projected JLab"
+    s9 legend  "Projected JLab12 b1"
 
     s10 hidden false
 #    s10 hidden true
@@ -3420,6 +3420,49 @@ with g4
     s15 avalue offset 0.000000 , 0.000000
     s15 comment "Cols 1:2:3"
     s15 legend  "SHMS Central Value"
+
+    s16 hidden false
+    s16 type xycolor
+    s16 symbol 2
+    s16 symbol size 1
+    s16 symbol color 4
+    s16 symbol pattern 1
+    s16 symbol fill color 4
+    s16 symbol fill pattern 1
+    s16 symbol linewidth 1.0
+    s16 symbol linestyle 0
+    s16 symbol char 65
+    s16 symbol char font 0
+    s16 symbol skip 0
+    s16 line type 0
+    s16 line linestyle 1
+    s16 line linewidth 1.0
+    s16 line color 11
+    s16 line pattern 1
+    s16 baseline type 0
+    s16 baseline off
+    s16 dropline off
+    s16 fill type 0
+    s16 fill rule 0
+    s16 fill color 1
+    s16 fill pattern 1
+    s16 avalue off
+    s16 avalue type 2
+    s16 avalue char size 0.500000
+    s16 avalue font 0
+    s16 avalue color 1
+    s16 avalue rot 0
+    s16 avalue format general
+    s16 avalue prec 3
+    s16 avalue prepend ""
+    s16 avalue append ""
+    s16 avalue offset 0.000000 , 0.000000
+    s16 comment "Cols 1:2:3"
+    s16 legend  "JLEIC Ee=10 GeV, Ep=60 GeV"
+
+
+
+
 with g5
 #    world 0, 0, 1.2, 15
 #    world 0, 0, 0.7, 5.5
@@ -4178,6 +4221,7 @@ with g5
     s13 avalue offset 0.000000 , 0.000000
     s13 comment "Cols 1:2:3"
     s13 legend  "SHMS Central Value"
+
     s14 hidden false
     s14 type xycolor
     s14 symbol 2
@@ -5110,6 +5154,49 @@ with g6
     s16 avalue offset 0.000000 , 0.000000
     s16 comment "Cols 1:2:3"
     s16 legend  "SHMS Central Value"
+
+
+    s17 hidden false
+    s17 type xycolor
+    s17 symbol 2
+    s17 symbol size 1
+    s17 symbol color 4
+    s17 symbol pattern 1
+    s17 symbol fill color 4
+    s17 symbol fill pattern 1
+    s17 symbol linewidth 1.0
+    s17 symbol linestyle 0
+    s17 symbol char 65
+    s17 symbol char font 0
+    s17 symbol skip 0
+    s17 line type 0
+    s17 line linestyle 1
+    s17 line linewidth 1.0
+    s17 line color 11
+    s17 line pattern 1
+    s17 baseline type 0
+    s17 baseline off
+    s17 dropline off
+    s17 fill type 0
+    s17 fill rule 0
+    s17 fill color 1
+    s17 fill pattern 1
+    s17 avalue off
+    s17 avalue type 2
+    s17 avalue char size 0.500000
+    s17 avalue font 0
+    s17 avalue color 1
+    s17 avalue rot 0
+    s17 avalue format general
+    s17 avalue prec 3
+    s17 avalue prepend ""
+    s17 avalue append ""
+    s17 avalue offset 0.000000 , 0.000000
+    s17 comment "Cols 1:2:3"
+    s17 legend  "JLEIC Ee=10 GeV, Ep=60 GeV"
+
+
+
 with g7
     world 0, 0, 2.300, 3.0
 #    world 0, 1.5, 2.200, 3.5
@@ -5959,6 +6046,49 @@ with g7
     s15 avalue offset 0.000000 , 0.000000
     s15 comment "Cols 1:2:3"
     s15 legend  "SHMS Central Value"
+
+
+    s16 hidden false
+    s16 type xycolor
+    s16 symbol 2
+    s16 symbol size 1
+    s16 symbol color 4
+    s16 symbol pattern 1
+    s16 symbol fill color 4
+    s16 symbol fill pattern 1
+    s16 symbol linewidth 1.0
+    s16 symbol linestyle 0
+    s16 symbol char 65
+    s16 symbol char font 0
+    s16 symbol skip 0
+    s16 line type 0
+    s16 line linestyle 1
+    s16 line linewidth 1.0
+    s16 line color 11
+    s16 line pattern 1
+    s16 baseline type 0
+    s16 baseline off
+    s16 dropline off
+    s16 fill type 0
+    s16 fill rule 0
+    s16 fill color 1
+    s16 fill pattern 1
+    s16 avalue off
+    s16 avalue type 2
+    s16 avalue char size 0.500000
+    s16 avalue font 0
+    s16 avalue color 1
+    s16 avalue rot 0
+    s16 avalue format general
+    s16 avalue prec 3
+    s16 avalue prepend ""
+    s16 avalue append ""
+    s16 avalue offset 0.000000 , 0.000000
+    s16 comment "Cols 1:2:3"
+    s16 legend  "JLEIC Ee=10 GeV, Ep=60 GeV"
+
+
+
 with g8
 #    world 0, 0, 1.2, 90
 #    world 0, 0, 0.7, 50
@@ -6710,6 +6840,50 @@ with g8
     s13 avalue offset 0.000000 , 0.000000
     s13 comment "Cols 1:2:3"
     s13 legend  "SHMS Central Value"
+
+
+    s14 hidden false
+    s14 type xycolor
+    s14 symbol 2
+    s14 symbol size 1
+    s14 symbol color 4
+    s14 symbol pattern 1
+    s14 symbol fill color 4
+    s14 symbol fill pattern 1
+    s14 symbol linewidth 1.0
+    s14 symbol linestyle 0
+    s14 symbol char 65
+    s14 symbol char font 0
+    s14 symbol skip 0
+    s14 line type 0
+    s14 line linestyle 1
+    s14 line linewidth 1.0
+    s14 line color 11
+    s14 line pattern 1
+    s14 baseline type 0
+    s14 baseline off
+    s14 dropline off
+    s14 fill type 0
+    s14 fill rule 0
+    s14 fill color 1
+    s14 fill pattern 1
+    s14 avalue off
+    s14 avalue type 2
+    s14 avalue char size 0.500000
+    s14 avalue font 0
+    s14 avalue color 1
+    s14 avalue rot 0
+    s14 avalue format general
+    s14 avalue prec 3
+    s14 avalue prepend ""
+    s14 avalue append ""
+    s14 avalue offset 0.000000 , 0.000000
+    s14 comment "Cols 1:2:3"
+    s14 legend  "JLEIC Ee=10 GeV, Ep=60 GeV"
+
+
+
+
 with g9
 #    world 0, 0, 2.3, 3
     world 0, 0, 2.2, 2.5
@@ -7458,4 +7632,45 @@ with g9
     s13 avalue offset 0.000000 , 0.000000
     s13 comment "Cols 1:2:3"
     s13 legend  "SHMS Central Value"
+
+
+    s14 hidden false
+    s14 type xycolor
+    s14 symbol 2
+    s14 symbol size 1
+    s14 symbol color 4
+    s14 symbol pattern 1
+    s14 symbol fill color 4
+    s14 symbol fill pattern 1
+    s14 symbol linewidth 1.0
+    s14 symbol linestyle 0
+    s14 symbol char 65
+    s14 symbol char font 0
+    s14 symbol skip 0
+    s14 line type 0
+    s14 line linestyle 1
+    s14 line linewidth 1.0
+    s14 line color 11
+    s14 line pattern 1
+    s14 baseline type 0
+    s14 baseline off
+    s14 dropline off
+    s14 fill type 0
+    s14 fill rule 0
+    s14 fill color 1
+    s14 fill pattern 1
+    s14 avalue off
+    s14 avalue type 2
+    s14 avalue char size 0.500000
+    s14 avalue font 0
+    s14 avalue color 1
+    s14 avalue rot 0
+    s14 avalue format general
+    s14 avalue prec 3
+    s14 avalue prepend ""
+    s14 avalue append ""
+    s14 avalue offset 0.000000 , 0.000000
+    s14 comment "Cols 1:2:3"
+    s14 legend  "JLEIC Ee=10 GeV, Ep=60 GeV"
+
 

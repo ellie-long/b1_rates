@@ -263,10 +263,10 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -355,9 +355,9 @@ c      endif
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-         prec1(1)  = 96
-         xval1(1)  = 1.5
-         qqval1(1) = 1.8
+c         prec1(1)  = 96
+c         xval1(1)  = 1.5
+c         qqval1(1) = 1.8
        ! vvv 10 deg constraint vvv
 c         prec1(1) = 300
 c         xval1(1) = 1.5
@@ -383,9 +383,9 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
  
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
-         prec1(1) = 300
-         xval1(1) = 1.0
-         qqval1(1) = 2.89
+c         prec1(1) = 300
+c         xval1(1) = 1.0
+c         qqval1(1) = 2.89
       ! vvv Using HMS as proton spectrometer vvv
 c         prec1(1) = 300
 c         xval1(1) = 1.8
@@ -398,9 +398,9 @@ c         qqval1(1) = 22
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-        prec1(1)  = 12
-        xval1(1)  = 1.8
-        qqval1(1) = 0.31 
+c        prec1(1)  = 12
+c        xval1(1)  = 1.8
+c        qqval1(1) = 0.31 
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

@@ -23,7 +23,11 @@
 
 # JLEIC Kinematics Below
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-eicFile="/home/ellie/b1_rates/from_patricia/rates/output/eic/Azz_10x60new.out"
+#eicFile="/home/ellie/b1_rates/from_patricia/rates/output/eic/Azz_10x60new.out"
+#eicFile="/home/ellie/physics/b1/eic/eic_sim/pass1/Azz_10x60new.out" # Usual EIC Kinematics
+#eicFile="/home/ellie/physics/b1/eic/eic_sim/pass2/Azz_3x38.out"     # Minimum beam energies
+eicFile="/home/ellie/physics/b1/eic/eic_sim/pass2/Azz_10x60.out"    # No y cut
+#eicFile="/home/ellie/b1_rates/from_patricia/rates/output/eic/Azz_10x60new.out"
 eic_csmin=`awk 'BEGIN {min = 100000000} {if ($1>0 && $4<min) min=$4} END {print min}' $eicFile`
 eic_csmax=`awk 'BEGIN {max = 0} {if ($1>0 && $4>max) max=$4} END {print max}' $eicFile`
 #eic_csmax="0.436E-04"
@@ -32,9 +36,42 @@ eic_csmax=`awk 'BEGIN {max = 0} {if ($1>0 && $4>max) max=$4} END {print max}' $e
 #eic_csmin="1E-30"
 eic_scale=`awk 'BEGIN{scale = 19/('$eic_csmax'-'$eic_csmin')} END {print scale}' $eicFile`
 
-awk '$1>0 {print $1,$2,$4*'$eic_scale'+80}' $eicFile > temp_eic_q21
-#awk '$1==2 {print $1,0,0,$7}' $eicFile > temp_eic_azz_stat
+eicQ2="0"
+#eicQ2="1.333521"
+#eicQ2="2.371374"
+#eicQ2="4.216965"
+#eicQ2="7.498942"
+#eicQ2="13.335214"
+#eicQ2="23.713737"
+#eicQ2="42.16965"
+#eicQ2="74.989421"
+#eicQ2="133.352143"
+#eicQ2="237.137371"
+#eicQ2="421.696503"
+#eicQ2="749.894209"
+#eicQ2="1333.521432"
+
+# No EIC Q2 Cut
 awk '$1>0 {print $1,0,0,$7}' $eicFile > temp_eic_azz_stat
+awk '$1>0 {print $1,$13,$4*'$eic_scale'+80}' $eicFile > temp_eic_theta
+awk '$1>0 {print $1,$2,$4*'$eic_scale'+80}' $eicFile > temp_eic_q2
+awk '$1>0 {print $1,$11,$4*'$eic_scale'+80}' $eicFile > temp_eic_ep
+awk '$1>0 {print $1,$9,$4*'$eic_scale'+80}' $eicFile > temp_eic_w
+awk '$1>0 {print $1,$14,$4*'$eic_scale'+80}' $eicFile > temp_eic_theta_q
+awk '$1>0 {print $1,$8,$4*'$eic_scale'+80}' $eicFile > temp_eic_nu
+
+# With EIC Q2 Cut
+#awk '$2=='$eicQ2' {print $1,0,0,$7}' $eicFile > temp_eic_azz_stat
+#awk '$2=='$eicQ2' {print $1,$13,$4*'$eic_scale'+80}' $eicFile > temp_eic_theta
+#awk '$2=='$eicQ2' {print $1,$2,$4*'$eic_scale'+80}' $eicFile > temp_eic_q2
+#awk '$2=='$eicQ2' {print $1,$11,$4*'$eic_scale'+80}' $eicFile > temp_eic_ep
+#awk '$2=='$eicQ2' {print $1,$9,$4*'$eic_scale'+80}' $eicFile > temp_eic_w
+#awk '$2=='$eicQ2' {print $1,$14,$4*'$eic_scale'+80}' $eicFile > temp_eic_theta_q
+#awk '$2=='$eicQ2' {print $1,$8,$4*'$eic_scale'+80}' $eicFile > temp_eic_nu
+
+
+
+
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
@@ -286,28 +323,47 @@ echo "10 12.2" >> temp_thmin_hms
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # vvvv WORKING ON NEW STUFF HERE vvvvvvvvvvvvvvvvvvvvvvvvvv<<<<<<<<<<<<<<<<<
-file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out"
+# Azz plots not hidden:
+# s5  temp_Azz_tot
+# s6  temp_hms_azz_tot
+# s7  temp_hms_azz_stat
+# s8  temp_shms_azz_tot
+# s9  temp_shms_azz_stat
+# s10 temp_shms_azz_sys_bar
+# s13 temp_eic_azz_stat
+
+
+
+#file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out"
+#file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/azz_b1_outputs/rebinned-x.out"
+file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/azz_b1_outputs/rebinned-x-best.out"
+file7b1="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/azz_b1_outputs/rebinned-x-b1.out"
+file7azz="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/azz_b1_outputs/rebinned-x-azz-best.out"
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_stat
-echo "100	0	0	0" > temp_hms_azz_stat
+#echo "100	0	0	0" > temp_hms_azz_stat
+awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7azz > temp_hms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$4}' $file7 > temp_shms_azz_stat
-awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7 > temp_shms_azz_stat
+#awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7 > temp_shms_azz_stat
+awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7b1 > temp_shms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_shms_azz_stat
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_tot
-echo "100	0	0	0" > temp_hms_azz_tot
+#echo "100	0	0	0" > temp_hms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$9}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_shms_azz_tot
-awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
+#awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
+awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7azz > temp_hms_azz_tot
+awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7b1 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 
 
 echo "100	0	0	0" > temp_hms_stat
 echo "100	0	0	0" > temp_hms_tot
-awk '$1==2 && $5!="NaN" {print $2,$12,$3,$5}' $file7 > temp_shms_stat
+awk '$1==2 && $5!="NaN" {print $2,$12,$3,$5}' $file7b1 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,$12,$3,$10}' $file7 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_tot
-awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
+awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7b1 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 
 #awk '$1==2 && $5!="NaN" {print $2-$3,-0.025,"\n"$2-$3,-0.025+$9"\n"$2+$3,-0.025+$9,"\n"$2+$3,-0.025}' $file7 > temp_shms_azz_sys_bar
@@ -766,8 +822,6 @@ awk '$12!="NaN" {print $1,$12}' $file9 > temp_shms_fdil
 awk '$12!="NaN" {print $1,$12}' $file10 > temp_hms_fdil
 
 
-
-
 #gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 xmgrace \
 		-settype xy		-block temp_shms_fdil			-graph 0 -bxy 1:2 \
@@ -817,6 +871,7 @@ xmgrace \
 		-settype xycolor	-block temp_shms_theta5			-graph 4 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_ctheta			-graph 4 -bxy 1:2 \
 		-settype xy		-block temp_shms_ctheta			-graph 4 -bxy 1:2 \
+		-settype xycolor	-block temp_eic_theta			-graph 4 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_aq2			-graph 5 -bxy 1:2:3 \
 		-settype xycolor	-block temp_shms_aq2			-graph 5 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_q21			-graph 5 -bxy 1:2:3 \
@@ -831,7 +886,7 @@ xmgrace \
 		-settype xycolor	-block temp_shms_q25			-graph 5 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_cq2			-graph 5 -bxy 1:2 \
 		-settype xy		-block temp_shms_cq2			-graph 5 -bxy 1:2 \
-		-settype xycolor	-block temp_eic_q21			-graph 5 -bxy 1:2:3 \
+		-settype xycolor	-block temp_eic_q2			-graph 5 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_e0			-graph 6 -bxy 1:2 \
 		-settype xy		-block temp_epmax_hms			-graph 6 -bxy 1:2 \
 		-settype xy		-block temp_epmax_shms			-graph 6 -bxy 1:2 \
@@ -849,6 +904,7 @@ xmgrace \
 		-settype xycolor	-block temp_shms_ep5			-graph 6 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_cep			-graph 6 -bxy 1:2 \
 		-settype xy		-block temp_shms_cep			-graph 6 -bxy 1:2 \
+		-settype xycolor	-block temp_eic_ep			-graph 6 -bxy 1:2:3 \
 		-settype xy		-block temp_wqe				-graph 7 -bxy 1:2 \
 		-settype xy		-block temp_wmin			-graph 7 -bxy 1:2 \
 		-settype xycolor	-block temp_hms_aw			-graph 7 -bxy 1:2:3 \
@@ -865,6 +921,7 @@ xmgrace \
 		-settype xycolor	-block temp_shms_w5			-graph 7 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_cw			-graph 7 -bxy 1:2 \
 		-settype xy		-block temp_shms_cw			-graph 7 -bxy 1:2 \
+		-settype xycolor	-block temp_eic_w			-graph 7 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_theta_aq		-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_shms_theta_aq		-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_theta_q1		-graph 8 -bxy 1:2:3 \
@@ -879,6 +936,7 @@ xmgrace \
 		-settype xycolor	-block temp_shms_theta_q5		-graph 8 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_theta_cq		-graph 8 -bxy 1:2 \
 		-settype xy		-block temp_shms_theta_cq		-graph 8 -bxy 1:2 \
+		-settype xycolor	-block temp_eic_theta_q			-graph 8 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_nu_a			-graph 9 -bxy 1:2:3 \
 		-settype xycolor	-block temp_shms_nu_a			-graph 9 -bxy 1:2:3 \
 		-settype xycolor	-block temp_hms_nu1			-graph 9 -bxy 1:2:3 \
@@ -893,6 +951,7 @@ xmgrace \
 		-settype xycolor	-block temp_shms_nu5			-graph 9 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_nu_c			-graph 9 -bxy 1:2 \
 		-settype xy		-block temp_shms_nu_c			-graph 9 -bxy 1:2 \
+		-settype xycolor	-block temp_eic_nu			-graph 9 -bxy 1:2:3 \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_eic.par -noask 
 
 #
