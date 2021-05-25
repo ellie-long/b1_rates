@@ -439,8 +439,8 @@ awk '{print $2,$14}' $file4 > temp_syst
 #              -p b1_proj_new.par -noask
 
 #gracebat -hdevice EPS -printfile b1_rates_hms_shms.eps \
-#xmgrace \
-gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
+#gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
+xmgrace \
 		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
 		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
 		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \

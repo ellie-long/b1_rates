@@ -45,6 +45,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 th_in1,ep_in1,th_in2,ep_in2
       REAL*8 A,d_r
       REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
+      REAL*8 p_min,p_max
       REAL*8 deg,thrad,thincr,thmin,thmax
       REAL*8 dep,epmin,epmax
       REAL*8 s2,t2,xx,qq,w,tempqq,wnn,cent_wnn
@@ -263,10 +264,10 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
 c      csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -276,7 +277,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-      bcurrent  =  0.100    ! 0.085    ! microAmps
+      bcurrent  =  0.010    ! 0.085    ! microAmps
+c      bcurrent  =  0.100    ! 0.085    ! microAmps
 c      bcurrent  =  0.080    ! 0.085    ! microAmps
 c      tgt_len   =  3.0*1.0  ! cm
       tgt_len   =  3.0*1.0  ! cm
@@ -436,9 +438,9 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
 
       ! vvvvv Proposal Azz at E0= 11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.11.0) then
-c         prec2(1) = 300
-c         xval2(1) = 0.953
-c         qqval2(1) = 1.788
+         prec2(1) = 300
+         xval2(1) = 0.953
+         qqval2(1) = 1.788
 
 c         prec2(1) = 120
 c         xval2(1) = 0.2
@@ -448,9 +450,9 @@ c         qqval2(1) = 2
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
-c         prec2(1) = 300
-c         xval2(1) = 1.8
-c         qqval2(1) = 1.5
+         prec2(1) = 300
+         xval2(1) = 1.8
+         qqval2(1) = 1.5
        ! vvv 8.5 deg constraint vvv
 c         prec2(1) = 300
 c         xval2(1) = 1.8
@@ -467,9 +469,9 @@ c         qqval2(1) = 2.181
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-c         prec2(1) = 96
-c         xval2(1) = 1.5
-c         qqval2(1) = 0.71
+         prec2(1) = 96
+         xval2(1) = 1.5
+         qqval2(1) = 0.71
         ! vvv 8.5 deg constraint vvv
 c         prec2(1) = 300
 c         xval2(1) = 1.5
@@ -490,9 +492,9 @@ c         qqval2(1) = 1.8
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-c         prec2(1) = 12
-c         xval2(1) = 1.8
-c         qqval2(1) = 0.17
+         prec2(1) = 12
+         xval2(1) = 1.8
+         qqval2(1) = 0.17
 
        ! vvv HMS kinematics for quick dilution/cs calculation vvv
 c         prec2(1)  = 12
@@ -548,9 +550,142 @@ c      DATA xval3/    0.1, 0.3, 0.5, 0.75, 1.00/
 
       ! SOLID
 c      DATA xval4/    0.1, 0.3, 0.5, 0.75, 1.00/
-      DATA xval4/    100, 100, 100, 100, 100/
-      DATA qqval4/   0.70, 1.4, 3.2, 5.2, 0.90/   
-      DATA prec4/    0.50,  0.50,  0.50,  0.50,  0.50/
+c      DATA xval4/    100, 100, 100, 100, 100/
+c      DATA qqval4/   0.70, 1.4, 3.2, 5.2, 0.90/   
+c      DATA prec4/    0.50,  0.50,  0.50,  0.50,  0.50/
+
+      ! SOLID
+c vvvvv vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+      ! vvvvv Initialize all values to not record any rates vvvvvv
+       DATA prec4/    168.0,  168.0,  336.0,  720.0,  360.0/
+       DATA xval4/    100, 100, 100, 100, 100/
+       DATA qqval4/    99, 99, 99, 99, 99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+c      DATA prec4/    144.0,  216.0,  360.0,  168.0,  168.0/
+c      DATA xval4/    100, 100, 100, 100, 100/
+c      DATA qqval4/    99, 99, 99, 99, 99/   
+
+      ! vvvvv Proposal b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec4/    72.0, 108.0, 180.0, 168.0, 168.0/
+c      DATA xval4/    0.15, 0.3,   0.452, 100.0, 100.0/
+c      DATA qqval4/   1.21, 2.0,   2.58,  99,    99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv x=0.4 Optimized b1 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA prec4/    360.0, 168.0, 168.0, 168.0, 168.0/
+c      DATA xval4/    0.29,  100.0, 100.0, 100.0, 100.0/
+c      DATA qqval4/   1.8,   99,    99,    99,    99/   
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Proposal Azz at E0= 11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.11.0) then
+c         prec4(1) = 300
+c         xval4(1) = 0.953
+c         qqval4(1) = 1.788
+
+c         prec4(1) = 120
+c         xval4(1) = 0.2
+c         qqval4(1) = 2
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.8.8) then
+c         prec4(1) = 300
+c         xval4(1) = 1.8
+c         qqval4(1) = 1.5
+       ! vvv 8.5 deg constraint vvv
+c         prec4(1) = 300
+c         xval4(1) = 1.8
+c         qqval4(1) = 1.61
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^
+       ! vvv 10 deg constraint vvv
+c         prec4(1) = 300
+c         xval4(1) = 1.8
+c         qqval4(1) = 2.181
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+      ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.6.6) then
+c         prec4(1) = 96
+c         xval4(1) = 1.5
+c         qqval4(1) = 0.71
+        ! vvv 8.5 deg constraint vvv
+c         prec4(1) = 300
+c         xval4(1) = 1.5
+c         qqval4(1) = 1.5
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! vvv 10 deg constraint vvv
+c         prec4(1) = 300
+c         xval4(1) = 1.5
+c         qqval4(1) = 1.5
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+       ! vvv HMS kinematics for quick dilution/cs calculation vvv
+c         prec4(1)  = 96
+c         xval4(1)  = 1.5
+c         qqval4(1) = 1.8
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.2.2) then
+c         prec4(1) = 12
+c         xval4(1) = 1.8
+c         qqval4(1) = 0.17
+
+       ! vvv HMS kinematics for quick dilution/cs calculation vvv
+c         prec4(1)  = 12
+c         xval4(1)  = 1.8
+c         qqval4(1) = 0.31 
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Potential Azz at E0=11.0 GeV vvvvvvvvvvvvvvvvvvvvvvv
+c      if (e_in.eq.11.0) then
+c         DATA prec4/    168, 216, 360, 168, 168/
+c         DATA xval4/    1.3, 100, 100, 100, 100/
+c         DATA qqval4/   2.0, 99,  99,  99,  99/   
+c      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Potential Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.4.4) then
+       ! vvv 10 deg constraint vvv
+         prec4(1) = 96
+         xval4(1) = 1.5
+c         qqval2(1) = 0.57
+         qqval4(1) = 0.71
+       ! ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Trying for 6 quark-hidden color in b1 vvvvvvvvvvvvvv
+      ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if (e_in.eq.8.8) then
+c         prec4(1) = 300
+c         xval4(1) = 0.5
+c         qqval4(1) = 1.2
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Matching HERMES Results vvv vvvvvvvvvvvvvvvvvvvvvvvv
+c      DATA xval4/    0.1, 0.3, 0.452, 0.128, 0.248/
+c      DATA qqval4/   1.01, 1.5, 4.69, 2.33, 3.11/   
+c      DATA prec4/    168.0,  168.0,  117.4,  982.2,  59.65/
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
 
       ! BB
 c      DATA xval5/    0.1, 0.3, 0.5, 0.75, 1.00/
@@ -615,9 +750,10 @@ c         xval1(1)  = x
       write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
       write (6,*) "------------------------------------------"
-      write (6,*) "  HMS:             E'max=7.3  Thmin=12.2"
+c      write (6,*) "  HMS:             E'max=7.3  Thmin=12.2"
+      write (6,*) "  SOLID Forward     E'max=7.0  Thmin=8.0  Thmax=14.8"
       write (6,*) "      x         Q2        E'       Th"
-      do ib=1,5
+      do ib=1,1
          xx = xval1(ib)
          qq = qqval1(ib)
          w     = sqrt(mp**2+qq/xx-qq)
@@ -629,9 +765,21 @@ c         xval1(1)  = x
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
+         if (ib.eq.1) then
+                 thrad = 11.4*pi/180 ! SOLID Forward Central Angle
+                 th_in = thrad/d_r
+                 ep_in = 4
+                 nu = e_in - ep_in
+                 qq = 4*e_in*ep_in*(sin(thrad/2)**2)
+                 xx = qq/(2*mp*nu)
+                 w = sqrt(mp**2+qq/xx-qq)
+                 w2nn = 2*nu*md+md**2-qq
+                 wnn = sqrt(w2nn)
+                 y_in = nu/e_in
+         endif
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
-            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
+c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) STOP "BAD INPUT"
 c            if ((ep_in.le.0.0).or.(th_in.lt.55.0)) STOP "BAD INPUT"
 c            if ((ep_in.gt.7.3).or.(th_in.lt.12.2)) qqval1(ib)=99
 c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) STOP "BAD INPUT"
@@ -639,10 +787,11 @@ c            if ((ep_in.gt.7.3).or.(th_in.lt.10.5)) qqval1(ib)=99
          endif
       enddo
       write (6,*) "------------------------------------------"
-      write (6,*) "  SHMS:           E'max=10.4  Thmin=7.3"
+c      write (6,*) "  SHMS:           E'max=10.4  Thmin=7.3"
+      write (6,*) "  SOLID Large Ang. E'max=7.0  Thmin=16  Thmax=24"
       write (6,*) "      x         Q2        E'       Th       W2nn         Wnn"
 c "
-      do ib=1,5
+      do ib=1,1
          xx = xval2(ib)
          qq = qqval2(ib)
          w     = sqrt(mp**2+qq/xx-qq)
@@ -654,40 +803,76 @@ c "
          s2    = qq/4.0/e_in/ep_in
          thrad = 2.*asin(sqrt(s2))
          th_in = thrad/d_r
+         if (ib.eq.1) then
+                 thrad = 20.0*pi/180 ! SOLID Large Angle Central Angle
+                 th_in = thrad/d_r
+                 ep_in = 5.25
+                 nu = e_in - ep_in
+                 qq = 4*e_in*ep_in*(sin(thrad/2)**2)
+                 xx = qq/(2*mp*nu)
+                 w = sqrt(mp**2+qq/xx-qq)
+                 w2nn = 2*nu*md+md**2-qq
+                 wnn = sqrt(w2nn)
+                 y_in = nu/e_in
+         endif
          if (.not.xx.eq.100) then
             write (6,1009) "",xx,qq,ep_in,th_in,w2nn,wnn
 c            if ((ep_in.gt.10.4).or.(th_in.lt.10)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.8.5)) STOP "BAD INPUT"
-            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
+c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) STOP "BAD INPUT"
 c            if ((ep_in.gt.10.4).or.(th_in.lt.7.3)) qqval2(ib)=99
          endif
       enddo
       write (6,*) "------------------------------------------"
 
 
-      xx =  xval2(1)
-      qq = qqval2(1)
-      w     = sqrt(mp**2+qq/xx-qq)
-      nu    = qq/2./mp/xx
-      w2nn  = 2*nu*md+md**2-qq
-      wnn   = sqrt(w2nn)
-      y_in  = nu/e_in
-      ep_in1 = e_in - nu
-      s2    = qq/4.0/e_in/ep_in1
-      thrad = 2.*asin(sqrt(s2))
-      th_in1 = thrad/d_r
+c      xx =  xval2(1)
+c      qq = qqval2(1)
+c      w     = sqrt(mp**2+qq/xx-qq)
+c      nu    = qq/2./mp/xx
+c      w2nn  = 2*nu*md+md**2-qq
+c      wnn   = sqrt(w2nn)
+c      y_in  = nu/e_in
+c      ep_in1 = e_in - nu
+c      s2    = qq/4.0/e_in/ep_in1
+c      thrad = 2.*asin(sqrt(s2))
+c      th_in1 = thrad/d_r
 
-      xx =  xval1(1)
-      qq = qqval1(1)
-      w     = sqrt(mp**2+qq/xx-qq)
-      nu    = qq/2./mp/xx
-      w2nn  = 2*nu*md+md**2-qq
-      wnn   = sqrt(w2nn)
-      y_in  = nu/e_in
-      ep_in2 = e_in - nu
-      s2    = qq/4.0/e_in/ep_in2
-      thrad = 2.*asin(sqrt(s2))
+      thrad = 11.4*pi/180 ! SOLID Forward Central Angle
+      th_in1 = thrad/d_r
+      ep_in1 = 4
+      nu = e_in - ep_in1
+      qq = 4*e_in*ep_in1*(sin(thrad/2)**2)
+      xx = qq/(2*mp*nu)
+      w = sqrt(mp**2+qq/xx-qq)
+      w2nn = 2*nu*md+md**2-qq
+      wnn = sqrt(w2nn)
+      y_in = nu/e_in
+ 
+
+      thrad = 20.0*pi/180 ! SOLID Large Angle Central Angle
       th_in2 = thrad/d_r
+      ep_in2 = 5.25
+      nu = e_in - ep_in2
+      qq = 4*e_in*ep_in2*(sin(thrad/2)**2)
+      xx = qq/(2*mp*nu)
+      w = sqrt(mp**2+qq/xx-qq)
+      w2nn = 2*nu*md+md**2-qq
+      wnn = sqrt(w2nn)
+      y_in = nu/e_in
+
+
+c      xx =  xval1(1)
+c      qq = qqval1(1)
+c      w     = sqrt(mp**2+qq/xx-qq)
+c      nu    = qq/2./mp/xx
+c      w2nn  = 2*nu*md+md**2-qq
+c      wnn   = sqrt(w2nn)
+c      y_in  = nu/e_in
+c      ep_in2 = e_in - nu
+c      s2    = qq/4.0/e_in/ep_in2
+c      thrad = 2.*asin(sqrt(s2))
+c      th_in2 = thrad/d_r
 
 c      write (6,*) "Please enter E0 (GeV) you wish to use for f_dil:"
 c      read (*,*) e_in1
@@ -770,7 +955,8 @@ c     &      DAzz    time '
 cLoop over the spectrometers
 cvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c      do ispectro = 1,6
-      do ispectro = 1,2
+c      do ispectro = 1,2 ! <--- b1 and Azz in Hall C
+      do ispectro = 1,2 ! <--- SOLID
 c      do ispectro = 2,2
 
 
@@ -778,24 +964,84 @@ c      do ispectro = 2,2
          ! for physics extraction
         if (ispectro.eq.1.and.type.eq.1) then ! HMS
                               ! Momentum resolution dp/p < 0.1%
-            dp_p    =  0.08   ! 8% momentum bite for the HMS
-            dp_m    =  0.08   ! 8% momentum bite for the HMS
-            dtheta  =  0.028  ! theta acceptance of the HMS
-            dphi    =  0.058  ! phi acceptance of the HMS
-            acc     =  2.*dtheta*2.*dphi
-            hms_min =  10.5   ! minimum angle of the HMS
+c            dp_p    =  0.08   ! +8% momentum bite for the HMS
+c            dp_m    =  0.08   ! -8% momentum bite for the HMS
+c            dtheta  =  0.028  ! theta acceptance of the HMS
+c            dphi    =  0.058  ! phi acceptance of the HMS
+c            acc     =  2.*dtheta*2.*dphi
+c            hms_min =  10.5   ! minimum angle of the HMS
 c            dep     =  0.0015*ep_in 
-            nx      =  nx1 
+            nx      =  nx1
+c           vvvvvvvvvvvvvvvv SOLID FORWARD vvvvvvvvvvvvvvvvvvvvv  
+                              ! Momentum Range: 
+                              !    1-7 GeV Forward Detector
+                              !    3.5-7 GeV Large Detector
+                              ! Momentum Resolution: 2-3%
+                              ! Acceptance in azimuthal angle phi: 2*pi
+                              ! Acceptance in polar angle theta:
+                              !   8deg to 24deg for SIDIS configuration, 
+                              !   22deg to 35deg for PVDIS configuration
+            dp_p    =  0.5  
+            dp_m    =  0.5 
+c            p_min   = 3.5 ! GeV
+            p_min   = 1.0 ! GeV
+            p_max   = 7.0 ! GeV 
+            dtheta = .0593411 ! radians -- Forward Acceptance
+                              ! theta: 8deg to 14.8deg, so 
+                              ! dtheta = (14.8deg-8deg)/2 = 0.0593411 rad
+c            dtheta  =  0.1395 ! theta acceptance of the SoLID - SIDIS
+c            dtheta  =  0.1134 ! theta acceptance of the SoLID - PVDIS
+            dphi    =  pi   ! phi acceptance of the SoLID
+            acc     =  2*dphi*2*dtheta   ! large acceptance: 1.43 sr
+c            acc     =  1.43   ! large acceptance: 1.43 sr
+            hms_min =  8.0   ! minimum angle of the SoLID - SIDIS
+            thmin = 8*pi/180
+            thmax = 14.8*pi/180
+c            hms_min =  22.0   ! minimum angle of the SoLID - PVDIS
+            dep     =  0.02*ep_in 
+c            nx      =  nx4 
+
          elseif (ispectro.eq.2.and.type.eq.1) then ! SHMS
                               ! Momentum resolution dp/p < 0.03% - 0.08%
                               !   (<0.08% the conservative choice)
-            dp_p    =  0.20   ! 20% momentum bite for the SHMS
-            dp_m    =  0.08   ! 8% momentum bite for the SHMS
-            dtheta  =  0.022  ! theta acceptance of the SHMS
-            dphi    =  0.050  ! phi acceptance of the SHMS
-            acc     =  2.*dtheta*2.*dphi
-            hms_min =  5.5    ! minimum angle of the SHMS
+c            dp_p    =  0.20   ! +20% momentum bite for the SHMS
+c            dp_m    =  0.08   ! -8% momentum bite for the SHMS
+c            dtheta  =  0.022  ! theta acceptance of the SHMS
+c            dphi    =  0.050  ! phi acceptance of the SHMS
+c            acc     =  2.*dtheta*2.*dphi
+c            hms_min =  5.5    ! minimum angle of the SHMS
             nx      =  nx2 
+c           vvvvvvvvvvvvvvvv SOLID Large Angle vvvvvvvvvvvvvvvvvvvvv  
+                              ! Momentum Range: 
+                              !    1-7 GeV Forward Detector
+                              !    3.5-7 GeV Large Detector
+                              ! Momentum Resolution: 2-3%
+                              ! Acceptance in azimuthal angle phi: 2*pi
+                              ! Acceptance in polar angle theta:
+                              !   8deg to 24deg for SIDIS configuration, 
+                              !   22deg to 35deg for PVDIS configuration
+            dp_p    =  0.5  
+            dp_m    =  0.5 
+            p_min   = 3.5 ! GeV
+c            p_min   = 1.0 ! GeV
+            p_max   = 7.0 ! GeV 
+            dtheta  = 0.069813 ! radians -- Large Angle
+                               ! theta: 16deg to 24 def, so
+                               ! dtheta = (24deg - 16deg)/2 = 0.069813 rad
+c            dtheta  =  0.1395 ! theta acceptance of the SoLID - SIDIS
+c            dtheta  =  0.1134 ! theta acceptance of the SoLID - PVDIS
+            dphi    =  pi   ! phi acceptance of the SoLID
+            acc     =  2*dphi*2*dtheta   ! large acceptance: 1.43 sr
+c            acc     =  1.43   ! large acceptance: 1.43 sr
+c            hms_min =  8.0   ! minimum angle of the SoLID - SIDIS
+            hms_min =  22.0   ! minimum angle of the SoLID - PVDIS
+            thmin = 16*pi/180
+            thmax = 24*pi/180
+            dep     =  0.025*ep_in 
+c            nx      =  nx4 
+
+
+
 
 c vvvvvvvvv Playing -- DO NOT USE FOR ACTUAL PHYSICS !! vvvvvvvvvvvv
 c            dp_p    =  0.20   ! 20% momentum bite for the SHMS
@@ -816,21 +1062,35 @@ c            hms_min =  5.5    ! minimum angle of the SHMS
 c            dep     =  0.002*ep_in 
 c            nx      =  nx2 
          elseif (ispectro.eq.3.and.type.eq.1) then ! HRS
-            dp_p    =  0.03   ! 20% momentum bite for the HRS
-            dp_m    =  0.03   ! 8% momentum bite for the HRS
+            dp_p    =  0.045  ! 20% momentum bite for the HRS
+            dp_m    =  0.045  ! 8% momentum bite for the HRS
             dtheta  =  0.040  ! theta acceptance of the HRS
             dphi    =  0.020  ! phi acceptance of the HRS
             acc     =  2.*dtheta*2.*dphi
             hms_min =  12.5    ! minimum angle of the HRS
             nx      =  nx3 
          elseif (ispectro.eq.4.and.type.eq.1) then ! SOLID
-            dp_p    =  0.08  
-            dp_m    =  0.08  
-            dtheta  =  0.028  ! theta acceptance of the SoLID
-            dphi    =  0.058  ! phi acceptance of the SoLID
-            acc     =  1.43   ! large acceptance: 1.43 sr
-            hms_min =  12.5   ! minimum angle of the SoLID
-            dep     =  0.02*ep_in 
+                              ! Momentum Range: 
+                              !    1-7 GeV Forward Detector
+                              !    3.5-7 GeV Large Detector
+                              ! Momentum Resolution: 2-3%
+                              ! Acceptance in azimuthal angle phi: 2*pi
+                              ! Acceptance in polar angle theta:
+                              !   8deg to 24deg for SIDIS configuration, 
+                              !   22deg to 35deg for PVDIS configuration
+            dp_p    =  0.5  
+            dp_m    =  0.5 
+c            p_min   = 3.5 ! GeV
+            p_min   = 1.0 ! GeV
+            p_max   = 7.0 ! GeV 
+            dtheta  =  0.1395 ! theta acceptance of the SoLID - SIDIS
+c            dtheta  =  0.1134 ! theta acceptance of the SoLID - PVDIS
+            dphi    =  pi   ! phi acceptance of the SoLID
+            acc     =  2*dphi*2*dtheta   ! large acceptance: 1.43 sr
+c            acc     =  1.43   ! large acceptance: 1.43 sr
+            hms_min =  8.0   ! minimum angle of the SoLID - SIDIS
+c            hms_min =  22.0   ! minimum angle of the SoLID - PVDIS
+            dep     =  0.025*ep_in 
             nx      =  nx4 
          elseif (ispectro.eq.5.and.type.eq.1) then ! BB
             dp_p    =  0.40  
@@ -935,10 +1195,17 @@ c            do ib=1,nx
 c            dep    = 0.02*ep_in
 c            dep    = 0.005*ep_in
 c            dep    = 0.0005*ep_in
-            dep    = 0.001*ep_in
+c            dep    = 0.001*ep_in
 c            dep    = ep_in
-            epmin  = ep_in*(1.-dp_m)
-            epmax  = ep_in*(1.+dp_p)
+c            epmin  = ep_in*(1.-dp_m)
+c            epmax  = ep_in*(1.+dp_p)
+            epmin = p_min
+            epmax = p_max
+            if (ispectro.eq.4) then
+                    epmin = p_min
+                    epmax = p_max
+c                    dep = 0.025*ep_in
+            endif
             npbin  = int((epmax-epmin)/dep)+1
 
             ! binning over the angular spread

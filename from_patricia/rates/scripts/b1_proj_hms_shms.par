@@ -2775,8 +2775,7 @@ with g3
     s1 errorbar riser clip length 0.100000
     s1 comment "Cols 1:2:3"
     s1 legend "Kumano (With \xd\f{}\sT\Nqbar)"
-
-	s2 hidden true
+    s2 hidden true
     s2 type xy
     s2 symbol 0
     s2 symbol size 0.50000
