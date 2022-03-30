@@ -161,7 +161,6 @@ c
       REAL*8 rr1,rr2,phistar,thstar
       REAL*8 thq,thq_r,cosqvec
       REAL*8 xdx
-      REAL*8 n_cups
       COMMON /VPLRZ/ E0_PASS,TH_PASS,EP_PASS
       call system_clock ( clck_counts_beg, clck_rate ) 
 
@@ -213,8 +212,7 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
-      DATA prec2/    104.0,  136.0,  360.0,  168.0,  168.0/
+      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
 c      DATA prec2/    576.0,  144.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
        DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
@@ -315,15 +313,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-c      bcurrent  =  0.115    ! 0.085    ! microAmps
-      bcurrent  =  0.075    ! 0.085    ! microAmps
-
-c      n_cups    =  1.0 ! Number of target cups operating simultaneously
-      n_cups    =  2.0 ! Number of target cups operating simultaneously
-      tgt_len   =  3.0*1.0*n_cups  ! cm
-c      tgt_len   =  3.0*1.0  ! cm
-
-
+      bcurrent  =  0.115    ! 0.085    ! microAmps
+      tgt_len   =  3.0*1.0  ! cm
       ! ND3 specs
       rho_nd3   =  1.007 ! g/cm3
 
@@ -339,14 +330,11 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       Pz_lid    =  0.50 !0.30     !0.50     ! 64% vector polarization, Bueltman NIM A425 
       M_lid     =  9.0      ! g/mole
 
-
       ND        =  1.0     ! D-wave component
 c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-c      Pzz_in    =  0.30    ! expected improvement on the target
-c      Pzz_in    =  0.275    ! expected improvement on the target
-      Pzz_in    =  0.28    ! expected improvement on the target
+      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.35    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
@@ -1062,9 +1050,7 @@ c               f_dil = 0.95*(goodRate_d/(goodRate_d + goodRate_he))
                f_dil = (goodRate_d/(goodRate_d + goodRate_he))
             endif
 c           vvvvv Error on Azz using A_meas^(2)
-c                 Note: This is NOT the final dAzz used in plots! That's
-c                       below in the write(14,1006) output file
-            dAzz = (4./(f_dil*Pzz))*(1/SQRT(time*physRate*3600.0))
+            dAzz = (4./(f_dil*Pzz))*(1/SQRT(time*physrate*3600.0))
 c            F1d = F1out*2
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
@@ -1367,12 +1353,9 @@ c                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
-c            dAzz = (2./(f_dil*Pzz))*SQRT((Ntotal_for_x(ib)/2)/(Nunpoltotal_for_x(ib)/2)**2
-c     +                 + (Ntotal_for_x(ib)/2)**2/(Nunpoltotal_for_x(ib)/2)**3)
-            dAzz = (2./(f_dil*Pzz))*SQRT((Ntotal_for_x(ib)*n_cups/2)
-     +             /(Nunpoltotal_for_x(ib)*n_cups/2)**2
-     +             + (Ntotal_for_x(ib)*n_cups/2)**2
-     +             /(Nunpoltotal_for_x(ib)*n_cups/2)**3)
+            dAzz = (2./(f_dil*Pzz))*SQRT((Ntotal_for_x(ib)/2)/(Nunpoltotal_for_x(ib)/2)**2
+     +                 + (Ntotal_for_x(ib)/2)**2/(Nunpoltotal_for_x(ib)/2)**3)
+
 c            dAzz = sqrt(Aout**2)*0.092
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
 
