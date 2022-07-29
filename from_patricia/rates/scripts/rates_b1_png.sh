@@ -732,31 +732,34 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-settype xy			-block temp_hms_theta_cq		-graph 8 -bxy 1:2 \
 		-settype xy			-block temp_shms_theta_cq		-graph 8 -bxy 1:2 \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_t20_proj_hms_shms.par -noask 
 
 
 display b1_rates_hms_shms.png
 
-xmgrace \
-		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_117			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_176			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_212			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_325			-graph 0 -bxy 1:2 \
-		-settype xy		-block temp_6qhc_r35			-graph 0 -bxy 1:2 \
-		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
-		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
-		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
-		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
-		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
-		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
-        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+
+# vvvvvvvvvvv b1 main plot in xmgrace format vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+#xmgrace \
+#		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_nosea_mstw	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_sea_mstw		-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_sargsian_vn	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_sargsian_lc	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_bacchetta_low	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_model_bacchetta_up	-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_117			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_176			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_212			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_325			-graph 0 -bxy 1:2 \
+#		-settype xy		-block temp_6qhc_r35			-graph 0 -bxy 1:2 \
+#		-settype xydy	-block temp_xb1_tot				-graph 0 -bxy 1:2:3 \
+#		-settype xydy	-block temp_xb1_stat			-graph 0 -bxy 1:2:3 \
+#		-settype xydxdy	-block temp_hms_tot				-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy	-block temp_hms_stat			-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy	-block temp_shms_tot			-graph 0 -bxy 1:2:3:4 \
+#		-settype xydxdy	-block temp_shms_stat			-graph 0 -bxy 1:2:3:4 \
+#        -settype xy     -block temp_shms_b1_sys_bar	-graph 0 -bxy 1:2 \
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 
 
 #xmgrace \
@@ -780,19 +783,22 @@ xmgrace \
 #		-settype bar	-block temp_shms_time 	-log y	-graph 2 -bxy 1:2 \
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 
-xmgrace \
-        -settype xy     -block temp_model_nosea_Azz     -graph 3 -bxy 1:2 \
-        -settype xy     -block temp_model_sea_Azz       -graph 3 -bxy 1:2 \
-        -settype xy     -block temp_model_miller_Azz    -graph 3 -bxy 1:2 \
-        -settype xy     -block temp_model_frankfurt_Azz -graph 3 -bxy 1:2 \
-        -settype xydy   -block temp_Azz_stat            -graph 3 -bxy 1:2:3 \
-        -settype xydy   -block temp_Azz_tot             -graph 3 -bxy 1:2:3 \
-        -settype xydxdy -block temp_hms_azz_tot         -graph 3 -bxy 1:2:3:4 \
-        -settype xydxdy -block temp_hms_azz_stat        -graph 3 -bxy 1:2:3:4 \
-        -settype xydxdy -block temp_shms_azz_tot        -graph 3 -bxy 1:2:3:4 \
-        -settype xydxdy -block temp_shms_azz_stat       -graph 3 -bxy 1:2:3:4 \
-        -settype xy     -block temp_shms_azz_sys_bar   -graph 3 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+
+
+# vvvvvvvvvvv Azz main plot in xmgrace format vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+#xmgrace \
+#        -settype xy     -block temp_model_nosea_Azz     -graph 3 -bxy 1:2 \
+#        -settype xy     -block temp_model_sea_Azz       -graph 3 -bxy 1:2 \
+#        -settype xy     -block temp_model_miller_Azz    -graph 3 -bxy 1:2 \
+#        -settype xy     -block temp_model_frankfurt_Azz -graph 3 -bxy 1:2 \
+#        -settype xydy   -block temp_Azz_stat            -graph 3 -bxy 1:2:3 \
+#        -settype xydy   -block temp_Azz_tot             -graph 3 -bxy 1:2:3 \
+#        -settype xydxdy -block temp_hms_azz_tot         -graph 3 -bxy 1:2:3:4 \
+#        -settype xydxdy -block temp_hms_azz_stat        -graph 3 -bxy 1:2:3:4 \
+#        -settype xydxdy -block temp_shms_azz_tot        -graph 3 -bxy 1:2:3:4 \
+#        -settype xydxdy -block temp_shms_azz_stat       -graph 3 -bxy 1:2:3:4 \
+#        -settype xy     -block temp_shms_azz_sys_bar   -graph 3 -bxy 1:2 \
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 
 #xmgrace \
 #		-settype xy		-block temp_thmin_hms			-graph 4 -bxy 1:2 \

@@ -144,9 +144,11 @@ file5="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data
 #awk '{print 4*5.766*(5.766-$1)*(sin((18.0/2)*(3.14159/180))^2)/(2*0.938*$1),$2*1E-6,$3*1E-6}' $file5 >> temp_sigma_d_exp_x
 
 
-awk '$3==20.9990 && $4==10.00 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6,$7}' $file2 >> temp_sigma_d_exp_x
-awk '$3==20.9990 && $4==10.00 {print $5,$6,$7}' $file2 >> temp_sigma_d_exp_nu
+#awk '$3==20.9990 && $4==10.00 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6,$7}' $file2 >> temp_sigma_d_exp_x
+#awk '$3==20.9990 && $4==10.00 {print $5,$6,$7}' $file2 >> temp_sigma_d_exp_nu
 
+#awk '$3==11.671 && $4==10.00 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6,$7}' $file2 >> temp_sigma_d_exp_x
+#awk '$3==11.671 && $4==10.00 {print $5,$6,$7}' $file2 >> temp_sigma_d_exp_nu
 
 #file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/misak_deut_6GeV.dat"
 #awk '$2>4 && $2<11.0 {print 6.519-$2,$9*1E-6}'    $file6 >> temp_misak_d_nu
@@ -170,12 +172,12 @@ awk '$3==20.9990 && $4==10.00 {print $5,$6,$7}' $file2 >> temp_sigma_d_exp_nu
 #awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file8 >> temp_misak_fdil
 
 #file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/misak_shms_66_GeV_0951deg_607GeV.dat"
-file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/test_66GeV_607GeV_0951deg.dat"
-awk '$2>4 && $2<11.0 {print 6.6-$2,$9*1E-6}'      $file9 >> temp_misak_d_nu
-awk '$2>4 && $2<11.0 {print $3,$9*1E-6}'          $file9 >> temp_misak_d_x
-awk '$2>4 && $2<11.0 {print 6.6-$2,$6*1E-6}'      $file9 >> temp_misak_n_nu
-awk '$2>4 && $2<11.0 {print $3,$6*1E-6}'          $file9 >> temp_misak_n_x
-awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file9 >> temp_misak_fdil
+#file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/test_66GeV_607GeV_0951deg.dat"
+#awk '$2>4 && $2<11.0 {print 6.6-$2,$9*1E-6}'      $file9 >> temp_misak_d_nu
+#awk '$2>4 && $2<11.0 {print $3,$9*1E-6}'          $file9 >> temp_misak_d_x
+#awk '$2>4 && $2<11.0 {print 6.6-$2,$6*1E-6}'      $file9 >> temp_misak_n_nu
+#awk '$2>4 && $2<11.0 {print $3,$6*1E-6}'          $file9 >> temp_misak_n_x
+#awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file9 >> temp_misak_fdil
 
 #file10="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/e02019_18deg_lc.out"
 #awk '$2>2 && $2<11.0 {print 5.766-$2,$9*1E-6}'    $file10 >> temp_misak_d_nu
@@ -185,6 +187,19 @@ awk '$2>4 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file9 >> temp_misak_fdil
 #awk '$2>2 && $2<11.0 {print $3,$6*1E-6}'          $file10 >> temp_misak_n_x
 #awk '$2>2 && $2<11.0 {print $3,(3*$9/($6+3*$9))}' $file10 >> temp_misak_fdil
 
+file11="/home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/world_qe_data/E02-019.dat"
+# 1 = Z
+# 2 = A
+# 3 = Energy (GeV)
+# 4 = Angle (degrees)
+# 5 = x
+# 6 = Cross section (nb/GeV*str)
+# 7 = Cross section uncertainty (stat)
+# 8 = Cross section uncertainty (sys)
+# 9 = Citation
+awk '$2==2 && $3==5.7660 && $4==18.000 {print $5,$6*1E-9,sqrt(($7*1E-9)^2+($8*1E-9)^2)}' $file11 >> temp_sigma_d_exp_x
+awk '$2==2 && $3==5.7660 && $4==18.000 {print ($3-$3*0.938272*$5/(2*$3*sin(($4/2)*(3.14159/180))^2+0.938272*$5)),$6*1E-9,sqrt(($7*1E-9)^2+($8*1E-9)^2)}' $file11 >> temp_sigma_d_exp_nu
+#awk '$2==2 && $3==5.7660 && $4==18.000 {print 4*$3*($3-$5)*(sin(($4/2)*(3.14159/180))^2)/(2*0.938*$5),$6*1E-9,$7*1E-9}' $file2 >> temp_sigma_d_exp_x
 
 #gracebat -hdevice PNG -printfile cs_check.png \
 #xmgrace\
@@ -210,9 +225,9 @@ xmgrace\
 	-settype xy		-block temp_sigma_li		-log y		-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_d_x		-log y		-graph 0 -bxy 1:2\
 	-settype xy		-block temp_misak_n_x		-log y		-graph 0 -bxy 1:2\
-	-settype xydy	-block temp_sigma_d_exp_x	-log y		-graph 0 -bxy 1:2:3\
-	-settype xy		-block temp_fdil_shms					-graph 1 -bxy 1:2\
-	-settype xy		-block temp_fdil_hms					-graph 1 -bxy 1:2\
+	-settype xydy		-block temp_sigma_d_exp_x	-log y		-graph 0 -bxy 1:2:3\
+	-settype xy		-block temp_fdil_shms				-graph 1 -bxy 1:2\
+	-settype xy		-block temp_fdil_hms				-graph 1 -bxy 1:2\
 	-settype xy		-block temp_lumsig_d_pol	-log y		-graph 2 -bxy 1:2\
 	-settype xy		-block temp_lumsig_d_unpol	-log y		-graph 2 -bxy 1:2\
 	-settype xy		-block temp_lumsig_n		-log y		-graph 2 -bxy 1:2\
@@ -225,9 +240,9 @@ xmgrace\
 xmgrace\
 	-settype xy		-block temp_sigma_d_unpol_nu_shms	-log y 	-graph 0 -bxy 1:2\
 	-settype xy		-block temp_sigma_d_unpol_nu_hms	-log y 	-graph 0 -bxy 1:2\
-	-settype xydy	-block temp_sigma_d_exp_nu			-log y	-graph 0 -bxy 1:2:3\
+	-settype xydy		-block temp_sigma_d_exp_nu		-log y	-graph 0 -bxy 1:2:3\
 	-settype xy		-block temp_sigma_d_unpol_nu		-log y 	-graph 1 -bxy 1:2\
-	-settype xy		-block temp_misak_d_nu				-log y 	-graph 1 -bxy 1:2\
+	-settype xy		-block temp_misak_d_nu			-log y 	-graph 1 -bxy 1:2\
 	-settype xydy	-block temp_sigma_d_exp_nu			-log y	-graph 1 -bxy 1:2:3\
 	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/cs_check_nu.par -noask
 

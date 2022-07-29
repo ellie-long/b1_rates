@@ -39,6 +39,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       INTEGER kin_in
       INTEGER npbin,ntbin
       INTEGER ip,it
+      INTEGER driftsOn
       REAL*8 z_d,z_he,z_n,z_c,z_li
       REAL*8 a_d,a_he,a_n,a_c,a_li
       REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
@@ -263,10 +264,12 @@ c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sec
       csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+
       e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+
+c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
       w2pion    =  1.18**2  ! pion threshold
 c      w2min     =  1.8**2  ! Cut on W
@@ -306,7 +309,13 @@ c      fsyst_xs  =  0.13     ! add a 5% from F1
 
 c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
-      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+c      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+c      dAzz_rel  =  0.072     ! Rel. Sys. w/ Pzz=26% +\- 2% (reL)
+      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
+c      dAzz_rel  =  0.118     ! Rel. Sys. w/ Pzz=36% +\- 9.5% (reL)
+
+      driftsOn = 0 ! Turn off drift systematics
+c      driftsOn = 1 ! Turn on drift systematics
 
       ! General Parameters
       rho_he = 0.1412 ! 0.1412 g/cm^3
@@ -347,17 +356,17 @@ c      DATA qqval1/   99,   99,  99,  99,  99/
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
 c      if (e_in.eq.8.8) then
-         DATA prec1/    300, 216, 360, 168, 168/
-         DATA xval1/    1.4, 100, 100, 100, 100/
-         DATA qqval1/   1.5, 99,  99,  99,  99/   
+c         DATA prec1/    300, 216, 360, 168, 168/
+c         DATA xval1/    1.4, 100, 100, 100, 100/
+c         DATA qqval1/   1.5, 99,  99,  99,  99/   
 c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.6.6) then
-c         prec1(1)  = 96
-c         xval1(1)  = 1.5
-c         qqval1(1) = 1.8
+         prec1(1)  = 96
+         xval1(1)  = 1.5
+         qqval1(1) = 1.8
        ! vvv 10 deg constraint vvv
 c         prec1(1) = 300
 c         xval1(1) = 1.5
@@ -367,11 +376,11 @@ c         qqval1(1) = 1.8
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.4.4) then
+c      if (e_in.eq.4.4) then
 c         prec1(1)  = 96
 c         xval1(1)  = 1.5
 c         qqval1(1) = 0.82
-      endif
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -383,9 +392,9 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
  
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.8.8) then
-c         prec1(1) = 300
-c         xval1(1) = 1.0
-c         qqval1(1) = 2.89
+         prec1(1) = 300
+         xval1(1) = 1.0
+         qqval1(1) = 2.89
       ! vvv Using HMS as proton spectrometer vvv
 c         prec1(1) = 300
 c         xval1(1) = 1.8
@@ -398,9 +407,9 @@ c         qqval1(1) = 22
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if (e_in.eq.2.2) then
-c        prec1(1)  = 12
-c        xval1(1)  = 1.8
-c        qqval1(1) = 0.31 
+        prec1(1)  = 12
+        xval1(1)  = 1.8
+        qqval1(1) = 0.31 
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1438,7 +1447,11 @@ c           vvvvv Error on Azz using A_meas^(2)
             dAzz = (4./(f_dil*Pzz))*(1/SQRT(time*physrate*3600.0))
 c            F1d = F1out*2
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
-            syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+            if (driftsOn.eq.1) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+            else
+               syst_Azz = sqrt((Aout*dAzz_rel)**2)
+            endif
             if (spec_x.ge.0.24) then
 c               syst_Azz  = Aout*0.1   ! to be adjusted
                syst_Azz  = Aout*0.092
@@ -1454,7 +1467,10 @@ c               syst_Azz  = Aout*0.1   ! to be adjusted
             endif 
             if (spec_x.eq.0.55) then
                syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0021**2)
-            endif 
+            endif
+            if (driftsOn.eq.0) then 
+                    syst_Azz = sqrt((Aout*dAzz_rel)**2)
+            endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
 
             xdx = xmax(ix) - xx
@@ -1555,16 +1571,22 @@ c               qq = (w2nn - md**2)/(1/(cent_x(ib)*mp/md) - 1)
      +                    + thisNforx(ib)**2/thisNunpolforx(ib)**3)
 
                db1d  = abs(-1.5*dAzz)*F1d/2
-   
-               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
-               if (spec_x.gt.0.6) then
-c                  syst_Azz = Aout*0.1
-                  syst_Azz = Aout*0.14
+               
+               if (driftsOn.eq.1) then  
+                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+               else
+                  syst_Azz = sqrt((Aout*dAzz_rel)**2)
                endif
+c               if (spec_x.gt.0.6) then
+c                  syst_Azz = Aout*0.1
+c                  syst_Azz = Aout*0.14
+c               endif
                syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
                if (thisNforx(ib).ne.0.0) then
                   drift_scale = 0
-                  drift_scale = thisNforx(ib)*0.20/Pzz_in
+                  if (driftsOn.eq.1) then
+                     drift_scale = thisNforx(ib)*0.20/Pzz_in
+                  endif
                   if (spec_x.eq.0.15) then
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0032*drift_scale
                   elseif (spec_x.eq.0.3) then
@@ -1576,6 +1598,9 @@ c                  syst_Azz = Aout*0.1
                   else 
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0019*drift_scale
                   endif 
+                  if (driftsOn.eq.0) then
+                     dAzz_drift(ib) = 0
+                  endif
 
                endif
 c               dAzz_drift(ib) = 0 ! To be fixed later 
@@ -1894,7 +1919,11 @@ c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
 c            dAzz = sqrt(Aout**2)*0.092
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
 
-            dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
+            if (driftsOn.eq.1) then
+               dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
+            else
+               dAzz_drift(ib) = 0
+            endif
 
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)
 c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
@@ -1913,7 +1942,8 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
             endif
             if (cent_x(ib).ge.0.25) then
 c               syst_Azz = Aout*0.1 ! To be fixed later
-               syst_Azz = abs(Aout*0.092) ! To be fixed later
+c               syst_Azz = abs(Aout*0.092) ! To be fixed later
+               syst_Azz = abs(Aout*dAzz_rel) ! To be fixed later
             endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
             t20       = 0.0
