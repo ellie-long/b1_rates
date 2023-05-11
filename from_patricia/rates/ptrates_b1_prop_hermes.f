@@ -24,11 +24,13 @@ c
       INTEGER kin_in
       INTEGER npbin,ntbin
       INTEGER ip,it
-      REAL*8 z_d,z_he,z_n,z_c,z_li
-      REAL*8 a_d,a_he,a_n,a_c,a_li
-      REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
+      REAL*8 z_d,z_he,z_n,z_c,z_li,z_p,z_n0
+      REAL*8 a_d,a_he,a_n,a_c,a_li,a_p,a_n0
+      REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in,ep
       REAL*8 th_in1,ep_in1,th_in2,ep_in2
       REAL*8 A,d_r
+      REAL*8 R,DR
+      LOGICAL GOODFIT
       REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
       REAL*8 deg,thrad,thincr,thmin,thmax
       REAL*8 dep,epmin,epmax
@@ -64,6 +66,8 @@ c
       REAL*8 F1d_code,F1d_hermes
       REAL*8 F1d_ie,F2d_ie,F1he_ie,F2he_ie,F1n_ie,F2n_ie,F1c_ie,F2c_ie
       REAL*8 F1li_ie,F2li_ie
+      REAL*8 F1p_qe,F2p_qe,F1p_ie,F2p_ie,F1p,F2p
+      REAL*8 F1n0_qe,F2n0_qe,F1n0_ie,F2n0_ie,F1n0,F2n0
       REAL*8 F1d_qe,F2d_qe,F1he_qe,F2he_qe,F1n_qe,F2n_qe,F1c_qe,F2c_qe
       REAL*8 F1li_qe,F2li_qe
       REAL*8 allF1out,allF2out,allF1in,allF1qe
@@ -146,7 +150,7 @@ c
 
       REAL*8 good_x_min,good_x_max
       REAL*8 xmin(5),xmax(5)
-      REAL*8 cent_x(11),cent_x_min(11),cent_x_max(11)
+      REAL*8 cent_x(11),cent_x_min(11),cent_x_max(11),cent_q2(11)
       REAL*8 N_for_x(11),Ngood_for_x(11),Ntotal_for_x(11)
       REAL*8 Nunpol_for_x(11),Nunpolgood_for_x(11),Nunpoltotal_for_x(11)
       REAL*8 thisNforx(11),xsum(11)
@@ -185,6 +189,7 @@ c For HERMES b1
       DATA cent_x/      0.012, 0.032,  0.063, 0.128, 0.248, 0.452, 0.8,  0.9,  1.0,  1.1,  1.2/ 
       DATA cent_x_min/  0.007, 0.021,  0.041, 0.088, 0.18,  0.35, 0.75, 0.85, 0.95, 1.05, 1.15/ 
       DATA cent_x_max/  0.021, 0.041,  0.088, 0.180, 0.35,  0.85, 0.85, 0.95, 1.05, 1.15, 1.25/ 
+      DATA cent_q2/     0.51,  1.06,   1.65,  2.33,  3.11,  4.69, 0.8,  0.9,  1.0,  1.1,  1.2/ 
 
 
 
@@ -221,14 +226,17 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec2/    0.0005,  1.2,  5.0,  10.0,  30.0/
+c      DATA prec2/    0.0005,  1.2,  5.0,  10.0,  30.0/
+      DATA prec2/    1E-6,  0.1,  0.4,  0.7,  5.5/
 c      DATA prec2/    576.0,  144.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
        DATA xval2/    0.032, 0.063, 0.128, 0.248, 0.452/
+c       DATA xval2/    100, 100, 100, 100, 0.452/
 c       DATA xval2/    0.32, 0.17, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       DATA qqval2/   1.06, 1.65, 2.33, 3.11, 4.69/   
+c      DATA qqval2/   99, 99, 99, 99, 4.69/   
 c      DATA qqval2/    2.38, 1.80, 99, 99, 99/   
 
 c      DATA qqval2/    1.3, 99, 99, 99, 99/   
@@ -359,8 +367,10 @@ c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
       ! General Parameters
       rho_he = 0.1412 ! 0.1412 g/cm^3
       m_he = 4.0026
-      z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3;
-      a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6;
+      z_d = 1; z_he = 2; z_n = 7;  z_c = 6;  z_li = 3; 
+      z_p = 1; z_n0 = 0;
+      a_d = 2; a_he = 4; a_n = 14; a_c = 12; a_li = 6; 
+      a_p = 1; a_n0 = 1;
 c----- MAIN ------------------------------------------------
       write (6,*) "------------------------------------------"
       write (6,*) "Current Central Values are:"
@@ -517,7 +527,8 @@ c      do ispectro = 1,6
             nx      =  nx1 
         elseif (ispectro.eq.2.and.type.eq.1) then ! HERMES
             dp_p    =  0.20   ! 20% momentum bite for the HERMES
-            dp_m    =  0.08   ! 8% momentum bite for the HERMES
+c            dp_m    =  0.08   ! 8% momentum bite for the HERMES
+            dp_m    =  0.2   ! 8% momentum bite for the HERMES
             dtheta  =  0.170  ! theta acceptance of the HERMES
 c            dphi    =  0.040  ! phi min. acceptance of the HERMES
 c            dphi    =  0.140  ! phi max. acceptance of the HERMES
@@ -662,8 +673,9 @@ c            do ib=1,nx
             superth_in = thrad/d_r
 
             ! Binning over the momentum bite
-c            dep    = 0.02*ep_in
-            dep    = 0.001*ep_in
+            dep    = 0.02*ep_in
+c            dep    = 0.001*ep_in
+c            dep    = 0.1*ep_in
             epmin  = ep_in*(1.-dp_m)
             epmax  = ep_in*(1.+dp_p)
             npbin  = int((epmax-epmin)/dep)+1
@@ -768,6 +780,16 @@ c                 vvvvvvvvv This part gives us the total, non-physics info vvvvv
                   call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 6Li
                   call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
                   call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
+c                  call F1F2QE21(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
+c                  call F1F2QE21(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+c                  call F1F2QE21(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 6Li
+c                  call F1F2QE21(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
+c                  call F1F2QE21(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
+c                  call F1F2IN21(z_d,a_d,q2,w2,F1d_ie,F2d_ie)       ! Get DIS F1 & F2 for 2H
+c                  call F1F2IN21(z_he,a_he,q2,w2,F1he_ie,F2he_ie) ! Get DIS F1 & F2 for 4He
+c                  call F1F2IN21(z_li,a_li,q2,w2,F1li_ie,F2li_ie) ! Get DIS F1 & F2 for 6Li
+c                  call F1F2IN21(z_n,a_n,q2,w2,F1n_ie,F2n_ie)      ! Get DIS F1 & F2 for 14N
+c                  call F1F2IN21(z_c,a_c,q2,w2,F1c_ie,F2c_ie)      ! Get DIS F1 & F2 for 12C
                   if (x.ge.0.8.and.x.le.5.0) then   ! If QE:
                       call get_qe_b1d(x,q2,Aout,F1out,b1out)
                   elseif (x.lt.0.8.and.x.gt.0) then ! If DIS:
@@ -1020,6 +1042,8 @@ c      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
             call F1F2QE09(z_d,a_d,qq,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
             call F1F2IN09(z_d,a_d,qq,w2,F1d_ie,F2d_ie,rc)  !      Get F1 for Deuterium
+c            call F1F2QE21(z_d,a_d,qq,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
+c            call F1F2IN21(z_d,a_d,qq,w2,F1d_ie,F2d_ie)  !      Get F1 for Deuterium
             if (.not.(F1d_ie.gt.0)) F1d_ie = 0
             if (.not.(F1d_qe.gt.0)) F1d_qe = 0
             if (.not.(F1n_ie.gt.0)) F1n_ie = 0
@@ -1153,6 +1177,8 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                call F1F2QE09(z_d,a_d,qq,w2,F1d_qe,F2d_qe)
                call F1F2IN09(z_d,a_d,qq,w2,F1d_ie,F2d_ie,rc)
+c               call F1F2QE21(z_d,a_d,qq,w2,F1d_qe,F2d_qe)
+c               call F1F2IN21(z_d,a_d,qq,w2,F1d_ie,F2d_ie)
                if (.not.(F1d_ie.gt.0)) F1d_ie = 0
                if (.not.(F1d_qe.gt.0)) F1d_qe = 0
                if (.not.(F1n_ie.gt.0)) F1n_ie = 0
@@ -1255,8 +1281,10 @@ c         do ib=1,nx
 
             if (cent_x(ib).gt.0.9.and.cent_x(ib).lt.2.0) then
                call F1F2QE09(z_d,a_d,qq,w2,F1d,F2d)
+c               call F1F2QE21(z_d,a_d,qq,w2,F1d,F2d)
             elseif (cent_x(ib).lt.0.9.and.cent_x(ib).gt.0) then
                call F1F2IN09(z_d,a_d,qq,w2,F1d,F2d,rc)
+c               call F1F2IN21(z_d,a_d,qq,w2,F1d,F2d)
             endif
 
 c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ngood_for_x(ib)))
@@ -1278,20 +1306,26 @@ c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
             w2 = total_w_ave(ib)**2
             qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+c            qq = cent_q2(ib)
+            x = cent_x(ib)
             xdx = cent_x_max(ib) - cent_x(ib)
+c            w2 = mp**2 + qq*(1/x-1)
+            nu = qq/(2*mp*x)
+            ep = e_in - nu
+            thrad = 2*asin((qq/(4*e_in*ep))**(1/2))
 
 c           The section below calculates the dilution factor based on the cross-sections
 c           at the central angle/energy of the detectors and x
 c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            thrad = th_in1*d_r
+c            thrad = th_in1*d_r
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
             tnsq  = tan(thrad/2.)**2.
-            nu    = e_in - ep_in1
-            q2    = 4.*e_in*ep_in1*snsq
+c            nu    = e_in - ep_in1
+c            q2    = 4.*e_in*ep_in1*snsq
+            q2    = qq
 c            x     = q2/(2.*mp*nu)
-            x     = cent_x(ib)
-            w2    = mp*mp + q2/x - q2
+c            w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
@@ -1308,16 +1342,30 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             rc      = 0; rche    = 0; rcn     = 0; rcc     = 0;
             F1li_qe = 0; F1li_ie = 0; F2li_qe = 0; F2li_ie = 0;
             F1li    = 0; F2li    = 0; rcli    = 0;
+            call F1F2QE09(z_p,a_p,q2,w2,F1p_qe,F2p_qe)          ! Get QE  F1 & F2 for 2H
+            call F1F2QE09(z_n,a_n0,q2,w2,F1n0_qe,F2n0_qe)          ! Get QE  F1 & F2 for 2H
             call F1F2QE09(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
             call F1F2QE09(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
             call F1F2QE09(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 4He
             call F1F2QE09(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
             call F1F2QE09(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
+            call F1F2IN09(z_p,a_p,q2,w2,F1p_ie,F2p_ie,rc)       ! Get DIS F1 & F2 for 2H
+            call F1F2IN09(z_n0,a_n0,q2,w2,F1n0_ie,F2n0_ie,rc)       ! Get DIS F1 & F2 for 2H
             call F1F2IN09(z_d,a_d,q2,w2,F1d_ie,F2d_ie,rc)       ! Get DIS F1 & F2 for 2H
             call F1F2IN09(z_he,a_he,q2,w2,F1he_ie,F2he_ie,rche) ! Get DIS F1 & F2 for 4He
             call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) ! Get DIS F1 & F2 for 4He
             call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      ! Get DIS F1 & F2 for 14N
             call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      ! Get DIS F1 & F2 for 12C
+c            call F1F2QE21(z_d,a_d,q2,w2,F1d_qe,F2d_qe)          ! Get QE  F1 & F2 for 2H
+c            call F1F2QE21(z_he,a_he,q2,w2,F1he_qe,F2he_qe)      ! Get QE  F1 & F2 for 4He
+c            call F1F2QE21(z_li,a_li,q2,w2,F1li_qe,F2li_qe)      ! Get QE  F1 & F2 for 4He
+c            call F1F2QE21(z_n,a_n,q2,w2,F1n_qe,F2n_qe)          ! Get QE  F1 & F2 for 14N
+c            call F1F2QE21(z_c,a_c,q2,w2,F1c_qe,F2c_qe)          ! Get QE  F1 & F2 for 12C
+c            call F1F2IN21(z_d,a_d,q2,w2,F1d_ie,F2d_ie)       ! Get DIS F1 & F2 for 2H
+c            call F1F2IN21(z_he,a_he,q2,w2,F1he_ie,F2he_ie) ! Get DIS F1 & F2 for 4He
+c            call F1F2IN21(z_li,a_li,q2,w2,F1li_ie,F2li_ie) ! Get DIS F1 & F2 for 4He
+c            call F1F2IN21(z_n,a_n,q2,w2,F1n_ie,F2n_ie)      ! Get DIS F1 & F2 for 14N
+c            call F1F2IN21(z_c,a_c,q2,w2,F1c_ie,F2c_ie)      ! Get DIS F1 & F2 for 12C
             if (x.ge.0.75.and.x.le.5.0) then   ! If QE:
                 call get_qe_b1d(x,q2,Aout,F1out,b1out)
             elseif (x.lt.0.75.and.x.gt.0) then ! If DIS:
@@ -1342,10 +1390,20 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
                 Aout = 1.57E-2
                 b1out = -0.38E-2
             endif
+            F1p = (F1p_ie+F1p_qe)
+            F2p = (F2p_ie+F2p_qe)
+            F1n = (F1n_ie+F1n_qe)
+            F2n = (F2n0_ie+F2n0_qe)
+            F2d = (F2d_ie+F2d_qe)/2
+c            F2d = F2p*(1+F2n/F2p)/2
+c            call R1998(x,q2,R,DR,GOODFIT)
+c            F1d_code = (1+q2/nu/nu)*(F2d)/(2*x*(1+R))
             F1d_code = (F1d_ie+F1d_qe)/2
+c            F1d_code = (F1d_ie)/2
             F1d_hermes = -(2/3)*b1out/Aout
-            b1out = -1.5*Aout*(F1d_ie+F1d_qe)/2
+            b1out = -1.5*Aout*F1d_code
 
+c            call get_b1d(x,q2,Aout,F1out,b1out)
 
 c vvvv VERY PRELIMINARY PLATEAU CHANGES WIth Q^2 vvvvvvvvv
 
@@ -1419,9 +1477,10 @@ c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
      +                 + (Ntotal_for_x(ib)/2)**2/(Nunpoltotal_for_x(ib)/2)**3)
 
 c            dAzz = sqrt(Aout**2)*0.092
-            F1d = (F1d_ie + F1d_qe)/2
+c            F1d = (F1d_ie + F1d_qe)/2
+            F1d = F1d_code
             F2d = (F2d_ie + F2d_qe)/2
-            db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
+            db1d  = abs(-1.5*dAzz)*F1d
 
             dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
 
@@ -1430,7 +1489,7 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
             if (cent_x(ib).ge.0.6) then
                syst_Azz = Aout*0.1 ! To be fixed later
             endif
-            syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
+            syst_b1d = abs(-1.5*syst_Azz)*F1d
             write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
@@ -1507,6 +1566,16 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
          call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
          call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
+c         call F1F2QE21(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
+c         call F1F2QE21(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+c         call F1F2QE21(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
+c         call F1F2QE21(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
+c         call F1F2QE21(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
+c         call F1F2IN21(z_d,a_d,q2,w2,F1d_ie,F2d_ie)       !      Get F1 for Deuterium
+c         call F1F2IN21(z_he,a_he,q2,w2,F1he_ie,F2he_ie) !      Get F1 for Helium-4
+c         call F1F2IN21(z_li,a_li,q2,w2,F1li_ie,F2li_ie) !      Get F1 for Helium-4
+c         call F1F2IN21(z_n,a_n,q2,w2,F1n_ie,F2n_ie)      !      Get F1 for Nitrogen-14
+c         call F1F2IN21(z_c,a_c,q2,w2,F1c_ie,F2c_ie)      !      Get F1 for Nitrogen-14
          if (x.ge.0.75.and.x.le.5.0) then       ! If Quasi-Elastic:
              call get_qe_b1d(x,q2,Aout,F1out,b1out)
          elseif (x.lt.0.75.and.x.gt.0) then          ! If DIS:
@@ -1647,6 +1716,16 @@ c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
          call F1F2IN09(z_li,a_li,q2,w2,F1li_ie,F2li_ie,rcli) !      Get F1 for Helium-4
          call F1F2IN09(z_n,a_n,q2,w2,F1n_ie,F2n_ie,rcn)      !      Get F1 for Nitrogen-14
          call F1F2IN09(z_c,a_c,q2,w2,F1c_ie,F2c_ie,rcc)      !      Get F1 for Nitrogen-14
+c         call F1F2QE21(z_d,a_d,q2,w2,F1d_qe,F2d_qe)     !      Get F1 for Deuterium
+c         call F1F2QE21(z_he,a_he,q2,w2,F1he_qe,F2he_qe) !      Get F1 and F2 for Helium-4
+c         call F1F2QE21(z_li,a_li,q2,w2,F1li_qe,F2li_qe) !      Get F1 and F2 for Helium-4
+c         call F1F2QE21(z_n,a_n,q2,w2,F1n_qe,F2n_qe)     !      Get F1 and F2 for Nitrogen-14
+c         call F1F2QE21(z_c,a_c,q2,w2,F1c_qe,F2c_qe)     !      Get F1 and F2 for Nitrogen-14
+c         call F1F2IN21(z_d,a_d,q2,w2,F1d_ie,F2d_ie)       !      Get F1 for Deuterium
+c         call F1F2IN21(z_he,a_he,q2,w2,F1he_ie,F2he_ie) !      Get F1 for Helium-4
+c         call F1F2IN21(z_li,a_li,q2,w2,F1li_ie,F2li_ie) !      Get F1 for Helium-4
+c         call F1F2IN21(z_n,a_n,q2,w2,F1n_ie,F2n_ie)      !      Get F1 for Nitrogen-14
+c         call F1F2IN21(z_c,a_c,q2,w2,F1c_ie,F2c_ie)      !      Get F1 for Nitrogen-14
          if (x.ge.0.75.and.x.le.5.0) then       ! If Quasi-Elastic:
              call get_qe_b1d(x,q2,Aout,F1out,b1out)
          elseif (x.lt.0.75.and.x.gt.0) then          ! If DIS:
@@ -1802,7 +1881,8 @@ c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f1
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
  1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),1x,E10.3)
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
- 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),10(E10.3,1x))
+c 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),10(E10.3,1x))
+ 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),15(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
  1008 format(24(E10.3,1x))
  1009 format(A1,4(f10.3))

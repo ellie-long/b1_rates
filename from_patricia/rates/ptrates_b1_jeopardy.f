@@ -341,10 +341,10 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-c      Pzz_in    =  0.2    ! expected improvement on the target
+      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.35    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
@@ -1323,20 +1323,25 @@ c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
             w2 = total_w_ave(ib)**2
             qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+            x = cent_x(ib)
             xdx = cent_x_max(ib) - cent_x(ib)
+            nu = qq/(2*mp*x)
+            ep = ep_in - nu
+            thrad = 2*asin((qq/(4*e_in*ep))**(1/2))
 
 c           The section below calculates the dilution factor based on the cross-sections
 c           at the central angle/energy of the detectors and x
 c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            thrad = th_in1*d_r
+c            thrad = th_in1*d_r
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
             tnsq  = tan(thrad/2.)**2.
-            nu    = e_in - ep_in1
-            q2    = 4.*e_in*ep_in1*snsq
+c            nu    = e_in - ep_in1
+            q2 = qq
+c            q2    = 4.*e_in*ep_in1*snsq
 c            x     = q2/(2.*mp*nu)
-            x     = cent_x(ib)
-            w2    = mp*mp + q2/x - q2
+c            x     = cent_x(ib)
+c            w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)

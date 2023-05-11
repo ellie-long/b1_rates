@@ -1527,7 +1527,7 @@ with g2
     s5 legend  "Li\s \N"
 
 with g3
-    world 0.0, 0, 2.3, 0.6
+    world 0.0, 0, 0.5, 2.0
     stack world 0, 0, 0, 0
     znorm 1
 #    view 0.10000, 0.2, 0.50000, 0.5
@@ -1612,7 +1612,7 @@ with g3
     yaxis  label color 1
     yaxis  label place normal
     yaxis  tick on
-    yaxis  tick major 0.1
+    yaxis  tick major 1
     yaxis  tick minor ticks 3
     yaxis  tick default 6
     yaxis  tick place rounded true
