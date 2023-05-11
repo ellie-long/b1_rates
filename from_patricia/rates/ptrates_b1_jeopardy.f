@@ -21,7 +21,7 @@ c
       PARAMETER( nanobarn = 1E9        )
       PARAMETER( Navo     = 6.022E23   )   ! mol-1
 
-      INTEGER kin_in
+      INTEGER kin_in 
       INTEGER npbin,ntbin
       INTEGER ip,it
       INTEGER driftsOn
