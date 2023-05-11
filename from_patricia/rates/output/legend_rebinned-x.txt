@@ -1,5 +1,5 @@
-1	2		3	   4		 5		  	  6		   7	8		   9		  10		  11		12		    13		  14		 15			 16
-#   <x>	    xdx	   dAzz		 db1d	  	  w_ave	   qq	Ntotal	   sys_Azz    sys_b1s	  Azz	 	b1d			sig_d_u	  sig_n		 sig_he		 f_dil
+1   2       3	   4		 5		  6	   7	8	   9	      10	  11		12			13	  14		 15		 16		17
+#   <x>	    xdx	   dAzz		 db1d	  	  w_ave	   qq	Ntotal	   sys_Azz    sys_b1s	  Azz	 	b1d			sig_d_u	  sig_n		 sig_he		 f_dil		F1d
 
 
 

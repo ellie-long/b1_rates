@@ -157,8 +157,8 @@ with g0
 #    world 0, -0.01, 0.70, 0.01
 #    world 0, -0.01, 0.70, 0.012
 #    world 0, -0.015, 0.70, 0.012
-    world 0, -0.0075, 0.70, 0.012
-#    world 0, -0.015,0.7,0.012
+##    world 0, -0.0075, 0.70, 0.012
+    world 0, -0.015,0.7,0.012
     stack world 0, 0, 0, 0
     znorm 1
     view 0.10000, 0.70, 0.50000, 0.98
@@ -1200,7 +1200,8 @@ with g0
 #    s16 errorbar color 3
     s16 errorbar color 5
     s16 errorbar pattern 1
-    s16 errorbar size 0.0000
+#    s16 errorbar size 0.0000
+    s16 errorbar size 0.4600000
     s16 errorbar linewidth 2.0
     s16 errorbar linestyle 1
     s16 errorbar riser linewidth 2.0
@@ -3125,8 +3126,8 @@ with g3
 #    s8 errorbar color 3
     s8 errorbar color 5
     s8 errorbar pattern 1
-    s8 errorbar size 0.0000
-#    s8 errorbar size 0.46000
+#    s8 errorbar size 0.0000
+    s8 errorbar size 0.46000
     s8 errorbar linewidth 2.0
     s8 errorbar linestyle 1
     s8 errorbar riser linewidth 2.0

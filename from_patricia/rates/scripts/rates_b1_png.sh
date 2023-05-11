@@ -209,26 +209,30 @@ file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_stat
 echo "100	0	0	0" > temp_hms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$4}' $file7 > temp_shms_azz_stat
-awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7 > temp_shms_azz_stat
+#awk '$1==2 && $5!="NaN" {print $2,$11,0,$4}' $file7 > temp_shms_azz_stat
+awk '$1==2 && $5!="NaN" {print $2,0,0,$4}' $file7 > temp_shms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_shms_azz_stat
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_tot
 echo "100	0	0	0" > temp_hms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$9}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
-awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
+#awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
+awk '$1==2 && $5!="NaN" {print $2,0,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 
 
 echo "100	0	0	0" > temp_hms_stat
 echo "100	0	0	0" > temp_hms_tot
 #awk '$1==2 && $5!="NaN" {print $2,$12,$3,$5}' $file7 > temp_shms_stat
-awk '$1==2 && $5!="NaN" {print $2,$12,0,$5}' $file7 > temp_shms_stat
+#awk '$1==2 && $5!="NaN" {print $2,$12,0,$5}' $file7 > temp_shms_stat
+awk '$1==2 && $5!="NaN" {print $2,0,0,$5}' $file7 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_stat
 #awk '$1==2 && $5!="NaN" {print $2,$12,$3,$10}' $file7 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,$5}' $file7 > temp_shms_tot
 #awk '$1==2 && $5!="NaN" {print $2,$12,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
-awk '$1==2 && $5!="NaN" {print $2,$12,0,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
+#awk '$1==2 && $5!="NaN" {print $2,$12,0,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
+awk '$1==2 && $5!="NaN" {print $2,0,0,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 awk '$1==2 && $5!="NaN" {print $2,$12,0,sqrt($5*$5+$10*$10),0.00503/sqrt($5*$5+$10*$10)}' $file7 > b1d_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($5*$5+$10*$10)}' $file7 > temp_shms_tot
 

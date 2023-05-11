@@ -331,10 +331,10 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-c      Pzz_in    =  0.2    ! expected improvement on the target
+      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
-      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.35    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
@@ -1341,6 +1341,22 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      +                         + ((F2c_ie+F2c_qe)/12.)/nu)
             sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
+
+
+c            sigma_unpol    =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+c            sigma_unpol_d  =  2.*mott_p*(2.*((F1d_ie+F1d_qe)/2.)*tnsq/mp
+c     +                         + ((F2d_ie+F2d_qe)/2.)/nu)
+c            sigma_unpol_li =  6.*mott_p*(2.*((F1li_ie+F1li_qe)/6.)*tnsq/mp
+c     +                         + ((F2li_ie+F2li_qe)/6.)/nu)
+c            sigma_unpol_he =  4.*mott_p*(2.*((F1he_ie+F1he_qe)/4.)*tnsq/mp
+c     +                         + ((F2he_ie+F2he_qe)/4.)/nu)
+c            sigma_unpol_n  = 14.*mott_p*(2.*((F1n_ie+F1n_qe)/14.)*tnsq/mp
+c     +                         + ((F2n_ie+F2n_qe)/14.)/nu)
+c            sigma_unpol_c  = 12.*mott_p*(2.*((F1c_ie+F1c_qe)/12.)*tnsq/mp
+c     +                         + ((F2c_ie+F2c_qe)/12.)/nu)
+c            sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+
             f_dil = (lumi_d*sigma_unpol_d)/(lumi_he*sigma_unpol_he 
      +                + lumi_heli*sigma_unpol_he
      +                + lumi_n*sigma_unpol_n
@@ -1357,6 +1373,8 @@ c            dAzz = (4./(f_dil*Pzz))*(1/SQRT(Ntotal_for_x(ib)))
      +                 + (Ntotal_for_x(ib)/2)**2/(Nunpoltotal_for_x(ib)/2)**3)
 
 c            dAzz = sqrt(Aout**2)*0.092
+            F1d = (F1d_ie + F1d_qe)/2
+            F2d = (F2d_ie + F2d_qe)/2
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
 
             dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
@@ -1371,11 +1389,11 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
      &                     total_w_ave(ib),q2,Ntotal_for_x(ib),
      &                     syst_Azz,syst_b1d,
-     &                     0.0,0.0,
-c     &                     Aout,b1out,
+c     &                     0.0,0.0,
+     &                     Aout,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
-     &                     f_dil,sigma_unpol_li
+     &                     f_dil,sigma_unpol_li,F1d,F2d,rc
 c            write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
 c     &                     syst_Azz,syst_b1d,
