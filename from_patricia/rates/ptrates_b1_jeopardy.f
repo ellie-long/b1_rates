@@ -323,7 +323,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-      bcurrent  =  0.115    ! 0.085    ! microAmps
+c      bcurrent  =  0.115    ! 0.085    ! microAmps
+      bcurrent  =  0.085    ! 0.085    ! microAmps
       tgt_len   =  3.0*1.0  ! cm
       ! ND3 specs
       rho_nd3   =  1.007 ! g/cm3
@@ -341,9 +342,9 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-      Pzz_in    =  0.2    ! expected improvement on the target
+c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
-c      Pzz_in    =  0.25    ! expected improvement on the target
+      Pzz_in    =  0.26    ! expected improvement on the target
 c      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.35    ! expected improvement on the target
 
@@ -357,8 +358,8 @@ c      dAzz_rel  =  0.049     ! Rel. Sys. w/ Pzz = 26% +\- 2% (rel)
 c      dAzz_rel  =  0.083     ! Rel. Sys. w/ Pzz = 30% +\- 7% (rel)
 c      dAzz_rel  =  0.105     ! Rel. Sys. w/ Pzz = 36% +\- 9.5% (rel)
 
-c      driftsOn = 0 ! Drift systematics turned off
-      driftsOn = 1 ! Drift systematics turned on
+      driftsOn = 0 ! Drift systematics turned off
+c      driftsOn = 1 ! Drift systematics turned on
       pzzFlipsPerHr = 1
 c      pzzFlipsPerHr = 0.0833333
 
@@ -1081,7 +1082,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0043**2)
                else
 c                  syst_Azz = sqrt((Aout*dAzz_rel)**2+(0.0046*sqrt(12.0)/sqrt(144.0*3.0))**2)
-                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043*sqrt(12.0)/sqrt(prec2(1)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043*sqrt(12.0)/sqrt(prec2(1)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043*sqrt(prec2(1)/24.)/sqrt(prec2(1)*pzzFlipsPerHr))**2)
+                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
             if (spec_x.eq.0.3) then
@@ -1090,7 +1093,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0049**2)
                else
 c                  syst_Azz = sqrt((Aout*dAzz_rel)**2+(0.0037*sqrt(9.)/sqrt(216.*3.))**2)
-                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049*sqrt(9.)/sqrt(prec2(2)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049*sqrt(9.)/sqrt(prec2(2)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049*sqrt(prec2(2)/24.)/sqrt(prec2(2)*pzzFlipsPerHr))**2)
+                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
             if (spec_x.eq.0.452) then
@@ -1099,7 +1104,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0028**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0038**2)
                else
 c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 +(0.0028*sqrt(15.)/sqrt(360.*3.))**2)
-                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038*sqrt(15.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038*sqrt(15.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038*sqrt(prec2(3)/24.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
             if (spec_x.eq.0.55) then
@@ -1108,7 +1115,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0021**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0024**2)
                else
 c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0021*sqrt(36.)/sqrt(360.*3.))**2)
-                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024*sqrt(36.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024*sqrt(36.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024*sqrt(prec2(3)/24.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
 

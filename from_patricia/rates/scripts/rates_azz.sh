@@ -883,11 +883,24 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 #
 display Azz_rates_hms_shms.png
 
-#xmgrace \
-#		-settype xy			-block temp_shms_fdil				-graph 0 -bxy 1:2 \
-#		-settype xy			-block temp_hms_fdil				-graph 0 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
-#
+xmgrace \
+		-settype xy		-block temp_shms_fdil				-graph 0 -bxy 1:2 \
+		-settype xy		-block temp_hms_fdil				-graph 0 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_av18			-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_miller_Azz			-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_model_frankfurt_Azz			-graph 3 -bxy 1:2 \
+		-settype xydy 		-block temp_Azz_stat         			-graph 3 -bxy 1:2:3 \
+		-settype xydy 		-block temp_Azz_tot          			-graph 3 -bxy 1:2:3 \
+		-settype xydxdy		-block temp_hms_azz_tot				-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_hms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_tot			-graph 3 -bxy 1:2:3:4 \
+		-settype xydxdy		-block temp_shms_azz_stat			-graph 3 -bxy 1:2:3:4 \
+	        -settype xy     	-block temp_shms_azz_sys_bar   			-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
+		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
+	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+
 #
 #xmgrace \
 #		-settype bar		-block temp_1kHz			-log y	-graph 1 -bxy 1:2 \
