@@ -2225,7 +2225,7 @@ with g3
     s7 comment "Cols 1:2:3"
     s7 legend  ""
     s8 hidden false
-    s8 hidden true
+#    s8 hidden true
 #    s8 type xydxdy
 #    s8 symbol 4
     s8 symbol 3
@@ -2333,8 +2333,8 @@ with g3
     s9 comment "Cols 1:2:3"
     s9 legend  "Projected"
 
-    s10 hidden false
-#    s10 hidden true
+#    s10 hidden false
+    s10 hidden true
     s10 type xy
     s10 symbol 0
     s10 symbol size 0.50000

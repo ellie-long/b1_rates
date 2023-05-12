@@ -40,7 +40,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       INTEGER npbin,ntbin
       INTEGER ip,it
       INTEGER driftsOn
-      REAL*8 pzzFlipsPerHr
+      REAL*8 pzzFlipsPerHour
       REAL*8 z_d,z_he,z_n,z_c,z_li
       REAL*8 a_d,a_he,a_n,a_c,a_li
       REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
@@ -310,9 +310,9 @@ c      fsyst_xs  =  0.13     ! add a 5% from F1
 
 c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
-c      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.072     ! Rel. Sys. w/ Pzz=26% +\- 2% (reL)
-      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
+c      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
 c      dAzz_rel  =  0.118     ! Rel. Sys. w/ Pzz=36% +\- 9.5% (reL)
 
 c      driftsOn = 0 ! Turn off drift systematics
@@ -1452,27 +1452,26 @@ c            F1d = F1out*2
             if (driftsOn.eq.1) then
                syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
             else
-               syst_Azz = sqrt((Aout*dAzz_rel)**2 + (0.0037/sqrt(24*pzzFlipsPerHr))**2)
+               syst_Azz = sqrt((Aout*dAzz_rel)**2)
             endif
             if (spec_x.ge.0.24) then
 c               syst_Azz  = Aout*0.1   ! to be adjusted
                syst_Azz  = Aout*0.092
             endif
-c            if (spec_x.eq.0.15) then
-c               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
-c            endif 
-c            if (spec_x.eq.0.3) then
-c               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
-c            endif 
-c            if (spec_x.eq.0.452) then
-c               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0028**2)
-c            endif 
-c            if (spec_x.eq.0.55) then
-c               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0021**2)
-c            endif
+            if (spec_x.eq.0.15) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
+            endif 
+            if (spec_x.eq.0.3) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+            endif 
+            if (spec_x.eq.0.452) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0028**2)
+            endif 
+            if (spec_x.eq.0.55) then
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0021**2)
+            endif
             if (driftsOn.eq.0) then 
-c               syst_Azz = sqrt((Aout*dAzz_rel)**2)
-               syst_Azz = sqrt((Aout*dAzz_rel)**2 + (0.0037/sqrt(24*pzzFlipsPerHr))**2)
+                    syst_Azz = sqrt((Aout*dAzz_rel)**2)
             endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
 
@@ -1693,21 +1692,18 @@ c            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
 c            qq = (w2nn - md**2)/(1 - md/(cent_x(ib)*mp))
             xdx = cent_x_max(ib) - cent_x(ib)
             x     = cent_x(ib)
-            nu = qq/(2*mp*x)
-            ep_in1 = e_in - nu
-            thrad = 2*asin((qq/(4*e_in*ep_in1))**(1/2))
 
 c           The section below calculates the dilution factor based on the cross-sections
 c           at the central angle/energy of the detectors and x
 c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-c            thrad = th_in1*d_r
+            thrad = th_in1*d_r
             if (qqval2(1).eq.99.and.xval2(1).eq.100) thrad = th_in2*d_r
 c            q2    = 4.*e_in*ep_in1*snsq
             q2    = qq
 c            nu    = e_in - ep_in1
-c            nu = q2/(2*mp*x)
-c            ep_in1 = e_in - nu
-c            thrad = 2*asin(sqrt(q2/(4*e_in*ep_in1)))
+            nu = q2/(2*mp*x)
+            ep_in1 = e_in - nu
+            thrad = 2*asin(sqrt(q2/(4*e_in*ep_in1)))
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
             tnsq  = tan(thrad/2.)**2.
@@ -1928,7 +1924,8 @@ c            dAzz = sqrt(Aout**2)*0.092
             if (driftsOn.eq.1) then
                dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
             else
-               dAzz_drift(ib) = 0
+c               dAzz_drift(ib) = 0
+               dAzz_drift(ib) = (dAzz_drift(ib)/Ntotal_for_x(ib))/(sqrt(24*pzzFlipsPerHour))
             endif
 
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)

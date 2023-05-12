@@ -204,7 +204,8 @@ c      DATA xval1/    1.3, 100, 100, 100, 100/
 c      DATA xval1/    0.9, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
-      DATA prec1/    720.0,  168.0,  336.0,  720.0,  720.0/
+c      DATA prec1/    720.0,  168.0,  336.0,  720.0,  720.0/ ! <-- Proposal
+      DATA prec1/    720.0,  168.0,  336.0,  720.0,  855.716/ ! <-- Jeopardy 100 PAC Days
 c      DATA prec1/    600.0,  168.0,  336.0,  720.0,  720.0/
 c      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -221,14 +222,21 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
+c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/ ! <-- Proposal
+c      DATA prec2/    144.0,  216.0,  495.716,  168.0,  168.0/ ! <-- Jeopardy for 100 PAC Days Opt 1
+c      DATA prec2/    144.0,  351.716,  360.0,  168.0,  168.0/ ! <-- Jeopardy for 100 PAC Days Opt 2
+      DATA prec2/    144.0,  711.716,  360.0,  168.0,  168.0/ ! <-- Jeopardy for 100 PAC Days Opt 3
+c      DATA prec2/    144.0,  576.0,  360.0,  168.0,  168.0/ ! <-- Jeopardy Opt 3, no extra time
 c      DATA prec2/    104.0,  136.0,  360.0,  168.0,  168.0/
 c      DATA prec2/    576.0,  144.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
+c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/ ! <-- Main Proposal & Jeopardy
+       DATA xval2/    0.15, 0.3, 100.0, 100.0, 100.0/ ! <-- Jeopardy Opt 3
 c       DATA xval2/    0.32, 0.17, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   ! <-- Main Proposal & Jeopardy
+      DATA qqval2/   1.21, 2.0, 99, 99, 99/   ! <-- Jeopardy Opt 3
+c      DATA qqval2/   1.21, 2.58, 2.58, 99, 99/   
 c      DATA qqval2/    2.38, 1.80, 99, 99, 99/   
 
 c      DATA qqval2/    1.3, 99, 99, 99, 99/   
@@ -344,7 +352,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       ND        =  1.0     ! D-wave component
 c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
-      Pzz_in    =  0.26    ! expected improvement on the target
+c      Pzz_in    =  0.26    ! expected improvement on the target
+      Pzz_in    =  0.20    ! expected improvement on the target
 c      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.35    ! expected improvement on the target
 
