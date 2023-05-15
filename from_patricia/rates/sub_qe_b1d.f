@@ -27,6 +27,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       a_d = 2
       w2 = mp*mp + QQ/x - QQ
       call F1F2QE09(z_d,a_d,QQ,w2,F1d,F2d)
+c      call F1F2QE21(z_d,a_d,QQ,w2,F1d,F2d)
       F1out = F1d
       xplat=1.64203-0.177032*log(QQ)
       if (x.le.0.75) then

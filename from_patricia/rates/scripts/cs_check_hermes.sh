@@ -117,7 +117,7 @@ awk '$12!="NaN" {print $6,$11}' $file1 >> temp_sigma_he_nu
 awk '$12!="NaN" {print $6,$17}' $file1 >> temp_sigma_he_nu
 
 
-#file2="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-F1.out"
+file2="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-F1.out"
 # 1  = x
 # 2  = Q^2
 # 3 = F1d_ie

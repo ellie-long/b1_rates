@@ -40,6 +40,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       INTEGER npbin,ntbin
       INTEGER ip,it
       INTEGER driftsOn
+      REAL*8 pzzFlipsPerHour
       REAL*8 z_d,z_he,z_n,z_c,z_li
       REAL*8 a_d,a_he,a_n,a_c,a_li
       REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
@@ -309,13 +310,14 @@ c      fsyst_xs  =  0.13     ! add a 5% from F1
 
 c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
-c      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.072     ! Rel. Sys. w/ Pzz=26% +\- 2% (reL)
-      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
+c      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
 c      dAzz_rel  =  0.118     ! Rel. Sys. w/ Pzz=36% +\- 9.5% (reL)
 
-      driftsOn = 0 ! Turn off drift systematics
-c      driftsOn = 1 ! Turn on drift systematics
+c      driftsOn = 0 ! Turn off drift systematics
+      driftsOn = 1 ! Turn on drift systematics
+      pzzFlipsPerHour = 1
 
       ! General Parameters
       rho_he = 0.1412 ! 0.1412 g/cm^3
@@ -1922,7 +1924,8 @@ c            dAzz = sqrt(Aout**2)*0.092
             if (driftsOn.eq.1) then
                dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
             else
-               dAzz_drift(ib) = 0
+c               dAzz_drift(ib) = 0
+               dAzz_drift(ib) = (dAzz_drift(ib)/Ntotal_for_x(ib))/(sqrt(24*pzzFlipsPerHour))
             endif
 
             syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)

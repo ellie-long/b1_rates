@@ -124,8 +124,12 @@ c--      MSTW2008LO
          ipdf=3   ! 3=mstw
          iset=0   ! LO
          prefix = "../models/Grids/mstw2008lo" ! prefix for the grid files
-         CALL GetAllPDFs(prefix,iset,x,q,upv,dnv,usea,dsea,str,sbar,
-     &        chm,cbar,bot,bbar,glu,phot)
+c      vvvv Ellie edited this on 5/11/2023 to get the code running again vvvv
+c      vvvv The original is the first commented out line, the bottom is the edited code vvvv
+c         CALL GetAllPDFs(prefix,iset,x,q,upv,dnv,usea,dsea,str,sbar,
+c     &   chm,cbar,bot,bbar,glu,phot)
+         CALL GetAllPDFs(prefix,iset,x,q,upv,dnv,usea,dsea,str,sbar(ipdf,ix),
+     &   chm,cbar(ipdf,ix),bot,bbar(ipdf,ix),glu,phot)
 c         WRITE(6,*)'upv= ',upv/x
          u(ipdf,ix)    = upv/x
 c         WRITE(6,*)'u(ipdf,ix)= ',u(ipdf,ix)

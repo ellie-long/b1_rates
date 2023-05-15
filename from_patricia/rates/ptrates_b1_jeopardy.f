@@ -21,7 +21,7 @@ c
       PARAMETER( nanobarn = 1E9        )
       PARAMETER( Navo     = 6.022E23   )   ! mol-1
 
-      INTEGER kin_in
+      INTEGER kin_in  
       INTEGER npbin,ntbin
       INTEGER ip,it
       INTEGER driftsOn
@@ -204,7 +204,8 @@ c      DATA xval1/    1.3, 100, 100, 100, 100/
 c      DATA xval1/    0.9, 100, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 c      DATA prec1/    168.0,  168.0,  336.0,  720.0,  720.0/
-      DATA prec1/    720.0,  168.0,  336.0,  720.0,  720.0/
+c      DATA prec1/    720.0,  168.0,  336.0,  720.0,  720.0/ ! <-- Proposal
+      DATA prec1/    720.0,  168.0,  336.0,  720.0,  855.716/ ! <-- Jeopardy 100 PAC Days
 c      DATA prec1/    600.0,  168.0,  336.0,  720.0,  720.0/
 c      DATA prec1/   168.0,  168.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -221,14 +222,21 @@ c      DATA qqval1/    0.37, 99, 99, 99, 99/
 c      DATA xval2/    100, 100, 100, 100, 100/
 c      DATA qqval2/    99, 99, 99, 99, 99/   
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/
+c      DATA prec2/    144.0,  216.0,  360.0,  168.0,  168.0/ ! <-- Proposal
+c      DATA prec2/    144.0,  216.0,  495.716,  168.0,  168.0/ ! <-- Jeopardy for 100 PAC Days Opt 1
+c      DATA prec2/    144.0,  351.716,  360.0,  168.0,  168.0/ ! <-- Jeopardy for 100 PAC Days Opt 2
+      DATA prec2/    144.0,  711.716,  360.0,  168.0,  168.0/ ! <-- Jeopardy for 100 PAC Days Opt 3
+c      DATA prec2/    144.0,  576.0,  360.0,  168.0,  168.0/ ! <-- Jeopardy Opt 3, no extra time
 c      DATA prec2/    104.0,  136.0,  360.0,  168.0,  168.0/
 c      DATA prec2/    576.0,  144.0,  168.0,  168.0,  168.0/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/
+c       DATA xval2/    0.15, 0.3, 0.452, 100.0, 100.0/ ! <-- Main Proposal & Jeopardy
+       DATA xval2/    0.15, 0.3, 100.0, 100.0, 100.0/ ! <-- Jeopardy Opt 3
 c       DATA xval2/    0.32, 0.17, 100, 100, 100/
       ! vvvv THE GOOD ONE vvvvvvvvvvvvv<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   
+c      DATA qqval2/   1.21, 2.0, 2.58, 99, 99/   ! <-- Main Proposal & Jeopardy
+      DATA qqval2/   1.21, 2.0, 99, 99, 99/   ! <-- Jeopardy Opt 3
+c      DATA qqval2/   1.21, 2.58, 2.58, 99, 99/   
 c      DATA qqval2/    2.38, 1.80, 99, 99, 99/   
 
 c      DATA qqval2/    1.3, 99, 99, 99, 99/   
@@ -323,7 +331,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-      bcurrent  =  0.115    ! 0.085    ! microAmps
+c      bcurrent  =  0.115    ! 0.085    ! microAmps
+      bcurrent  =  0.085    ! 0.085    ! microAmps
       tgt_len   =  3.0*1.0  ! cm
       ! ND3 specs
       rho_nd3   =  1.007 ! g/cm3
@@ -343,8 +352,9 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       ND        =  1.0     ! D-wave component
 c      Pzz_in    =  0.2    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
-c      Pzz_in    =  0.25    ! expected improvement on the target
-      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.26    ! expected improvement on the target
+      Pzz_in    =  0.20    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
 c      Pzz_in    =  0.35    ! expected improvement on the target
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
@@ -357,8 +367,8 @@ c      dAzz_rel  =  0.049     ! Rel. Sys. w/ Pzz = 26% +\- 2% (rel)
 c      dAzz_rel  =  0.083     ! Rel. Sys. w/ Pzz = 30% +\- 7% (rel)
 c      dAzz_rel  =  0.105     ! Rel. Sys. w/ Pzz = 36% +\- 9.5% (rel)
 
-c      driftsOn = 0 ! Drift systematics turned off
-      driftsOn = 1 ! Drift systematics turned on
+      driftsOn = 0 ! Drift systematics turned off
+c      driftsOn = 1 ! Drift systematics turned on
       pzzFlipsPerHr = 1
 c      pzzFlipsPerHr = 0.0833333
 
@@ -1081,7 +1091,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0046**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0043**2)
                else
 c                  syst_Azz = sqrt((Aout*dAzz_rel)**2+(0.0046*sqrt(12.0)/sqrt(144.0*3.0))**2)
-                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043*sqrt(12.0)/sqrt(prec2(1)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043*sqrt(12.0)/sqrt(prec2(1)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043*sqrt(prec2(1)/24.)/sqrt(prec2(1)*pzzFlipsPerHr))**2)
+                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0043/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
             if (spec_x.eq.0.3) then
@@ -1090,7 +1102,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0049**2)
                else
 c                  syst_Azz = sqrt((Aout*dAzz_rel)**2+(0.0037*sqrt(9.)/sqrt(216.*3.))**2)
-                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049*sqrt(9.)/sqrt(prec2(2)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049*sqrt(9.)/sqrt(prec2(2)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049*sqrt(prec2(2)/24.)/sqrt(prec2(2)*pzzFlipsPerHr))**2)
+                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0049/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
             if (spec_x.eq.0.452) then
@@ -1099,7 +1113,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0028**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0038**2)
                else
 c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 +(0.0028*sqrt(15.)/sqrt(360.*3.))**2)
-                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038*sqrt(15.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038*sqrt(15.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038*sqrt(prec2(3)/24.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0038/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
             if (spec_x.eq.0.55) then
@@ -1108,7 +1124,9 @@ c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0021**2)
                   syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0024**2)
                else
 c                  syst_Azz =sqrt((Aout*dAzz_rel)**2+(0.0021*sqrt(36.)/sqrt(360.*3.))**2)
-                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024*sqrt(36.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024*sqrt(36.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+c                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024*sqrt(prec2(3)/24.)/sqrt(prec2(3)*pzzFlipsPerHr))**2)
+                  syst_Azz=sqrt((Aout*dAzz_rel)**2+(0.0024/sqrt(24.*pzzFlipsPerHr))**2)
                endif
             endif 
 
@@ -1323,20 +1341,25 @@ c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
             w2 = total_w_ave(ib)**2
             qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
+            x = cent_x(ib)
             xdx = cent_x_max(ib) - cent_x(ib)
+            nu = qq/(2*mp*x)
+            ep = ep_in - nu
+            thrad = 2*asin((qq/(4*e_in*ep))**(1/2))
 
 c           The section below calculates the dilution factor based on the cross-sections
 c           at the central angle/energy of the detectors and x
 c           vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            thrad = th_in1*d_r
+c            thrad = th_in1*d_r
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
             tnsq  = tan(thrad/2.)**2.
-            nu    = e_in - ep_in1
-            q2    = 4.*e_in*ep_in1*snsq
+c            nu    = e_in - ep_in1
+            q2 = qq
+c            q2    = 4.*e_in*ep_in1*snsq
 c            x     = q2/(2.*mp*nu)
-            x     = cent_x(ib)
-            w2    = mp*mp + q2/x - q2
+c            x     = cent_x(ib)
+c            w2    = mp*mp + q2/x - q2
 c           vvv The Mott cross sections below are in barns (1E-24 cm^2)
             mott_p  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
             mott_d  = hbarc2*((1*alpha*cos(thrad/2.)/(2.*e_in*snsq))**2.)
