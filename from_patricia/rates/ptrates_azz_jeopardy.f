@@ -185,6 +185,11 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 P(0:23)
       REAL*8 sigrsv(7),sig_nr,sigmec
 
+      LOGICAL useSHMS
+      LOGICAL useHMS
+      LOGICAL extraTime
+      LOGICAL split
+
       INTEGER test
 
       COMMON /VPLRZ/ E0_PASS,TH_PASS,EP_PASS
@@ -200,8 +205,6 @@ c !$OMP THREADPRIVATE(/tst2/)
 
       test = 0   ! Test Mode OFF
 c      test = 1   ! Test Mode ON
-
-
 
 
 c vvvv binMax = 17 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -264,6 +267,19 @@ c      csmodel   = 'Bosted_dis'   ! Set the code used to calculate the cross sec
 c      csmodel   = 'Bosted_qe'    ! Set the code used to calculate the cross sections
       csmodel   = 'Sargsian'     ! Set the code used to calculate the cross sections
 c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!!!!!!!!!!!!
+
+      extraTime = .FALSE.
+      split = .FALSE.
+
+      extraTime = .TRUE.
+      split = .TRUE.
+
+      useHMS = .FALSE.
+      useSHMS = .FALSE.
+
+c      useHMS = .TRUE.
+      useSHMS = .TRUE.
+
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
       e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
@@ -280,7 +296,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-      bcurrent  =  0.100    ! 0.085    ! microAmps
+c      bcurrent  =  0.100    ! 0.085    ! microAmps
+      bcurrent  =  0.085    ! 0.085    ! microAmps
 c      bcurrent  =  0.080    ! 0.085    ! microAmps
 c      tgt_len   =  3.0*1.0  ! cm
       tgt_len   =  3.0*1.0  ! cm
@@ -300,7 +317,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
+      Pzz_in    =  0.26    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
 c      Pzz_in    =  0.40    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
@@ -310,13 +328,13 @@ c      fsyst_xs  =  0.13     ! add a 5% from F1
 
 c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
-      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+c      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.072     ! Rel. Sys. w/ Pzz=26% +\- 2% (reL)
-c      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
+      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
 c      dAzz_rel  =  0.118     ! Rel. Sys. w/ Pzz=36% +\- 9.5% (reL)
 
-c      driftsOn = 0 ! Turn off drift systematics
-      driftsOn = 1 ! Turn on drift systematics
+      driftsOn = 0 ! Turn off drift systematics
+c      driftsOn = 1 ! Turn on drift systematics
       pzzFlipsPerHour = 1
 
       ! General Parameters
@@ -365,16 +383,24 @@ c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.6.6) then
-         prec1(1)  = 96
-         xval1(1)  = 1.5
-         qqval1(1) = 1.8
+      if ((e_in.eq.6.6) .and. useHMS) then     ! <-- HMS Good!
+         prec1(1)  = 96         ! <-- HMS Good!
+         if (extraTime) then
+            if (split) then
+               prec1(1)  = 116.75         ! <-- HMS Good!
+            else
+               prec1(1)  = 132.7         ! <-- HMS Good!
+            endif
+         endif
+         xval1(1)  = 1.5        ! <-- HMS Good!
+         qqval1(1) = 1.8        ! <-- HMS Good!
+      endif                     ! <-- HMS Good!
        ! vvv 10 deg constraint vvv
 c         prec1(1) = 300
 c         xval1(1) = 1.5
 c         qqval1(1) = 1.8
        ! ^^^^^^^^^^^^^^^^^^^^^^^^^
-      endif
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvvv
@@ -393,26 +419,41 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.8.8) then
-         prec1(1) = 300
-         xval1(1) = 1.0
-         qqval1(1) = 2.89
+      if ((e_in.eq.8.8) .and. useHMS) then     ! <-- HMS Good!
+         prec1(1) = 300         ! <-- HMS Good!
+         if (extraTime) then
+            if (split) then
+               prec1(1)  = 364.8         ! <-- HMS Good!
+            else
+               prec1(1)  = 414.7         ! <-- HMS Good!
+            endif
+         endif
+         xval1(1) = 1.0         ! <-- HMS Good!
+         qqval1(1) = 2.89       ! <-- HMS Good!
+      endif                     ! <-- HMS Good!
       ! vvv Using HMS as proton spectrometer vvv
 c         prec1(1) = 300
 c         xval1(1) = 1.8
 c         qqval1(1) = 22
       ! ^^^ Using HMS as proton spectrometer ^^^
 
-      endif
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.2.2) then
-        prec1(1)  = 12
-        xval1(1)  = 1.8
-        qqval1(1) = 0.31 
-      endif
+      if ((e_in.eq.2.2) .and. useHMS) then     ! <-- HMS Good!
+        prec1(1)  = 12          ! <-- HMS Good!
+        if (extraTime) then
+           if (split) then
+              prec1(1)  = 14.6         ! <-- HMS Good!
+           else
+              prec1(1)  = 16.6         ! <-- HMS Good!
+           endif
+        endif
+        xval1(1)  = 1.8         ! <-- HMS Good!
+        qqval1(1) = 0.31        ! <-- HMS Good!
+      endif                     ! <-- HMS Good!
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -458,10 +499,18 @@ c         qqval2(1) = 2
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.8.8) then
-         prec2(1) = 300
-         xval2(1) = 1.8
-         qqval2(1) = 1.5
+      if ((e_in.eq.8.8) .and. useSHMS) then     ! <-- SHMS Good!
+         prec2(1) = 300         ! <-- SHMS Good!
+         if (extraTime) then
+            if (split) then
+               prec2(1)  = 364.8         ! <-- HMS Good!
+            else
+               prec2(1)  = 414.7         ! <-- HMS Good!
+            endif
+         endif
+         xval2(1) = 1.8         ! <-- SHMS Good!
+         qqval2(1) = 1.5        ! <-- SHMS Good!
+      endif                     ! <-- SHMS Good!
        ! vvv 8.5 deg constraint vvv
 c         prec2(1) = 300
 c         xval2(1) = 1.8
@@ -472,13 +521,20 @@ c         prec2(1) = 300
 c         xval2(1) = 1.8
 c         qqval2(1) = 2.181
        ! ^^^^^^^^^^^^^^^^^^^^^^^^^
-      endif
+c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
       ! vvvvv Proposal Azz at E0= 6.6 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.6.6) then
+      if ((e_in.eq.6.6) .and. useSHMS) then
          prec2(1) = 96
+         if (extraTime) then
+            if (split) then
+               prec2(1)  = 116.75         ! <-- HMS Good!
+            else
+               prec2(1)  = 132.7         ! <-- HMS Good!
+            endif
+         endif
          xval2(1) = 1.5
          qqval2(1) = 0.71
         ! vvv 8.5 deg constraint vvv
@@ -500,8 +556,15 @@ c         qqval2(1) = 1.8
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 2.2 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.2.2) then
+      if ((e_in.eq.2.2) .and. useSHMS) then
          prec2(1) = 12
+         if (extraTime) then
+            if (split) then
+               prec2(1)  = 14.6         ! <-- HMS Good!
+            else
+               prec2(1)  = 16.6         ! <-- HMS Good!
+            endif
+         endif
          xval2(1) = 1.8
          qqval2(1) = 0.17
 
@@ -522,7 +585,7 @@ c      endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Potential Azz at E0= 4.4 GeV vvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.4.4) then
+      if ((e_in.eq.4.4) .and. useSHMS) then
        ! vvv 10 deg constraint vvv
          prec2(1) = 96
          xval2(1) = 1.5
@@ -2549,6 +2612,9 @@ c     vvvvvvvvvvvvv Reminder output vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
          endif
 
       enddo
+      write (6,*) "------------------------------------------"
+      write (6,*) "HMS Time (Hr):",prec1(1)
+      write (6,*) "SHMS Time (Hr):",prec2(1)
       write (6,*) "------------------------------------------"
       write (6,*) "Beam E used:",e_in
       write (6,*) "E' used for f_dil:",ep_in1

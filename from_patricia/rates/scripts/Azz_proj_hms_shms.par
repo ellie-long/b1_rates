@@ -2,9 +2,11 @@
 #
 version 50122
 page size 1200, 800
+#page size 4800, 3200
 page scroll 5%
 page inout 5%
 link page off
+DEVICE "PNG" OP "transparent:on"
 map font 0 to "Times-Roman", "Times-Roman"
 map font 1 to "Times-Italic", "Times-Italic"
 map font 2 to "Times-Bold", "Times-Bold"
@@ -1817,8 +1819,8 @@ with g3
 
 
 
-    s0 hidden false
-#    s0 hidden true
+#    s0 hidden false
+    s0 hidden true
     s0 type xy
     s0 symbol 0
     s0 symbol size 0.50000
@@ -1868,8 +1870,8 @@ with g3
     s0 comment "Cols 1:2:3"
     s0 legend "Virtual Nucleon (AV18)"
 
-    s1 hidden false
-#    s1 hidden true
+#    s1 hidden false
+    s1 hidden true
     s1 type xy
     s1 symbol 0
     s1 symbol size 0.50000
@@ -1970,8 +1972,8 @@ with g3
     s2 legend "Miller"
 
 
-    s3 hidden false
-#    s3 hidden true
+#    s3 hidden false
+    s3 hidden true
     s3 type xy
     s3 symbol 0
     s3 symbol size 0.50000
@@ -2384,8 +2386,8 @@ with g3
     s10 comment "Cols 1:2:3"
 #    s10 legend "Systematic Uncertainty"
 
-    s11 hidden false
-#    s11 hidden true
+#    s11 hidden false
+    s11 hidden true
     s11 type xy
     s11 symbol 0
     s11 symbol size 0.50000
@@ -2435,8 +2437,8 @@ with g3
     s11 comment "Cols 1:2:3"
     s11 legend "Virtual Nucleon (CDBonn)"
 
-    s12 hidden false
-#    s12 hidden true
+#    s12 hidden false
+    s12 hidden true
     s12 type xy
     s12 symbol 0
     s12 symbol size 0.50000

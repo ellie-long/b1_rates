@@ -283,6 +283,7 @@ awk '$1==2 && $5!="NaN" {print $2,$11,0,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_a
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 #awk '$1==2 && $5!="NaN" {print $2,0,$3,sqrt($4*$4+$9*$9)}' $file7 > temp_shms_azz_tot
 
+awk '$1==2 && $5!="NaN" {print $2,$11,$4,$9}' $file7 > temp_azz_phys_tot
 
 echo "100	0	0	0" > temp_hms_stat
 echo "100	0	0	0" > temp_hms_tot
@@ -877,7 +878,8 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xycolor	-block temp_shms_nu5				-graph 9 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_nu_c				-graph 9 -bxy 1:2 \
 		-settype xy		-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png.par -noask 
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms2.par -noask 
 
 #
