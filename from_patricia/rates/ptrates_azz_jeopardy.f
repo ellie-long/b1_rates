@@ -272,19 +272,19 @@ c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!
       split = .FALSE.
 
       extraTime = .TRUE.
-      split = .TRUE.
+c      split = .TRUE.
 
       useHMS = .FALSE.
       useSHMS = .FALSE.
 
-c      useHMS = .TRUE.
-      useSHMS = .TRUE.
+      useHMS = .TRUE.
+c      useSHMS = .TRUE.
 
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
-      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
