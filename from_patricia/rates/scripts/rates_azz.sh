@@ -25,40 +25,48 @@ file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
 awk '$1!="#" {print $1,$3,$4}' $file0 > temp_Azz_stat
 awk '$1!="#" {print $1,$3,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 
+file_all_models="../../models/all_Azz_calculations.csv"
+spec="S1"
+awk '$1=="'$spec'" && $2=="VN-AV18" && $5=="Misak" {print $3,$4}' $file_all_models > temp_misak_vn_av18
+awk '$1=="'$spec'" && $2=="VN-CDBonn" && $5=="Misak" {print $3,$4}' $file_all_models > temp_misak_vn_cdbonn
+awk '$1=="'$spec'" && $2=="LC-AV18" && $5=="Misak" {print $3,$4}' $file_all_models > temp_misak_lc_av18
+awk '$1=="'$spec'" && $2=="LC-CDBonn" && $5=="Misak" {print $3,$4}' $file_all_models > temp_misak_lc_cdbonn
+#awk '$1=="'$spec'" && $2=="AV18-Norm" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_norm_av18
+#awk '$1=="'$spec'" && $2=="AV18-Norm-Rel" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_norm_av18_rel
+#awk '$1=="'$spec'" && $2=="AV18-Norm-MEC" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_norm_av18_mec
+#awk '$1=="'$spec'" && $2=="AV18-Norm-MEC-IC" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_norm_av18_mec_ic
+awk '$1=="'$spec'" && $2=="AV18-Norm-MEC-IC-Rel" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_norm_av18_mec_ic_rel
+awk '$1=="'$spec'" && $2=="Bonn-Norm-MEC-IC-Rel" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_norm_bonn_mec_ic_rel
+#awk '$1=="'$spec'" && $2=="AV18-PWBA-NR" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_av18_pwba_nr
+awk '$1=="'$spec'" && $2=="AV18-PWBA-RC" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_av18_pwba_rc
+awk '$1=="'$spec'" && $2=="Bonn-PWBA-RC" && $5=="Arenhovel" {print $3,$4}' $file_all_models > temp_arenhovel_bonn_pwba_rc
+awk '$1=="'$spec'" && $2=="PW-AV18" && $5=="Wim" {print $3,$4}' $file_all_models > temp_wim_pw_av18
+awk '$1=="'$spec'" && $2=="PW-CDBonn" && $5=="Wim" {print $3,$4}' $file_all_models > temp_wim_pw_cdbonn
+awk '$1=="'$spec'" && $2=="PW+FSIOff-AV18" && $5=="Wim" {print $3,$4}' $file_all_models > temp_wim_pw_fsioff_av18
+awk '$1=="'$spec'" && $2=="PW+FSIOff-CDBonn" && $5=="Wim" {print $3,$4}' $file_all_models > temp_wim_pw_fsioff_cdbonn
+awk '$1=="'$spec'" && $2=="PW+FSIOn-AV18" && $5=="Wim" {print $3,$4}' $file_all_models > temp_wim_pw_fsion_av18
+awk '$1=="'$spec'" && $2=="PW+FSIOn-CDBonn" && $5=="Wim" {print $3,$4}' $file_all_models > temp_wim_pw_fsion_cdbonn
+
+
+
+
+#hms_scale=`awk 'BEGIN{scale = 19/('$hms_csmax'-'$hms_csmin')} END {print scale}' $file6`
+
+
 file_misak1="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/vn-av18.dat"
 file_misak2="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/vn-cdbonn.dat"
 file_misak3="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-av18.dat"
 file_misak4="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-cdbonn.dat"
-awk '$1>0 && $1<100 {print $1,$2}' $file_misak1 > temp_misak_vn_av18
-awk '$1>0 && $1<100 {print $1,$2}' $file_misak2 > temp_misak_vn_cdbonn
-awk '$1>0 && $1<100 {print $1,$2}' $file_misak3 > temp_misak_lc_av18
-awk '$1>0 && $1<100 {print $1,$2}' $file_misak4 > temp_misak_lc_cdbonn
+#awk '$1>0 && $1<100 {print $1,$2}' $file_misak1 > temp_misak_vn_av18
+#awk '$1>0 && $1<100 {print $1,$2}' $file_misak2 > temp_misak_vn_cdbonn
+#awk '$1>0 && $1<100 {print $1,$2}' $file_misak3 > temp_misak_lc_av18
+#awk '$1>0 && $1<100 {print $1,$2}' $file_misak4 > temp_misak_lc_cdbonn
 
 #awk '$1!="#" {print $1,0,$7}' $file0 > temp_xb1_stat
 #awk '$1!="#" {print $1,0,sqrt($7*$7+$8*$8)}' $file0 > temp_xb1_tot
 #awk '$1!="#" {print $1,0,$4}' $file0 > temp_Azz_stat
 #awk '$1!="#" {print $1,0,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 
-file1="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_kumano.dat"
-awk '$1==1 {print $2,$11}' $file1 > temp_model_nosea_Azz
-awk '$1==1 {print $2,$12}' $file1 > temp_model_sea_Azz
-awk '$1==2 {print $2,$11}' $file1 > temp_model_nosea_Azz
-awk '$1==2 {print $2,$12}' $file1 > temp_model_sea_Azz
-awk '$1==3 {print $2,$11}' $file1 > temp_model_nosea_Azz
-awk '$1==3 {print $2,$12}' $file1 > temp_model_sea_Azz
-
-
-file2="/home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_newtable/miller_nov11_2010.dat"
-awk '$1==3 && $2<=0.6 {print $2,$5}' $file2 > temp_model_miller_Azz
-
-
-file3="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_sargsian.dat"
-awk '$1==1 && $2>=0.15 {print $2,$4/$2}' $file3 > temp_model_sargsian_vn
-awk '$1==1 && $2>=0.15 {print $2,$6/$2}' $file3 > temp_model_sargsian_lc
-
-file5="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_bacchetta.dat"
-awk '$1==1 && $2!=0.0{print $2,$4/$2}' $file5 > temp_model_bacchetta_low
-awk '$1==1 && $2!=0.0{print $2,$5/$2}' $file5 > temp_model_bacchetta_up
 
 file_ah="/home/ellie/physics/b1/b1_rates/from_patricia/models/arenhovel/arenhovel_azz.dat"
 awk '$1==0.3{print $12,$13}' $file_ah > temp_aren_03_av18
@@ -901,6 +909,16 @@ xmgrace \
 	        -settype xy     	-block temp_shms_azz_sys_bar   			-graph 3 -bxy 1:2 \
 		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
 		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_arenhovel_norm_av18_mec_ic_rel	-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_arenhovel_norm_bonn_mec_ic_rel	-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_arenhovel_av18_pwba_rc		-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_arenhovel_bonn_pwba_rc		-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_wim_pw_av18				-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_wim_pw_cdbonn			-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_wim_pw_fsioff_av18			-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_wim_pw_fsioff_cdbonn		-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_wim_pw_fsion_av18			-graph 3 -bxy 1:2 \
+ 		-settype xy   		-block temp_wim_pw_fsion_cdbonn			-graph 3 -bxy 1:2 \
 	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 
 #
