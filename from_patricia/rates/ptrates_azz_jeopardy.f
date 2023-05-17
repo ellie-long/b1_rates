@@ -65,6 +65,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       REAL*8 deltae
       REAL*8 w2min,w2max,w2pion,K_fact,w2nn,cent_w2nn
+      REAL*8 qminus,alphatn
 
       REAL*8 tb,ta,teff
       REAL*8 aux(7)
@@ -271,8 +272,8 @@ c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!
       extraTime = .FALSE.
       split = .FALSE.
 
-      extraTime = .TRUE.
-      split = .TRUE.
+c      extraTime = .TRUE.
+c      split = .TRUE.
 
       useHMS = .FALSE.
       useSHMS = .FALSE.
@@ -296,8 +297,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-c      bcurrent  =  0.100    ! 0.085    ! microAmps
-      bcurrent  =  0.085    ! 0.085    ! microAmps
+      bcurrent  =  0.100    ! 0.085    ! microAmps
+c      bcurrent  =  0.085    ! 0.085    ! microAmps
 c      bcurrent  =  0.080    ! 0.085    ! microAmps
 c      tgt_len   =  3.0*1.0  ! cm
       tgt_len   =  3.0*1.0  ! cm
@@ -317,8 +318,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-c      Pzz_in    =  0.30    ! expected improvement on the target
-      Pzz_in    =  0.26    ! expected improvement on the target
+      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.26    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
 c      Pzz_in    =  0.40    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
@@ -1637,11 +1638,12 @@ c               qq = (w2nn - md**2)/(1/(cent_x(ib)*mp/md) - 1)
 
                db1d  = abs(-1.5*dAzz)*F1d/2
                
-               if (driftsOn.eq.1) then  
-                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
-               else
-                  syst_Azz = sqrt((Aout*dAzz_rel)**2)
-               endif
+               syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+c               if (driftsOn.eq.1) then  
+c                  syst_Azz = sqrt((Aout*dAzz_rel)**2 + 0.0037**2)
+c               else
+c                  syst_Azz = sqrt((Aout*dAzz_rel)**2)
+c               endif
 c               if (spec_x.gt.0.6) then
 c                  syst_Azz = Aout*0.1
 c                  syst_Azz = Aout*0.14
@@ -1663,9 +1665,9 @@ c               endif
                   else 
                      dAzz_drift(ib) = dAzz_drift(ib) +0.0019*drift_scale
                   endif 
-                  if (driftsOn.eq.0) then
-                     dAzz_drift(ib) = 0
-                  endif
+c                  if (driftsOn.eq.0) then
+c                     dAzz_drift(ib) = 0
+c                  endif
 
                endif
 c               dAzz_drift(ib) = 0 ! To be fixed later 
@@ -1750,11 +1752,13 @@ c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
             w2 = total_w_ave(ib)**2
             qq = total_q_ave(ib)**2
-c            w2 = total_wnn_ave(ib)**2
+            w2nn = total_wnn_ave(ib)**2
+            wnn = total_wnn_ave(ib)
 c            qq = (w2 - mp**2)/(1/cent_x(ib) - 1)
 c            qq = (w2nn - md**2)/(1 - md/(cent_x(ib)*mp))
             xdx = cent_x_max(ib) - cent_x(ib)
             x     = cent_x(ib)
+
 
 c           The section below calculates the dilution factor based on the cross-sections
 c           at the central angle/energy of the detectors and x
@@ -1766,6 +1770,11 @@ c            q2    = 4.*e_in*ep_in1*snsq
 c            nu    = e_in - ep_in1
             nu = q2/(2*mp*x)
             ep_in1 = e_in - nu
+
+            qminus = nu - sqrt(q2+(q2*q2)/(md**2*x**2))
+
+            alphatn = 2 - ((qminus+md)/md)*(1+(sqrt(w2nn-md**2)/wnn))
+
             thrad = 2*asin(sqrt(q2/(4*e_in*ep_in1)))
             snsq  = sin(thrad/2.)**2.
             cssq  = cos(thrad/2.)**2.
@@ -1985,14 +1994,14 @@ c            dAzz = sqrt(Aout**2)*0.092
             db1d  = abs(-1.5*dAzz)*(F1d_ie+F1d_qe)/2
 
             if (driftsOn.eq.1) then
-               dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
+c               dAzz_drift(ib) = dAzz_drift(ib)/Ntotal_for_x(ib)
+               dAzz_drift(ib) = (2/(f_dil*Pzz_in))*(0.0001 + 0.0001)
             else
 c               dAzz_drift(ib) = 0
-               dAzz_drift(ib) = (dAzz_drift(ib)/Ntotal_for_x(ib))/(sqrt(24*pzzFlipsPerHour))
+c               dAzz_drift(ib) = (dAzz_drift(ib)/Ntotal_for_x(ib))/(sqrt(24*pzzFlipsPerHour))
+               dAzz_drift(ib) = (2/(f_dil*Pzz_in))*(0.0001 + 0.0001)/(sqrt(24*pzzFlipsPerHour))
             endif
 
-            syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)
-c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
             if (e_in.eq.8.8) then
                if (cent_x(ib).eq.0.8)  Aout = -6.2808628/43.223160
                if (cent_x(ib).eq.0.9)  Aout =  8.9649267/217.15784
@@ -2006,11 +2015,15 @@ c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
                if (cent_x(ib).eq.1.7)  Aout = -2.7280214/3.5652487
                if (cent_x(ib).eq.1.8)  Aout = -1.2216212/2.3818970
             endif
-            if (cent_x(ib).ge.0.25) then
+
+            syst_Azz = sqrt((Aout*dAzz_rel)**2 + dAzz_drift(ib)**2)
+c            syst_b1d = abs(-1.5*syst_Azz)*F1d/2
+
+c            if (cent_x(ib).ge.0.25) then
 c               syst_Azz = Aout*0.1 ! To be fixed later
 c               syst_Azz = abs(Aout*0.092) ! To be fixed later
-               syst_Azz = abs(Aout*dAzz_rel) ! To be fixed later
-            endif
+c               syst_Azz = abs(Aout*dAzz_rel) ! To be fixed later
+c            endif
             syst_b1d = abs(-1.5*syst_Azz)*(F1d_ie+F1d_qe)/2
             t20       = 0.0
             dt20_stat = 0.0
@@ -2031,7 +2044,8 @@ c     &                     Aout,b1out,
 c     &                     0.75*Aout,b1out,
      &                     sigma_unpol_d,sigma_unpol_n,sigma_unpol_he,
      &                     f_dil,sigma_unpol_li,
-     &                     t20,dt20_stat,dt20_sys,dt20
+     &                     t20,dt20_stat,dt20_sys,dt20,
+     &                     alphatn
 c            write(14,1006) 2,cent_x(ib),xdx,dAzz,db1d,
 c     &                     total_w_ave(ib),qq,Ntotal_for_x(ib),
 c     &                     syst_Azz,syst_b1d,
@@ -2661,7 +2675,7 @@ c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f1
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
  1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
- 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),14(E10.3,1x))
+ 1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),18(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
  1008 format(24(E10.3,1x))
  1009 format(A1,6(f10.3))
