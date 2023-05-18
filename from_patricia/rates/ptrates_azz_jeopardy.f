@@ -116,7 +116,8 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8  lumiSig, goodRateTotal, physRateTotal
       REAL*8  goodRate_d, goodRate_n, goodRate_he, goodRate_li
 
-      INTEGER, PARAMETER :: binMax = 17
+c      INTEGER, PARAMETER :: binMax = 17
+      INTEGER, PARAMETER :: binMax = 15
       INTEGER ixsum(binMax),ib
       INTEGER allixsum(binMax)
       REAL*8  sigpara,sigperp,e_fact,scale,b1d_scaled,scale_time
@@ -210,9 +211,16 @@ c      test = 1   ! Test Mode ON
 
 c vvvv binMax = 17 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 c For Azz, our target range is 0.8 < x < 2.2
-      DATA cent_x/     0.3,   0.4,  0.5,  0.6,  0.7,  0.8,  0.9,0.999, 1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  2.0/
-      DATA cent_x_min/ 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.90/ 
-      DATA cent_x_max/ 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 2.10/ 
+c      DATA cent_x/     0.3,   0.4,  0.5,  0.6,  0.7,  0.8,  0.9,0.999, 1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  2.0/
+c      DATA cent_x_min/ 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.90/ 
+c      DATA cent_x_max/ 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.55, 1.65, 1.75, 1.85, 2.10/ 
+
+c Alt #1
+      DATA cent_x/     0.3,   0.4,  0.5,  0.6,  0.7,  0.8,  0.9,0.999, 1.1,  1.2,  1.3,  1.4, 1.55, 1.75,  2.0/
+      DATA cent_x_min/ 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.90/ 
+      DATA cent_x_max/ 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95,1.05, 1.15, 1.25, 1.35, 1.45, 1.65, 1.85, 2.10/ 
+
+
 
 c      DATA cent_x/     0.8,  0.9, 1.01,  1.1,  1.2,  1.3, 1.45, 1.65, 1.8,  2.0,  3.8,  3.0,  4.0,  4.1/ 
 c      DATA cent_x_min/ 0.75, 0.85,0.95, 1.05, 1.15, 1.25, 1.35, 1.55, 1.75, 1.85, 3.75, 2.85, 3.95, 4.05/ 
@@ -278,14 +286,14 @@ c      split = .TRUE.
       useHMS = .FALSE.
       useSHMS = .FALSE.
 
-c      useHMS = .TRUE.
-      useSHMS = .TRUE.
+      useHMS = .TRUE.
+c      useSHMS = .TRUE.
 
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
-      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
