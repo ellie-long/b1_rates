@@ -280,8 +280,8 @@ c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!
       extraTime = .FALSE.
       split = .FALSE.
 
-c      extraTime = .TRUE.
-c      split = .TRUE.
+      extraTime = .TRUE.
+      split = .TRUE.
 
       useHMS = .FALSE.
       useSHMS = .FALSE.
@@ -305,8 +305,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-      bcurrent  =  0.100    ! 0.085    ! microAmps
-c      bcurrent  =  0.085    ! 0.085    ! microAmps
+c      bcurrent  =  0.100    ! 0.085    ! microAmps
+      bcurrent  =  0.085    ! 0.085    ! microAmps
 c      bcurrent  =  0.080    ! 0.085    ! microAmps
 c      tgt_len   =  3.0*1.0  ! cm
       tgt_len   =  3.0*1.0  ! cm
@@ -326,8 +326,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-      Pzz_in    =  0.30    ! expected improvement on the target
-c      Pzz_in    =  0.26    ! expected improvement on the target
+c      Pzz_in    =  0.30    ! expected improvement on the target
+      Pzz_in    =  0.26    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
 c      Pzz_in    =  0.40    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
