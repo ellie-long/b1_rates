@@ -289,11 +289,11 @@ c      split = .TRUE.
       useHMS = .TRUE.
 c      useSHMS = .TRUE.
 
-c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
 c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
@@ -465,7 +465,20 @@ c      endif
       endif                     ! <-- HMS Good!
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
+      ! vvvvv Proposal b1 at E0= 11 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if ((e_in.eq.11.0) .and. useHMS) then     ! <-- HMS Good!
+         prec1(1) = 360 !720/2         ! <-- HMS Good!
+         if (extraTime) then
+            if (split) then
+               prec1(1)  = 427.858         ! <-- HMS Good!
+            else
+               prec1(1)  = 427.858         ! <-- HMS Good!
+            endif
+         endif
+         xval1(1) = 0.55         ! <-- HMS Good!
+         qqval1(1) = 3.82       ! <-- HMS Good!
+      endif                     ! <-- HMS Good!
+ 
 
 c ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -496,7 +509,7 @@ c      DATA qqval2/   1.8,   99,    99,    99,    99/
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       ! vvvvv Proposal Azz at E0= 11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
-      if (e_in.eq.11.0) then
+c      if (e_in.eq.11.0) then
 c         prec2(1) = 300
 c         xval2(1) = 0.953
 c         qqval2(1) = 1.788
@@ -504,8 +517,21 @@ c         qqval2(1) = 1.788
 c         prec2(1) = 120
 c         xval2(1) = 0.2
 c         qqval2(1) = 2
+c      endif
+      ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      ! vvvvv Proposal b1 at E0= 11.0 GeV vvvvvvvvvvvvvvvvvvvvvvvv
+      if ((e_in.eq.11.0) .and. useSHMS) then
+         prec2(1) = 180 ! 360/2
+         xval2(1) = 0.452
+         qqval2(1) = 2.58
+
+c         prec2(1) = 120
+c         xval2(1) = 0.2
+c         qqval2(1) = 2
       endif
       ! ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
       ! vvvvv Proposal Azz at E0= 8.8 GeV vvvvvvvvvvvvvvvvvvvvvvvv
       if ((e_in.eq.8.8) .and. useSHMS) then     ! <-- SHMS Good!
