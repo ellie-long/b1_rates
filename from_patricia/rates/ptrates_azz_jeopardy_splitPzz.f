@@ -44,6 +44,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 z_d,z_he,z_n,z_c,z_li
       REAL*8 a_d,a_he,a_n,a_c,a_li
       REAL*8 e_in,ep_in,th_in,y_in,Pzz_in,superth_in
+      REAL*8 Pzz_pos_in,Pzz_neg_in
       REAL*8 th_in1,ep_in1,th_in2,ep_in2
       REAL*8 A,d_r
       REAL*8 dp_p,dp_m,dtheta,dphi,acc,hms_min,theta_res
@@ -78,6 +79,7 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
       REAL*8 mott_d,mott_he,mott_n,mott_p,mott_c,mott_li
       REAL*8 Pzz,Aout,F1out,b1out,F2out,F1in,F1qe
+      REAL*8 Pzz_pos,Pzz_neg
       REAL*8 F1d,F2d,F1he,F2he,F1n,F2n,F1c,F2c,F1li,F2li
       REAL*8 F1d_ie,F2d_ie,F1he_ie,F2he_ie,F1n_ie,F2n_ie,F1c_ie,F2c_ie
       REAL*8 F1li_ie,F2li_ie
@@ -91,8 +93,10 @@ c ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       REAL*8 lumsig_u_d,lumsig_he,lumsig_n,lumsig_c,lumsig_li
       REAL*8 lumsig_p_d,lumsig_heli
       REAL*8 sigma_pol_d,sigma_unpol_li,allsigma_unpol_li
+      REAL*8 sigma_neg_pol_d
       REAL*8 allsigma_unpol_d,allsigma_unpol_he,allsigma_unpol_n
       REAL*8 allsigma_pol_d,tot_allsigma
+      REAL*8 allsigma_neg_pol_d
       REAL*8 sigma_unpol_xem
       REAL*8 sigma_meas
       REAL*4 dis_raw,qe_raw,mod_raw
@@ -280,20 +284,20 @@ c !!!!!!!!!! NOTE: IF YOU USE LiD, YOU NEED TO CHANGE THE LUMINOSITY !!!!!!!!!!!
       extraTime = .FALSE.
       split = .FALSE.
 
-c      extraTime = .TRUE.
-c      split = .TRUE.
+      extraTime = .TRUE.
+      split = .TRUE.
 
       useHMS = .FALSE.
       useSHMS = .FALSE.
 
-      useHMS = .TRUE.
-c      useSHMS = .TRUE.
+c      useHMS = .TRUE.
+      useSHMS = .TRUE.
 
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
@@ -327,10 +331,13 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
 
       ND        =  1.0     ! D-wave component
 c      Pzz_in    =  0.30    ! expected improvement on the target
-      Pzz_in    =  0.26    ! expected improvement on the target
+c      Pzz_in    =  0.26    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
 c      Pzz_in    =  0.40    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
+
+      Pzz_pos_in = 0.123
+      Pzz_neg_in = -0.0789
 
 c      fsyst_xs  =  0.13     ! add a 5% from F1
       fsyst_xs  =  0.05     ! add a 5% from F1
@@ -836,7 +843,9 @@ c         lumi_li = (Navo*(rho_lid/M_lid)*pack_lid)*Nelec*tgt_len        ! lumin
 
 
 c      Pzz   = Pzz_fact *(2. - sqrt(4. - 3.*Pz**2))    ! tensor polarization
-      Pzz = Pzz_in  ! considering that Pzz cannot be derived from Pz
+c      Pzz = Pzz_in  ! considering that Pzz cannot be derived from Pz
+      Pzz_pos = Pzz_pos_in  ! considering that Pzz cannot be derived from Pz
+      Pzz_neg = Pzz_neg_in  ! considering that Pzz cannot be derived from Pz
 
 c      write(10,*)'#    q2     x       w    rate(kHz)     Azz  
 c     &      DAzz    time '
@@ -1255,7 +1264,9 @@ c                        call elastic(z_n,a_n,q2,thrad,e_in,sigma_unpol_n,ispect
 c                        call elastic(z_c,a_c,q2,thrad,e_in,sigma_unpol_c,ispectro,csmodel)
                   endif
                   sigma_unpol_d  = sigma_unpol
-                  sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
+                  sigma_neg_pol_d  = sigma_unpol_d*(1+0.5*Pzz_neg*Aout)
+                  sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz_pos*Aout)
+c                  sigma_pol_d    = sigma_unpol_d*(1+0.5*Pzz*Aout)
 
 c                  write(6,*)"sigma_unpol = ",sigma_unpol
 
@@ -1400,17 +1411,12 @@ c                     write(6,*)"ave_x = ",ave_x
                         good_x_max = x
                      endif
                   endif
-                 
-                  qminus = nu - sqrt(q2+(q2*q2)/(md**2*x**2))
-                  alphatn = 2 - ((qminus+md)/md)*(1+(sqrt(w2nn-md**2)/wnn))
-
                   write(12,1002)ispectro, ix, ip, it, isum,
      &              thit,superth_in,q2,qq,x,xx,w2,w*w,
      &              sigma_unpol_d,sigma_unpol_he,sigma_unpol_n,
      &              F1d,F2d,F1he,F2he,F1n,F2n,
      &              pit,thit,thq,
-     &              tot_allsigma,sigma_unpol_li,nu,w2nn,wnn,
-     &              alphatn
+     &              tot_allsigma,sigma_unpol_li,nu,w2nn,wnn
 
                enddo ! loop over theta bins
 
@@ -1584,9 +1590,6 @@ c            vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
                  thq_in = thq
              endif
 c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-            qminus = nu - sqrt(qq+(qq*qq)/(md**2*xx**2))
-            alphatn = 2 - ((qminus+md)/md)*(1+(sqrt(cent_w2nn-md**2)/cent_wnn))
  
             write(11,1005)ispectro,xx,qq,w,
      &                    ep_in,superth_in,
@@ -1603,8 +1606,7 @@ c            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      &                    goodRateTotal,goodRate_he,goodRate_n,
      &                    f_dil,spec_x,
      &                    good_x_min,good_x_max,
-     &                    goodRate_li,cent_nu,cent_w2nn,cent_wnn,
-     &                    alphatn
+     &                    goodRate_li,cent_nu,cent_w2nn,cent_wnn
 
             do ib=1,binMax
                F1d = 0
@@ -2684,13 +2686,13 @@ C =========================== Format Statements ================================
  1001 format(a)
 c 1002 format(2(i2,1x),f7.3,1x,f6.1,1x,2f7.3,4(1x,E10.3))
  1022 format(A7,1x,E10.3)
- 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),6(E10.3,1x))
+ 1002 format(5(i2,1x),8(f7.3,1x),3(E10.3,1x),6(E10.3,1x),3(f10.3,1x),5(E10.3,1x))
 c 1003 format(2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3))
  1003 format(i1,2f7.3,1x,f6.1,1x,f7.3,2(1x,E10.3),4(1x,E10.3))
  1004 format(i1,1x,f6.1,1x,f7.3,1x,f7.3,3(1x,E10.3),1x,f7.1,2(1x,E10.3),2(1x,f7.3),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3)
- 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),5(1x,E10.3))
+ 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.3),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2,3(1x,E10.3),1x,E10.2,3(1x,f7.2),4(1x,E10.3))
 c 1005 format(i1,f7.2,1x,f6.1,1x,f7.2,1x,f7.2,1x,f7.2,1x,E10.3,4(1x,E10.2),1x,f10.2,2(1x,E10.2),f10.3,1x,f7.3,1x,E10.4,1x,f7.2,1x,f7.2,1x,f7.2,1x,f7.2,1x,f10.2,1x,f10.2,1x,f7.2)
  1006 format(i1,2(f7.2,1x),2(E10.3,1x),2(f7.2,1x),18(E10.3,1x))
  1007 format(i1,3(f7.2,1x),2(E10.3,1x),2(f7.2,1x),5(E10.3,1x))
