@@ -291,9 +291,9 @@ c      useSHMS = .TRUE.
 
 c      e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
-c      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+      e_in      =  8.8     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      =  6.6     ! GeV (Inrease/Decrease in 2.2 GeV increments)
-      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
+c      e_in      =  2.2     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
 c      e_in      =  4.4     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 c      e_in      = 11.671
@@ -305,8 +305,8 @@ c      w2max     =  1.85**2  ! Cut on W
       w2max     =  30**2  ! Cut on W
 c      w2max     =  0.8**2  ! Cut on W
       m_atom    =  2.0
-c      bcurrent  =  0.100    ! 0.085    ! microAmps
-      bcurrent  =  0.085    ! 0.085    ! microAmps
+      bcurrent  =  0.100    ! 0.085    ! microAmps
+c      bcurrent  =  0.085    ! 0.085    ! microAmps
 c      bcurrent  =  0.080    ! 0.085    ! microAmps
 c      tgt_len   =  3.0*1.0  ! cm
       tgt_len   =  3.0*1.0  ! cm
@@ -326,8 +326,8 @@ c      pack_nd3  =  0.80 !0.55     ! packing fraction
       M_lid     =  9.0      ! g/mole
 
       ND        =  1.0     ! D-wave component
-c      Pzz_in    =  0.30    ! expected improvement on the target
-      Pzz_in    =  0.26    ! expected improvement on the target
+      Pzz_in    =  0.30    ! expected improvement on the target
+c      Pzz_in    =  0.26    ! expected improvement on the target
 c      Pzz_in    =  0.25    ! expected improvement on the target
 c      Pzz_in    =  0.40    ! expected improvement on the target
 c      Pzz_in    =  0.15    ! expected improvement on the target
@@ -337,14 +337,15 @@ c      fsyst_xs  =  0.13     ! add a 5% from F1
 
 c      dAzz_rel  =  0.12     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.06     ! Relative Systematic Contribution to Azz
-c      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
+      dAzz_rel  =  0.092     ! Relative Systematic Contribution to Azz
 c      dAzz_rel  =  0.072     ! Rel. Sys. w/ Pzz=26% +\- 2% (reL)
-      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
+c      dAzz_rel  =  0.099     ! Rel. Sys. w/ Pzz=30% +\- 7% (reL)
 c      dAzz_rel  =  0.118     ! Rel. Sys. w/ Pzz=36% +\- 9.5% (reL)
 
-      driftsOn = 0 ! Turn off drift systematics
-c      driftsOn = 1 ! Turn on drift systematics
-      pzzFlipsPerHour = 1
+c      driftsOn = 0 ! Turn off drift systematics
+      driftsOn = 1 ! Turn on drift systematics
+c      pzzFlipsPerHour = 1
+      pzzFlipsPerHour = 1/24.
 
       ! General Parameters
       rho_he = 0.1412 ! 0.1412 g/cm^3
@@ -439,6 +440,8 @@ c      DATA qqval1/   0.37, 99,  99,  99,  99/
          endif
          xval1(1) = 1.0         ! <-- HMS Good!
          qqval1(1) = 2.89       ! <-- HMS Good!
+c         xval1(1) = 1.3        
+c         qqval1(1) = 3.7 
       endif                     ! <-- HMS Good!
       ! vvv Using HMS as proton spectrometer vvv
 c         prec1(1) = 300
