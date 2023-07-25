@@ -893,8 +893,8 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xy		-block temp_hms_nu_c				-graph 9 -bxy 1:2 \
 		-settype xy		-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
 		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png.par -noask 
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms2.par -noask 
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms2.par -noask 
 
 
 display Azz_rates_hms_shms.png
