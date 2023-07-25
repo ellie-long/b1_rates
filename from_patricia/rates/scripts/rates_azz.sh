@@ -546,54 +546,99 @@ echo "0.0	0.0	0.0" >> temp_hms_nu_a
 echo "0.0	0.0	0.0" >> temp_shms_nu_a
 
 
-# This fills temporary files for Q^2
+## This fills temporary files for Q^2
+## vvvvvv Plots vs x vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+##   vvv Central Values vvv
+#awk '$1==1 && $2!="NaN" {print $29,$3}' $file4 > temp_hms_cq2
+##awk '$1==1 {print 1000,1000}' $file4 > temp_hms_cq2
+#awk '$1==2 && $2!="NaN" {print $29,$3}' $file4 > temp_shms_cq2
+#awk '$1==3 && $2!="NaN" {print $29,$3}' $file4 > temp_hrs_cq2
+#awk '$1==4 && $2!="NaN" {print $29,$3}' $file4 > temp_solid_cq2
+#awk '$1==5 && $2!="NaN" {print $29,$3}' $file4 > temp_bb_cq2
+#awk '$1==6 && $2!="NaN" {print $29,$3}' $file4 > temp_sbs_cq2
+##   vvv Full Spread vvv
+#awk '$1==1 && $14>0 {print $10,$8}' $file6 > temp_hms_q2
+##awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_hms_q21
+#awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q21
+#awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q22
+#awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q23
+#awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q24
+#awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q25
+##awk '$1==1 {print 10000,10000}' $file6 > temp_hms_q2
+#awk '$1==2 && $14>0 {print $10,$8}' $file6 > temp_shms_q2
+#awk '$1==2 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q21
+#awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q22
+#awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q23
+#awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q24
+#awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q25
+#awk '$1==3 && $14>0 {print $10,$8}' $file6 > temp_hrs_q2
+#awk '$1==4 && $14>0 {print $10,$8}' $file6 > temp_solid_q2
+#awk '$1==5 && $14>0 {print $10,$8}' $file6 > temp_bb_q2
+#awk '$1==6 && $14>0 {print $10,$8}' $file6 > temp_sbs_q2
+##   vvv Include Non-Physics Events vvv
+#awk '$1==1 && $2==1 && $26>0 && $10>0 && $10<1000 {print $10,$8,$26*'$hmsa_scale'+60}' $file6 > temp_hms_aq2
+##awk '$1==1 {print 10000,10000}' $file6 > temp_hms_aq2
+#awk '$1==2 && $2==1 && $26>0 && $10>0 && $10<1000 {print $10,$8,$26*'$shmsa_scale'+60}' $file6 > temp_shms_aq2
+#awk '$1==3 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_hrs_aq2
+#awk '$1==4 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_solid_aq2
+#awk '$1==5 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_bb_aq2
+#awk '$1==6 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_sbs_aq2
+## ^^^^^^ Plots vs x ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+# vvvvvv Plots vs alpha vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #   vvv Central Values vvv
-awk '$1==1 && $2!="NaN" {print $29,$3}' $file4 > temp_hms_cq2
+#awk '$1==1 && $2!="NaN" {print $36,$3}' $file4 > temp_hms_cq2
 #awk '$1==1 {print 1000,1000}' $file4 > temp_hms_cq2
-awk '$1==2 && $2!="NaN" {print $29,$3}' $file4 > temp_shms_cq2
-awk '$1==3 && $2!="NaN" {print $29,$3}' $file4 > temp_hrs_cq2
-awk '$1==4 && $2!="NaN" {print $29,$3}' $file4 > temp_solid_cq2
-awk '$1==5 && $2!="NaN" {print $29,$3}' $file4 > temp_bb_cq2
-awk '$1==6 && $2!="NaN" {print $29,$3}' $file4 > temp_sbs_cq2
+#awk '$1==2 && $2!="NaN" {print $36,$3}' $file4 > temp_shms_cq2
+#awk '$1==3 && $2!="NaN" {print $36,$3}' $file4 > temp_hrs_cq2
+#awk '$1==4 && $2!="NaN" {print $36,$3}' $file4 > temp_solid_cq2
+#awk '$1==5 && $2!="NaN" {print $36,$3}' $file4 > temp_bb_cq2
+#awk '$1==6 && $2!="NaN" {print $36,$3}' $file4 > temp_sbs_cq2
 #   vvv Full Spread vvv
-awk '$1==1 && $14>0 {print $10,$8}' $file6 > temp_hms_q2
-#awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_hms_q21
-awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q21
-awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q22
-awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q23
-awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q24
-awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q25
+awk '$1==1 && $14>0 {print $31,$8}' $file6 > temp_hms_q2
+#awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<1000 {print $31,$8}' $file6 > temp_hms_q21
+awk '$1==1 && $2==1 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q21
+awk '$1==1 && $2==2 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q22
+awk '$1==1 && $2==3 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q23
+awk '$1==1 && $2==4 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q24
+awk '$1==1 && $2==5 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$hms_scale'+20}' $file6 > temp_hms_q25
+#awk '$1==1 {print 10000,10000}' $file6 > temp_hms_q2
+awk '$1==2 && $14>0 {print $31,$8}' $file6 > temp_shms_q2
+awk '$1==2 && $2==1 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q21
+awk '$1==2 && $2==2 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q22
+awk '$1==2 && $2==3 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q23
+awk '$1==2 && $2==4 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q24
+awk '$1==2 && $2==5 && $14>0 && $31>0 && $31<1000 {print $31,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q25
+awk '$1==3 && $14>0 {print $31,$8}' $file6 > temp_hrs_q2
+awk '$1==4 && $14>0 {print $31,$8}' $file6 > temp_solid_q2
+awk '$1==5 && $14>0 {print $31,$8}' $file6 > temp_bb_q2
+awk '$1==6 && $14>0 {print $31,$8}' $file6 > temp_sbs_q2
+#   vvv Include Non-Physics Events vvv
+awk '$1==1 && $2==1 && $26>0 && $31>0 && $31<1000 {print $31,$8,$26*'$hmsa_scale'+60}' $file6 > temp_hms_aq2
+#awk '$1==1 {print 10000,10000}' $file6 > temp_hms_aq2
+awk '$1==2 && $2==1 && $26>0 && $31>0 && $31<1000 {print $31,$8,$26*'$shmsa_scale'+60}' $file6 > temp_shms_aq2
+awk '$1==3 && $26>0 && $31>0 && $31<1000 {print $31,$8}' $file6 > temp_hrs_aq2
+awk '$1==4 && $26>0 && $31>0 && $31<1000 {print $31,$8}' $file6 > temp_solid_aq2
+awk '$1==5 && $26>0 && $31>0 && $31<1000 {print $31,$8}' $file6 > temp_bb_aq2
+awk '$1==6 && $26>0 && $31>0 && $31<1000 {print $31,$8}' $file6 > temp_sbs_aq2
+# ^^^^^^ Plots vs alpha ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 echo "0.0	0.0	0.0" >> temp_hms_cq2
 echo "0.0	0.0	0.0" >> temp_hms_q21
 echo "0.0	0.0	0.0" >> temp_hms_q22
 echo "0.0	0.0	0.0" >> temp_hms_q23
 echo "0.0	0.0	0.0" >> temp_hms_q24
 echo "0.0	0.0	0.0" >> temp_hms_q25
-#awk '$1==1 {print 10000,10000}' $file6 > temp_hms_q2
-awk '$1==2 && $14>0 {print $10,$8}' $file6 > temp_shms_q2
-awk '$1==2 && $2==1 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q21
-awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q22
-awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q23
-awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q24
-awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<1000 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q25
+
+
 echo "0.0	0.0	0.0" >> temp_shms_cq2
 echo "0.0	0.0	0.0" >> temp_shms_q21
 echo "0.0	0.0	0.0" >> temp_shms_q22
 echo "0.0	0.0	0.0" >> temp_shms_q23
 echo "0.0	0.0	0.0" >> temp_shms_q24
 echo "0.0	0.0	0.0" >> temp_shms_q25
-awk '$1==3 && $14>0 {print $10,$8}' $file6 > temp_hrs_q2
-awk '$1==4 && $14>0 {print $10,$8}' $file6 > temp_solid_q2
-awk '$1==5 && $14>0 {print $10,$8}' $file6 > temp_bb_q2
-awk '$1==6 && $14>0 {print $10,$8}' $file6 > temp_sbs_q2
-#   vvv Include Non-Physics Events vvv
-awk '$1==1 && $2==1 && $26>0 && $10>0 && $10<1000 {print $10,$8,$26*'$hmsa_scale'+60}' $file6 > temp_hms_aq2
-#awk '$1==1 {print 10000,10000}' $file6 > temp_hms_aq2
-awk '$1==2 && $2==1 && $26>0 && $10>0 && $10<1000 {print $10,$8,$26*'$shmsa_scale'+60}' $file6 > temp_shms_aq2
-awk '$1==3 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_hrs_aq2
-awk '$1==4 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_solid_aq2
-awk '$1==5 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_bb_aq2
-awk '$1==6 && $26>0 && $10>0 && $10<1000 {print $10,$8}' $file6 > temp_sbs_aq2
+
 echo "0.0	0.0	0.0" >> temp_hms_aq2
 echo "0.0	0.0	0.0" >> temp_shms_aq2
 
@@ -892,11 +937,12 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xycolor	-block temp_shms_nu5				-graph 9 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_nu_c				-graph 9 -bxy 1:2 \
 		-settype xy		-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png.par -noask 
+		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png_alpha.par -noask 
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png.par -noask 
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms2.par -noask 
 
-
+#
 display Azz_rates_hms_shms.png
 
 xmgrace \
