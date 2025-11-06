@@ -1,7 +1,8 @@
 # Grace project file
 #
 version 50122
-page size 1200, 800
+#page size 1200, 800
+page size 4800, 3200
 page scroll 5%
 page inout 5%
 link page off
@@ -4087,9 +4088,9 @@ with g4
     s15 legend  "SHMS Central Value"
 with g5
 #    world 0, 0, 1.2, 15
-#    world 0, 0, 0.7, 5.5
+    world 0, 0, 0.7, 5.5
 #    world 0.001, 0.09, 1.0, 20
-    world 0, 0, 1.15, 5.5
+#    world 0, 0, 1.15, 5.5
 #    world 0, 0, 2.0, 5.5
     stack world 0, 0, 0, 0
     znorm 1

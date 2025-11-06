@@ -639,27 +639,35 @@ C***************************************************************C
       q2save=qsq
       if(init.ne.0) goto 10
         open(unit=33,file='../models/subs/MRST/2001LO/lo2002.dat',status='old')
-        do 20 n=1,nx-1
-        do 20 m=1,nq
-        read(33,50)f1(n,m),f2(n,m),f3(n,m),f4(n,m),
-     .		  f5(n,m),f7(n,m),f6(n,m),f8(n,m)
+c        do 20 n=1,nx-1
+c        do 20 m=1,nq
+c        read(33,50)f1(n,m),f2(n,m),f3(n,m),f4(n,m),
+c     .		  f5(n,m),f7(n,m),f6(n,m),f8(n,m)
+        do n=1, nx-1
+           do m=1, nq
+              read(33,50) f1(n,m), f2(n,m), f3(n,m), f4(n,m),
+     &                    f5(n,m), f7(n,m), f6(n,m), f8(n,m)
+           end do
+        end do
 c notation: 1=uval 2=val 3=glue 4=usea 5=chm 6=str 7=btm 8=dsea
   20  continue
-      do 40 m=1,nq
-      f1(nx,m)=0.d0
-      f2(nx,m)=0.d0
-      f3(nx,m)=0.d0
-      f4(nx,m)=0.d0
-      f5(nx,m)=0.d0
-      f6(nx,m)=0.d0
-      f7(nx,m)=0.d0
-      f8(nx,m)=0.d0
+c      do 40 m=1,nq
+      do m=1,nq
+         f1(nx,m)=0.d0
+         f2(nx,m)=0.d0
+         f3(nx,m)=0.d0
+         f4(nx,m)=0.d0
+         f5(nx,m)=0.d0
+         f6(nx,m)=0.d0
+         f7(nx,m)=0.d0
+         f8(nx,m)=0.d0
+      end do
   40  continue
       do n=1,nx
-      xxl(n)=dlog(xx(n))
+         xxl(n)=dlog(xx(n))
       enddo
-      do m=1,nq
-      qql(m)=dlog(qq(m))
+         do m=1,nq
+         qql(m)=dlog(qq(m))
       enddo
       call jeppe1(nx,nq,xxl,qql,f1,cc1)
       call jeppe1(nx,nq,xxl,qql,f2,cc2)
@@ -671,18 +679,28 @@ c notation: 1=uval 2=val 3=glue 4=usea 5=chm 6=str 7=btm 8=dsea
       emc2=2.045
       emb2=18.5
 
-      do 44 m=1,nqc
-      qqlc(m)=qql(m+nqc0)
-      do 44 n=1,nx
-      fc(n,m)=f5(n,m+nqc0)
+c      do 44 m=1,nqc
+      do m=1,nqc
+         qqlc(m)=qql(m+nqc0)
+c      do 44 n=1,nx
+         do n=1,nx
+            fc(n,m)=f5(n,m+nqc0)
+         end do
+      end do
    44 continue
       qqlc(1)=dlog(emc2)
       call jeppe1(nx,nqc,xxl,qqlc,fc,ccc)
 
-      do 45 m=1,nqb
-      qqlb(m)=qql(m+nqb0)
-      do 45 n=1,nx
-      fb(n,m)=f7(n,m+nqb0)
+c      do 45 m=1,nqb
+c      qqlb(m)=qql(m+nqb0)
+c      do 45 n=1,nx
+c      fb(n,m)=f7(n,m+nqb0)
+      do m=1,nqb
+         qqlb(m)=qql(m+nqb0)
+         do n=1,nx
+            fb(n,m)=f7(n,m+nqb0)
+         end do
+      end do
    45 continue
       qqlb(1)=dlog(emb2)
       call jeppe1(nx,nqb,xxl,qqlb,fb,ccb)

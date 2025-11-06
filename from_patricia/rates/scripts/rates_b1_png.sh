@@ -21,7 +21,8 @@
 # 4/2/2013
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
+#file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
+file0="../../models/SCRIPTS/table2.dat"
 awk '$1!="#" {print $1,$6,$7}' $file0 > temp_xb1_stat
 awk '$1!="#" {print $1,$6,sqrt($7*$7+$8*$8)}' $file0 > temp_xb1_tot
 awk '$1!="#" {print $1,$3,$4}' $file0 > temp_Azz_stat
@@ -32,7 +33,8 @@ awk '$1!="#" {print $1,$3,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 #awk '$1!="#" {print $1,0,$4}' $file0 > temp_Azz_stat
 #awk '$1!="#" {print $1,0,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 
-file1="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_kumano.dat"
+#file1="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_kumano.dat"
+file1="../../models/output/b1model_kumano.dat"
 awk '$1==1 && $2!=0.0 {print $2,$6/$2}' $file1 > temp_model_nosea_cteq
 awk '$1==1 && $2!=0.0 {print $2,$10/$2}' $file1 > temp_model_sea_cteq
 awk '$1==2 && $2!=0.0 {print $2,$6/$2}' $file1 > temp_model_nosea_mrst
@@ -46,19 +48,23 @@ awk '$1==2 {print $2,$12}' $file1 > temp_model_sea_Azz
 awk '$1==3 {print $2,$11}' $file1 > temp_model_nosea_Azz
 awk '$1==3 {print $2,$12}' $file1 > temp_model_sea_Azz
 
-file2="/home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_newtable/miller_nov11_2010.dat"
+#file2="/home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_newtable/miller_nov11_2010.dat"
+file2="../../models/Miller_newtable/miller_nov11_2010.dat"
 awk '$1!=0.9 {print $2,$3}' $file2 > temp_model_miller
 awk '$1==3 && $2<=0.6 {print $2,$5}' $file2 > temp_model_miller_Azz
 
-file3="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_sargsian.dat"
+#file3="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_sargsian.dat"
+file3="../../models/output/b1model_sargsian.dat"
 awk '$1==1 && $2>=0.15 {print $2,$4/$2}' $file3 > temp_model_sargsian_vn
 awk '$1==1 && $2>=0.15 {print $2,$6/$2}' $file3 > temp_model_sargsian_lc
 
-file5="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_bacchetta.dat"
+#file5="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/b1model_bacchetta.dat"
+file5="../../models/output/b1model_bacchetta.dat"
 awk '$1==1 && $2!=0.0{print $2,$4/$2}' $file5 > temp_model_bacchetta_low
 awk '$1==1 && $2!=0.0{print $2,$5/$2}' $file5 > temp_model_bacchetta_up
 
-file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
+#file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
+file8="../../models/output/Azz_frankfurt.dat"
 awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 
 #cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_R12_m338.dat temp_model_b16q
@@ -68,11 +74,17 @@ awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 #cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/b16q_m+10.dat temp_model_b16q_mp10
 
 #cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_hermes.dat temp_6qhc_117
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_117.dat temp_6qhc_117
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_176.dat temp_6qhc_176
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_212.dat temp_6qhc_212
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_325.dat temp_6qhc_325
-cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_ref_35.dat temp_6qhc_r35
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_117.dat temp_6qhc_117
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_176.dat temp_6qhc_176
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_212.dat temp_6qhc_212
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_q2_325.dat temp_6qhc_325
+#cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_ref_35.dat temp_6qhc_r35
+
+cp ../../models/Miller_b16q/miller_b1_q2_117.dat temp_6qhc_117
+cp ../../models/Miller_b16q/miller_b1_q2_176.dat temp_6qhc_176
+cp ../../models/Miller_b16q/miller_b1_q2_212.dat temp_6qhc_212
+cp ../../models/Miller_b16q/miller_b1_q2_325.dat temp_6qhc_325
+cp ../../models/Miller_b16q/miller_b1_ref_35.dat temp_6qhc_r35
 
 
 # In file4, the columns are defined by:
@@ -96,7 +108,8 @@ cp /home/ellie/physics/b1/b1_rates/from_patricia/models/Miller_b16q/miller_b1_re
 # $12 = Time (Hours)
 # $13 = Azz Systematic Uncertainty
 # $14 = b1d Systematic Uncertainty
-file4="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/prop_table.out"
+#file4="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/prop_table.out"
+file4="../../rates/output/prop_table.out"
 #awk '$1==1 && $2!="NaN" {print $2,0,0,$11}' $file4 > temp_hms_stat
 #echo "1	100	1	1" > temp_hms_stat
 #awk '$1==2 {print $2,0,$24,$11}' $file4 > temp_shms_stat
@@ -205,7 +218,8 @@ echo "10 12.2" >> temp_thmin_hms
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # vvvv WORKING ON NEW STUFF HERE vvvvvvvvvvvvvvvvvvvvvvvvvv<<<<<<<<<<<<<<<<<
-file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out"
+#file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out"
+file7="../../rates/output/rebinned-x.out"
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_stat
 echo "100	0	0	0" > temp_hms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$4}' $file7 > temp_shms_azz_stat
@@ -271,7 +285,8 @@ awk '$1==5 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_bb_azz_tot
 awk '$1==6 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_sbs_azz_tot
 
 
-file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/xs-take1.out"
+#file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/xs-take1.out"
+file6="../../rates/output/xs-take1.out"
 
 hms_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==5 && $14>0 && $10>0 && $10<3 && $14<min) min=$14} END {print min}' $file6`
 hms_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==5 && $14>0 && $10>0 && $10<3 && $14>max) max=$14} END {print max}' $file6`
@@ -735,7 +750,8 @@ gracebat -hdevice PNG -printfile b1_rates_hms_shms.png \
 		-settype xycolor		-block temp_shms_theta_q5		-graph 8 -bxy 1:2:3 \
 		-settype xy			-block temp_hms_theta_cq		-graph 8 -bxy 1:2 \
 		-settype xy			-block temp_shms_theta_cq		-graph 8 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
+		-p ./b1_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_proj_hms_shms.par -noask 
 #		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/b1_t20_proj_hms_shms.par -noask 
 
 

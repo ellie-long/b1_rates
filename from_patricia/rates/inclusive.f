@@ -4036,8 +4036,10 @@ C ************************************************
       C(11)=-75925.226                                                  
       C(12)=29059.715                                                   
       A=0.                                                              
-      DO 401 J=1,12                                                     
-401   A=A+C(J)                                                          
+c      DO 401 J=1,12                                                     
+      DO J=1,12                                                     
+401      A=A+C(J)                                                          
+      END DO
       C(13)=-A                                                          
       D(1)=0.023135193                                                  
       D(2)=-0.85604572                                                  
@@ -4049,15 +4051,19 @@ C ************************************************
       D(8)=3373.9172                                                    
       D(9)=-13041.151                                                   
       D(10)=19512.524                                                   
-      DO 402 J=1,13                                                     
-402   BM(J)=0.23162461+(J-1)                                            
+c      DO 402 J=1,13                                                     
+      DO J=1,13                                                     
+402      BM(J)=0.23162461+(J-1)                                            
+      END DO
       A=0.                                                              
       B=0.                                                              
       CC=0.                                                             
-      DO 3 J=1,10                                                       
-      A=A+D(J)/BM(J)**2                                                 
-      B=B+D(J)                                                          
-3     CC=CC+D(J)*BM(J)**2                                               
+c      DO 3 J=1,10                                                       
+      DO J=1,10                                                       
+         A=A+D(J)/BM(J)**2                                                 
+         B=B+D(J)                                                          
+3        CC=CC+D(J)*BM(J)**2                                               
+      END DO
       D(11)=BM(11)**2/(BM(13)**2-BM(11)**2)/(BM(12)**2-BM(11)           
      ***2)*(-BM(12)**2*BM(13)**2*A+(BM(12)**2+BM(13)**2)*B-CC)          
       D(12)=BM(12)**2/(BM(11)**2-BM(12)**2)/(BM(13)**2-BM(12)           
@@ -4071,8 +4077,11 @@ C ***** S PARTIAL WAVE ******
       FUNCTION U(X)                                                     
       COMMON/PARIS/C(13),D(13),BM(13)                                   
       A=0.                                                              
-      DO 1 J=1,13                                                       
-1     A=C(J)/(X*X+BM(J)**2)+A                                           
+c      DO 1 J=1,13                                                       
+      DO J=1,13                                                       
+c1        A=C(J)/(X*X+BM(J)**2)+A                                           
+         A=C(J)/(X*X+BM(J)**2)+A                                           
+      END DO
       F=0.79788456                                                      
       U=A*F/SQRT(4.*3.14159265)                                         
       RETURN                                                            
@@ -4081,8 +4090,11 @@ C  **** D PARTIAL WAVE *****
       FUNCTION WW(X)                                                    
       COMMON/PARIS/C(13),D(13),BM(13)                                   
       A=0.                                                              
-      DO 1 J=1,13                                                       
-1     A=D(J)/(X*X+BM(J)**2)+A                                           
+c      DO 1 J=1,13                                                       
+      DO J=1,13                                                       
+c1        A=D(J)/(X*X+BM(J)**2)+A                                           
+         A=D(J)/(X*X+BM(J)**2)+A                                           
+      END DO
       F=0.79788456                                                      
       WW=A*F/SQRT(4.*3.14159265)                                        
       RETURN                                                            
@@ -4331,33 +4343,61 @@ C  *******************************
 1     B2=AMAX1(0.,(WM-C(4)))/(WM-C(4))*(1.-C(2))   ! 0/0                
 *********************************************************
 12    EB2=C(5)*(WSQ-C(4)**2)                                            
-      IF(EB2.GT.25.) GO TO 2                                            
-      B2=B2*(1.-EXP(-EB2))                                              
+c      IF(EB2.GT.25.) GO TO 2                                            
+c      B2=B2*(1.-EXP(-EB2))                                              
+c2     CONTINUE                                                          
+      IF(EB2.GT.25.) then                                            
+         B2=B2*(1.-EXP(-EB2))                                              
+      END IF
 2     CONTINUE                                                          
       BBKG=B1+B2                                                        
       BRES=C(2)+B2                                                      
       RESSUM=0.                                                         
-      DO 30 I=1,NRES                                                    
-      INDEX=(I-1)*3+1+NBKG                                              
-      RAM=C(INDEX)                                                      
-      IF(I.EQ.1)RAM=C(INDEX)+C(18)*QSQ+C(19)*QSQ**2                     
-      RMA=C(INDEX+1)                                                    
-      IF(I.EQ.3)RMA=RMA*(1.+C(20)/(1.+C(21)*QSQ))                       
-      RWD=C(INDEX+2)                                                    
-      QSTARN=SQRT(AMAX1(0.,((WSQ+PMSQ-PIEMSQ)/(2.*WM))**2-PMSQ))        
-      QSTARO=SQRT(AMAX1(0.,((RMA**2-PMSQ+PIEMSQ)/(2.*RMA))**2-PIEMSQ))  
-      IF(QSTARO.LE.1.E-10)GO TO 40                                      
-      TERM=6.08974*QSTARN                                               
-      TERMO=6.08974*QSTARO                                              
-      J=2*LSPIN(I)                                                      
-      K=J+1                                                             
-      GAMRES=RWD*(TERM/TERMO)**K*(1.+TERMO**J)/(1.+TERM**J)             
-      GAMRES=GAMRES/2.                                                  
-      BRWIG=GAMRES/((WM-RMA)**2+GAMRES**2)/3.1415926                    
-      RES=RAM*BRWIG/PM2                                                 
-      GO TO 30                                                          
-40    RES=0.                                                            
-30    RESSUM=RESSUM+RES                                                 
+c      DO 30 I=1,NRES                                                    
+c      INDEX=(I-1)*3+1+NBKG                                              
+c      RAM=C(INDEX)                                                      
+c      IF(I.EQ.1)RAM=C(INDEX)+C(18)*QSQ+C(19)*QSQ**2                     
+c      RMA=C(INDEX+1)                                                    
+c      IF(I.EQ.3)RMA=RMA*(1.+C(20)/(1.+C(21)*QSQ))                       
+c      RWD=C(INDEX+2)                                                    
+c      QSTARN=SQRT(AMAX1(0.,((WSQ+PMSQ-PIEMSQ)/(2.*WM))**2-PMSQ))        
+c      QSTARO=SQRT(AMAX1(0.,((RMA**2-PMSQ+PIEMSQ)/(2.*RMA))**2-PIEMSQ))  
+c      IF(QSTARO.LE.1.E-10)GO TO 40                                      
+c      TERM=6.08974*QSTARN                                               
+c      TERMO=6.08974*QSTARO                                              
+c      J=2*LSPIN(I)                                                      
+c      K=J+1                                                             
+c      GAMRES=RWD*(TERM/TERMO)**K*(1.+TERMO**J)/(1.+TERM**J)             
+c      GAMRES=GAMRES/2.                                                  
+c      BRWIG=GAMRES/((WM-RMA)**2+GAMRES**2)/3.1415926                    
+c      RES=RAM*BRWIG/PM2                                                 
+c      GO TO 30                                                          
+c40    RES=0.                                                            
+c30    RESSUM=RESSUM+RES                                                 
+      DO I=1,NRES                                                    
+         INDEX=(I-1)*3+1+NBKG                                              
+         RAM=C(INDEX)                                                      
+         IF(I.EQ.1)RAM=C(INDEX)+C(18)*QSQ+C(19)*QSQ**2                     
+         RMA=C(INDEX+1)                                                    
+         IF(I.EQ.3)RMA=RMA*(1.+C(20)/(1.+C(21)*QSQ))                       
+         RWD=C(INDEX+2)                                                    
+         QSTARN=SQRT(AMAX1(0.,((WSQ+PMSQ-PIEMSQ)/(2.*WM))**2-PMSQ))        
+         QSTARO=SQRT(AMAX1(0.,((RMA**2-PMSQ+PIEMSQ)/(2.*RMA))**2-PIEMSQ))  
+         IF(QSTARO.LE.1.E-10) THEN
+            RES=0.
+         ELSE            
+            TERM=6.08974*QSTARN                                               
+            TERMO=6.08974*QSTARO                                              
+            J=2*LSPIN(I)                                                      
+            K=J+1                                                             
+            GAMRES=RWD*(TERM/TERMO)**K*(1.+TERMO**J)/(1.+TERM**J)             
+            GAMRES=GAMRES/2.                                                  
+            BRWIG=GAMRES/((WM-RMA)**2+GAMRES**2)/3.1415926                    
+            RES=RAM*BRWIG/PM2                                                 
+         END IF
+c      GO TO 30                                                          
+30       RESSUM=RESSUM+RES                                                 
+      END DO
       B=BBKG*(1.+(1.-BBKG)*XPX)+RESSUM*(1.-BRES)                        
       RETURN                                                            
       END                                                               
@@ -4797,73 +4837,154 @@ C      WRITE(6,1)
 	P(4) = 4.0
 	P(3) = 2.0
 	P(5) = 1.0
-	IF(B-A.EQ.0.0)GOTO 2
-	DO 3 K = 1 , 7
-3	F(K) = 10.0E+16
+c	IF(B-A.EQ.0.0)GOTO 2
+	IF(B-A.EQ.0.0)THEN
+           RETURN
+        END IF
+c	DO 3 K = 1 , 7
+	DO K = 1 , 7
+3	   F(K) = 10.0E+16
+        END DO
 	X = A
 	C = 0.0
 	F(1) = FUNCT(X) / 3.
 4	X0 = X
-	IF((X0+4.0*H-B)*S)5,5,6
+c	IF((X0+4.0*H-B)*S)5,5,6
+	IF((X0+4.0*H-B)*S > 0.0) THEN
+           GOTO 6
+        ELSE
+           GOTO 5
+        END IF
 6       H = (B-X0)/4.
-	IF(H) 7,2,7
-7	DO 8 K = 2 , 7
-8	F(K) = 10.0E+16
+c	IF(H) 7,2,7
+	IF(H == 0.0) THEN
+c           GOTO 2
+           RETURN
+        ELSE
+           GOTO 7
+        END IF
+c7	DO 8 K = 2 , 7
+7	DO K = 2 , 7
+8	   F(K) = 10.0E+16
+        END DO
 	C = 1.0
 5	DI2 = F(1)
 	DI3 = ABS(F(1))
-	DO 9  K = 2 , 5
-	X = X + H
-	IF((X-B)*S) 23,24,24
-24	X = B
-23	IF(F(K)-10.0E+16) 10 , 11 , 10
-11	F(K) = FUNCT(X) / 3.0
-10	DI2 = DI2 + P(K)*F(K)
-9	DI3 = DI3 + P(K)*ABS(F(K))
+c	DO 9  K = 2 , 5
+	DO K = 2 , 5
+	   X = X + H
+c	   IF((X-B)*S) 23,24,24
+	   IF((X-B)*S > 0.0) THEN 
+24	      X = B
+           END IF
+c23	   IF(F(K)-10.0E+16) 10 , 11 , 10
+23	   IF(F(K) .eq. 10.0E+16) THEN
+11	      F(K) = FUNCT(X) / 3.0
+           END IF
+10	   DI2 = DI2 + P(K)*F(K)
+9	   DI3 = DI3 + P(K)*ABS(F(K))
+        END DO
 	DI1 = (F(1) + 4.*F(3) + F(5)) * 2.0 * H
 	DI2 = DI2 * H
 	DI3 = DI3 * H
         IF(REPS.GE.1.0)GOTO 13
-	IF(REPS) 12,13,12
-13      IF(AEPS.GE.1.0)GOTO 14
-	IF(AEPS) 12,14,12
+c	IF(REPS) 12,13,12
+	IF(REPS .eq. 0.0) THEN
+           GOTO 13
+        ELSE
+           GOTO 12
+        END IF
+c13      IF(AEPS.GE.1.0)GOTO 14
+c	IF(AEPS) 12,14,12
+13      IF(AEPS.GE.1.0 .OR. AEPS .EQ. 0.0) THEN
+c           GOTO 14
+	   F(1) = F(5)
+	   F(3) = F(6)
+	   F(5) = F(7)
+	   F(2) = 10.0E+16
+	   F(4) = 10.0E+16 
+	   F(6) = 10.0E+16	
+	   F(7) = 10.0E+16
+           GOTO 18
+        ELSE
+            GOTO 12
+        END IF
 12	EPS = ABS((AIABS+DI3)*REPS)
-	IF(EPS-AEPS) 15 , 16 , 16
-15	EPS = AEPS
+c	IF(EPS-AEPS) 15 , 16 , 16
+	IF(EPS.LT.AEPS) THEN
+15	   EPS = AEPS
+        END IF
 16	DELTA = ABS(DI1)
-	IF(DELTA - EPS) 20 , 21 , 21
-20	IF(DELTA - EPS/8.0) 17 , 14 , 14
-17	H = 2.0 * H
-	F(1) = F(5)
-	F(2) = F(6)
-	F(3) = F(7)
-	DO 19 K = 4 , 7
-19 	F(K) = 10.0E+16
-	GO TO 18
-14	F(1) = F(5)
-	F(3) = F(6)
-	F(5) = F(7)
-	F(2) = 10.0E+16
-	F(4) = 10.0E+16 
-	F(6) = 10.0E+16	
-	F(7) = 10.0E+16
+c	IF(DELTA - EPS) 20 , 21 , 21
+c20	IF(DELTA - EPS/8.0) 17 , 14 , 14
+c17	H = 2.0 * H
+c	F(1) = F(5)
+c	F(2) = F(6)
+c	F(3) = F(7)
+c	DO 19 K = 4 , 7
+c19 	F(K) = 10.0E+16
+c	GO TO 18
+c14	F(1) = F(5)
+c	F(3) = F(6)
+c	F(5) = F(7)
+c	F(2) = 10.0E+16
+c	F(4) = 10.0E+16 
+c	F(6) = 10.0E+16	
+c	F(7) = 10.0E+16
+        IF(DELTA .LT. EPS) THEN
+20	   IF(DELTA .LT. EPS/8.0) THEN
+17	      H = 2.0 * H
+	      F(1) = F(5)
+	      F(2) = F(6)
+	      F(3) = F(7)
+	      DO K = 4 , 7
+19 	         F(K) = 10.0E+16
+              END DO
+	      GO TO 18
+           ELSE
+14	      F(1) = F(5)
+	      F(3) = F(6)
+	      F(5) = F(7)
+	      F(2) = 10.0E+16
+	      F(4) = 10.0E+16 
+	      F(6) = 10.0E+16	
+	      F(7) = 10.0E+16
+              GOTO 18
+           END IF
+        ELSE
+21         H = H / 2.0
+	   F(7) = F(5)
+	   F(6) = F(4)
+	   F(5) = F(3)
+	   F(3) = F(2)
+	   F(2) = 10.0E+16
+	   F(4) = 10.0E+16
+	   X = X0
+	   C = 0.0
+	   GO TO  5
+        END IF
+
 18	DI1 = DI2 + (DI2-DI1) / 15.
 	AI = AI + DI1
 	AIH = AIH + DI2
 	AIABS = AIABS + DI3
 	GO TO 22
-21      H = H / 2.0
-	F(7) = F(5)
-	F(6) = F(4)
-	F(5) = F(3)
-	F(3) = F(2)
-	F(2) = 10.0E+16
-	F(4) = 10.0E+16
-	X = X0
-	C = 0.0
-	GO TO  5
-22	IF(C) 2 , 4 , 2
-2	RETURN
+c21      H = H / 2.0
+c	F(7) = F(5)
+c	F(6) = F(4)
+c	F(5) = F(3)
+c	F(3) = F(2)
+c	F(2) = 10.0E+16
+c	F(4) = 10.0E+16
+c	X = X0
+c	C = 0.0
+c	GO TO  5
+c22	IF(C) 2 , 4 , 2
+22	IF(C .EQ. 0) THEN
+           GOTO 4
+        ELSE
+2	   RETURN
+        END IF
 	END	 
 
 

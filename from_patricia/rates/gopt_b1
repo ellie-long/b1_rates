@@ -13,7 +13,8 @@ rm ./ptrates
 #gfortran -ffixed-line-length-none -o ptrates ptrates_b1_prop_update.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
 #gfortran -ffixed-line-length-none -o ptrates ptrates_b1_20GeV.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
 #gfortran -ffixed-line-length-none -o ptrates ptrates_b1_jeopardy.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
-gfortran -ffixed-line-length-none -o ptrates ptrates_b1_prop_hermes_test.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
+#gfortran -ffixed-line-length-none -o ptrates ptrates_b1_prop_hermes_test.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f
 
+gfortran -ffixed-line-length-none -o ptrates ptrates_b1_wim.f F1F209.f sub_b1d.f sub_qe_b1d.f sub_b1d_wim.f get_qe_b1.f inclusive.f
 rm *.o
 ./ptrates

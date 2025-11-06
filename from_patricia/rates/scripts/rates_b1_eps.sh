@@ -248,6 +248,26 @@ awk '$1==6 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_sbs_azz_tot
 
 
 file6="../output/xs-take1.out"
+
+hms_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==5 && $14>0 && $10>0 && $10<3 && $14<min) min=$14} END {print min}' $file6`
+hms_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==5 && $14>0 && $10>0 && $10<3 && $14>max) max=$14} END {print max}' $file6`
+hms_scale=`awk 'BEGIN{scale = 18/('$hms_csmax'-'$hms_csmin')} END {print scale}' $file6`
+
+shms_csmin=`awk 'BEGIN {min = 1000} {if ($1==2 && ($2==1 || $2==2 || $2==3) && $14>0 && $10>0 && $10<3 && $14<min) min=$14} END {print min}' $file6`
+shms_csmax=`awk 'BEGIN {max = 0} {if ($1==2 && ($2==1 || $2==2 || $2==3) && $14>0 && $10>0 && $10<3 && $14>max) max=$14} END {print max}' $file6`
+shms_scale=`awk 'BEGIN{scale = 18/('$shms_csmax'-'$shms_csmin')} END {print scale}' $file6`
+
+
+hmsa_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==5 && $26>0 && $10>0 && $10<3 && $26<min) min=$26} END {print min}' $file6`
+hmsa_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==5 && $26>0 && $10>0 && $10<3 && $26>max) max=$26} END {print max}' $file6`
+hmsa_scale=`awk 'BEGIN{scale = 18/('$hmsa_csmax'-'$hmsa_csmin')} END {print scale}' $file6`
+
+shmsa_csmin=`awk 'BEGIN {min = 1000} {if ($1==2 && ($2==1 || $2==2 || $2==3) && $26>0 && $10>0 && $10<3 && $26<min) min=$26} END {print min}' $file6`
+shmsa_csmax=`awk 'BEGIN {max = 0} {if ($1==2 && ($2==1 || $2==2 || $2==3) && $26>0 && $10>0 && $10<3 && $26>max) max=$26} END {print max}' $file6`
+shmsa_scale=`awk 'BEGIN{scale = 18/('$shmsa_csmax'-'$shmsa_csmin')} END {print scale}' $file6`
+
+
+
 # This fills temporary files for Theta_e'
 #   vvv Central Values vvv
 awk '$1==1 && $2!="NaN" {print $29,$6}' $file4 > temp_hms_ctheta
@@ -319,17 +339,31 @@ awk '$1==6 && $2!="NaN" {print $29,$3}' $file4 > temp_sbs_cq2
 #   vvv Full Spread vvv
 awk '$1==1 && $14>0 {print $10,$8}' $file6 > temp_hms_q2
 #awk '$1==1 {print 10000,10000}' $file6 > temp_hms_q2
+awk '$1==1 && $2==1 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$hms_scale'+19}' $file6 > temp_hms_q21
+awk '$1==1 && $2==2 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$hms_scale'+19}' $file6 > temp_hms_q22
+awk '$1==1 && $2==3 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$hms_scale'+19}' $file6 > temp_hms_q23
+awk '$1==1 && $2==4 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$hms_scale'+19}' $file6 > temp_hms_q24
+awk '$1==1 && $2==5 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$hms_scale'+19}' $file6 > temp_hms_q25
 awk '$1==2 && $2==1 && $14>0 {print $10,$8}' $file6 > temp_shms_q2
-awk '$1==2 && $2==2 && $14>0 {print $10,$8}' $file6 > temp_shms_q22
-awk '$1==2 && $2==3 && $14>0 {print $10,$8}' $file6 > temp_shms_q23
+#awk '$1==2 && $2==2 && $14>0 {print $10,$8}' $file6 > temp_shms_q22
+#awk '$1==2 && $2==3 && $14>0 {print $10,$8}' $file6 > temp_shms_q23
+awk '$1==2 && $2==1 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q21
+awk '$1==2 && $2==2 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q22
+awk '$1==2 && $2==3 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q23
+awk '$1==2 && $2==4 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q24
+awk '$1==2 && $2==5 && $14>0 && $10>0 && $10<3 {print $10,$8,$14*'$shms_scale'+40}' $file6 > temp_shms_q25
+
+
 awk '$1==3 && $14>0 {print $10,$8}' $file6 > temp_hrs_q2
 awk '$1==4 && $14>0 {print $10,$8}' $file6 > temp_solid_q2
 awk '$1==5 && $14>0 {print $10,$8}' $file6 > temp_bb_q2
 awk '$1==6 && $14>0 {print $10,$8}' $file6 > temp_sbs_q2
 #   vvv Include Non-Physics Events vvv
-awk '$1==1 && $26>0 {print $10,$8}' $file6 > temp_hms_aq2
+#awk '$1==1 && $26>0 {print $10,$8}' $file6 > temp_hms_aq2
+awk '$1==1 && $26>0 && $10>0 && $10<3 {print $10,$8,$26*'$hmsa_scale'+60}' $file6 > temp_hms_aq2
 #awk '$1==1 {print 10000,10000}' $file6 > temp_hms_aq2
-awk '$1==2 && $26>0 {print $10,$8}' $file6 > temp_shms_aq2
+#awk '$1==2 && $26>0 {print $10,$8}' $file6 > temp_shms_aq2
+awk '$1==2 && $26>0 && $10>0 && $10<3 {print $10,$8,$26*'$shmsa_scale'+60}' $file6 > temp_shms_aq2
 awk '$1==3 && $26>0 {print $10,$8}' $file6 > temp_hrs_aq2
 awk '$1==4 && $26>0 {print $10,$8}' $file6 > temp_solid_aq2
 awk '$1==5 && $26>0 {print $10,$8}' $file6 > temp_bb_aq2
@@ -452,25 +486,25 @@ xmgrace \
 		-settype xy		-block temp_shms_b1_stat_bar	-graph 0 -bxy 1:2 \
 		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_rates.eps \
-xmgrace \
-		-settype bar	-block temp_1kHz				-graph 1 -bxy 1:2 \
-		-settype bar	-block temp_50kHz				-graph 1 -bxy 1:2 \
-		-settype bar	-block temp_hms_totrates		-graph 1 -bxy 1:2 \
-		-settype bar	-block temp_hms_rates			-graph 1 -bxy 1:2 \
-		-settype bar	-block temp_shms_totrates		-graph 1 -bxy 1:2 \
-		-settype bar	-block temp_shms_rates			-graph 1 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask
+#xmgrace \
+#		-settype bar	-block temp_1kHz				-graph 1 -bxy 1:2 \
+#		-settype bar	-block temp_50kHz				-graph 1 -bxy 1:2 \
+#		-settype bar	-block temp_hms_totrates		-graph 1 -bxy 1:2 \
+#		-settype bar	-block temp_hms_rates			-graph 1 -bxy 1:2 \
+#		-settype bar	-block temp_shms_totrates		-graph 1 -bxy 1:2 \
+#		-settype bar	-block temp_shms_rates			-graph 1 -bxy 1:2 \
+#		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_time.eps \
-xmgrace \
-		-settype xy		-block temp_1day	 	-log y	-graph 2 -bxy 1:2 \
-		-settype xy		-block temp_1week	 	-log y	-graph 2 -bxy 1:2 \
-		-settype xy		-block temp_1month	 	-log y	-graph 2 -bxy 1:2 \
-		-settype xy		-block temp_1year		-log y	-graph 2 -bxy 1:2 \
-		-settype bar	-block temp_hms_pactm	-log y	-graph 2 -bxy 1:2 \
-		-settype bar	-block temp_hms_time	-log y	-graph 2 -bxy 1:2 \
-		-settype bar	-block temp_shms_pactm 	-log y	-graph 2 -bxy 1:2 \
-		-settype bar	-block temp_shms_time 	-log y	-graph 2 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask
+#xmgrace \
+#		-settype xy		-block temp_1day	 	-log y	-graph 2 -bxy 1:2 \
+#		-settype xy		-block temp_1week	 	-log y	-graph 2 -bxy 1:2 \
+#		-settype xy		-block temp_1month	 	-log y	-graph 2 -bxy 1:2 \
+#		-settype xy		-block temp_1year		-log y	-graph 2 -bxy 1:2 \
+#		-settype bar	-block temp_hms_pactm	-log y	-graph 2 -bxy 1:2 \
+#		-settype bar	-block temp_hms_time	-log y	-graph 2 -bxy 1:2 \
+#		-settype bar	-block temp_shms_pactm 	-log y	-graph 2 -bxy 1:2 \
+#		-settype bar	-block temp_shms_time 	-log y	-graph 2 -bxy 1:2 \
+#		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_Azz.eps \
 xmgrace \
 		-settype xy   	-block temp_model_nosea_Azz 	-graph 3 -bxy 1:2 \
@@ -485,67 +519,73 @@ xmgrace \
 		-settype xy		-block temp_shms_azz_stat_bar	-graph 3 -bxy 1:2 \
 		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_theta.eps \
-xmgrace \
-		-settype xy		-block temp_thmin_hms			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_thmin_shms			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_hms_atheta			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_shms_atheta			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_hms_theta			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta2			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta3			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_hms_ctheta			-graph 4 -bxy 1:2 \
-		-settype xy		-block temp_shms_ctheta			-graph 4 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask
+#xmgrace \
+#		-settype xy		-block temp_thmin_hms			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_thmin_shms			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_hms_atheta			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_shms_atheta			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_hms_theta			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta2			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta3			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_hms_ctheta			-graph 4 -bxy 1:2 \
+#		-settype xy		-block temp_shms_ctheta			-graph 4 -bxy 1:2 \
+#		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_q2.eps \
 xmgrace \
-		-settype xy		-block temp_hms_aq2				-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_shms_aq2			-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_hms_q2				-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_shms_q2				-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_shms_q22			-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_shms_q23			-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_hms_cq2				-graph 5 -bxy 1:2 \
-		-settype xy		-block temp_shms_cq2			-graph 5 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask
+	-settype xycolor		-block temp_hms_aq2			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_shms_aq2			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_hms_q21			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_hms_q22			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_hms_q23			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_hms_q24			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_hms_q25			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_shms_q21			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_shms_q22			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_shms_q23			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_shms_q24			-graph 5 -bxy 1:2:3 \
+	-settype xycolor		-block temp_shms_q25			-graph 5 -bxy 1:2:3 \
+	-settype xy			-block temp_hms_cq2			-graph 5 -bxy 1:2 \
+	-settype xy			-block temp_shms_cq2			-graph 5 -bxy 1:2 \
+	-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_eprime.eps \
-xmgrace \
-		-settype xy		-block temp_hms_e0				-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_epmax_hms			-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_epmax_shms			-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_hms_aep				-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_shms_aep			-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_hms_ep				-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_shms_ep				-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_shms_ep2			-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_shms_ep3			-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_hms_cep				-graph 6 -bxy 1:2 \
-		-settype xy		-block temp_shms_cep			-graph 6 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask
+#xmgrace \
+#		-settype xy		-block temp_hms_e0				-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_epmax_hms			-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_epmax_shms			-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_hms_aep				-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_shms_aep			-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_hms_ep				-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_shms_ep				-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_shms_ep2			-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_shms_ep3			-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_hms_cep				-graph 6 -bxy 1:2 \
+#		-settype xy		-block temp_shms_cep			-graph 6 -bxy 1:2 \
+#		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_w.eps \
-xmgrace \
-		-settype xy		-block temp_wqe					-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_wmin				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_hms_aw				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_shms_aw				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_hms_w				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_shms_w				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_shms_w2				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_shms_w3				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_hms_cw				-graph 7 -bxy 1:2 \
-		-settype xy		-block temp_shms_cw				-graph 7 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask
+#xmgrace \
+#		-settype xy		-block temp_wqe					-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_wmin				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_hms_aw				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_shms_aw				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_hms_w				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_shms_w				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_shms_w2				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_shms_w3				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_hms_cw				-graph 7 -bxy 1:2 \
+#		-settype xy		-block temp_shms_cw				-graph 7 -bxy 1:2 \
+#		-p b1_proj_hms_shms.par -noask
 #gracebat -hdevice EPS -printfile hms_shms_theta_q.eps \
-xmgrace \
-		-settype xy		-block temp_hms_theta_aq		-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta_aq		-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_hms_theta_q			-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta_q		-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta_q2		-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta_q3		-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_hms_theta_cq		-graph 8 -bxy 1:2 \
-		-settype xy		-block temp_shms_theta_cq		-graph 8 -bxy 1:2 \
-		-p b1_proj_hms_shms.par -noask 
+#xmgrace \
+#		-settype xy		-block temp_hms_theta_aq		-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta_aq		-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_hms_theta_q			-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta_q		-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta_q2		-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta_q3		-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_hms_theta_cq		-graph 8 -bxy 1:2 \
+#		-settype xy		-block temp_shms_theta_cq		-graph 8 -bxy 1:2 \
+#		-p b1_proj_hms_shms.par -noask 
 
 #gracebat -hdevice PNG -printfile b1_rates_hrs_solid.png \
 #		-settype xy		-block temp_model_miller		-graph 0 -bxy 1:2 \
