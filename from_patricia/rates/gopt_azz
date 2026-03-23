@@ -11,7 +11,8 @@ rm ./ptrates
 #gfortran -ffree-line-length-0 -ffixed-line-length-0 -o ptrates ptrates_azz_prop2.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f elastic.f
 #gfortran -ffree-line-length-0 -ffixed-line-length-0 -o ptrates ptrates_azz_cscheck.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f elastic.f
 #gfortran -ffree-line-length-0 -ffixed-line-length-0 -o ptrates ptrates_azz_b1_t20.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f elastic.f
-gfortran -ffree-line-length-0 -ffixed-line-length-0 -o ptrates ptrates_azz_jeopardy.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f elastic.f
+#gfortran -ffree-line-length-0 -ffixed-line-length-0 -o ptrates ptrates_azz_jeopardy.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f elastic.f
+gfortran -ffree-line-length-0 -ffixed-line-length-0 -o ptrates ptrates_azz_2026.f F1F209.f sub_b1d.f sub_qe_b1d.f get_qe_b1.f inclusive.f elastic.f
 
 rm *.o
 ./ptrates

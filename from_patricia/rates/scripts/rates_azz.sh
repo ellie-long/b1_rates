@@ -21,7 +21,7 @@
 # 4/2/2013
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-file0="/home/ellie/physics/b1/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
+file0="/home/ellie/physics/b1_rates/from_patricia/models/SCRIPTS/table2.dat"
 awk '$1!="#" {print $1,$3,$4}' $file0 > temp_Azz_stat
 awk '$1!="#" {print $1,$3,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 
@@ -58,10 +58,10 @@ echo "100   100" > temp_model_miller_Azz
 #hms_scale=`awk 'BEGIN{scale = 19/('$hms_csmax'-'$hms_csmin')} END {print scale}' $file6`
 
 
-file_misak1="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/vn-av18.dat"
-file_misak2="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/vn-cdbonn.dat"
-file_misak3="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-av18.dat"
-file_misak4="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-cdbonn.dat"
+file_misak1="/home/ellie/physics/b1_rates/from_patricia/models/misak_mark/vn-av18.dat"
+file_misak2="/home/ellie/physics/b1_rates/from_patricia/models/misak_mark/vn-cdbonn.dat"
+file_misak3="/home/ellie/physics/b1_rates/from_patricia/models/misak_mark/lc-av18.dat"
+file_misak4="/home/ellie/physics/b1_rates/from_patricia/models/misak_mark/lc-cdbonn.dat"
 #awk '$1>0 && $1<100 {print $1,$2}' $file_misak1 > temp_misak_vn_av18
 #awk '$1>0 && $1<100 {print $1,$2}' $file_misak2 > temp_misak_vn_cdbonn
 #awk '$1>0 && $1<100 {print $1,$2}' $file_misak3 > temp_misak_lc_av18
@@ -73,7 +73,7 @@ file_misak4="/home/ellie/physics/b1/b1_rates/from_patricia/models/misak_mark/lc-
 #awk '$1!="#" {print $1,0,sqrt($4*$4+$5*$5)}' $file0 > temp_Azz_tot
 
 
-file_ah="/home/ellie/physics/b1/b1_rates/from_patricia/models/arenhovel/arenhovel_azz.dat"
+file_ah="/home/ellie/physics/b1_rates/from_patricia/models/arenhovel/arenhovel_azz.dat"
 awk '$1==0.3{print $12,$13}' $file_ah > temp_aren_03_av18
 awk '$1==0.3{print $12,$14}' $file_ah > temp_aren_03_pwbanr
 awk '$1==0.3{print $12,$15}' $file_ah > temp_aren_03_pwbarc
@@ -122,7 +122,7 @@ awk '$1==1.5{print $12,$17}' $file_ah > temp_aren_15_normMECIC
 awk '$1==1.5{print $12,$18}' $file_ah > temp_aren_15_normRel
 awk '$1==1.5{print $12,$19}' $file_ah > temp_aren_15_normMECICRel
 
-file8="/home/ellie/physics/b1/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
+file8="/home/ellie/physics/b1_rates/from_patricia/models/output/Azz_frankfurt.dat"
 awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 
 # In file4, the columns are defined by:
@@ -146,7 +146,7 @@ awk '{print $1,$2}' $file8 > temp_model_frankfurt_Azz
 # $12 = Time (Hours)
 # $13 = Azz Systematic Uncertainty
 # $14 = b1d Systematic Uncertainty
-file4="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/prop_table.out"
+file4="/home/ellie/physics/b1_rates/from_patricia/rates/output/prop_table.out"
 #awk '$1==1 && $2!="NaN" {print $2,0,0,$11}' $file4 > temp_hms_stat
 #echo "1	100	1	1" > temp_hms_stat
 #awk '$1==2 {print $2,0,$24,$11}' $file4 > temp_shms_stat
@@ -282,7 +282,7 @@ echo "10 12.2" >> temp_thmin_hms
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 #vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 # vvvv WORKING ON NEW STUFF HERE vvvvvvvvvvvvvvvvvvvvvvvvvv<<<<<<<<<<<<<<<<<
-file7="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/rebinned-x.out"
+file7="/home/ellie/physics/b1_rates/from_patricia/rates/output/rebinned-x.out"
 #awk '$1==1 && $5!="NaN" {print $2,0,$3,$4}' $file7 > temp_hms_azz_stat
 echo "100	0	0	0" > temp_hms_azz_stat
 #awk '$1==2 && $5!="NaN" {print $2,$11,$3,$4}' $file7 > temp_shms_azz_stat
@@ -341,7 +341,7 @@ awk '$1==4 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_solid_azz_tot
 awk '$1==5 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_bb_azz_tot
 awk '$1==6 && $2!="NaN" {print $2,$8,sqrt($9*S9)}' $file4 > temp_sbs_azz_tot
 
-file6="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/xs-take1.out"
+file6="/home/ellie/physics/b1_rates/from_patricia/rates/output/xs-take1.out"
 
 hms_csmin=`awk 'BEGIN {min = 1000} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14<min) min=$14} END {print min}' $file6`
 hms_csmax=`awk 'BEGIN {max = 0} {if ($1==1 && $2==1 && $14>0 && $10>0 && $10<1000 && $14>max) max=$14} END {print max}' $file6`
@@ -806,8 +806,8 @@ echo "0.0	0.0	0.0" >> temp_hms_awnn
 echo "0.0	0.0	0.0" >> temp_shms_awnn
 
 
-file9="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-shms.out"
-file10="/home/ellie/physics/b1/b1_rates/from_patricia/rates/output/cs-check-hms.out"
+file9="/home/ellie/physics/b1_rates/from_patricia/rates/output/cs-check-shms.out"
+file10="/home/ellie/physics/b1_rates/from_patricia/rates/output/cs-check-hms.out"
 awk '$12!="NaN" {print $1,$12}' $file9 > temp_shms_fdil
 awk '$12!="NaN" {print $1,$12}' $file10 > temp_hms_fdil
 
@@ -937,10 +937,10 @@ gracebat -hdevice PNG -printfile Azz_rates_hms_shms.png \
 		-settype xycolor	-block temp_shms_nu5				-graph 9 -bxy 1:2:3 \
 		-settype xy		-block temp_hms_nu_c				-graph 9 -bxy 1:2 \
 		-settype xy		-block temp_shms_nu_c				-graph 9 -bxy 1:2 \
-		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png_alpha.par -noask 
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png.par -noask 
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms2.par -noask 
+		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png_alpha.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms_png.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms2.par -noask 
 
 #
 display Azz_rates_hms_shms.png
@@ -971,7 +971,7 @@ xmgrace \
  		-settype xy   		-block temp_wim_pw_fsioff_cdbonn		-graph 3 -bxy 1:2 \
  		-settype xy   		-block temp_wim_pw_fsion_av18			-graph 3 -bxy 1:2 \
  		-settype xy   		-block temp_wim_pw_fsion_cdbonn			-graph 3 -bxy 1:2 \
-	-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+	-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 
 #
 #xmgrace \
@@ -982,7 +982,7 @@ xmgrace \
 #		-settype bar		-block temp_shms_rates		-log y	-graph 1 -bxy 1:2 \
 #		-settype bar		-block temp_hms_totrates	-log y	-graph 1 -bxy 1:2 \
 #		-settype bar		-block temp_hms_rates		-log y	-graph 1 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_1day	 		-log y	-graph 2 -bxy 1:2 \
@@ -993,7 +993,7 @@ xmgrace \
 #		-settype bar		-block temp_hms_time		-log y	-graph 2 -bxy 1:2 \
 #		-settype bar		-block temp_shms_pactm 		-log y	-graph 2 -bxy 1:2 \
 #		-settype bar		-block temp_shms_time 		-log y	-graph 2 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy   		-block temp_misak_vn_av18	 		-graph 3 -bxy 1:2 \
@@ -1009,7 +1009,7 @@ xmgrace \
 #        -settype xy     	-block temp_shms_azz_sys_bar   		-graph 3 -bxy 1:2 \
 #		-settype xy   		-block temp_misak_vn_cdbonn	 		-graph 3 -bxy 1:2 \
 #		-settype xy   		-block temp_misak_lc_cdbonn			-graph 3 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_thmin_hms				-graph 4 -bxy 1:2 \
@@ -1028,7 +1028,7 @@ xmgrace \
 #		-settype xycolor	-block temp_shms_theta5				-graph 4 -bxy 1:2:3 \
 #		-settype xy			-block temp_hms_ctheta				-graph 4 -bxy 1:2 \
 #		-settype xy			-block temp_shms_ctheta				-graph 4 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xycolor	-block temp_hms_aq2					-graph 5 -bxy 1:2:3 \
@@ -1045,7 +1045,7 @@ xmgrace \
 #		-settype xycolor	-block temp_shms_q25				-graph 5 -bxy 1:2:3 \
 #		-settype xy			-block temp_hms_cq2					-graph 5 -bxy 1:2 \
 #		-settype xy			-block temp_shms_cq2				-graph 5 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_hms_e0					-graph 6 -bxy 1:2 \
@@ -1065,7 +1065,7 @@ xmgrace \
 #		-settype xycolor	-block temp_shms_ep5				-graph 6 -bxy 1:2:3 \
 #		-settype xy			-block temp_hms_cep					-graph 6 -bxy 1:2 \
 #		-settype xy			-block temp_shms_cep				-graph 6 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xy			-block temp_wqe						-graph 7 -bxy 1:2 \
@@ -1084,7 +1084,7 @@ xmgrace \
 #		-settype xycolor	-block temp_shms_w5					-graph 7 -bxy 1:2:3 \
 #		-settype xy			-block temp_hms_cw					-graph 7 -bxy 1:2 \
 #		-settype xy			-block temp_shms_cw					-graph 7 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #xmgrace \
 #		-settype xycolor	-block temp_hms_theta_aq			-graph 8 -bxy 1:2:3 \
@@ -1101,7 +1101,7 @@ xmgrace \
 #		-settype xycolor	-block temp_shms_theta_q5			-graph 8 -bxy 1:2:3 \
 #		-settype xy			-block temp_hms_theta_cq			-graph 8 -bxy 1:2 \
 #		-settype xy			-block temp_shms_theta_cq			-graph 8 -bxy 1:2 \
-#		-p /home/ellie/physics/b1/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
+#		-p /home/ellie/physics/b1_rates/from_patricia/rates/scripts/Azz_proj_hms_shms.par -noask 
 #
 #
 rm -f temp*

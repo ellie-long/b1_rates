@@ -286,8 +286,8 @@ c      split = .TRUE.
       useHMS = .FALSE.
       useSHMS = .FALSE.
 
-      useHMS = .TRUE.
-c      useSHMS = .TRUE.
+c      useHMS = .TRUE.
+      useSHMS = .TRUE.
 
       e_in      =  11.0     ! GeV (Inrease/Decrease in 2.2 GeV increments)
 
